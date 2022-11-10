@@ -33,3 +33,11 @@
 
 // NobleUI styles For RTL
 // @import "./assets/scss/style.rtl.css";
+
+.background-image{
+  background-image: url(../src/assets/images/FondoLaReinaLandscape1.png);
+  background-repeat: none;
+  background-position: center;
+  background-size: cover;
+
+}
