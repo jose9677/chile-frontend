@@ -1,5 +1,5 @@
 <div class="row w-100 mx-0 auth-page">
-  <div class="col-md-8 col-xl-6 mx-auto">
+  <div class=" col-md-8 col-xl-6 mx-auto">
     <div class="card">
       <div class="row">
         <div class="col-md-4 pe-md-0">
@@ -11,33 +11,232 @@
           <div class="auth-form-wrapper px-4 py-5">
             <a routerLink="." class="nobleui-logo d-block mb-2">Noble<span>UI</span></a>
             <h5 class="text-muted fw-normal mb-4">Create a free account.</h5>
-            <form class="forms-sample">
-              <div class="mb-3">
-                <label for="exampleInputUsername1" class="form-label">Username</label>
-                <input type="text" class="form-control" id="exampleInputUsername1" autocomplete="Username" placeholder="Username">
+            <form class="forms-sample" [formGroup]="userRegister" (ngSubmit)="onRegister($event)">
+              <div>
+                <!-- <div class="mb-3">
+                  <label for="exampleInputUsername1" class="form-label">Nombres</label>
+                  <input
+                  type="text"
+                  class="form-control"
+                  id="exampleInputUsername1"
+                  formControlName="names"
+                  [ngClass]="{'is-invalid': (userRegister.controls.names.touched && userRegister.controls.names.errors?.required) || (isFormSubmitted && userRegister.controls.names.errors)}" placeholder="Introduce tu nombre"
+                  >
+                  <div *ngIf="(userRegister.controls.names.touched && userRegister.controls.names.errors?.required) || (isFormSubmitted && userRegister.controls.names.errors)" class="invalid-feedback">Campo Requerido</div>
+
+                  <div class="text-danger mt-1" *ngIf="userRegister.controls.names.errors?.pattern">Este campo solo admite letas</div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="lastNames" class="form-label">Apellidos</label>
+                  <input
+                  type="text"
+                  class="form-control"
+                  id="lastNames"
+                  formControlName="lastNames"
+                  [ngClass]="{'is-invalid': (userRegister.controls.lastNames.touched && userRegister.controls.lastNames.errors?.required) || (isFormSubmitted && userRegister.controls.lastNames.errors)}" placeholder="Introduce tu nombre"
+                  >
+                  <div *ngIf="(userRegister.controls.lastNames.touched && userRegister.controls.lastNames.errors?.required) || (isFormSubmitted && userRegister.controls.lastNames.errors)" class="invalid-feedback">Campo Requerido</div>
+
+                  <div class="text-danger mt-1" *ngIf="userRegister.controls.lastNames.errors?.pattern">Este campo solo admite letas</div>
+
+                </div>
+
+                <div class="mb-3">
+                  <label for="datesBirth" class="form-label">Fecha de Nacimiento</label>
+                  <input
+                  type="date"
+                  class="form-control"
+                  id="datesBirth"
+                  formControlName="datesBirth"
+                  [ngClass]="{'is-invalid': (userRegister.controls.datesBirth.touched && userRegister.controls.datesBirth.errors?.required) || (isFormSubmitted && userRegister.controls.datesBirth.errors)}" placeholder="Introduce tu nombre"
+                  >
+                  <div *ngIf="(userRegister.controls.datesBirth.touched && userRegister.controls.datesBirth.errors?.required) || (isFormSubmitted && userRegister.controls.datesBirth.errors)" class="invalid-feedback">Campo Requerido</div>
+
+                  <div class="text-danger mt-1" *ngIf="userRegister.controls.datesBirth.errors?.date">Error al ingresar la frecha de nacimiento</div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  formControlName="email"
+                  [ngClass]="{'is-invalid': (userRegister.controls.email.touched && userRegister.controls.email.errors?.required) || (isFormSubmitted && userRegister.controls.email.errors)}" placeholder="Introduce tu nombre"
+                  >
+                  <div *ngIf="(userRegister.controls.email.touched && userRegister.controls.email.errors?.required) || (isFormSubmitted && userRegister.controls.email.errors)" class="invalid-feedback">Campo Requerido</div>
+
+                  <div class="text-danger mt-1" *ngIf="userRegister.controls.email.errors?.email">Verifique el formato de email</div>
+
+                </div>
+                <div class="mb-3">
+                  <label for="landLine" class="form-label">Teléfono Fijo</label>
+                  <input
+                  type="tel"
+                  class="form-control"
+                  id="landLine"
+                  formControlName="landLine"
+                  prefix="+56" mask="0 0000-0000" [showMaskTyped] = "true"
+                  [ngClass]="{'is-invalid': (userRegister.controls.landLine.touched && userRegister.controls.landLine.errors?.required) || (isFormSubmitted && userRegister.controls.landLine.errors)}" placeholder="Introduce tu nombre"
+                  >
+                  <div *ngIf="(userRegister.controls.landLine.touched && userRegister.controls.landLine.errors?.required) || (isFormSubmitted && userRegister.controls.email.errors)" class="invalid-feedback">Campo Requerido</div>
+
+                </div>
+
+                <div class="mb-3">
+                  <label for="mobilePhone" class="form-label">Teléfono Fijo</label>
+                  <input
+                  type="text"
+                  class="form-control"
+                  id="mobilePhone"
+                  formControlName="mobilePhone"
+                  prefix="+56" mask="0 0000-0000" [showMaskTyped] = "true"
+                  [ngClass]="{'is-invalid': (userRegister.controls.mobilePhone.touched && userRegister.controls.mobilePhone.errors?.required) || (isFormSubmitted && userRegister.controls.mobilePhone.errors)}" placeholder="Introduce tu nombre"
+                  >
+                  <div *ngIf="(userRegister.controls.mobilePhone.touched && userRegister.controls.mobilePhone.errors?.required) || (isFormSubmitted && userRegister.controls.mobilePhone.errors)" class="invalid-feedback">Campo Requerido</div>
+                </div> -->
+                <h3>Direccion</h3>
+                <div class="mb-3">
+                  <label for="typeOfPrevention" class="form-label">Nombres</label>
+                  <input
+                  type="text"
+                  class="form-control"
+                  id="typeOfPrevention"
+                  formControlName="names"
+                  [ngClass]="{'is-invalid': (userRegister.controls.names.touched && userRegister.controls.names.errors?.required) || (isFormSubmitted && userRegister.controls.names.errors)}" placeholder="Introduce tu nombre"
+                  >
+                  <div *ngIf="(userRegister.controls.names.touched && userRegister.controls.names.errors?.required) || (isFormSubmitted && userRegister.controls.names.errors)" class="invalid-feedback">Campo Requerido</div>
+
+                  <div class="text-danger mt-1" *ngIf="userRegister.controls.names.errors?.pattern">Este campo solo admite letas</div>
+                </div>
               </div>
-              <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
-              </div>
-              <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" autocomplete="current-password" placeholder="Password">
-              </div>
+
+
+              <!-- <div>
+                <h3>Info Salud</h3>
+                <div class="mb-3">
+                  <label for="exampleInputUsername1" class="form-label">Username</label>
+                  <input
+                  type="text"
+                  class="form-control"
+                  id="exampleInputUsername1"
+                  autocomplete="Username"
+                  placeholder="Username"
+                  formControlName="names"
+                  >
+                  <p class="text-danger mt-1" *ngIf="userRegister.controls.names.errors?.required">Campo Requerido</p>
+                  <p class="text-danger mt-1" *ngIf="userRegister.controls.names.errors?.number">texto Requerido</p>
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputUsername1" class="form-label">Username</label>
+                  <input
+                  type="text"
+                  class="form-control"
+                  id="exampleInputUsername1"
+                  autocomplete="Username"
+                  placeholder="Username"
+                  formControlName="names"
+                  >
+                  <p class="text-danger mt-1" *ngIf="userRegister.controls.names.errors?.required">Campo Requerido</p>
+                  <p class="text-danger mt-1" *ngIf="userRegister.controls.names.errors?.number">texto Requerido</p>
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputUsername1" class="form-label">Username</label>
+                  <input
+                  type="text"
+                  class="form-control"
+                  id="exampleInputUsername1"
+                  autocomplete="Username"
+                  placeholder="Username"
+                  formControlName="names"
+                  >
+                  <p class="text-danger mt-1" *ngIf="userRegister.controls.names.errors?.required">Campo Requerido</p>
+                  <p class="text-danger mt-1" *ngIf="userRegister.controls.names.errors?.number">texto Requerido</p>
+                </div>
+              </div> -->
+
+              <!-- <div>
+                <h3>Documentos</h3>
+                <div class="mb-3">
+                  <label for="proofOfAddress" class="form-label">Cetificado de Prevencion</label>
+                  <select
+                  class="form-select"
+                  id="preventionCertificate"
+                  formControlName="preventionCertificate"
+                  >
+                  <option selected disabled value=" "> Tipo de Certificado</option>
+                  <option value="1"> 1</option>
+                  <option value="2"> 2</option>
+                  <option value="3"> 3</option>
+                  <option value="4"> 4</option>
+                  <option value="5"> 5</option>
+                  </select>
+                  <p class="text-danger mt-1" *ngIf="userRegister.controls.preventionCertificate.errors?.required">Campo Requerido</p>
+                  <p class="text-danger mt-1" *ngIf="userRegister.controls.preventionCertificate.errors?.number">texto Requerido</p>
+                </div>
+                <div class="mb-3">
+                  <label for="adjDoc1" class="form-label">Haga click para adjuntar</label>
+                  <input
+                  type="text"
+                  class="form-control"
+                  id="adjDoc1"
+                  autocomplete="Username"
+                  placeholder="Username"
+                  formControlName="names"
+                  >
+                  <p class="text-danger mt-1" *ngIf="userRegister.controls.names.errors?.required">Campo Requerido</p>
+                  <p class="text-danger mt-1" *ngIf="userRegister.controls.names.errors?.number">texto Requerido</p>
+                </div>
+
+                <div class="mb-3">
+                  <label for="proofOfAddress" class="form-label">Comprobande de Domicilio</label>
+                  <select
+                  class="form-select"
+                  id="proofOfAddress"
+                  formControlName="preventionCertificate"
+                  >
+                  <option selected disabled> Tipo de Comprobante</option>
+                  <option value=""> 1</option>
+                  <option value="2"> 2</option>
+                  <option value="3"> 3</option>
+                  <option value="4"> 4</option>
+                  <option value="5"> 5</option>
+                  </select>
+                  <p class="text-danger mt-1" *ngIf="userRegister.controls.proofOfAddress.errors?.required">Campo Requerido</p>
+                  <p class="text-danger mt-1" *ngIf="userRegister.controls.proofOfAddress.errors?.number">texto Requerido</p>
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputUsername1" class="form-label">Haga click para adjuntar</label>
+                  <input
+                  type="text"
+                  class="form-control"
+                  id="exampleInputUsername1"
+                  autocomplete="Username"
+                  placeholder="Username"
+                  formControlName="names"
+                  >
+                  <p class="text-danger mt-1" *ngIf="userRegister.controls.names.errors?.required">Campo Requerido</p>
+                  <p class="text-danger mt-1" *ngIf="userRegister.controls.names.errors?.number">texto Requerido</p>
+                </div>
+              </div> -->
+
               <div class="form-check mb-3">
-                <input type="checkbox" class="form-check-input" id="authCheck">
+                <input type="checkbox" class="form-check-input" id="authCheck" formControlName="authCheck">
                 <label class="form-check-label" for="authCheck">
-                  Remember me
+                  <p>He leido y acepto los <a href="#">Términos y Condiciones</a> y la <a href="#">Politica de Privacidad</a></p>
                 </label>
               </div>
               <div>
-                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="onRegister($event)">Sign up</button>
+                <!-- <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="onRegister($event)">Sign up</button> -->
+                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0">Sign up</button>
                 <button type="button" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
                   <i class="feather icon-twitter btn-icon-prepend"></i>
                   Sign up with twitter
                 </button>
               </div>
               <a routerLink="/auth/login" class="d-block mt-3 text-muted">Already a user? Sign in</a>
+              status = {{userRegister.status}}
             </form>
           </div>
         </div>

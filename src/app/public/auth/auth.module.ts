@@ -4,6 +4,9 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthComponent } from './auth.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CustomFormsModule } from 'ngx-custom-validators';
+import { NgxMaskModule } from 'ngx-mask';
 
 const routes: Routes = [
   {
@@ -31,6 +34,10 @@ const routes: Routes = [
   declarations: [LoginComponent, RegisterComponent, AuthComponent],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CustomFormsModule,
+    NgxMaskModule.forRoot(),
     RouterModule.forChild(routes)
   ]
 })
