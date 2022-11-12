@@ -15,21 +15,39 @@ export class RegisterComponent implements OnInit {
 
   public isFormSubmitted: Boolean;
 
-  public typeOfPrevention: any[];
 
   public typeOfRoad: any[]= [];
 
   public selectedRoadId: any = null;
 
+
   public nameOfstreet: any[]= [];
 
   public selectedStreet: any = null;
+
 
   public typeOfHousing: any[]= [];
 
   public selectedHousing: any = null;
 
 
+  public typeOfPrevention: any[];
+
+  public selectedPrevention: any = null;
+
+
+  public typeOfFonasa: any[];
+
+  public selectedtypeOfFonasa: any = null;
+
+  public typeOfCompany: any[];
+
+  public selectedtypeOfCompany: any = null;
+
+
+  public haveInsurance: any[];
+
+  public selectedhaveInsurance: any = null;
 
 
   constructor(
@@ -80,6 +98,55 @@ export class RegisterComponent implements OnInit {
           'name': 'Isapre'
         }
       ];
+
+      this.typeOfFonasa= [
+        {
+          'id': 0 ,
+          'name': 'fA'
+        },
+        {
+          'id': 1,
+          'name': 'fB'
+        },
+        {
+          'id': 3 ,
+          'name': 'fC'
+        },
+        {
+          'id': 4,
+          'name': 'fD'
+        }
+      ];
+
+      this.typeOfCompany= [
+        {
+          'id': 0 ,
+          'name': 'cA'
+        },
+        {
+          'id': 1,
+          'name': 'cB'
+        },
+        {
+          'id': 3 ,
+          'name': 'cC'
+        },
+        {
+          'id': 4,
+          'name': 'cD'
+        }
+      ];
+
+      this.haveInsurance= [
+        {
+          'id': 0 ,
+          'name': 'Si'
+        },
+        {
+          'id': 1,
+          'name': 'No'
+        }
+      ];
     }
 
   ngOnInit(): void {
@@ -101,6 +168,7 @@ export class RegisterComponent implements OnInit {
       healthInformation: this.fb.group({
         typeOfPrevention: ['', Validators.required],
         typeOfFonasa: ['', Validators.required],
+        typeOfCompany: ['', Validators.required],
         haveInsurance: ['', Validators.required]
       }),
       documents: this.fb.group({

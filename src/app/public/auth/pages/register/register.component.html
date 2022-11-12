@@ -164,57 +164,79 @@
                   <div class="text-danger mt-1" *ngIf="userRegister.controls.address.controls.nameHome.errors?.required"></div>
 
                 </div>
+              </div>
 
+              <div formGroupName="healthInformation">
+                <h3>Info Salud</h3>
 
+                <div class="mb-3">
+                  <label for="typeOfPrevention" class="form-label">Tipo de Prevención</label>
+                  <ng-select [items]="typeOfPrevention"
+                      id="typeOfPrevention"
+                      class="form-control p-0"
+                      bindLabel="name"
+                      bindValue="id"
+                      placeholder=""
+                      [(ngModel)]="selectedPrevention"
+                      formControlName="typeOfPrevention"
+                      [ngClass]="{'is-invalid': ((userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.typeOfPrevention === null) || (isFormSubmitted && userRegister.controls.healthInformation.value.typeOfPrevention === null))}"
+                      >
+                  </ng-select>
+                  <div *ngIf="(userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.typeOfPrevention === null) || (isFormSubmitted && userRegister.controls.healthInformation.value.typeOfPrevention === null)" class="invalid-feedback">Campo Requerido</div>
+                </div>
 
+                <div class="mb-3" *ngIf="userRegister.controls.healthInformation.controls.typeOfPrevention.value === 0">
+                  <label for="typeOfFonasa" class="form-label">Tipo de Fonasa</label>
+                  <ng-select [items]="typeOfFonasa"
+                      id="typeOfFonasa"
+                      class="form-control p-0"
+                      bindLabel="name"
+                      bindValue="id"
+                      placeholder=""
+                      [(ngModel)]="selectedtypeOfFonasa"
+                      formControlName="typeOfFonasa"
+                      [ngClass]="{'is-invalid': ((userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.typeOfFonasa === null) || (isFormSubmitted && userRegister.controls.healthInformation.value.typeOfFonasa === null))}"
+                      >
+                  </ng-select>
+                  <div *ngIf="(userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.typeOfFonasa === null) || (isFormSubmitted && userRegister.controls.healthInformation.value.typeOfFonasa === null)" class="invalid-feedback">Campo Requerido</div>
+                </div>
+
+                <div class="mb-3" *ngIf="userRegister.controls.healthInformation.controls.typeOfPrevention.value === 1">
+                  <label for="typeOfCompany" class="form-label">Tipo de Compañia</label>
+                  <ng-select [items]="typeOfCompany"
+                      id="typeOfCompany"
+                      class="form-control p-0"
+                      bindLabel="name"
+                      bindValue="id"
+                      placeholder=""
+                      [(ngModel)]="selectedtypeOfCompany"
+                      formControlName="typeOfCompany"
+                      [ngClass]="{'is-invalid': ((userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.typeOfcompany === null) || (isFormSubmitted && userRegister.controls.healthInformation.value.typeOfCompany === null))}"
+                      >
+                  </ng-select>
+                  <div *ngIf="(userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.typeOfCompany === null) || (isFormSubmitted && userRegister.controls.healthInformation.value.typeOfCompany === null)" class="invalid-feedback">Campo Requerido</div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="haveInsurance" class="form-label">¿Tiene Seguro Complementario?</label>
+                  <ng-select [items]="haveInsurance"
+                      id="haveInsurance"
+                      class="form-control p-0"
+                      bindLabel="name"
+                      bindValue="id"
+                      placeholder=""
+                      [(ngModel)]="selectedhaveInsurance"
+                      formControlName="haveInsurance"
+                      [ngClass]="{'is-invalid': ((userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.haveInsurance === null) || (isFormSubmitted && userRegister.controls.healthInformation.value.haveInsurance === null))}"
+                      >
+                  </ng-select>
+                  <div *ngIf="(userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.haveInsurance === null) || (isFormSubmitted && userRegister.controls.healthInformation.value.haveInsurance === null)" class="invalid-feedback">Campo Requerido</div>
+                </div>
 
 
 
 
               </div>
-
-              <!-- <div>
-                <h3>Info Salud</h3>
-                <div class="mb-3">
-                  <label for="exampleInputUsername1" class="form-label">Username</label>
-                  <input
-                  type="text"
-                  class="form-control"
-                  id="exampleInputUsername1"
-                  autocomplete="Username"
-                  placeholder="Username"
-                  formControlName="names"
-                  >
-                  <p class="text-danger mt-1" *ngIf="userRegister.controls.names.errors?.required">Campo Requerido</p>
-                  <p class="text-danger mt-1" *ngIf="userRegister.controls.names.errors?.number">texto Requerido</p>
-                </div>
-                <div class="mb-3">
-                  <label for="exampleInputUsername1" class="form-label">Username</label>
-                  <input
-                  type="text"
-                  class="form-control"
-                  id="exampleInputUsername1"
-                  autocomplete="Username"
-                  placeholder="Username"
-                  formControlName="names"
-                  >
-                  <p class="text-danger mt-1" *ngIf="userRegister.controls.names.errors?.required">Campo Requerido</p>
-                  <p class="text-danger mt-1" *ngIf="userRegister.controls.names.errors?.number">texto Requerido</p>
-                </div>
-                <div class="mb-3">
-                  <label for="exampleInputUsername1" class="form-label">Username</label>
-                  <input
-                  type="text"
-                  class="form-control"
-                  id="exampleInputUsername1"
-                  autocomplete="Username"
-                  placeholder="Username"
-                  formControlName="names"
-                  >
-                  <p class="text-danger mt-1" *ngIf="userRegister.controls.names.errors?.required">Campo Requerido</p>
-                  <p class="text-danger mt-1" *ngIf="userRegister.controls.names.errors?.number">texto Requerido</p>
-                </div>
-              </div> -->
 
               <!-- <div>
                 <h3>Documentos</h3>
