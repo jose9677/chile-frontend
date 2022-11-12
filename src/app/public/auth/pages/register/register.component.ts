@@ -38,17 +38,21 @@ export class RegisterComponent implements OnInit {
 
   public typeOfFonasa: any[];
 
-  public selectedtypeOfFonasa: any = null;
+  public selectedtypeOfFonasa: any = "";
 
   public typeOfCompany: any[];
 
-  public selectedtypeOfCompany: any = null;
+  public selectedTypeOfCompany: any = "";
 
 
   public haveInsurance: any[];
 
   public selectedhaveInsurance: any = null;
 
+
+  public proofOfAddress: any[];
+
+  public selectedproofOfAddress: any = null;
 
   constructor(
     private router: Router,
@@ -147,6 +151,17 @@ export class RegisterComponent implements OnInit {
           'name': 'No'
         }
       ];
+
+      this.proofOfAddress= [
+        {
+          'id': 0 ,
+          'name': 'Tipo1'
+        },
+        {
+          'id': 1,
+          'name': 'Tipo2'
+        }
+      ];
     }
 
   ngOnInit(): void {
@@ -173,7 +188,8 @@ export class RegisterComponent implements OnInit {
       }),
       documents: this.fb.group({
         preventionCertificate: ['', Validators.required],
-        proofOfAddress: ['', Validators.required]
+        proofOfAddress: ['', Validators.required],
+        proofOfAddress1: ['', Validators.required],
       }),
       authCheck: ['',[Validators.required]]
     })
@@ -185,9 +201,7 @@ export class RegisterComponent implements OnInit {
 
   }
 
-  proofOfAddress() {
-    console.log('acepto Terminos');
-  }
+
   // onRegister(e: Event) {
   onRegister(e: Event) {
     console.log(this.userRegister)
