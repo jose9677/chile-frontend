@@ -10,16 +10,76 @@ import { CustomValidators } from 'ngx-custom-validators';
 })
 export class RegisterComponent implements OnInit {
 
-  public userRegister: FormGroup;
+  // public userRegister: FormGroup;
+  public userRegister: any;
+
   public isFormSubmitted: Boolean;
-  public typeOfPrevention: string[];
+
+  public typeOfPrevention: any[];
+
+  public typeOfRoad: any[]= [];
+
+  public selectedRoadId: any = null;
+
+  public nameOfstreet: any[]= [];
+
+  public selectedStreet: any = null;
+
+  public typeOfHousing: any[]= [];
+
+  public selectedHousing: any = null;
+
+
 
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     ) {
-      this.typeOfPrevention= ['fonasa', 'Otros']
+
+      this.typeOfRoad = [
+        {
+          'id': 0 ,
+          'name': 'Calle'
+        },
+        {
+          'id': 1,
+          'name': 'Avenida'
+        }
+      ];
+
+      this.nameOfstreet = [
+        {
+          'id': 0 ,
+          'name': 'Calle#1'
+        },
+        {
+          'id': 1,
+          'name': 'Calle#2'
+        }
+      ];
+
+      this.typeOfHousing = [
+        {
+          'id': 0 ,
+          'name': 'Casa'
+        },
+        {
+          'id': 1,
+          'name': 'Departamento'
+        }
+      ]
+
+      this.typeOfPrevention= [
+        {
+          'id': 0 ,
+          'name': 'Fonasa'
+        },
+        {
+          'id': 1,
+          'name': 'Isapre'
+        }
+      ];
     }
 
   ngOnInit(): void {
@@ -34,8 +94,8 @@ export class RegisterComponent implements OnInit {
       address: this.fb.group({
         typeOfRoad: ['', Validators.required],
         nameOfstreet: ['', Validators.required],
-        numberstreet: ['', Validators.required],
-        home: ['', Validators.required],
+        numberStreet: ['', [Validators.required, CustomValidators.number]],
+        typeOfHousing: ['', Validators.required],
         nameHome: ['', Validators.required],
       }),
       healthInformation: this.fb.group({
@@ -49,6 +109,7 @@ export class RegisterComponent implements OnInit {
       }),
       authCheck: ['',[Validators.required]]
     })
+
 
     console.log(this.userRegister)
 

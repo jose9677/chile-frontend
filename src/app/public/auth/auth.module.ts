@@ -7,6 +7,7 @@ import { AuthComponent } from './auth.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ngx-custom-validators';
 import { NgxMaskModule } from 'ngx-mask';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 const routes: Routes = [
   {
@@ -35,6 +36,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    NgSelectModule,
     ReactiveFormsModule,
     CustomFormsModule,
     NgxMaskModule.forRoot(),
