@@ -8,6 +8,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ngx-custom-validators';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ModalComponent } from './shared/modals/modal/modal.component';
+import { EnterRutComponent } from './pages/enter-rut/enter-rut.component';
 
 const routes: Routes = [
   {
@@ -26,13 +28,18 @@ const routes: Routes = [
       {
         path: 'register',
         component: RegisterComponent
-      }
+      },
+      {
+        path: 'modal',
+        component: ModalComponent
+      },
+
     ]
   },
 ]
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, AuthComponent],
+  declarations: [LoginComponent, RegisterComponent, AuthComponent, ModalComponent, EnterRutComponent],
   imports: [
     CommonModule,
     FormsModule,
