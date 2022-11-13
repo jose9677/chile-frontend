@@ -1,47 +1,363 @@
 <div class="row w-100 mx-0 auth-page">
-  <div class="col-md-8 col-xl-6 mx-auto">
+  <div class=" col-md-8 col-xl-6 mx-auto">
     <div class="card">
-      <div class="row">
-        <div class="col-md-4 pe-md-0">
+      <!-- <div class="row"> -->
+        <!-- <div class="col-md-4 pe-md-0">
           <div class="auth-side-wrapper" [ngStyle]="{ 'background-image': 'url(https://via.placeholder.com/219x452)' }">
 
           </div>
-        </div>
-        <div class="col-md-8 ps-md-0">
+        </div> -->
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-11 ps-md-0 justify-content-center">
           <div class="auth-form-wrapper px-4 py-5">
-            <a routerLink="." class="nobleui-logo d-block mb-2">Noble<span>UI</span></a>
-            <h5 class="text-muted fw-normal mb-4">Create a free account.</h5>
-            <form class="forms-sample">
-              <div class="mb-3">
-                <label for="exampleInputUsername1" class="form-label">Username</label>
-                <input type="text" class="form-control" id="exampleInputUsername1" autocomplete="Username" placeholder="Username">
+            <img class="card-img-top px-7" src="../assets/images/login/LogoLaReinaCorporacion-FondoBlanco1.png" alt=""><br><br>
+            <h2 class="text-muted fw-normal text-center titles "><strong>Registro</strong></h2><br>
+            <form class="forms-sample" [formGroup]="userRegister" (ngSubmit)="onRegister($event)">
+
+              <div>
+                <h3 class="colorTextPrimari pb-3">Datos Personales</h3>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="exampleInputUsername1" class="form-label">Nombres</label>
+                    <input
+                    type="text"
+                    class="form-control"
+                    id="exampleInputUsername1"
+                    formControlName="names"
+                    [ngClass]="{'is-invalid': (userRegister.controls.names.touched && userRegister.controls.names.errors?.required) || (isFormSubmitted && userRegister.controls.names.errors)}" placeholder="Introduzca sus nombres"
+                    >
+                    <div *ngIf="(userRegister.controls.names.touched && userRegister.controls.names.errors?.required) || (isFormSubmitted && userRegister.controls.names.errors)" class="invalid-feedback">Campo Requerido</div>
+                    <div class="text-danger mt-1" *ngIf="userRegister.controls.names.errors?.pattern">Este campo solo admite letas</div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="lastNames" class="form-label ">Apellidos</label>
+                    <input
+                    type="text"
+                    class="form-control"
+                    id="lastNames"
+                    formControlName="lastNames"
+                    [ngClass]="{'is-invalid': (userRegister.controls.lastNames.touched && userRegister.controls.lastNames.errors?.required) || (isFormSubmitted && userRegister.controls.lastNames.errors)}" placeholder="Introduzca sus apellidos"
+                    >
+                    <div *ngIf="(userRegister.controls.lastNames.touched && userRegister.controls.lastNames.errors?.required) || (isFormSubmitted && userRegister.controls.lastNames.errors)" class="invalid-feedback">Campo Requerido</div>
+                    <div class="text-danger mt-1" *ngIf="userRegister.controls.lastNames.errors?.pattern">Este campo solo admite letas</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="datesBirth" class="form-label">Fecha de Nacimiento</label>
+                    <input
+                    type="date"
+                    class="form-control"
+                    id="datesBirth"
+                    formControlName="datesBirth"
+                    [ngClass]="{'is-invalid': (userRegister.controls.datesBirth.touched && userRegister.controls.datesBirth.errors?.required) || (isFormSubmitted && userRegister.controls.datesBirth.errors)}"
+                    >
+                    <div *ngIf="(userRegister.controls.datesBirth.touched && userRegister.controls.datesBirth.errors?.required) || (isFormSubmitted && userRegister.controls.datesBirth.errors)" class="invalid-feedback">Campo Requerido</div>
+                    <div class="text-danger mt-1" *ngIf="userRegister.controls.datesBirth.errors?.date">Error al ingresar la frecha de nacimiento</div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    formControlName="email"
+                    [ngClass]="{'is-invalid': (userRegister.controls.email.touched && userRegister.controls.email.errors?.required) || (isFormSubmitted && userRegister.controls.email.errors)}" placeholder="Introduzca su email"
+                    >
+                    <div *ngIf="(userRegister.controls.email.touched && userRegister.controls.email.errors?.required) || (isFormSubmitted && userRegister.controls.email.errors)" class="invalid-feedback">Campo Requerido</div>
+                    <div class="text-danger mt-1" *ngIf="userRegister.controls.email.errors?.email">Verifique el formato de email</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="landLine" class="form-label">Teléfono Fijo</label>
+                    <input
+                    type="tel"
+                    class="form-control"
+                    id="landLine"
+                    formControlName="landLine"
+                    prefix="+56" mask="  0  0000 - 0000" [showMaskTyped] = "true"
+                    [ngClass]="{'is-invalid': (userRegister.controls.landLine.touched && userRegister.controls.landLine.errors?.required) || (isFormSubmitted && userRegister.controls.landLine.errors)}"
+                    >
+                    <div *ngIf="(userRegister.controls.landLine.touched && userRegister.controls.landLine.errors?.required) || (isFormSubmitted && userRegister.controls.email.errors)" class="invalid-feedback">Campo Requerido</div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="mobilePhone" class="form-label">Teléfono Movil</label>
+                    <input
+                    type="text"
+                    class="form-control"
+                    id="mobilePhone"
+                    formControlName="mobilePhone"
+                    prefix="+56" mask="  0  0000 - 0000" [showMaskTyped] = "true"
+                    [ngClass]="{'is-invalid': (userRegister.controls.mobilePhone.touched && userRegister.controls.mobilePhone.errors?.required) || (isFormSubmitted && userRegister.controls.mobilePhone.errors)}" placeholder="Introduce tu nombre"
+                    >
+                    <div *ngIf="(userRegister.controls.mobilePhone.touched && userRegister.controls.mobilePhone.errors?.required) || (isFormSubmitted && userRegister.controls.mobilePhone.errors)" class="invalid-feedback">Campo Requerido</div>
+                  </div>
+                </div>
               </div>
-              <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+
+              <div formGroupName="address">
+                <h3 class="colorTextPrimari pb-3">Dirección</h3>
+                
+                <div class="row">
+                  <div class="col-md-3 mb-3 ">
+                    <label for="typeOfRoad" class="form-label">Calle/Avenida</label>
+                    <ng-select [items]="typeOfRoad"
+                        class="form-control p-0"
+                        bindLabel="name"
+                        bindValue="id"
+                        placeholder="Seleccione"
+                        [(ngModel)]="selectedRoadId"
+                        formControlName="typeOfRoad"
+                        [ngClass]="{'is-invalid': ((userRegister.controls.address.touched && userRegister.controls.address.value.typeOfRoad === null) || (isFormSubmitted && userRegister.controls.address.value.typeOfRoad === null))}"
+                        >
+                    </ng-select>
+                    <div *ngIf="(userRegister.controls.address.touched && userRegister.controls.address.value.typeOfRoad === null) || (isFormSubmitted && userRegister.controls.address.value.typeOfRoad === null)" class="invalid-feedback">Campo Requerido</div>
+                  </div>
+
+                  <div class="col-md-6 mb-3 ">
+                    <label for="nameOfstreet" class="form-label">Nombre de la Vía</label>
+                    <ng-select [items]="nameOfstreet"
+                        class="form-control p-0"
+                        bindLabel="name"
+                        bindValue="id"
+                        placeholder="Seleccione"
+                        [(ngModel)]="selectedStreet"
+                        formControlName="nameOfstreet"
+                        [ngClass]="{'is-invalid': ((userRegister.controls.address.touched && userRegister.controls.address.value.nameOfstreet === null) || (isFormSubmitted && userRegister.controls.address.value.nameOfstreet === null))}"
+                        >
+                    </ng-select>
+                    <div *ngIf="(userRegister.controls.address.touched && userRegister.controls.address.value.nameOfstreet === null) || (isFormSubmitted && userRegister.controls.address.value.nameOfstreet === null)" class="invalid-feedback">Campo Requerido</div>
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label for="numberStreet" class="form-label">Número</label>
+                    <input
+                    type="text"
+                    class="form-control"
+                    id="numberStreet"
+                    formControlName="numberStreet"
+                    placeholder="Número"
+                    [ngClass]="{'is-invalid': ((userRegister.controls.address.touched && userRegister.controls.address.value.numberStreet === '') || (isFormSubmitted && userRegister.controls.address.value.numberStreet === ''))}"
+                    >
+                    <div *ngIf="(userRegister.controls.address.touched && userRegister.controls.address.value.numberStreet === '') || (isFormSubmitted && userRegister.controls.address.value.numberStreet === '')" class="invalid-feedback">Campo Requerido</div>
+
+                    <div class="text-danger mt-1" *ngIf="userRegister.controls.address.controls.numberStreet.errors?.number">Este campo solo admite Números</div>
+
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-3 mb-3 ">
+                    <label for="typeOfHousing" class="form-label">Casa/Dpto</label>
+                    <ng-select [items]="typeOfHousing"
+                        class="form-control p-0"
+                        bindLabel="name"
+                        bindValue="id"
+                        placeholder="Seleccione"
+                        [(ngModel)]="selectedHousing"
+                        formControlName="typeOfHousing"
+                        [ngClass]="{'is-invalid': ((userRegister.controls.address.touched && userRegister.controls.address.value.typeOfHousing === null) || (isFormSubmitted && userRegister.controls.address.value.typeOfHousing === null))}"
+                        >
+                    </ng-select>
+                    <div *ngIf="(userRegister.controls.address.touched && userRegister.controls.address.value.typeOfHousing === null) || (isFormSubmitted && userRegister.controls.address.value.typeOfHousing === null)" class="invalid-feedback">Campo Requerido</div>
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                    <label for="nameHome" class="form-label">Nombre o Número</label>
+                    <input
+                    type="text"
+                    class="form-control"
+                    id="nameHome"
+                    formControlName="nameHome"
+                    placeholder="Nombre o Número de Casa"
+                    [ngClass]="{'is-invalid': ((userRegister.controls.address.touched && userRegister.controls.address.value.nameHome === '') || (isFormSubmitted && userRegister.controls.address.value.nameHome === ''))}"
+                    >
+                    <div *ngIf="(userRegister.controls.address.touched && userRegister.controls.address.value.nameHome === '') || (isFormSubmitted && userRegister.controls.address.value.nameHome === '')" class="invalid-feedback">Campo Requerido</div>
+
+                    <div class="text-danger mt-1" *ngIf="userRegister.controls.address.controls.nameHome.errors?.required"></div>
+
+                  </div>
+                </div>
               </div>
-              <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" autocomplete="current-password" placeholder="Password">
+
+              <div formGroupName="healthInformation">
+                <h3 class="colorTextPrimari pb-3">Información de Salud</h3>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="typeOfPrevention" class="form-label">Tipo de Prevención</label>
+                    <ng-select [items]="typeOfPrevention"
+                        id="typeOfPrevention"
+                        class="form-control p-0"
+                        bindLabel="name"
+                        bindValue="id"
+                        [(ngModel)]="selectedPrevention"
+                        formControlName="typeOfPrevention"
+                        placeholder="Seleccione"
+                        [ngClass]="{'is-invalid': ((userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.typeOfPrevention === null) || (isFormSubmitted && userRegister.controls.healthInformation.value.typeOfPrevention === null))}"
+                        >
+                    </ng-select>
+                    <div *ngIf="(userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.typeOfPrevention === null) || (isFormSubmitted && userRegister.controls.healthInformation.value.typeOfPrevention === null)" class="invalid-feedback">Campo Requerido</div>
+                  </div>
+
+                  <div class="col-md-6 mb-3" *ngIf="userRegister.controls.healthInformation.controls.typeOfPrevention.value === 0">
+                    <label for="typeOfFonasa" class="form-label">Tipo de Fonasa</label>
+                    <ng-select [items]="typeOfFonasa"
+                        id="typeOfFonasa"
+                        class="form-control p-0"
+                        bindLabel="name"
+                        bindValue="id"
+                        [(ngModel)]="selectedtypeOfFonasa"
+                        formControlName="typeOfFonasa"
+                        placeholder="Seleccione"
+                        [ngClass]="{'is-invalid': ((userRegister.controls.healthInformation.controls.touched && userRegister.controls.healthInformation.controls.typeOfFonasa.value === '') || (isFormSubmitted && userRegister.controls.healthInformation.controls.typeOfFonasa.value === ''))}"
+                        >
+                    </ng-select>
+                    <div *ngIf="(userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.controls.typeOfFonasa.value === '') || (isFormSubmitted && userRegister.controls.healthInformation.controls.typeOfFonasa.value === '')" class="invalid-feedback">Campo Requerido</div>
+                  </div>
+
+                  <div class="col-md-6 mb-3" *ngIf="userRegister.controls.healthInformation.controls.typeOfPrevention.value === 1">
+                    <label for="typeOfCompany" class="form-label">Empresa</label>
+                    <ng-select [items]="typeOfCompany"
+                        id="typeOfCompany"
+                        class="form-control p-0"
+                        bindLabel="name"
+                        bindValue="id"
+                        [(ngModel)]="selectedTypeOfCompany"
+                        formControlName="typeOfCompany"
+                        placeholder="Seleccione"
+                        [ngClass]="{'is-invalid': ((userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.typeOfcompany === '') || (isFormSubmitted && userRegister.controls.healthInformation.value.typeOfCompany === ''))}"
+                        >
+                    </ng-select>
+                    <div *ngIf="(userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.typeOfCompany === '') || (isFormSubmitted && userRegister.controls.healthInformation.value.typeOfCompany === '')" class="invalid-feedback">Campo Requerido</div>
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="haveInsurance" class="form-label">¿Tiene Seguro Complementario?</label>
+                  <ng-select [items]="haveInsurance"
+                      id="haveInsurance"
+                      class="form-control p-0"
+                      bindLabel="name"
+                      bindValue="id"
+                      placeholder="Seleccione"
+                      [(ngModel)]="selectedhaveInsurance"
+                      formControlName="haveInsurance"
+                      [ngClass]="{'is-invalid': ((userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.haveInsurance === null) || (isFormSubmitted && userRegister.controls.healthInformation.value.haveInsurance === null))}"
+                      >
+                  </ng-select>
+                  <div *ngIf="(userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.haveInsurance === null) || (isFormSubmitted && userRegister.controls.healthInformation.value.haveInsurance === null)" class="invalid-feedback">Campo Requerido</div>
+                </div>
               </div>
-              <div class="form-check mb-3">
-                <input type="checkbox" class="form-check-input" id="authCheck">
-                <label class="form-check-label" for="authCheck">
-                  Remember me
-                </label>
+
+              <div formGroupName="documents">
+                <h3 class="colorTextPrimari pb-3">Documentos</h3>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="form-label" for="">Tipo de Prevención</label>
+                  </div>
+                  <div class="col-md-6">
+                    <input
+                  class="form-control"
+                  type="file"
+                  id="preventionCertificate"
+                  formControlName="preventionCertificate"
+                  [ngClass]="{'is-invalid': ((userRegister.controls.documents.touched && userRegister.controls.documents.value.preventionCertificate == '') || (isFormSubmitted && userRegister.controls.documents.value.preventionCertificate === ''))}"
+                  >
+                  <div *ngIf="(userRegister.controls.documents.touched && userRegister.controls.documents.value.preventionCertificate === '') || (isFormSubmitted && userRegister.controls.documents.value.preventionCertificate === '')" class="invalid-feedback">Campo Requerido</div>
+                  </div>
+
+                </div>
+                <!-- <div class="col-md-6 mb-3" *ngIf="userRegister.controls.healthInformation.controls.typeOfPrevention.value === 0"> -->
+                  <!-- <div class="col-md-6 mb-3">
+                  <label class="form-label" for="preventionCertificate">+ Haga click aqui para Adjuntar del Fonasa</label>
+                  <input
+                  class="form-control"
+                  type="file"
+                  id="preventionCertificate"
+                  formControlName="preventionCertificate"
+                  [ngClass]="{'is-invalid': ((userRegister.controls.documents.touched && userRegister.controls.documents.value.preventionCertificate == '') || (isFormSubmitted && userRegister.controls.documents.value.preventionCertificate === ''))}"
+                  >
+                  <div *ngIf="(userRegister.controls.documents.touched && userRegister.controls.documents.value.preventionCertificate === '') || (isFormSubmitted && userRegister.controls.documents.value.preventionCertificate === '')" class="invalid-feedback">Campo Requerido</div>
+                </div> -->
+
+                <br><br>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="form-label" for="">Comprobante de Domicilio</label>
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <input
+                    class="form-control"
+                    type="file"
+                    id="preventionCertificate"
+                    formControlName="preventionCertificate"
+                    [ngClass]="{'is-invalid': ((userRegister.controls.documents.touched && userRegister.controls.documents.value.preventionCertificate == '') || (isFormSubmitted && userRegister.controls.documents.value.preventionCertificate === ''))}"
+                    >
+                    <div *ngIf="(userRegister.controls.documents.touched && userRegister.controls.documents.value.preventionCertificate === '') || (isFormSubmitted && userRegister.controls.documents.value.preventionCertificate === '')" class="invalid-feedback">Campo Requerido</div>
+                    <br>
+                    <input
+                      class="form-control"
+                      type="file"
+                      id="proofOfAddress1"
+                      formControlName="proofOfAddress1"
+                      [ngClass]="{'is-invalid': ((userRegister.controls.documents.touched && userRegister.controls.documents.value.proofOfAddress1 == '') || (isFormSubmitted && userRegister.controls.documents.value.proofOfAddress1 === ''))}">
+                      <div *ngIf="(userRegister.controls.documents.touched && userRegister.controls.documents.value.proofOfAddress1 === '') || (isFormSubmitted && userRegister.controls.documents.value.proofOfAddress1 === '')" class="invalid-feedback">Campo Requerido</div>
+                  </div>
+                    
+
+                </div>
               </div>
               <div>
-                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="onRegister($event)">Sign up</button>
-                <button type="button" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
-                  <i class="feather icon-twitter btn-icon-prepend"></i>
-                  Sign up with twitter
+                <br>
+                <h3 class="colorTextPrimari pb-3">Datos de Acceso</h3>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" autocomplete="current-password"  placeholder="Ingrese una contraseña">
+                  </div>
+                  <div class="col-md-6 mb-3 info colorTextPrimari">
+                    La contraseña de contener:
+                    <ul>
+                     <li>Al menos una letra Mayúscula</li>
+                     <li>Al menos una letra minúscula</li>
+                     <li>Al menos un número</li>
+                     <li>Al menos 8 digitos de longitud</li>
+                    </ul>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Confirmar Contraseña</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" autocomplete="current-password"  placeholder="Repita la contraseña">
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="mb-3 d-flex flex-row justify-content-center">
+
+                <div class="form-check form-switch mb-2 colorTextPrimari">
+                  <input type="checkbox" class="form-check-input" id="formSwitch1" formControlName="authCheck">
+                  <label class="form-check-label" for="formSwitch1">He leido y acepto los <a href="#">Términos y Condiciones</a> y la <a href="#">Politica de Privacidad</a></label>
+                </div>
+
+              </div>
+              <div class="d-flex flex-row  justify-content-evenly">
+                <!-- <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="onRegister($event)">Sign up</button> -->
+                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 style">Registrarme</button>
+                <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 style-outline">
+                  Cancelar
                 </button>
               </div>
-              <a routerLink="/auth/login" class="d-block mt-3 text-muted">Already a user? Sign in</a>
+
+              <!-- status = {{userRegister.status}}
+              status = {{userRegister.value | json}} -->
             </form>
           </div>
         </div>
+      <!-- </div> -->
       </div>
-    </div>
+    </div> 
   </div>
 </div>

@@ -5,6 +5,10 @@ import { RegisterComponent } from './pages/register/register.component';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthComponent } from './auth.component';
 import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CustomFormsModule } from 'ngx-custom-validators';
+import { NgxMaskModule } from 'ngx-mask';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 const routes: Routes = [
   {
@@ -36,6 +40,11 @@ const routes: Routes = [
   declarations: [LoginComponent, RegisterComponent, AuthComponent, ForgetPasswordComponent],
   imports: [
     CommonModule,
+    FormsModule,
+    NgSelectModule,
+    ReactiveFormsModule,
+    CustomFormsModule,
+    NgxMaskModule.forRoot(),
     RouterModule.forChild(routes)
   ]
 })
