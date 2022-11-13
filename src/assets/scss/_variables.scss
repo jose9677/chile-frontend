@@ -33,7 +33,7 @@ $cyan:    #0dcaf0 !default;
 
 // --- Bootstrap Theme Colors --- //
 //
-$primary:         #6571ff !default;
+$primary:         #00acb0 !default;
 $secondary:       $gray-600 !default;
 $success:         #05a34a !default;
 $info:            #66d1d1 !default;
@@ -157,7 +157,7 @@ $action-transition-timing-function: ease;
 // Font, line-height, and color for body text, headings, and more.
 
 // Font family
-$font-family-sans-serif:           "Roboto", Helvetica, sans-serif !default;
+$font-family-sans-serif:           "Century Gothic" !default;
 
 $font-size-base:              		 0.875rem !default;   // 14px
 $font-size-lg:               	 		 1rem !default;       // 16px
@@ -262,6 +262,9 @@ $input-border-radius-lg:                $btn-border-radius-lg !default;
 // form-check
 $form-check-input-width:                  1.3em !default;
 $form-check-input-border-radius:          .15em !default;
+
+// form-label
+$form-label-color:                  #376B83 !default;
 
 // Form select
 $form-select-indicator-color:           $gray-600 !default;
