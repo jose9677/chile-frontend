@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalsService } from '../../../services/modals.service';
 
 @Component({
@@ -8,18 +9,21 @@ import { ModalsService } from '../../../services/modals.service';
 })
 export class ModalComponent implements OnInit {
 
-contenido = 'Eduy';
+
+
+  @Input() error:any; title: any; message: any;
 
   constructor(
-    private modal: ModalsService
+    public modal: NgbActiveModal
   ) { }
 
   ngOnInit(): void {
-    this.openModal(this.contenido);
+
+
   }
 
-  openModal(contenido:any) {
-    this.modal.openModal(contenido);
-  }
+  // openModal(contenido:any) {
+  //   this.modal.openModal(contenido);
+  // }
 
 }

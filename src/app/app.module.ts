@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { ErrorPageComponent } from './views/pages/error-page/error-page.component';
 
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import { FormBuilder } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
     LayoutModule,
   ],
   providers: [
+    FormBuilder,
     AuthGuard,
     {
       provide: HIGHLIGHT_OPTIONS, // https://www.npmjs.com/package/ngx-highlightjs

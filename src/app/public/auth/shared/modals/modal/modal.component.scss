@@ -1,0 +1,19 @@
+.content-img{
+  & img{
+    width: 100%;
+  }
+
+}
+.content-img2{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-body{
+  font-family: 'Century Gothic' !important;
+  & p{
+    padding: 5% 10%;
+    text-align: justify;
+  }
+}

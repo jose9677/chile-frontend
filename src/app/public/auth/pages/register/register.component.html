@@ -98,7 +98,7 @@
 
               <div formGroupName="address">
                 <h3 class="colorTextPrimari pb-3">Dirección</h3>
-                
+
                 <div class="row">
                   <div class="col-md-3 mb-3 ">
                     <label for="typeOfRoad" class="form-label">Calle/Avenida</label>
@@ -208,6 +208,7 @@
                         class="form-control p-0"
                         bindLabel="name"
                         bindValue="id"
+                        value="0"
                         [(ngModel)]="selectedtypeOfFonasa"
                         formControlName="typeOfFonasa"
                         placeholder="Seleccione"
@@ -224,6 +225,7 @@
                         class="form-control p-0"
                         bindLabel="name"
                         bindValue="id"
+                        value = 0
                         [(ngModel)]="selectedTypeOfCompany"
                         formControlName="typeOfCompany"
                         placeholder="Seleccione"
@@ -254,7 +256,7 @@
               <div formGroupName="documents">
                 <h3 class="colorTextPrimari pb-3">Documentos</h3>
 
-                <div class="row">
+                <!-- <div class="row">
                   <div class="col-md-6">
                     <label class="form-label" for="">Tipo de Prevención</label>
                   </div>
@@ -269,7 +271,7 @@
                   <div *ngIf="(userRegister.controls.documents.touched && userRegister.controls.documents.value.preventionCertificate === '') || (isFormSubmitted && userRegister.controls.documents.value.preventionCertificate === '')" class="invalid-feedback">Campo Requerido</div>
                   </div>
 
-                </div>
+                </div> -->
                 <!-- <div class="col-md-6 mb-3" *ngIf="userRegister.controls.healthInformation.controls.typeOfPrevention.value === 0"> -->
                   <!-- <div class="col-md-6 mb-3">
                   <label class="form-label" for="preventionCertificate">+ Haga click aqui para Adjuntar del Fonasa</label>
@@ -286,18 +288,18 @@
                 <br><br>
                 <div class="row">
                   <div class="col-md-6">
-                    <label class="form-label" for="">Comprobante de Domicilio</label>
+                    <label class="form-label" for="proofOfAddress">Comprobante de Domicilio</label>
                   </div>
-                  
+
                   <div class="col-md-6">
                     <input
                     class="form-control"
                     type="file"
-                    id="preventionCertificate"
-                    formControlName="preventionCertificate"
-                    [ngClass]="{'is-invalid': ((userRegister.controls.documents.touched && userRegister.controls.documents.value.preventionCertificate == '') || (isFormSubmitted && userRegister.controls.documents.value.preventionCertificate === ''))}"
+                    id="proofOfAddress"
+                    formControlName="proofOfAddress"
+                    [ngClass]="{'is-invalid': ((userRegister.controls.documents.touched && userRegister.controls.documents.value.proofOfAddress == '') || (isFormSubmitted && userRegister.controls.documents.value.proofOfAddress === ''))}"
                     >
-                    <div *ngIf="(userRegister.controls.documents.touched && userRegister.controls.documents.value.preventionCertificate === '') || (isFormSubmitted && userRegister.controls.documents.value.preventionCertificate === '')" class="invalid-feedback">Campo Requerido</div>
+                    <div *ngIf="(userRegister.controls.documents.touched && userRegister.controls.documents.value.proofOfAddress === '') || (isFormSubmitted && userRegister.controls.documents.value.proofOfAddress === '')" class="invalid-feedback">Campo Requerido</div>
                     <br>
                     <input
                       class="form-control"
@@ -307,8 +309,6 @@
                       [ngClass]="{'is-invalid': ((userRegister.controls.documents.touched && userRegister.controls.documents.value.proofOfAddress1 == '') || (isFormSubmitted && userRegister.controls.documents.value.proofOfAddress1 === ''))}">
                       <div *ngIf="(userRegister.controls.documents.touched && userRegister.controls.documents.value.proofOfAddress1 === '') || (isFormSubmitted && userRegister.controls.documents.value.proofOfAddress1 === '')" class="invalid-feedback">Campo Requerido</div>
                   </div>
-                    
-
                 </div>
               </div>
               <div>
@@ -317,7 +317,12 @@
                 <div class="row">
                   <div class="col-md-6 mb-3">
                     <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" autocomplete="current-password"  placeholder="Ingrese una contraseña">
+                    <input
+                    type="password"
+                    class="form-control"
+                    id="exampleInputPassword1"
+                    autocomplete="current-password"
+                    placeholder="Ingrese una contraseña">
                   </div>
                   <div class="col-md-6 mb-3 info colorTextPrimari">
                     La contraseña de contener:
@@ -330,7 +335,12 @@
                   </div>
                   <div class="col-md-6 mb-3">
                     <label for="exampleInputPassword1" class="form-label">Confirmar Contraseña</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" autocomplete="current-password"  placeholder="Repita la contraseña">
+                    <input
+                    type="password"
+                    class="form-control"
+                    id="exampleInputPassword1"
+                    autocomplete="current-password"
+                    placeholder="Repita la contraseña">
                   </div>
                 </div>
               </div>
@@ -338,7 +348,11 @@
               <div class="mb-3 d-flex flex-row justify-content-center">
 
                 <div class="form-check form-switch mb-2 colorTextPrimari">
-                  <input type="checkbox" class="form-check-input" id="formSwitch1" formControlName="authCheck">
+                  <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="formSwitch1"
+                  formControlName="authCheck">
                   <label class="form-check-label" for="formSwitch1">He leido y acepto los <a href="#">Términos y Condiciones</a> y la <a href="#">Politica de Privacidad</a></label>
                 </div>
 
@@ -346,7 +360,7 @@
               <div class="d-flex flex-row  justify-content-evenly">
                 <!-- <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="onRegister($event)">Sign up</button> -->
                 <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 style">Registrarme</button>
-                <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 style-outline">
+                <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 style-outline" routerLink="/auth/login">
                   Cancelar
                 </button>
               </div>
@@ -358,6 +372,6 @@
         </div>
       <!-- </div> -->
       </div>
-    </div> 
+    </div>
   </div>
 </div>

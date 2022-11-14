@@ -1,19 +1,32 @@
-<p>modal works!</p>
 
-<ng-template #contenido let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title">Titulo Modal</h4>
-    <button class="close" aria-label="close" (click)="modal.dismiss()">
-      <span aria-hidden="true">&times;</span>
-    </button>
+  <div class="modal-header container">
+    <div class="row">
+      <div class="col-12 content-img">
+        <img class=" px-4 " src="../assets/images/login/LogoLaReinaCorporacion-FondoBlanco1.png" alt="">
+      </div>
+
+      <div class="col-12 content-img2" *ngIf="error == true; else none">
+        <img class=" px-4" src="../assets/images/none.svg" alt="">
+      </div>
+      <ng-template #none>
+        <div class="col-12 content-img2"><img class=" px-4" src="../assets/images/check.svg" alt=""></div>
+      </ng-template>
+
+
+    </div>
+
   </div>
   <div class="modal-body">
-    <app-login></app-login>
+    <div class="col-12">
+      <h2 class="text-muted fw-normal text-center titles "><strong> {{title}}</strong></h2>
+    </div>
+
+    <p>{{message}}</p>
   </div>
 
   <div class="modal-footer">
     <button class="btn btn-success" type="button" (click)="modal.close()">ok</button>
   </div>
-</ng-template>
 
-<button class="btn btn-outline-primary" type="button" (click)="openModal(contenido)">lanzar</button>
+
+

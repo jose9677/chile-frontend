@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomValidators } from 'ngx-custom-validators';
+import { ModalsService } from '../../services/modals.service';
+import { ModalComponent } from '../../shared/modals/modal/modal.component';
+import { ValidateEmailComponent } from '../validate-email/validate-email.component';
 
 @Component({
   selector: 'app-register',
@@ -9,6 +12,8 @@ import { CustomValidators } from 'ngx-custom-validators';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+
+  public errors: any = null;
 
   // public userRegister: FormGroup;
   public userRegister: any;
@@ -54,9 +59,12 @@ export class RegisterComponent implements OnInit {
 
   public selectedproofOfAddress: any = null;
 
+  public emailUser: any = '';
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
+    private modalService: ModalsService
     ) {
 
       this.typeOfRoad = [
@@ -106,7 +114,7 @@ export class RegisterComponent implements OnInit {
       this.typeOfFonasa= [
         {
           'id': 0 ,
-          'name': 'fA'
+          'name': 'Na'
         },
         {
           'id': 1,
@@ -125,7 +133,7 @@ export class RegisterComponent implements OnInit {
       this.typeOfCompany= [
         {
           'id': 0 ,
-          'name': 'cA'
+          'name': 'Na'
         },
         {
           'id': 1,
@@ -167,8 +175,10 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
 
     this.userRegister= this.fb.group({
-      names: ['',[Validators.required, Validators.pattern("^(?=.{3,15}$)[A-ZÁÉÍÓÚ][a-zñáéíóú]+(?: [A-ZÁÉÍÓÚ][a-zñáéíóú]+)?$")]],
-      lastNames: ['', [Validators.required, Validators.pattern("^(?=.{3,15}$)[A-ZÁÉÍÓÚ][a-zñáéíóú]+(?: [A-ZÁÉÍÓÚ][a-zñáéíóú]+)?$")]],
+      names: ['',[Validators.required, ]],
+      // names: ['',[Validators.required, Validators.pattern("^(?=.{3,15}$)[A-ZÁÉÍÓÚ][a-zñáéíóú]+(?: [A-ZÁÉÍÓÚ][a-zñáéíóú]+)?$")]],
+      lastNames: ['', [Validators.required, ]],
+      // lastNames: ['', [Validators.required, Validators.pattern("^(?=.{3,15}$)[A-ZÁÉÍÓÚ][a-zñáéíóú]+(?: [A-ZÁÉÍÓÚ][a-zñáéíóú]+)?$")]],
       datesBirth: ['', [Validators.required, CustomValidators.date]],
       email: ['', [Validators.required, CustomValidators.email]],
       landLine: ['', [Validators.required, Validators.minLength(9), CustomValidators.number]],
@@ -182,12 +192,12 @@ export class RegisterComponent implements OnInit {
       }),
       healthInformation: this.fb.group({
         typeOfPrevention: ['', Validators.required],
-        typeOfFonasa: ['', Validators.required],
-        typeOfCompany: ['', Validators.required],
+        typeOfFonasa: ['', ],
+        typeOfCompany: ['', ],
         haveInsurance: ['', Validators.required]
       }),
       documents: this.fb.group({
-        preventionCertificate: ['', Validators.required],
+        // preventionCertificate: ['', Validators.required],
         proofOfAddress: ['', Validators.required],
         proofOfAddress1: ['', Validators.required],
       }),
@@ -201,15 +211,29 @@ export class RegisterComponent implements OnInit {
 
   }
 
+  modalValidateEmail(email: any) {
+    this.modalService.openModalData(ValidateEmailComponent, email);
+  }
+
 
   // onRegister(e: Event) {
   onRegister(e: Event) {
     console.log(this.userRegister)
-    this.isFormSubmitted = true;
-    e.preventDefault();
-    localStorage.setItem('isLoggedin', 'true');
-    if (localStorage.getItem('isLoggedin')) {
-      // this.router.navigate(['/']);
+    if(!this.userRegister.invalid) {
+      this.isFormSubmitted = true;
+      e.preventDefault();
+      localStorage.setItem('isLoggedin', 'true');
+      if ((localStorage.getItem('isLoggedin'))) {
+        this.emailUser = this.userRegister.controls.email.value
+        console.log(this.emailUser)
+        this.modalValidateEmail(this.emailUser);
+        // this.router.navigate(['/']);
+      }
+    }else {
+      this.errors = true
+      let title= "Registro Invalido";
+      let message = "No se pudo realizar el registro del Usuario";
+      this.modalService.OpenModalError2(ModalComponent, this.errors, title, message);
     }
   }
 

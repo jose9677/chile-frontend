@@ -1,0 +1,33 @@
+<!-- <div class="row col-md-12 col-xl-8 mx-0 auth-page">
+  <div class="col-md-5 col-xl-6 mx-auto ">
+    <div class="card" style="border-radius: .9rem;">
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-11 ps-md-0 "> -->
+          <div class="auth-form-wrapper px-4 py-5 ">
+            <img class="card-img-top px-4" src="../assets/images/login/LogoLaReinaCorporacion-FondoBlanco1.png" alt=""><br><br>
+            <h2 class="text-muted fw-normal text-center titles "><strong> Recuperar Contraseña</strong></h2><br>
+            <form class="forms-sample" [formGroup]="formRecoveryPassword" (ngSubmit)="recoveryPassword($event)">
+              <div class="mb-3 mt-3">
+                <label for="exampleInputEmail1" class="form-label colorTextPrimari size">Por Favor Ingrese su RUT</label>
+                <input
+                type="text"
+                class="form-control" id="Rud"
+                placeholder="RUT"
+                formControlName="rutUser"
+                [ngClass]="{'is-invalid': (formRecoveryPassword.controls.rutUser.touched && formRecoveryPassword.controls.rutUser.errors?.required) || (isFormSubmitted && formRecoveryPassword.controls.rutUser.errors)}"
+                    >
+                    <div *ngIf="(formRecoveryPassword.controls.rutUser.touched && formRecoveryPassword.controls.rutUser.errors?.required) || (isFormSubmitted && formRecoveryPassword.controls.rutUser.errors)" class="invalid-feedback">Campo Requerido</div>
+
+              </div>
+
+              <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 style">Continuar</button>
+              </div>
+              <a routerLink="/auth/login" (click)="modalService.dismiss()" class="d-block mt-3 text-muted text-center"><span class="link" >Volver a Inicia Sesión</span></a>
+            </form>
+          </div>
+        <!-- </div>
+      </div>
+    </div>
+  </div>
+</div> -->
