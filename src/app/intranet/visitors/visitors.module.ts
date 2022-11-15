@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { VisitorsRoutingModule } from './visitors-routing.module';
 import { VisitorsComponent } from './visitors.component';
+import { RequestManagementComponent } from './pages/request-management/request-management.component';
 
 
 @NgModule({
   declarations: [
-    VisitorsComponent
+    VisitorsComponent,
+    RequestManagementComponent
   ],
   imports: [
     CommonModule,

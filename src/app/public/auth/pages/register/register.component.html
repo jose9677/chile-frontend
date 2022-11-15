@@ -108,6 +108,7 @@
                         bindValue="id"
                         placeholder="Seleccione"
                         [(ngModel)]="selectedRoadId"
+                        
                         formControlName="typeOfRoad"
                         [ngClass]="{'is-invalid': ((userRegister.controls.address.touched && userRegister.controls.address.value.typeOfRoad === null) || (isFormSubmitted && userRegister.controls.address.value.typeOfRoad === null))}"
                         >
