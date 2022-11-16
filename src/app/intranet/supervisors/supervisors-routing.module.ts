@@ -1,6 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AssignRequestFormComponent } from './requests/assign-request-form/assign-request-form.component';
+import { AssignRequestFormComponent } from './assign-request-form/assign-request-form.component';
 import { RequestsComponent } from './requests/requests.component';
 import { SupervisorsComponent } from './supervisors.component';
 
@@ -17,11 +17,11 @@ const routes: Routes = [
         path: 'assign-request-form',
         component: AssignRequestFormComponent
       },
-      // {
-      //   path: '',
-      //   redirectTo: 'login',
-      //   pathMatch: 'full'
-      // },
+      {
+        path: '',
+        redirectTo: 'requests',
+        pathMatch: 'full'
+      },
       // {
       //   path: 'nombre ruta',
       //   component: Nombre del Componente

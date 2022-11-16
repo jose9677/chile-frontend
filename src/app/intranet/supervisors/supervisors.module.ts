@@ -4,7 +4,7 @@ import { SupervisorsRoutingModule } from './supervisors-routing.module';
 import { SupervisorsComponent } from './supervisors.component';
 import { RequestsComponent } from './requests/requests.component';
 import { AssignRequestComponent } from './requests/assign-request/assign-request.component';
-import { AssignRequestFormComponent } from './requests/assign-request-form/assign-request-form.component';
+import { AssignRequestFormComponent } from './assign-request-form/assign-request-form.component';
 
 
 @NgModule({
