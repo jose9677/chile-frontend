@@ -3,134 +3,148 @@
    Asignar Solicitud
  </p>
 </div>
-<div class="row p-5">
-  <div class="col-3 p-3">
-    <button class="btn btn-primary style w-100 h-75" style="border-color:var(--backgroundColo);  pointer-events: none;"></button>
-    <div class="row text-center">
-      <p>Cargar Documentos</p>
-    </div>
-  </div>
-  <div class="col-3 p-3">
-    <button class="btn btn-primary style w-100 h-75" style="border-color:var(--backgroundColo) !important;  pointer-events: none; background-color: white; border: 3px solid;"></button>
-    <div class="row text-center">
-      <p>Visitador Asignado</p>
-    </div>
-  </div>
-  <div class="col-3 p-3">
-    <button class="btn btn-primary style w-100 h-75" style="border-color:var(--backgroundColo) !important;  pointer-events: none; background-color: white; border: 3px solid;"></button>
-    <div class="row text-center">
-      <p>Cita Agendada</p>
-    </div>
-  </div>
-  <div class="col-3 p-3">
-    <button class="btn btn-primary style w-100 h-75" style="border-color:var(--backgroundColo) !important;  pointer-events: none; background-color: white; border: 3px solid;"></button>
-    <div class="row text-center">
-      <p >Cita Confirmada</p>
-    </div>
-  </div>
-</div>
-<div class="row ms-5 mt-5">
-  <h3 class="colorTextPrimari">Datos de la Solicitud</h3>
-</div>
-<div class="row ms-6 mt-4">
-  <div class="col-4">
-    <p class="row colorTextPrimari">Número de Solicitud</p>
-    <p class="row ms-1 mt-2">14.356</p>
-  </div>
-  <div class="col-4">
-      <p class="row colorTextPrimari">Fecha de Solicitud</p>
-      <p class="row ms-1 mt-2">31/07/2020</p>
-  </div>
-  <div class="col-4">
-    <p class="row colorTextPrimari">Estatus</p>
-    <p class="row ms-1 mt-2">Por Asignar</p>
-  </div>
-</div>
-<div class="row ms-6 mt-4">
-  <div class="col-4">
-    <p class="row colorTextPrimari">Solicitante</p>
-    <p class="row ms-1 mt-2">Pedro Perez</p>
-  </div>
-  <div class="col-4">
-    <p class="row colorTextPrimari">Comuna</p>
-    <p class="row ms-1 mt-2">La Reina</p>
-  </div>
-  <div class="col-4">
-    <p class="row colorTextPrimari">Barrio</p>
-    <p class="row ms-1 mt-2">Ossandon</p>
-  </div>
-</div>
-<div class="row ms-6 mt-4">
-  <div class="col-4">
-    <p class="row ms-1 mt-2 colorTextPrimari">Visitador</p>
-    <div class="row colorTextPrimari">
-      <div class="col-10">
-        <select class="form-select">
-          <option value="">Seleccione un Visitador</option>
-        </select>
+<div class="card mt-4 pb-4">
+  <div class="row p-5 d-flex justify-content-center">
+    <div class="col-sm-12 col-md-10 d-flex align-items-center ">
+      <div class="col-md-3 text-center">
+        <button class="btn btn-primary style w-75 min-vh-50 mh-75" style="border-color:var(--backgroundColo)!important;;  pointer-events: none; border: 2px solid; "></button>
+        <div class="row">
+          <p>Cargar Documentos</p>
+        </div>
+      </div>
+      <div class="col-md-3 text-center">
+        <button class="btn btn-primary style w-75 min-vh-50 mh-75" style="border-color:var(--backgroundColo) !important;  pointer-events: none; background-color: white; border: 2px solid;"></button>
+        <div class="row">
+          <p>Visitador Asignado</p>
+        </div>
+      </div>
+      <div class="col-md-3 text-center">
+        <button class="btn btn-primary style w-75 min-vh-50 mh-75" style="border-color:var(--backgroundColo) !important;  pointer-events: none; background-color: white; border: 2px solid;"></button>
+        <div class="row">
+          <p>Cita Agendada</p>
+        </div>
+      </div>
+      <div class="col-md-3 text-center">
+        <button class="btn btn-primary style w-75 min-vh-50 mh-75" style="border-color:var(--backgroundColo) !important;  pointer-events: none; background-color: white; border: 2px solid;"></button>
+        <div class="row">
+          <p>Cita Confirmada</p>
+        </div>
       </div>
     </div>
   </div>
-  <div class="col-4">
-    <p class="row colorTextPrimari">Fecha de Visita</p>
-    <p class="row ms-1 mt-2">-</p>
-  </div>
-  <div class="col-4">
-    <p class="row colorTextPrimari">Hora de Visita</p>
-    <p class="row ms-1 mt-2">-</p>
-  </div>
-</div>
-<div class="row ms-5 mt-2 colorTextPrimari">
-  <h3>Documentos</h3>
-</div>
-<div class="row ms-6 mt-4">
-  <div class="col-5">
-    <div class="row">
-      <div class="col-2 colorTextPrimari">
-        <label for="">Tipo de Prevención</label>
+  <form class="forms-sample container">
+    <div class="row mt-5">
+      <div class="col-md-4 col-sm-12 text-center">
+        <h3 class="colorTextPrimari">Datos de la Solicitud</h3>
       </div>
-      <div class="col-7 ms-4">
-        <input class="form-control col-9" type="text" placeholder="Fonasa" >
+      <div class="row mt-3 text-center">
+        <div class="col-md-4 col-sm-12">
+          <label for="Rut" class="form-label colorTextPrimari size">Número de Solicitud</label>
+          <div class="d-flex justify-content-center">
+            <input type="text" value="14.356" disabled class="form-control ms-1 mt-2 w-75">
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <label for="Rut" class="form-label colorTextPrimari size">Fecha de Solicitud</label>
+          <div class="d-flex justify-content-center">
+            <input type="date" value="2020-07-31" disabled class="form-control ms-1 mt-2 w-75">
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <label for="Rut" class="form-label colorTextPrimari size">Estatus</label>
+          <div class="d-flex justify-content-center">
+            <input type="text" value="Por Asignar" disabled class="form-control ms-1 mt-2 w-75">
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3 text-center">
+        <div class="col-md-4 col-sm-12">
+          <label for="Rut" class="form-label colorTextPrimari size">Solicitante</label>
+          <div class="d-flex justify-content-center">
+            <input type="text" value="Pedro Perez" disabled class="form-control ms-1 mt-2 w-75">
+          </div>
+        </div>
+        <div class="col-md-8 col-sm-12">
+          <label for="Rut" class="form-label colorTextPrimari size">Dirección</label>
+          <div class="d-flex justify-content-center">
+            <input type="text" value="Calle de ejemplo, Nro. 1234, Casa Doña Carmen" disabled class="form-control ms-1 mt-2 w-75">
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3 text-center">
+        <div class="col-md-4 col-sm-12">
+          <label for="Rut" class="form-label colorTextPrimari size">Visitador</label>
+          <div class="d-flex justify-content-center">
+            <select class="form-select form-control ms-1 mt-2 w-75">
+              <option value="">Seleccione un Visitador</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <label for="Rut" class="form-label colorTextPrimari size">Fecha de Visita</label>
+          <div class="d-flex justify-content-center">
+            <input type="text" value="-" disabled class="form-control ms-1 mt-2 w-75">
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <label for="Rut" class="form-label colorTextPrimari size">Hora de Visita</label>
+          <div class="d-flex justify-content-center">
+            <input type="text" value="-" disabled class="form-control ms-1 mt-2 w-75">
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col-6 ms-1">
-    <a href="">Certificado.pdf</a>
-    <a class="ms-6 h4 feather icon-eye"></a>
-  </div>
-</div>
-<div class="row ms-6 mt-4">
-  <div class="col-5">
-    <div class="row">
-      <div class="col colorTextPrimari">
-        <label for="">Comprobante de Domicilio</label>
+    <div class="row mt-5">
+      <div class="col-md-4 col-sm-12 text-center">
+        <h3 class="colorTextPrimari">Documentos</h3>
+      </div>
+      <div class="row mt-3 text-center">
+        <div class="col-md-6 col-sm-12">
+          <div class="row d-flex justify-content-center">
+            <div class="col-md-2 col-sm-12 d-flex justify-content-center">
+              <label for="Rut" class="form-label colorTextPrimari size">Tipo de Prevención</label>
+            </div>
+            <div class="col-md-7 col-sm-12 d-flex justify-content-center">
+              <input type="text" value="Fonasa" disabled class="form-control ms-1 mt-2 w-75">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-12 d-flex justify-content-center">
+          <div class="col-6 mt-3">
+            <a href="">Comprobante1.pdf</a>
+            <a class="ms-5 h4 feather icon-eye"></a>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-6 col-sm-12 mt-3 text-center">
+          <label for="Rut" class="form-label colorTextPrimari size">Comprobante de Domicilio</label>
+        </div>
+        <div class="col-md-4 col-sm-12 d-flex justify-content-center">
+          <div class="col-6 mt-3">
+            <a href="">Comprobante1.pdf</a>
+            <a class="ms-5 h4 feather icon-eye"></a>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3 text-center">
+        <div class="col-md-6 col-sm-12 mt-3">
+        </div>
+        <div class="col-md-4 col-sm-12 d-flex justify-content-center">
+          <div class="col-6 mt-3">
+            <a href="">Comprobante2.pdf</a>
+            <a class="ms-5 h4 feather icon-eye"></a>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col-6">
-    <a href="">Comprobante1.pdf</a>
-    <a class="ms-5 h4 feather icon-eye"></a>
-  </div>
-</div>
-<div class="row ms-6 mt-4">
-  <div class="col-5">
-    <div class="row">
-      <div class="col-3">
+    <div class="row justify-content-center">
+      <div class="col-md-2 col-sm-12  mt-4">
+        <button class="btn btn-primary style w-100 h-100">Asignar</button>
       </div>
-      <div class="col-7">
+      <div class="col-md-2 col-sm-12  mt-4">
+        <button class="btn btn-primary style w-100 h-100">Cancelar</button>
       </div>
     </div>
-  </div>
-  <div class="col-6">
-    <a href="">Comprobante2.pdf</a>
-    <a class="ms-5 h4 feather icon-eye"></a>
-  </div>
-</div>
-<div class="row justify-content-center mt-4">
-  <div class="col-2">
-    <button class="btn btn-primary style w-100 h-100">Asignar</button>
-  </div>
-  <div class="col-2">
-    <button class="btn btn-primary style w-100 h-100">Cancelar</button>
-  </div>
+  </form>
 </div>
