@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { RequestManagementComponent } from './pages/request-management/request-management.component';
 import { VisitorsComponent } from './visitors.component';
 
 const routes: Routes = [
@@ -7,15 +8,15 @@ const routes: Routes = [
     path: '',
     component: VisitorsComponent,
     children: [
-      // {
-      //   path: '',
-      //   redirectTo: 'login',
-      //   pathMatch: 'full'
-      // },
-      // {
-      //   path: 'nombre ruta',
-      //   component: Nombre del Componente
-      // },
+      {
+        path: '',
+        redirectTo: 'request-management',
+        pathMatch: 'full'
+      },
+      {
+        path: 'request-management',
+        component: RequestManagementComponent
+      },
 
     ]
   },
