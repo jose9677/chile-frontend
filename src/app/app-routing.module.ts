@@ -53,6 +53,18 @@ const routes: Routes = [
         path: 'general',
         loadChildren: () => import('./views/pages/general/general.module').then(m => m.GeneralModule)
       },
+      {
+        path: 'supervisors',
+        loadChildren: () => import('./intranet/supervisors/supervisors.module').then(m => m.SupervisorsModule)
+      },
+      {
+        path: 'neighbor',
+        loadChildren: () => import('./intranet/neighbor/neighbor.module').then(m => m.NeighborModule)
+      },
+      {
+        path: 'visitors',
+        loadChildren: () => import('./intranet/visitors/visitors.module').then(m => m.VisitorsModule)
+      },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       // { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
