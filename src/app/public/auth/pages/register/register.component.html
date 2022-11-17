@@ -256,9 +256,9 @@
               <div formGroupName="documents">
                 <h3 class="colorTextPrimari pb-3">Documentos</h3>
 
-                <!-- <div class="row">
+                <div class="row">
                   <div class="col-md-6">
-                    <label class="form-label" for="">Tipo de Prevención</label>
+                    <label class="form-label" for="">Certificado de Prevención</label>
                   </div>
                   <div class="col-md-6">
                     <input
@@ -271,19 +271,7 @@
                   <div *ngIf="(userRegister.controls.documents.touched && userRegister.controls.documents.value.preventionCertificate === '') || (isFormSubmitted && userRegister.controls.documents.value.preventionCertificate === '')" class="invalid-feedback">Campo Requerido</div>
                   </div>
 
-                </div> -->
-                <!-- <div class="col-md-6 mb-3" *ngIf="userRegister.controls.healthInformation.controls.typeOfPrevention.value === 0"> -->
-                  <!-- <div class="col-md-6 mb-3">
-                  <label class="form-label" for="preventionCertificate">+ Haga click aqui para Adjuntar del Fonasa</label>
-                  <input
-                  class="form-control"
-                  type="file"
-                  id="preventionCertificate"
-                  formControlName="preventionCertificate"
-                  [ngClass]="{'is-invalid': ((userRegister.controls.documents.touched && userRegister.controls.documents.value.preventionCertificate == '') || (isFormSubmitted && userRegister.controls.documents.value.preventionCertificate === ''))}"
-                  >
-                  <div *ngIf="(userRegister.controls.documents.touched && userRegister.controls.documents.value.preventionCertificate === '') || (isFormSubmitted && userRegister.controls.documents.value.preventionCertificate === '')" class="invalid-feedback">Campo Requerido</div>
-                </div> -->
+                </div>
 
                 <br><br>
                 <div class="row">
