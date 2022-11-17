@@ -76,19 +76,19 @@
                     class="form-control"
                     id="landLine"
                     formControlName="landLine"
-                    prefix="+56" mask="  0  0000 - 0000" [showMaskTyped] = "true"
+                    prefix="+56" mask="  0  0000 - 0000" [showMaskTyped] = "false"
                     [ngClass]="{'is-invalid': (userRegister.controls.landLine.touched && userRegister.controls.landLine.errors?.required) || (isFormSubmitted && userRegister.controls.landLine.errors)}"
                     >
                     <div *ngIf="(userRegister.controls.landLine.touched && userRegister.controls.landLine.errors?.required) || (isFormSubmitted && userRegister.controls.email.errors)" class="invalid-feedback">Campo Requerido</div>
                   </div>
                   <div class="col-md-6 mb-3">
-                    <label for="mobilePhone" class="form-label">Teléfono Movil</label>
+                    <label for="mobilePhone" class="form-label">Teléfono Móvil</label>
                     <input
                     type="text"
                     class="form-control"
                     id="mobilePhone"
                     formControlName="mobilePhone"
-                    prefix="+56" mask="  0  0000 - 0000" [showMaskTyped] = "true"
+                    prefix="+56" mask="  0  0000 - 0000" [showMaskTyped] = "false"
                     [ngClass]="{'is-invalid': (userRegister.controls.mobilePhone.touched && userRegister.controls.mobilePhone.errors?.required) || (isFormSubmitted && userRegister.controls.mobilePhone.errors)}" placeholder="Introduce tu nombre"
                     >
                     <div *ngIf="(userRegister.controls.mobilePhone.touched && userRegister.controls.mobilePhone.errors?.required) || (isFormSubmitted && userRegister.controls.mobilePhone.errors)" class="invalid-feedback">Campo Requerido</div>
@@ -100,23 +100,8 @@
                 <h3 class="colorTextPrimari pb-3">Dirección</h3>
 
                 <div class="row">
-                  <div class="col-md-3 mb-3 ">
-                    <label for="typeOfRoad" class="form-label">Calle/Avenida</label>
-                    <ng-select [items]="typeOfRoad"
-                        class="form-control p-0"
-                        bindLabel="name"
-                        bindValue="id"
-                        placeholder="Seleccione"
-                        [(ngModel)]="selectedRoadId"
-                        formControlName="typeOfRoad"
-                        [ngClass]="{'is-invalid': ((userRegister.controls.address.touched && userRegister.controls.address.value.typeOfRoad === null) || (isFormSubmitted && userRegister.controls.address.value.typeOfRoad === null))}"
-                        >
-                    </ng-select>
-                    <div *ngIf="(userRegister.controls.address.touched && userRegister.controls.address.value.typeOfRoad === null) || (isFormSubmitted && userRegister.controls.address.value.typeOfRoad === null)" class="invalid-feedback">Campo Requerido</div>
-                  </div>
-
                   <div class="col-md-6 mb-3 ">
-                    <label for="nameOfstreet" class="form-label">Nombre de la Vía</label>
+                    <label for="nameOfstreet" class="form-label">Calle/Avenida</label>
                     <ng-select [items]="nameOfstreet"
                         class="form-control p-0"
                         bindLabel="name"
@@ -130,7 +115,7 @@
                     <div *ngIf="(userRegister.controls.address.touched && userRegister.controls.address.value.nameOfstreet === null) || (isFormSubmitted && userRegister.controls.address.value.nameOfstreet === null)" class="invalid-feedback">Campo Requerido</div>
                   </div>
 
-                  <div class="col-md-3 mb-3">
+                  <div class="col-md-6 mb-3">
                     <label for="numberStreet" class="form-label">Número</label>
                     <input
                     type="text"
@@ -148,8 +133,8 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-md-3 mb-3 ">
-                    <label for="typeOfHousing" class="form-label">Casa/Dpto</label>
+                  <div class="col-md-6 mb-3 ">
+                    <label for="typeOfHousing" class="form-label">Casa/Departamente</label>
                     <ng-select [items]="typeOfHousing"
                         class="form-control p-0"
                         bindLabel="name"
@@ -164,13 +149,13 @@
                   </div>
 
                   <div class="col-md-6 mb-3">
-                    <label for="nameHome" class="form-label">Nombre o Número</label>
+                    <label for="nameHome" class="form-label">Número de Departamento</label>
                     <input
                     type="text"
                     class="form-control"
                     id="nameHome"
                     formControlName="nameHome"
-                    placeholder="Nombre o Número de Casa"
+                    placeholder="Número del Departamento"
                     [ngClass]="{'is-invalid': ((userRegister.controls.address.touched && userRegister.controls.address.value.nameHome === '') || (isFormSubmitted && userRegister.controls.address.value.nameHome === ''))}"
                     >
                     <div *ngIf="(userRegister.controls.address.touched && userRegister.controls.address.value.nameHome === '') || (isFormSubmitted && userRegister.controls.address.value.nameHome === '')" class="invalid-feedback">Campo Requerido</div>

@@ -8,23 +8,25 @@
             <h2 class="text-muted fw-normal text-center titles "><strong> Iniciar Sesión</strong></h2><br>
             <form class="forms-sample" [formGroup]="userLogin" (ngSubmit)="onLoggedin($event)">
               <div class="mb-3 mt-3">
-                <label for="Rut" class="form-label colorTextPrimari size">RUT</label>
+                <label for="Rut" class="form-label colorTextPrimari">RUT</label>
                 <input
                 type="text"
                 class="form-control"
                 id="Rut"
                 formControlName="rut"
+                placeholder="Ingrese su RUT"
                 [ngClass]="{'is-invalid': (userLogin.controls.rut.touched && userLogin.controls.rut.errors?.required) || (isFormSubmitted && userLogin.controls.rut.errors?.required)}"
                     >
                     <div *ngIf="(userLogin.controls.rut.touched && userLogin.controls.rut.errors?.required) || ( isFormSubmitted && userLogin.controls.rut.errors?.required)" class="invalid-feedback">Campo Requerido</div>
               </div>
               <div class="mb-3">
-                <label for="password" class="form-label colorTextPrimari size">Contraseña</label>
+                <label for="password" class="form-label colorTextPrimari">Contraseña</label>
                 <input
                 type="password"
                 class="form-control"
                 id="password"
                 formControlName="password"
+                placeholder="Ingrese su Contraseña"
                 [ngClass]="{'is-invalid': (userLogin.controls.password.touched && userLogin.controls.password.errors?.required) || (isFormSubmitted && userLogin.controls.password.errors)}"
                     >
                     <div *ngIf="(userLogin.controls.password.touched && userLogin.controls.password.errors?.required) || (isFormSubmitted && userLogin.controls.password.errors)" class="invalid-feedback">Campo Requerido</div>
