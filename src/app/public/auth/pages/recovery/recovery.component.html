@@ -6,13 +6,14 @@
           <div class="auth-form-wrapper px-4 py-5 ">
             <img class="card-img-top px-4" src="../assets/images/login/LogoLaReinaCorporacion-FondoBlanco1.png" alt=""><br><br>
             <h2 class="text-muted fw-normal text-center titles "><strong> Recuperar Contraseña</strong></h2><br>
+            <p class="colorTextPrimari text-center">Para recuperar su contraseña por favor ingrese el RUT con el que se registró en el sistema</p>
             <form class="forms-sample" [formGroup]="formRecoveryPassword" (ngSubmit)="recoveryPassword($event)">
               <div class="mb-3 mt-3">
-                <label for="exampleInputEmail1" class="form-label colorTextPrimari size">Por Favor Ingrese su RUT</label>
+                <label for="exampleInputEmail1" class="form-label colorTextPrimari" style="display: none;">RUT</label>
                 <input
                 type="text"
                 class="form-control" id="Rud"
-                placeholder="RUT"
+                placeholder="Ingrese su RUT"
                 formControlName="rutUser"
                 [ngClass]="{'is-invalid': (formRecoveryPassword.controls.rutUser.touched && formRecoveryPassword.controls.rutUser.errors?.required) || (isFormSubmitted && formRecoveryPassword.controls.rutUser.errors)}"
                     >
@@ -23,7 +24,7 @@
               <div class="d-flex justify-content-center">
                 <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 style">Continuar</button>
               </div>
-              <a routerLink="/auth/login" (click)="modalService.dismiss()" class="d-block mt-3 text-muted text-center"><span class="link" >Volver a Inicia Sesión</span></a>
+              <a routerLink="/auth/login" (click)="modalService.dismiss()" class="d-block mt-3 text-muted text-center"><span class="link" >Volver al Inicio de Sesión</span></a>
             </form>
           </div>
         <!-- </div>
