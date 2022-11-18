@@ -66,8 +66,8 @@ label.size{
 button.style{
   font-family: 'Century Gothic';
   font-size: 1.2em;
-  width: 40%;
-  height: 40%;
+  min-width: 40%;
+  min-height: 40%;
   // left: 616px;
   background: #0EADB0;
   border: #0EADB0;
@@ -94,7 +94,6 @@ button.style-outline{
 button.style-outline:hover{
   background: #0EADB0 !important ;
   color: #fff;
-  border: none !important;
 }
 
 span.link{
@@ -125,10 +124,24 @@ ng-select.form-control{
   font-size: 0.7rem;
 }
 
+div.style{
+  font-family: 'Century Gothic';
+  background: #0EADB0;
+  border: #0EADB0;
+  border-radius: 18px;
+  color: transparent;
 
+}
 
 .btn-primary, .swal2-container .swal2-popup .swal2-actions button.swal2-confirm, full-calendar.fc .fc-button-primary:not(:disabled).fc-button-active, full-calendar.fc .fc-button-primary:not(:disabled):active {
   color: #fff;
   background-color: #00acb0;
   border-color: #6571ff;
+}
+
+input:disabled, textarea:disabled{
+  font-family: 'Century Gothic';
+  background-color: transparent !important;
+  border: none !important;
+
 }
