@@ -51,9 +51,6 @@
   font-family: 'Century Gothic';
   color:var(--Colortext) !important;
 }
-input label h1 h2 h3 h4 div p button{
-  font-family: 'Century Gothic' !important;
-}
 
 .colorTextPrimari{
   color: var(--Colortext);
@@ -120,6 +117,12 @@ ng-select.form-control{
   border-color: #00acb0 !important;
 }
 
+textarea.form-control{
+  border: 1px solid !important;
+  // border-radius: 0% !important;
+  border-color: #00acb0 !important;
+}
+
 .info{
   font-size: 0.7rem;
 }
@@ -139,7 +142,7 @@ div.style{
   border-color: #6571ff;
 }
 
-input:disabled, textarea:disabled{
+input:disabled, textarea:disabled, select:disabled{
   font-family: 'Century Gothic';
   background-color: transparent !important;
   border: none !important;
