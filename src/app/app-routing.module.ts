@@ -65,6 +65,14 @@ const routes: Routes = [
         path: 'visitors',
         loadChildren: () => import('./intranet/visitors/visitors.module').then(m => m.VisitorsModule)
       },
+      {
+        path: 'request',
+        loadChildren: () => import('./intranet/request-management/request-management.module').then(m => m.RequestManagementModule)
+      },
+      {
+        path: 'dates',
+        loadChildren: () => import('./intranet/dates-management/dates-management.module').then(m => m.DatesManagementModule)
+      },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       // { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
