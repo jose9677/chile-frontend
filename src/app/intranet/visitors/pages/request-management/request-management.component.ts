@@ -88,6 +88,17 @@ export class RequestManagementComponent implements OnInit {
         noRows: "No hay entradas para encontrar",
         info: "mostrando {start} de {end} de {rows} entradas",
       },
+      columns: [
+        {
+          select: 8,
+          render: function(data: any, cell: any, row: any) {
+            console.log(data);
+            console.log(cell);
+            console.log(row);
+            return data + "<button type='button' (click)= 'indexDataTable("+ row.dataIndex +")' value='"  + row.dataIndex + "'>Select</button>";
+        }
+        }
+      ]
     });
 
     const dataTable2: any = new DataTable("#quotesOfTheDay",{
@@ -110,8 +121,16 @@ export class RequestManagementComponent implements OnInit {
     dataTable1.insert(this.unassignedRequest);
     dataTable2.insert(this.unassignedRequest);
 
+    let columns  = dataTable1.data;
 
-    console.log(dataTable1)
+
+
+    console.log(columns);
+  }
+
+
+  indexDataTable(index: number) {
+    console.log(index);
   }
 
 }
