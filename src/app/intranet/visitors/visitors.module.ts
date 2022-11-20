@@ -9,12 +9,15 @@ import { AssignAppointmentComponent } from './pages/assign-appointment/assign-ap
 
 
 
+
+
 @NgModule({
   declarations: [
     VisitorsComponent,
     RequestManagementComponent,
     RequestApprovalComponent,
     AssignAppointmentComponent,
+
   ],
   imports: [
     CommonModule,
