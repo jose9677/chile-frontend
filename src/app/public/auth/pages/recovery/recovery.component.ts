@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalsService } from '../../services/modals.service';
+import { ModalsService } from '../../../../shared/sevices/modals.service';
 import { ModalComponent } from '../../shared/modals/modal/modal.component';
 
 @Component({

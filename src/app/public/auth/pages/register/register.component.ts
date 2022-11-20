@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomValidators } from 'ngx-custom-validators';
-import { ModalsService } from '../../services/modals.service';
+import { ModalsService } from '../../../../shared/sevices/modals.service';
 import { ModalComponent } from '../../shared/modals/modal/modal.component';
 import { ValidateEmailComponent } from '../validate-email/validate-email.component';
 

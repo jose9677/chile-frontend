@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ModalsService } from '../../services/modals.service';
+import { ModalsService } from '../../../../shared/sevices/modals.service';
 import { ModalComponent } from '../../shared/modals/modal/modal.component';
 import { EnterRutComponent } from '../enter-rut/enter-rut.component';
 import { RecoveryComponent } from '../recovery/recovery.component';

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {DataTable} from "simple-datatables"
+import { Router } from '@angular/router';
+import { AssignVisitorDatesComponent } from 'src/app/intranet/dates-management/pages/assign-visitor-dates/assign-visitor-dates.component';
+import { ModalsService } from 'src/app/shared/sevices/modals.service';
+import { SortByTablesService } from '../../shared/services/sort-by-tables.service';
 
 
 @Component({
@@ -9,16 +12,28 @@ import {DataTable} from "simple-datatables"
 })
 export class ViewSupervisorRequestsComponent implements OnInit {
 
-  unassignedRequest: any;
+
+  unassignedRequest: any[];
+  unassignedRequest2: any[];
+
+
 
   dataTable1: any;
+
+  numberRequest:any
 
   name!:string;
 
   nameLastnameUser: string = 'Eduy Omaña'
 
-  constructor() {
-    const unassignedRequest: any = [
+  constructor(
+    private router: Router,
+    public sortByService: SortByTablesService,
+    private modal : ModalsService
+
+
+  ) {
+    this.unassignedRequest = [
       {
         'nroRequest': "3",
         'requestDate': "1/10/2022",
@@ -53,101 +68,72 @@ export class ViewSupervisorRequestsComponent implements OnInit {
       },
 
 
+    ];
+
+
+    this.unassignedRequest2 = [
+      {
+        'nroRequest': "3",
+        'requestDate': "1/10/2022",
+        'namesLastnames': "Eduy Omaña",
+        'comune': "La Reina",
+        'neighborhood': "Osandon",
+        'dateOfVisit': '',
+        'visitor': "Pedro Perez",
+        'status': "Cita Pendiente",
+
+      },
+      {
+        'nroRequest': "4",
+        'requestDate': "3/10/2022",
+        'namesLastnames': "Emili Omaña",
+        'comune': "La Reina",
+        'neighborhood': "Osandon",
+        'dateOfVisit': '',
+        'visitor': "Pedro Perez",
+        'status': "Cita Pendiente",
+
+      },
+      {
+        'nroRequest': "5",
+        'requestDate': "12/10/2022",
+        'namesLastnames': "Edinson Omaña",
+        'comune': "La Reina",
+        'neighborhood': "Osandon",
+        'dateOfVisit': '',
+        'visitor': "Pedro Perez",
+        'status': "Cita Pendiente",
+      },
 
 
     ];
 
 
-
-    this.unassignedRequest = {
-
-      headings: Object.keys(unassignedRequest[0]),
-
-      data: []
-
-    };
-
-    for ( let i = 0; i < unassignedRequest.length; i++ ) {
-
-      this.unassignedRequest.data[i] = [];
-
-      for (let p in unassignedRequest[i]) {
-        if( unassignedRequest[i].hasOwnProperty(p) ) {
-            this.unassignedRequest.data[i].push(unassignedRequest[i][p]);
-        }
-      }
-    }
-
-
   }
 
   ngOnInit(): void {
-    const dataTable1: any = new DataTable("#unassignedRequest",{
-      searchable: true,
-      fixedHeight: true,
-      truncatePager: false,
-      footer: false,
-      layout: {
-        top: "{select}{search}",
-        bottom: "{info}{pager}"
-      },
-      labels: {
-        placeholder: "Buscar...",
-        perPage: "{select} entradas por pagina",
-        noRows: "No hay entradas para encontrar",
-        info: "mostrando {start} de {end} de {rows} entradas",
-      },
-      columns: [
-        {
-          select: 8,
-          render: function(data: any, cell: any, row: any) {
-            console.log(data)
-
-            return data + "<input id ='buttom-table"+ row.dataIndex +"' type='bottom'  value='"  + row.dataIndex + "'>Select</input>";
-        }
-        }
-      ]
-    });
-
-    const index: any = document.getElementById("buttom-table1");
-    console.log(index)
 
 
-    this.dataTable1= dataTable1;
 
-    const dataTable2: any = new DataTable("#quotesOfTheDay",{
-      searchable: true,
-      fixedHeight: true,
-      truncatePager: false,
-      footer: false,
-      layout: {
-        top: "{select}{search}",
-        bottom: "{info}{pager}"
-      },
-      labels: {
-        placeholder: "Buscar...",
-        perPage: "{select} entradas por pagina",
-        noRows: "No hay entradas para encontrar",
-        info: "mostrando {start} de {end} de {rows} entradas",
-      },
-    });
+  }
 
-    dataTable1.insert(this.unassignedRequest);
-    dataTable2.insert(this.unassignedRequest);
+  assingSocialAssistant (nroRequest: any) {
 
-    let columns  = dataTable1.data;
+    // this.router.navigate(['dates/assign-Visitor'])
+    this.modal.openModalData(AssignVisitorDatesComponent, nroRequest)
 
-    this.indexDataTable(1);
+
+
+  }
+
+  editAssingSocialAssistant (nroRequest: any) {
+
+    this.router.navigate(['dates/edit-assign-visitor'])
+
+
 
   }
 
 
-  indexDataTable(index: number) {
-
-    let row = [].slice.call(this.dataTable1.data[index].cells).map(function(cell) { return cell["data"]});
-
-    console.log(row);
-    console.log(index);
-  }
 
 }

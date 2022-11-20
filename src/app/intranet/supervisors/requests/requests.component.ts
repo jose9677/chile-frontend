@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalsService } from '../../../public/auth/services/modals.service';
+import { ModalsService } from '../../../shared/sevices/modals.service';
 import { AssignRequestComponent } from './assign-request/assign-request.component';
 
 @Component({

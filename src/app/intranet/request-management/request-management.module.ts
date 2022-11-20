@@ -6,6 +6,11 @@ import { ViewSupervisorRequestsComponent } from './pages/view-supervisor-request
 import { ViewVisitorRequestsComponent } from './pages/view-visitor-requests/view-visitor-requests.component';
 import { ViewNeighborRequestsComponent } from './pages/view-neighbor-requests/view-neighbor-requests.component';
 import { LayoutsComponent } from './layouts/layouts.component';
+import { FormsModule } from '@angular/forms';
+import { FilterPipe } from './shared/pipes/filter.pipe';
+import { SortByPipe } from './shared/pipes/sort-by.pipe';
+import { SortBy2Pipe } from './shared/pipes/sort-by2.pipe';
+import { Filter2Pipe } from './shared/pipes/filter2.pipe';
 
 
 @NgModule({
@@ -13,11 +18,18 @@ import { LayoutsComponent } from './layouts/layouts.component';
     ViewSupervisorRequestsComponent,
     ViewVisitorRequestsComponent,
     ViewNeighborRequestsComponent,
-    LayoutsComponent
+    LayoutsComponent,
+    FilterPipe,
+    SortByPipe,
+    SortBy2Pipe,
+    Filter2Pipe,
   ],
+
+
   imports: [
     CommonModule,
-    RequestManagementRoutingModule
+    RequestManagementRoutingModule,
+    FormsModule
   ]
 })
 export class RequestManagementModule { }
