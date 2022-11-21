@@ -1,4 +1,6 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { ModalsService } from '../../../../public/auth/services/modals.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-assign-visitor-dates',
@@ -12,7 +14,10 @@ export class AssignVisitorDatesComponent implements OnInit {
 
   nroRequest: any;
 
-  constructor() {
+  constructor(
+    public modalService: NgbActiveModal,
+    private modalService2: ModalsService,
+  ) {
 
    }
 
