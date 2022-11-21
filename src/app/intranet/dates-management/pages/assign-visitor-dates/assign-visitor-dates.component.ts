@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { ModalsService } from '../../../../public/auth/services/modals.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalsService } from 'src/app/shared/sevices/modals.service';
 
 @Component({
   selector: 'app-assign-visitor-dates',
