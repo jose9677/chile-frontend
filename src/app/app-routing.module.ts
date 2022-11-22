@@ -73,6 +73,10 @@ const routes: Routes = [
         path: 'dates',
         loadChildren: () => import('./intranet/dates-management/dates-management.module').then(m => m.DatesManagementModule)
       },
+      {
+        path: 'copago',
+        loadChildren: () => import('./intranet/services-copago/services-copago.module').then(m => m.ServicesCopagoModule)
+      },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       // { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
     ]

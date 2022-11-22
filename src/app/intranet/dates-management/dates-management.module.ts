@@ -21,7 +21,8 @@ import { ApproveDatesComponent } from './pages/approve-dates/approve-dates.compo
     AssignVisitorDatesComponent,
     EditAssignVisitorDatesComponent,
     AssignDayDatesComponent,
-    ApproveDatesComponent
+    ApproveDatesComponent,
+
   ],
   imports: [
     CommonModule,
