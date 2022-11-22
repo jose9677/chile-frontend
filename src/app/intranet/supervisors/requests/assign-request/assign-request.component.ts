@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalsService } from '../../../../shared/sevices/modals.service';
+import { ModalsService } from '../../../../shared/services/modals.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 

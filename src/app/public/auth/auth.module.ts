@@ -11,7 +11,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ModalComponent } from './shared/modals/modal/modal.component';
 import { EnterRutComponent } from './pages/enter-rut/enter-rut.component';
-import { ModalsService } from '../../shared/sevices/modals.service';
+import { ModalsService } from '../../shared/services/modals.service';
 import { RecoveryComponent } from './pages/recovery/recovery.component';
 import { ValidateEmailComponent } from './pages/validate-email/validate-email.component';
 
@@ -57,7 +57,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     CustomFormsModule,
     NgxMaskModule.forRoot(),
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    
   ],
   providers: [
     ModalsService,

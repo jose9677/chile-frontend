@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomValidators } from 'ngx-custom-validators';
-import { ModalsService } from '../../../../shared/sevices/modals.service';
+import { ModalsService } from '../../../../shared/services/modals.service';
 import { ModalComponent } from '../../shared/modals/modal/modal.component';
+import { AuthService } from '../../shared/services/auth.service';
 import { ValidateEmailComponent } from '../validate-email/validate-email.component';
 
 @Component({
@@ -64,7 +65,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private modalService: ModalsService
+    private modalService: ModalsService,
+    private authServices: AuthService
     ) {
 
       this.typeOfRoad = [
@@ -184,7 +186,7 @@ export class RegisterComponent implements OnInit {
       landLine: ['', [Validators.required, Validators.minLength(9), CustomValidators.number]],
       mobilePhone: ['', [Validators.required, Validators.minLength(9), CustomValidators.number]],
       address: this.fb.group({
-        typeOfRoad: ['', Validators.required],
+        // typeOfRoad: ['', Validators.required],
         nameOfstreet: ['', Validators.required],
         numberStreet: ['', [Validators.required, CustomValidators.number]],
         typeOfHousing: ['', Validators.required],
@@ -197,7 +199,7 @@ export class RegisterComponent implements OnInit {
         haveInsurance: ['', Validators.required]
       }),
       documents: this.fb.group({
-        // preventionCertificate: ['', Validators.required],
+        preventionCertificate: ['', Validators.required],
         proofOfAddress: ['', Validators.required],
         proofOfAddress1: ['', Validators.required],
       }),
@@ -219,7 +221,50 @@ export class RegisterComponent implements OnInit {
   // onRegister(e: Event) {
   onRegister(e: Event) {
     console.log(this.userRegister)
-    if(!this.userRegister.invalid) {
+
+    const dataUser = {
+      names: this.userRegister.value.names,
+      lastNames: this.userRegister.value.lastNames,
+      datesBirth: this.userRegister.value.datesBirt,
+      email: this.userRegister.value.email,
+      landLine: this.userRegister.value.landLine,
+      mobilePhone: this.userRegister.value.mobilePhone,
+      address: {
+        typeOfRoad: this.userRegister.controls.address.value.typeOfRoad,
+        nameOfstreet: this.userRegister.controls.address.value.nameOfstreet,
+        numberStreet: this.userRegister.controls.address.value.numberStreet,
+        typeOfHousing: this.userRegister.controls.address.value.typeOfHousing,
+        nameHome: this.userRegister.controls.address.value.nameHome,
+      },
+      healthInformation: {
+        typeOfPrevention: this.userRegister.controls.healthInformation.value.typeOfPrevention,
+        typeOfFonasa: this.userRegister.controls.healthInformation.value.typeOfFonasa,
+        typeOfCompany: this.userRegister.controls.healthInformation.value.typeOfCompany,
+        haveInsurance: this.userRegister.controls.healthInformation.value.haveInsurance
+      },
+      documents: {
+        proofOfAddress: this.userRegister.controls.documents.proofOfAddress,
+        proofOfAddress1: this.userRegister.controls.documents.proofOfAddress1
+      },
+      authCheck: this.userRegister.value.authCheck
+    }
+
+    console.log(dataUser)
+
+
+    this.authServices.register(dataUser).subscribe(result => {
+      console.log(result);
+    },
+    error => {
+      this.errors = true
+      let title= "Registro Invalido";
+      let message = "No se pudo realizar el registro del Usuario";
+      this.modalService.OpenModalError2(ModalComponent, this.errors, title, message);
+
+
+
+    },
+    () => {
       this.isFormSubmitted = true;
       e.preventDefault();
       localStorage.setItem('isLoggedin', 'true');
@@ -229,14 +274,11 @@ export class RegisterComponent implements OnInit {
         this.modalValidateEmail(this.emailUser);
         // this.router.navigate(['/']);
       }
-    }else {
-      this.errors = true
-      let title= "Registro Invalido";
-      let message = "No se pudo realizar el registro del Usuario";
-      this.modalService.OpenModalError2(ModalComponent, this.errors, title, message);
-    }
-  }
 
+    });
+
+
+  }
 
 
 }

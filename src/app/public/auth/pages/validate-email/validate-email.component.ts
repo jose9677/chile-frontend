@@ -2,8 +2,9 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalsService } from '../../../../shared/sevices/modals.service';
+import { ModalsService } from '../../../../shared/services/modals.service';
 import { ModalComponent } from '../../shared/modals/modal/modal.component';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-validate-email',
@@ -31,7 +32,8 @@ export class ValidateEmailComponent implements OnInit {
     public modalService: NgbActiveModal,
     private modalService2: ModalsService,
     private fb: FormBuilder,
-    private router : Router
+    private router : Router,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -42,7 +44,24 @@ export class ValidateEmailComponent implements OnInit {
   }
 
   validateEmail(e: Event) {
-    if (!this.formValidateEmail.invalid) {
+
+    const dataOtp = {
+      otp: this.formValidateEmail.value.otpUser,
+    }
+
+    this.authService.validateEmail( dataOtp ).subscribe(result => {
+
+      console.log(result)
+
+    },
+    error => {
+      this.errors = true;
+      let message: any = 'La clave que introdujo no es la correcta, por favor verifique e intente nuevamente'
+      let title = 'Clave Invalida'
+      this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message)
+
+    },
+    () => {
       this.modalService.close();
 
       this.router.navigate(['/auth/login']);
@@ -51,12 +70,8 @@ export class ValidateEmailComponent implements OnInit {
       let message:any = `Se ha generado una solicitud de forma exitosa. Recibirá un correo electrónico con sus datos de acceso al sistema donde podra consultar el estatus de su solicitud`;
       this.modalService2.OpenModalError2(ModalComponent, this. errors, title, message );
 
-    }else{
-      this.errors = true;
-      let message: any = 'La clave que introdujo no es la correcta, por favor verifique e intente nuevamente'
-      let title = 'Clave Invalida'
-      this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message)
-    }
+    });
+
 
   }
 

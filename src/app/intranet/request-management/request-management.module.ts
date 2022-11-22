@@ -11,6 +11,7 @@ import { FilterPipe } from './shared/pipes/filter.pipe';
 import { SortByPipe } from './shared/pipes/sort-by.pipe';
 import { SortBy2Pipe } from './shared/pipes/sort-by2.pipe';
 import { Filter2Pipe } from './shared/pipes/filter2.pipe';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { Filter2Pipe } from './shared/pipes/filter2.pipe';
   imports: [
     CommonModule,
     RequestManagementRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ]
 })
 export class RequestManagementModule { }
