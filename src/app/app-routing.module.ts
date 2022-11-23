@@ -77,6 +77,10 @@ const routes: Routes = [
         path: 'copago',
         loadChildren: () => import('./intranet/services-copago/services-copago.module').then(m => m.ServicesCopagoModule)
       },
+      {
+        path: 'private',
+        loadChildren: () => import('./private/private.module').then(m => m.PrivateModule)
+      },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       // { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
