@@ -30,11 +30,11 @@ const routes: Routes = [
         component: LoginComponent
       },
       {
-        path: 'forget-password',
+        path: 'recuperar-contraseña',
         component: ForgetPasswordComponent
       },
       {
-        path: 'register',
+        path: 'registrarse',
         component: RegisterComponent
       },
     ]

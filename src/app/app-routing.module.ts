@@ -54,23 +54,23 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/general/general.module').then(m => m.GeneralModule)
       },
       {
-        path: 'supervisors',
+        path: 'supervisor',
         loadChildren: () => import('./intranet/supervisors/supervisors.module').then(m => m.SupervisorsModule)
       },
       {
-        path: 'neighbor',
+        path: 'vecino',
         loadChildren: () => import('./intranet/neighbor/neighbor.module').then(m => m.NeighborModule)
       },
       {
-        path: 'visitors',
+        path: 'visitador',
         loadChildren: () => import('./intranet/visitors/visitors.module').then(m => m.VisitorsModule)
       },
       {
-        path: 'request',
+        path: 'solicitud',
         loadChildren: () => import('./intranet/request-management/request-management.module').then(m => m.RequestManagementModule)
       },
       {
-        path: 'dates',
+        path: 'citas',
         loadChildren: () => import('./intranet/dates-management/dates-management.module').then(m => m.DatesManagementModule)
       },
       {
@@ -78,7 +78,7 @@ const routes: Routes = [
         loadChildren: () => import('./intranet/services-copago/services-copago.module').then(m => m.ServicesCopagoModule)
       },
       {
-        path: 'private',
+        path: 'privado',
         loadChildren: () => import('./private/private.module').then(m => m.PrivateModule)
       },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },

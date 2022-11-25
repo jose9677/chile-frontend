@@ -10,15 +10,15 @@ const routes: Routes = [
     component: LayoutAdminUsersComponent,
     children: [
       {
-        path: 'create-users',
+        path: 'Crear-usuario',
         component: CreateUsersComponent
       },
       {
-        path: 'edit-user',
+        path: 'editar-usuario',
         component: EditUserComponent
       },
       {
-        path: 'view-users',
+        path: 'ver-usuarios',
         component: ViewUsersComponent
       },
     ]

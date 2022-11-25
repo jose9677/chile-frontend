@@ -1,1 +1,75 @@
-<p>create-users works!</p>
+ <div class="card">
+  <form class="forms-sample container pb-5 px-5">
+    <div class="row mt-5 justify-content-center">
+      <h3 class="colorTextPrimari">Datos Personales</h3><br>
+      <div class="row mt-3">
+        <div class="col-md-4 col-sm-12 form-floating">
+          <input id="Rut" type="text" class="form-control" placeholder="Rut">
+          <label for="Rut" class="form-label colorTextPrimari">RUT</label>
+        </div>
+      </div>
+      <div class="row mt-3 ">
+        <div class="col-md-5 col-sm-12 form-floating">
+          <input id="Nombres" type="text" class="form-control" placeholder="Nombres">
+          <label for="Nombres" class="form-label colorTextPrimari">Nombres</label>
+        </div>
+        <div class="col-md-5 col-sm-12 form-floating">
+          <input id="Apellidos" type="text" class="form-control" placeholder="Apellidos">
+          <label for="Apellidos" class="form-label colorTextPrimari">Apellidos</label>
+        </div>
+      </div>
+      <div class="row mt-3 ">
+        <div class="col-md-5 col-sm-12">
+          <label for="" class="form-label colorTextPrimari ">Fecha de Visita</label>
+          <input type="date" class="form-control form-date">
+        </div>
+        <div class="col-md-5 col-sm-12 mt-2 form-floating">
+          <input id="Correo Electrónico" type="email" class="form-control" placeholder="Correo Electrónico">
+          <label for="Correo Electrónico" class="form-label colorTextPrimari">Correo Electrónico</label>
+        </div>
+      </div>
+      <div class="row mt-3 ">
+        <div class="col-md-5 col-sm-12 mt-2 form-floating">
+          <input id="Teléfono Fijo" type="text" class="form-control" placeholder="Teléfono Fijo">
+          <label for="Teléfono Fijo" class="form-label colorTextPrimari">Teléfono Fijo</label>
+        </div>
+        <div class="col-md-5 col-sm-12 mt-2 form-floating">
+          <input id="Teléfono Movil" type="text" class="form-control" placeholder="Teléfono Movil">
+          <label for="Teléfono Movil" class="form-label colorTextPrimari">Teléfono Movil</label>
+        </div>
+      </div>
+      <div class="row mt-4">
+       <h4 class="colorTextPrimari">Fotografía de Perfil</h4>
+       <a href="" class="mt-2">+  Haga click aqui para agregar</a>
+       <p class="col-md-4 col-sm-12 colorTextPrimari mt-1">Solo admite archivos .jpg, .jpeg y .png
+        Tamaño máximo 8 Mb</p>
+      </div>
+    </div>
+    <div class="row mt-5 justify-content-center">
+      <h3 class="colorTextPrimari">Datos de Acceso</h3><br>
+      <div class="row mt-3">
+        <div class="col-md-5 col-sm-12 mt-2 form-floating">
+          <select id="Rol de Usuario" class="form-control form-select" placeholder="Rol de Usuario">
+            <option value="">Rol Admin</option>
+          </select>
+          <label for="Rol de Usuario" class="form-label colorTextPrimari">Rol de Usuario</label>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-5 justify-content-center">
+      <p class="colorTextPrimari fs-4">Contraseña</p>
+      <p class="colorTextPrimari fs-5">El usuario recibirá un correo electrónico con instrucciones para crear su contraseña de acceso.</p>
+    </div>
+    <br>
+    <div class="row justify-content-center">
+      <div class="col-md-2 col-sm-12">
+       <button class="btn btn-primary style w-100 h-100" >Agregar</button> <!--ojo el event.preventDefault() evita que el formulario recargue la pagina -->
+      </div>
+      <div class="col-md-2 col-sm-12">
+        <button class="btn btn-primary style w-100 h-100">Cancelar</button>
+      </div>
+    </div>
+  </form>
+ </div>
+
+

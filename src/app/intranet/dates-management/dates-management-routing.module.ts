@@ -15,31 +15,31 @@ const routes: Routes = [
     component: LayoutDatesComponent,
     children: [
       {
-        path: 'create',
+        path: 'crear-cita',
         component: CreateDatesComponent
       },
       {
-        path: 'status',
+        path: 'estatu-cita',
         component: StatusDatesComponent
       },
       {
-        path: 'confirm',
+        path: 'confirmar-cita',
         component: ConfirmDatesComponent
       },
       {
-        path: 'assign-Visitor',
+        path: 'asignar-visitador',
         component: AssignVisitorDatesComponent
       },
       {
-        path: 'edit-assign-visitor',
+        path: 'editar-visitador-asistente',
         component: EditAssignVisitorDatesComponent
       },
       {
-        path: 'assign-day',
+        path: 'asignar-fechas-cita',
         component: AssignDayDatesComponent
       },
       {
-        path: 'approve',
+        path: 'aprobar-cita',
         component: ApproveDatesComponent
       },
       // {
