@@ -60,8 +60,19 @@ export class AuthService {
   }
 
 
-  register(user: any): Observable<any>{
-    return this.http.post( AUTH_API + 'register-user', user, httpOptions).pipe(map((result:any) => {
+  validateRut(Rut: any): Observable<any>{
+    return this.http.post( AUTH_API_NP + 'validateRut', Rut).pipe(map((result:any) => {
+
+      console.log('Validate_Rut-Res->', result);
+
+    }),
+    catchError((err)=> this.handlerError(err))
+    );
+  }
+
+
+  register(dataUser: any): Observable<any>{
+    return this.http.post( AUTH_API + 'registerNeighbor', dataUser, httpOptions).pipe(map((result:any) => {
 
       console.log('Register_User-Res->', result);
 
@@ -71,10 +82,10 @@ export class AuthService {
   }
 
 
-  validateRut(Rut: any): Observable<any>{
-    return this.http.post( AUTH_API_NP + 'validate-user', Rut).pipe(map((result:any) => {
+  createRequest(dataRequest: any): Observable<any>{
+    return this.http.post( AUTH_API + 'create-request', dataRequest, httpOptions).pipe(map((result:any) => {
 
-      console.log('Validate_Rut-Res->', result);
+      console.log('createUser-Res->', result);
 
     }),
     catchError((err)=> this.handlerError(err))

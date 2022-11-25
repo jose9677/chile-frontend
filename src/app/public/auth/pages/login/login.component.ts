@@ -7,7 +7,6 @@ import { ModalComponent } from '../../shared/modals/modal/modal.component';
 import { AuthService } from '../../shared/services/auth.service';
 import { EnterRutComponent } from '../enter-rut/enter-rut.component';
 import { ForgetPasswordComponent } from '../forget-password/forget-password.component';
-import { RecoveryComponent } from '../recovery/recovery.component';
 
 @Component({
   selector: 'app-login',

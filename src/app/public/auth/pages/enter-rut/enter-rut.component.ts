@@ -54,7 +54,8 @@ export class EnterRutComponent implements OnInit {
     () => {
 
       this.modalService.close()
-      this.router.navigate(['/auth/register']);
+      this.router.navigate(['/auth/register'], { queryParams: { rut: this.formRutUser.value.rutUser } });
+
 
     });
   }
