@@ -2,8 +2,9 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalsService } from '../../../../shared/sevices/modals.service';
+import { ModalsService } from '../../../../shared/services/modals.service';
 import { ModalComponent } from '../../shared/modals/modal/modal.component';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-enter-rut',
@@ -26,6 +27,7 @@ export class EnterRutComponent implements OnInit {
     public modalService: NgbActiveModal,
     private modalService2: ModalsService,
     private router : Router,
+    private authServices: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -33,18 +35,29 @@ export class EnterRutComponent implements OnInit {
   }
 
   confirmRut(e: Event) {
-    this.isFormSubmitted = true;
-    if (!this.formRutUser.invalid) {
-      this.modalService.close()
-      this.router.navigate(['/auth/register']);
-    }else{
+
+    const dataRutUser= {
+      rut: this.formRutUser.value.rutUser
+    }
+
+    this.authServices.validateRut(dataRutUser).subscribe( result => {
+      console.log(result)
+    },
+    error => {  //recibe error del user services
       this.errors= true;
       let title: string = "Rut Incorrecto"
       let message = "El Rut ingresado no es correcto, por favor verifique y vuelva a intentarlo";
       this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
 
-    }
 
+    },
+    () => {
+
+      this.modalService.close()
+      this.router.navigate(['/auth/register'], { queryParams: { rut: this.formRutUser.value.rutUser } });
+
+
+    });
   }
 
 

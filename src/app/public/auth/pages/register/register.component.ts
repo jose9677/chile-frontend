@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CustomValidators } from 'ngx-custom-validators';
-import { ModalsService } from '../../../../shared/sevices/modals.service';
+import { Subscription } from 'rxjs';
+import { ModalsService } from '../../../../shared/services/modals.service';
 import { ModalComponent } from '../../shared/modals/modal/modal.component';
+import { AuthService } from '../../shared/services/auth.service';
 import { ValidateEmailComponent } from '../validate-email/validate-email.component';
 
 @Component({
@@ -61,63 +63,71 @@ export class RegisterComponent implements OnInit {
 
   public emailUser: any = '';
 
+  rutSubscription: Subscription;
+
+  private rut: string = '';
+
+  private detailPrevention: any;
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private modalService: ModalsService
+    private modalService: ModalsService,
+    private authServices: AuthService,
+    private routerQuery: ActivatedRoute
     ) {
 
       this.typeOfRoad = [
         {
-          'id': 0 ,
+          'id': 1 ,
           'name': 'Calle'
         },
         {
-          'id': 1,
+          'id': 2,
           'name': 'Avenida'
         }
       ];
 
       this.nameOfstreet = [
         {
-          'id': 0 ,
+          'id': 1 ,
           'name': 'Calle#1'
         },
         {
-          'id': 1,
+          'id': 2,
           'name': 'Calle#2'
         }
       ];
 
       this.typeOfHousing = [
         {
-          'id': 0 ,
+          'id': 1 ,
           'name': 'Casa'
         },
         {
-          'id': 1,
+          'id': 2,
           'name': 'Departamento'
         }
       ]
 
       this.typeOfPrevention= [
         {
-          'id': 0 ,
+          'id': 1 ,
           'name': 'Fonasa'
         },
         {
-          'id': 1,
+          'id': 2,
           'name': 'Isapre'
         }
       ];
 
       this.typeOfFonasa= [
         {
-          'id': 0 ,
+          'id': 1 ,
           'name': 'Na'
         },
         {
-          'id': 1,
+          'id': 2,
           'name': 'fB'
         },
         {
@@ -132,11 +142,11 @@ export class RegisterComponent implements OnInit {
 
       this.typeOfCompany= [
         {
-          'id': 0 ,
+          'id': 1 ,
           'name': 'Na'
         },
         {
-          'id': 1,
+          'id': 2,
           'name': 'cB'
         },
         {
@@ -151,28 +161,35 @@ export class RegisterComponent implements OnInit {
 
       this.haveInsurance= [
         {
-          'id': 0 ,
+          'id': true ,
           'name': 'Si'
         },
         {
-          'id': 1,
+          'id': false,
           'name': 'No'
         }
       ];
 
       this.proofOfAddress= [
         {
-          'id': 0 ,
+          'id': 1 ,
           'name': 'Tipo1'
         },
         {
-          'id': 1,
+          'id': 2,
           'name': 'Tipo2'
         }
       ];
+
+      this.rutSubscription = this.routerQuery.queryParams.subscribe(rut => this.rut= rut.rut)
+
+      console.log(this.rut)
+
+
     }
 
   ngOnInit(): void {
+
 
     this.userRegister= this.fb.group({
       names: ['',[Validators.required, ]],
@@ -183,29 +200,38 @@ export class RegisterComponent implements OnInit {
       email: ['', [Validators.required, CustomValidators.email]],
       landLine: ['', [Validators.required, Validators.minLength(9), CustomValidators.number]],
       mobilePhone: ['', [Validators.required, Validators.minLength(9), CustomValidators.number]],
+
+
+
       address: this.fb.group({
-        typeOfRoad: ['', Validators.required],
+        // typeOfRoad: ['', Validators.required],
         nameOfstreet: ['', Validators.required],
         numberStreet: ['', [Validators.required, CustomValidators.number]],
         typeOfHousing: ['', Validators.required],
         nameHome: ['', Validators.required],
       }),
+
       healthInformation: this.fb.group({
         typeOfPrevention: ['', Validators.required],
         typeOfFonasa: ['', ],
         typeOfCompany: ['', ],
         haveInsurance: ['', Validators.required]
       }),
+
       documents: this.fb.group({
-        // preventionCertificate: ['', Validators.required],
+        preventionCertificate: ['', Validators.required],
         proofOfAddress: ['', Validators.required],
         proofOfAddress1: ['', Validators.required],
+      }),
+      accesData: this.fb.group({
+        password: ['', [Validators.required]],
+        rePassword: ['', ],
       }),
       authCheck: ['',[Validators.required]]
     })
 
 
-    console.log(this.userRegister)
+
 
     this.isFormSubmitted = false;
 
@@ -216,26 +242,75 @@ export class RegisterComponent implements OnInit {
   }
 
 
-  // onRegister(e: Event) {
   onRegister(e: Event) {
-    console.log(this.userRegister)
-    if(!this.userRegister.invalid) {
-      this.isFormSubmitted = true;
-      e.preventDefault();
-      localStorage.setItem('isLoggedin', 'true');
-      if ((localStorage.getItem('isLoggedin'))) {
-        this.emailUser = this.userRegister.controls.email.value
-        console.log(this.emailUser)
-        this.modalValidateEmail(this.emailUser);
-        // this.router.navigate(['/']);
-      }
+    console.log(this.userRegister);
+
+    if (this.userRegister.controls.healthInformation.controls.typeOfPrevention.value === 0) {
+      this.detailPrevention = this.userRegister.controls.healthInformation.value.typeOfFonasa;
+    }
+    else if (this.userRegister.controls.healthInformation.controls.typeOfPrevention.value === 1){
+      this.detailPrevention = this.userRegister.controls.healthInformation.value.typeOfCompany;
+
     }else {
-      this.errors = true
+
+    }
+
+    const dataUser = {
+      rut : this.rut,
+      names: this.userRegister.value.names,
+      lastname: this.userRegister.value.lastNames,
+      f_nac: this.userRegister.value.datesBirth,
+      email: this.userRegister.value.email,
+      landline: this.userRegister.value.landLine,
+      mobile_phone: this.userRegister.value.mobilePhone,
+      password: this.userRegister.controls.accesData.value.password,
+
+      id_location: this.userRegister.controls.address.value.nameOfstreet,
+      way_number: this.userRegister.controls.address.value.numberStreet,
+      id_property_type: this.userRegister.controls.address.value.typeOfHousing,
+      property_number: this.userRegister.controls.address.value.nameHome,
+
+      id_prevention_type_detail : this.detailPrevention,
+
+      assurance: this.userRegister.controls.healthInformation.value.haveInsurance,
+
+      // preventionCertificate: this.userRegister.controls.documents.preventionCertificate,
+      // proofOfAddress: this.userRegister.controls.documents.proofOfAddress,
+      // proofOfAddress1: this.userRegister.controls.documents.proofOfAddress1,
+
+      // terms_condition: this.userRegister.value.authCheck
+    }
+
+    console.log(dataUser);
+
+
+    this.authServices.register(dataUser).subscribe(result => {
+      console.log(result);
+    },
+    error => {
+      this.errors = true;
       let title= "Registro Invalido";
       let message = "No se pudo realizar el registro del Usuario";
       this.modalService.OpenModalError2(ModalComponent, this.errors, title, message);
-    }
+
+    },
+    () => {
+      this.isFormSubmitted = true;
+      e.preventDefault();
+      this.emailUser = this.userRegister.value.email;
+      this.modalValidateEmail(this.emailUser);
+      this.router.navigate(['auth/login']);
+
+    });
+
   }
+
+
+
+  ngOnDestroy() {
+    this.rutSubscription.unsubscribe();
+  }
+
 
 
 

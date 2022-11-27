@@ -284,36 +284,41 @@
                   </div>
                 </div>
               </div>
-              <div>
+              <div formGroupName="accesData">
                 <br>
                 <h3 class="colorTextPrimari pb-3">Datos de Acceso</h3>
                 <div class="row">
                   <div class="col-md-6 mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+                    <label for="inputPassword1" class="form-label">Contraseña</label>
                     <input
                     type="password"
                     class="form-control"
-                    id="exampleInputPassword1"
+                    id="inputPassword1"
                     autocomplete="current-password"
-                    placeholder="Ingrese una contraseña">
-                  </div>
-                  <div class="col-md-6 mb-3 info colorTextPrimari">
-                    La contraseña de contener:
-                    <ul>
-                     <li>Al menos una letra Mayúscula</li>
-                     <li>Al menos una letra minúscula</li>
-                     <li>Al menos un número</li>
-                     <li>Al menos 8 digitos de longitud</li>
-                    </ul>
+                    placeholder="Ingrese una contraseña"
+                    formControlName="password"
+                    [ngClass]="{'is-invalid': ((userRegister.controls.accesData.touched && userRegister.controls.accesData.value.password === '') || (isFormSubmitted && userRegister.controls.accesData.value.password === ''))}">
+                      <div *ngIf="(userRegister.controls.accesData.touched && userRegister.controls.accesData.value.password === '') || (isFormSubmitted && userRegister.controls.accesData.value.password === '')" class="invalid-feedback col-md-6 mb-3 info ">
+                          La contraseña de contener:
+                          <ul>
+                           <li>Al menos una letra Mayúscula</li>
+                           <li>Al menos una letra minúscula</li>
+                           <li>Al menos un número</li>
+                           <li>Al menos 8 digitos de longitud</li>
+                          </ul>
+                      </div>
                   </div>
                   <div class="col-md-6 mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Confirmar Contraseña</label>
+                    <label for="InputPassword2" class="form-label">Confirmar Contraseña</label>
                     <input
                     type="password"
                     class="form-control"
-                    id="exampleInputPassword1"
+                    id="InputPassword2"
                     autocomplete="current-password"
-                    placeholder="Repita la contraseña">
+                    placeholder="Repita la contraseña"
+                    formControlName="rePassword"
+                    [ngClass]="{'is-invalid': ((userRegister.controls.accesData.touched && userRegister.controls.accesData.controls.rePassword.errors) || (isFormSubmitted && userRegister.controls.accesData.value.proofOfAddress1 === ''))}">
+                      <div *ngIf="(userRegister.controls.accesData.touched && userRegister.controls.accesData.controls.rePassword.errors) || (isFormSubmitted && userRegister.controls.accesData.value.rePassword === '')" class="invalid-feedback">Contraseña no Coincide</div>
                   </div>
                 </div>
               </div>

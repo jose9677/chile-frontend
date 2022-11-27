@@ -12,6 +12,8 @@ import { ErrorPageComponent } from './views/pages/error-page/error-page.componen
 
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { FormBuilder } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InterceptorService } from './shared/services/interceptor.service';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { FormBuilder } from '@angular/forms';
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
+    HttpClientModule
+
   ],
   providers: [
     FormBuilder,
@@ -35,8 +39,14 @@ import { FormBuilder } from '@angular/forms';
           xml: () => import('highlight.js/lib/languages/xml'),
           typescript: () => import('highlight.js/lib/languages/typescript'),
           scss: () => import('highlight.js/lib/languages/scss'),
-        }
-      }
+        },
+      },
+
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorService,
+      multi: true
     }
   ],
   bootstrap: [AppComponent]

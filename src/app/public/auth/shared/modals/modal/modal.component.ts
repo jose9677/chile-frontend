@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalsService } from '../../../../../shared/sevices/modals.service';
+import { ModalsService } from '../../../../../shared/services/modals.service';
 
 @Component({
   selector: 'app-modal',
