@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalsService } from '../../../../shared/services/modals.service';
+import { ModalsService } from 'src/app/shared/services/modals.service';
 import { ModalComponent } from '../../shared/modals/modal/modal.component';
 import { AuthService } from '../../shared/services/auth.service';
 
@@ -54,7 +54,7 @@ export class EnterRutComponent implements OnInit {
     () => {
 
       this.modalService.close()
-      this.router.navigate(['/auth/register'], { queryParams: { rut: this.formRutUser.value.rutUser } });
+      this.router.navigate(['/auth/registro'], { queryParams: { rut: this.formRutUser.value.rutUser } });
 
 
     });

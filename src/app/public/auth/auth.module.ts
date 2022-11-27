@@ -11,9 +11,9 @@ import { NgxMaskModule } from 'ngx-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ModalComponent } from './shared/modals/modal/modal.component';
 import { EnterRutComponent } from './pages/enter-rut/enter-rut.component';
-import { ModalsService } from '../../shared/services/modals.service';
 import { RecoveryComponent } from './pages/recovery/recovery.component';
 import { ValidateEmailComponent } from './pages/validate-email/validate-email.component';
+import { ModalsService } from 'src/app/shared/services/modals.service';
 
 const routes: Routes = [
   {
@@ -29,11 +29,11 @@ const routes: Routes = [
         component: ForgetPasswordComponent
       },
       {
-        path: 'registrarse',
+        path: 'registro',
         component: RegisterComponent
       },
       {
-        path: 'recovery',
+        path: 'cambiar-contraseña',
         component: RecoveryComponent
       },
       {

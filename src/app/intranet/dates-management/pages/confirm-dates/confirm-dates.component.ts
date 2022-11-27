@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalsService } from 'src/app/shared/sevices/modals.service';
 import { ModalComponent } from 'src/app/public/auth/shared/modals/modal/modal.component';
+import { ModalsService } from 'src/app/shared/services/modals.service';
 
 @Component({
   selector: 'app-confirm-dates',

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalsService } from 'src/app/shared/sevices/modals.service';
+import { ModalsService } from 'src/app/shared/services/modals.service';
 import { GenerateCredentialComponent } from './generate-credential/generate-credential.component';
 import { RejectRequestComponent } from './reject-request/reject-request.component';
 
