@@ -21,11 +21,6 @@ const routes: Routes = [
     component: AuthComponent,
     children: [
       {
-        path: '',
-        redirectTo: 'login',
-        pathMatch: 'full'
-      },
-      {
         path: 'login',
         component: LoginComponent
       },
@@ -36,6 +31,15 @@ const routes: Routes = [
       {
         path: 'register',
         component: RegisterComponent
+      },
+      {
+        path: 'recovery',
+        component: RecoveryComponent
+      },
+      {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full'
       },
     ]
   },
@@ -58,7 +62,7 @@ const routes: Routes = [
     CustomFormsModule,
     NgxMaskModule.forRoot(),
     RouterModule.forChild(routes),
-    
+
   ],
   providers: [
     ModalsService,

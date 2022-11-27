@@ -67,6 +67,8 @@ export class RegisterComponent implements OnInit {
 
   private rut: string = '';
 
+  private detailPrevention: any;
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -77,55 +79,55 @@ export class RegisterComponent implements OnInit {
 
       this.typeOfRoad = [
         {
-          'id': 0 ,
+          'id': 1 ,
           'name': 'Calle'
         },
         {
-          'id': 1,
+          'id': 2,
           'name': 'Avenida'
         }
       ];
 
       this.nameOfstreet = [
         {
-          'id': 0 ,
+          'id': 1 ,
           'name': 'Calle#1'
         },
         {
-          'id': 1,
+          'id': 2,
           'name': 'Calle#2'
         }
       ];
 
       this.typeOfHousing = [
         {
-          'id': 0 ,
+          'id': 1 ,
           'name': 'Casa'
         },
         {
-          'id': 1,
+          'id': 2,
           'name': 'Departamento'
         }
       ]
 
       this.typeOfPrevention= [
         {
-          'id': 0 ,
+          'id': 1 ,
           'name': 'Fonasa'
         },
         {
-          'id': 1,
+          'id': 2,
           'name': 'Isapre'
         }
       ];
 
       this.typeOfFonasa= [
         {
-          'id': 0 ,
+          'id': 1 ,
           'name': 'Na'
         },
         {
-          'id': 1,
+          'id': 2,
           'name': 'fB'
         },
         {
@@ -140,11 +142,11 @@ export class RegisterComponent implements OnInit {
 
       this.typeOfCompany= [
         {
-          'id': 0 ,
+          'id': 1 ,
           'name': 'Na'
         },
         {
-          'id': 1,
+          'id': 2,
           'name': 'cB'
         },
         {
@@ -159,22 +161,22 @@ export class RegisterComponent implements OnInit {
 
       this.haveInsurance= [
         {
-          'id': 0 ,
+          'id': true ,
           'name': 'Si'
         },
         {
-          'id': 1,
+          'id': false,
           'name': 'No'
         }
       ];
 
       this.proofOfAddress= [
         {
-          'id': 0 ,
+          'id': 1 ,
           'name': 'Tipo1'
         },
         {
-          'id': 1,
+          'id': 2,
           'name': 'Tipo2'
         }
       ];
@@ -229,7 +231,7 @@ export class RegisterComponent implements OnInit {
     })
 
 
-    console.log(this.userRegister)
+
 
     this.isFormSubmitted = false;
 
@@ -241,116 +243,68 @@ export class RegisterComponent implements OnInit {
 
 
   onRegister(e: Event) {
-    console.log(this.userRegister)
+    console.log(this.userRegister);
 
-    // const dataUser = {
-    //   rut : this.rut,
-    //   names: this.userRegister.value.names,
-    //   lastname: this.userRegister.value.lastNames,
-    //   f_nac: this.userRegister.value.datesBirth,
-    //   email: this.userRegister.value.email,
-    //   landline: this.userRegister.value.landLine,
-    //   mobile_phone: this.userRegister.value.mobilePhone,
-    //   password: this.userRegister.controls.accesData.value.password
-    // }
+    if (this.userRegister.controls.healthInformation.controls.typeOfPrevention.value === 0) {
+      this.detailPrevention = this.userRegister.controls.healthInformation.value.typeOfFonasa;
+    }
+    else if (this.userRegister.controls.healthInformation.controls.typeOfPrevention.value === 1){
+      this.detailPrevention = this.userRegister.controls.healthInformation.value.typeOfCompany;
 
-    // console.log(dataUser)
-
-
-    // this.authServices.register(dataUser).subscribe(result => {
-    //   console.log(result);
-    // },
-    // error => {
-    //   this.errors = true
-    //   let title= "Registro Invalido";
-    //   let message = "No se pudo realizar el registro del Usuario";
-    //   this.modalService.OpenModalError2(ModalComponent, this.errors, title, message);
-
-
-
-    // },
-    // () => {
-    //   this.isFormSubmitted = true;
-    //   e.preventDefault();
-    //   this.createRequest();
-
-    // });
-      this.createRequest();
-  }
-
-
-  createRequest() {
-    console.log(this.userRegister)
-
-    const dataRequest = {
-      id_location: this.userRegister.controls.address.value.nameOfstreet,
-      way_number: this.userRegister.controls.address.value.numberStreet,
-      typeOfHousing: this.userRegister.controls.address.value.typeOfHousing,
-      nameHome: this.userRegister.controls.address.value.nameHome,
-
-      id_prevention_type: this.userRegister.controls.healthInformation.value.typeOfPrevention,
-      typeOfFonasa: this.userRegister.controls.healthInformation.value.typeOfFonasa,
-      typeOfCompany: this.userRegister.controls.healthInformation.value.typeOfCompany,
-      assurance: this.userRegister.controls.healthInformation.value.haveInsurance,
-
-      terms_condition: this.userRegister.value.authCheck
+    }else {
 
     }
 
-    console.log(dataRequest)
+    const dataUser = {
+      rut : this.rut,
+      names: this.userRegister.value.names,
+      lastname: this.userRegister.value.lastNames,
+      f_nac: this.userRegister.value.datesBirth,
+      email: this.userRegister.value.email,
+      landline: this.userRegister.value.landLine,
+      mobile_phone: this.userRegister.value.mobilePhone,
+      password: this.userRegister.controls.accesData.value.password,
+
+      id_location: this.userRegister.controls.address.value.nameOfstreet,
+      way_number: this.userRegister.controls.address.value.numberStreet,
+      id_property_type: this.userRegister.controls.address.value.typeOfHousing,
+      property_number: this.userRegister.controls.address.value.nameHome,
+
+      id_prevention_type_detail : this.detailPrevention,
+
+      assurance: this.userRegister.controls.healthInformation.value.haveInsurance,
+
+      // preventionCertificate: this.userRegister.controls.documents.preventionCertificate,
+      // proofOfAddress: this.userRegister.controls.documents.proofOfAddress,
+      // proofOfAddress1: this.userRegister.controls.documents.proofOfAddress1,
+
+      // terms_condition: this.userRegister.value.authCheck
+    }
+
+    console.log(dataUser);
 
 
-    this.authServices.register(dataRequest).subscribe(result => {
+    this.authServices.register(dataUser).subscribe(result => {
       console.log(result);
     },
     error => {
-      this.errors = true
+      this.errors = true;
       let title= "Registro Invalido";
       let message = "No se pudo realizar el registro del Usuario";
       this.modalService.OpenModalError2(ModalComponent, this.errors, title, message);
 
     },
     () => {
-      this.createRequestDoc();
+      this.isFormSubmitted = true;
+      e.preventDefault();
+      this.emailUser = this.userRegister.value.email;
+      this.modalValidateEmail(this.emailUser);
+      this.router.navigate(['auth/login']);
 
     });
 
   }
 
-  createRequestDoc() {
-    console.log(this.userRegister)
-
-    const dataRequestDoc = {
-
-      preventionCertificate: this.userRegister.controls.documents.preventionCertificate,
-      proofOfAddress: this.userRegister.controls.documents.proofOfAddress,
-      proofOfAddress1: this.userRegister.controls.documents.proofOfAddress1
-
-    }
-
-    console.log(dataRequestDoc)
-
-
-    // this.authServices.register(dataRequestDoc).subscribe(result => {
-    //   console.log(result);
-    // },
-    // error => {
-    //   this.errors = true
-    //   let title= "Registro Invalido";
-    //   let message = "No se pudo realizar el registro del Usuario";
-    //   this.modalService.OpenModalError2(ModalComponent, this.errors, title, message);
-
-
-
-    // },
-    // () => {
-
-
-    // });
-
-
-
-  }
 
 
   ngOnDestroy() {

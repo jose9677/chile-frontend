@@ -27,11 +27,12 @@ export class RecoveryComponent implements OnInit {
 
 
   public formRecoveryPassword = this.fb.group ({
-    rutUser: ['',[Validators.required]]
+    password: ['',[Validators.required]],
+    rePassword: ['',[Validators.required]]
   })
 
   constructor(
-    public modalService: NgbActiveModal,
+    // public modalService: NgbActiveModal,
     private modalService2: ModalsService,
     private fb: FormBuilder,
     private router: Router,
@@ -90,7 +91,7 @@ export class RecoveryComponent implements OnInit {
       let message: any = `Hemos enviado un mensaje con instrucciones a ${this.emailUser}. Si no lo encuentra en su bandeja de entrada, recuerde revisar en el correo no deseado `;
       this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message)
 
-      this.modalService.close();
+      // this.modalService.close();
       this.router.navigate(['/auth/login']);
 
     });

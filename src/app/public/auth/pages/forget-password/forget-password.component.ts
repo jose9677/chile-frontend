@@ -42,9 +42,9 @@ export class ForgetPasswordComponent implements OnInit {
   validateUser(e: Event) {
 
     const dataForgetPassword = {
-      rutUser: this.formForgetPassword.value.rutUser,
+      rut: this.formForgetPassword.value.rutUser,
     }
-
+    console.log(dataForgetPassword)
     this.authService.validateUser(dataForgetPassword).subscribe( result => {
       console.log(result)
     },
@@ -58,15 +58,11 @@ export class ForgetPasswordComponent implements OnInit {
       let message: any  = `El Rut que introdujo no es correcto, por favor verifique e intente nuevamente`;
       this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
 
-
-
     },
     () => {
       this.isFormSubmitted = true;
       // modal
       console.log(this.formForgetPassword)
-
-
       // this.router.navigate([this.returnUrl]);
       this.emailUser = 'Eduyeoh@gmail.com'
       let title: any = 'Recuperar Contraseña';
