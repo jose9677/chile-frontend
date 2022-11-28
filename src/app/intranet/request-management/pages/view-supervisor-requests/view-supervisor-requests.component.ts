@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssignVisitorDatesComponent } from 'src/app/intranet/dates-management/pages/assign-visitor-dates/assign-visitor-dates.component';
+import { DatesService } from 'src/app/intranet/dates-management/shared/services/dates.service';
 import { ModalsService } from 'src/app/shared/services/modals.service';
 import { SortByTablesService } from '../../shared/services/sort-by-tables.service';
 
@@ -29,107 +30,48 @@ export class ViewSupervisorRequestsComponent implements OnInit {
   constructor(
     private router: Router,
     public sortByService: SortByTablesService,
-    private modal : ModalsService
+    private modalService : ModalsService,
+    private date: DatesService,
+
 
 
   ) {
-    this.unassignedRequest = [
-      {
-        'nroRequest': "3",
-        'requestDate': "1/10/2022",
-        'namesLastnames': "Eduy Omaña",
-        'comune': "La Reina",
-        'neighborhood': "Osandon",
-        'dateOfVisit': '',
-        'visitor': "Pedro Perez",
-        'status': "Cita Pendiente",
 
-      },
-      {
-        'nroRequest': "4",
-        'requestDate': "3/10/2022",
-        'namesLastnames': "Emili Omaña",
-        'comune': "La Reina",
-        'neighborhood': "Osandon",
-        'dateOfVisit': '',
-        'visitor': "Pedro Perez",
-        'status': "Cita Pendiente",
+    this.unassignedRequest = [];
 
-      },
-      {
-        'nroRequest': "5",
-        'requestDate': "12/10/2022",
-        'namesLastnames': "Edinson Omaña",
-        'comune': "La Reina",
-        'neighborhood': "Osandon",
-        'dateOfVisit': '',
-        'visitor': "Pedro Perez",
-        'status': "Cita Pendiente",
-      },
-
-
-    ];
-
-
-    this.unassignedRequest2 = [
-      {
-        'nroRequest': "3",
-        'requestDate': "1/10/2022",
-        'namesLastnames': "Eduy Omaña",
-        'comune': "La Reina",
-        'neighborhood': "Osandon",
-        'dateOfVisit': '',
-        'visitor': "Pedro Perez",
-        'status': "Cita Pendiente",
-
-      },
-      {
-        'nroRequest': "4",
-        'requestDate': "3/10/2022",
-        'namesLastnames': "Emili Omaña",
-        'comune': "La Reina",
-        'neighborhood': "Osandon",
-        'dateOfVisit': '',
-        'visitor': "Pedro Perez",
-        'status': "Cita Pendiente",
-
-      },
-      {
-        'nroRequest': "5",
-        'requestDate': "12/10/2022",
-        'namesLastnames': "Edinson Omaña",
-        'comune': "La Reina",
-        'neighborhood': "Osandon",
-        'dateOfVisit': '',
-        'visitor': "Pedro Perez",
-        'status': "Cita Pendiente",
-      },
-
-
-    ];
+    this.unassignedRequest2 = [];
 
 
   }
 
   ngOnInit(): void {
 
+    this.date.getAll().subscribe( result => {
 
+      result.map((res: any)=>{
 
+          if (res.employee_rut != null) {
+            this.unassignedRequest2.push(res);
+          }else{
+            this.unassignedRequest.push(res);
+          }
+      })
+
+    })
+  }
+
+  getAllRequest() {
   }
 
   assingSocialAssistant (nroRequest: any) {
 
-    // this.router.navigate(['dates/assign-Visitor'])
-    this.modal.openModalData(AssignVisitorDatesComponent, nroRequest)
-
-
+    this.modalService.openModalData(AssignVisitorDatesComponent, nroRequest);
 
   }
 
   editAssingSocialAssistant (nroRequest: any) {
 
-    this.router.navigate(['dates/edit-assign-visitor'])
-
+    this.router.navigate(['citas/editar-asistente-social'])
 
 
   }

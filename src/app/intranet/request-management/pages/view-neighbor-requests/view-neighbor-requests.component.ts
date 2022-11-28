@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DatesService } from 'src/app/intranet/dates-management/shared/services/dates.service';
 import { ModalsService } from 'src/app/shared/services/modals.service';
 import { SortByTablesService } from '../../shared/services/sort-by-tables.service';
 
@@ -17,7 +18,9 @@ export class ViewNeighborRequestsComponent implements OnInit {
   constructor(
     private router: Router,
     public sortByService : SortByTablesService,
-    private modal : ModalsService
+    private modal : ModalsService,
+    private date: DatesService,
+
 
 
   ) {
@@ -170,29 +173,30 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.getRequestForRut();
 
 
   }
 
-  viewDate (nroRequest: any) {
+  getRequestForRut() {
+    this.date.getForRut();
+  }
 
-    this.router.navigate(['dates/status'])
+  viewDate (id_request: any) {
 
-
+    this.router.navigate(['citas/estatus-cita'],{queryParams: {id_request : id_request}});
 
   }
 
-  confirmDate (nroRequest: any) {
+  confirmDate (id_request: any) {
 
-    this.router.navigate(['dates/confirm'])
-
-
+    this.router.navigate(['citas/confirmar-cita'], {queryParams: {id_request: id_request}});
 
   }
 
   createDate () {
 
-    this.router.navigate(['dates/create'])
+    this.router.navigate(['citas/crear-cita'])
   }
 
 

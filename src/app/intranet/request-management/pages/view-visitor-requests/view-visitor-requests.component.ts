@@ -114,7 +114,7 @@ export class ViewVisitorRequestsComponent implements OnInit {
 
   assignDayDate (nroRequest: any) {
 
-    this.router.navigate(['dates/assign-day'])
+    this.router.navigate(['citas/asignar-fecha-de-cita'])
 
 
 
@@ -122,7 +122,7 @@ export class ViewVisitorRequestsComponent implements OnInit {
 
   approveDates (nroRequest: any) {
 
-    this.router.navigate(['dates/approve'])
+    this.router.navigate(['citas/aprobar-cita'])
 
 
 

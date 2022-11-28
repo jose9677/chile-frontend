@@ -19,7 +19,7 @@ const routes: Routes = [
         component: CreateDatesComponent
       },
       {
-        path: 'estatu-cita',
+        path: 'estatus-cita',
         component: StatusDatesComponent
       },
       {
@@ -27,15 +27,15 @@ const routes: Routes = [
         component: ConfirmDatesComponent
       },
       {
-        path: 'asignar-visitador',
+        path: 'asignar-asistente-social',
         component: AssignVisitorDatesComponent
       },
       {
-        path: 'editar-visitador-asistente',
+        path: 'editar-asistente-social',
         component: EditAssignVisitorDatesComponent
       },
       {
-        path: 'asignar-fechas-cita',
+        path: 'asignar-fecha-de-cita',
         component: AssignDayDatesComponent
       },
       {

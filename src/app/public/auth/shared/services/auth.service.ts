@@ -25,7 +25,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
-  errorMessage = '';
+
+  private errorMessage = '';
 
 
 
@@ -42,7 +43,7 @@ export class AuthService {
   login(authData: any): Observable<any | void >{
     return this.http.post<any>( AUTH_API + 'login', authData).pipe(map((result:any) => {
 
-      console.log('login User');
+      console.log(result);
 
       window.sessionStorage.removeItem('error_status');
 
