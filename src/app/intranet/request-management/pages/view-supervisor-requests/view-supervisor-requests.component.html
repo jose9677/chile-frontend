@@ -14,10 +14,10 @@
               <tr>
                 <th (click)="sortByService.dataSortBy('id_request')">Nro. Solicitud</th>
                 <th (click)="sortByService.dataSortBy('request_date')">Fecha Solicitud</th>
-                <th (click)="sortByService.dataSortBy('comune')">Comuna</th>
-                <th (click)="sortByService.dataSortBy('way_number')">Barrio</th>
-                <th (click)="sortByService.dataSortBy('')">Fecha de Visita</th>
-                <th (click)="sortByService.dataSortBy('employee_rut')">Visitador</th>
+                <th (click)="sortByService.dataSortBy('rut')">RUT</th>
+                <th (click)="sortByService.dataSortBy('user_name')">Nombres y Apellidos</th>
+                <th (click)="sortByService.dataSortBy('way_number')">Direccion</th>
+                <th (click)="sortByService.dataSortBy('employee_rut')">Asistente Social</th>
                 <th (click)="sortByService.dataSortBy('status')">Estatus</th>
                 <th >Opciones</th>
               </tr>
@@ -27,13 +27,13 @@
                 <tr *ngFor="let request of unassignedRequest | filter:sortByService.search:sortByService.page | sortBy:sortByService.dataSort:sortByService.order" >
                   <td >{{request.id_request }}</td>
                   <td>{{request.request_date}}</td>
-                  <td>{{request.comune}}</td>
+                  <td>{{request.rut}}</td>
+                  <td>{{request.user_name + ',' + request.user_lastname}}</td>
                   <td>{{request.street +', '+ request.way_number}}</td>
-                  <td>Falta</td>
                   <td>{{request.employee_rut}}</td>
                   <td>{{request.status}}</td>
                   <td>
-                    <button (click)="assingSocialAssistant(request.nroRequest)"><i class="mdi mdi-account-plus"></i></button>
+                    <button (click)="assingSocialAssistant(request.id_request, request.rut)"><i class="mdi mdi-account-plus"></i></button>
 
                   </td>
                 </tr>
@@ -69,13 +69,13 @@
           <table class="table">
             <thead>
               <tr>
-                <th (click)="sortByService.dataSortBy2('id_request')">Nro. Solicitud</th>
-                <th (click)="sortByService.dataSortBy2('request_date')">Fecha Solicitud</th>
-                <th (click)="sortByService.dataSortBy2('comune')">Comuna</th>
-                <th (click)="sortByService.dataSortBy2('way_number')">Barrio</th>
-                <th (click)="sortByService.dataSortBy2('')">Fecha de Visita</th>
-                <th (click)="sortByService.dataSortBy2('employee_rut')">Visitador</th>
-                <th (click)="sortByService.dataSortBy2('status')">Estatus</th>
+                <th (click)="sortByService.dataSortBy('id_request')">Nro. Solicitud</th>
+                <th (click)="sortByService.dataSortBy('request_date')">Fecha Solicitud</th>
+                <th (click)="sortByService.dataSortBy('rut')">RUT</th>
+                <th (click)="sortByService.dataSortBy('user_name')">Nombres y Apellidos</th>
+                <th (click)="sortByService.dataSortBy('way_number')">Direccion</th>
+                <th (click)="sortByService.dataSortBy('employee_rut')">Asistente Social</th>
+                <th (click)="sortByService.dataSortBy('status')">Estatus</th>
                 <th >Opciones</th>
               </tr>
             </thead>
@@ -84,9 +84,9 @@
                 <tr *ngFor="let request of unassignedRequest2 | filter2:sortByService.search2:sortByService.page2 | sortBy2:sortByService.dataSort2:sortByService.order2" >
                   <td >{{request.id_request }}</td>
                   <td>{{request.request_date}}</td>
-                  <td>{{request.comune}}</td>
+                  <td>{{request.rut}}</td>
+                  <td>{{request.user_name + ',' + request.user_lastname}}</td>
                   <td>{{request.street +', '+ request.way_number}}</td>
-                  <td>Falta</td>
                   <td>{{request.employee_rut}}</td>
                   <td>{{request.status}}</td>
                   <td>

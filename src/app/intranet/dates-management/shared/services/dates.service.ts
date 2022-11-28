@@ -62,10 +62,17 @@ export class DatesService {
     );
   }
 
-  assignSocialAssistant() {
+  assignSocialAssistant(assignData: any): Observable<any | void> {
 
-    console.log('assignsocialassistant')
+    return this.http.post<any>(AUTH_API_NP + 'add_employeeRut', assignData, httpOptions).pipe(map((result: any) => {
 
+      console.log('assignsocialassistant');
+
+      return result['data'];
+
+    }),
+      catchError((err) => this.handlerError(err))
+    );
   }
 
   getforSocialAssistant() {
@@ -84,6 +91,17 @@ export class DatesService {
 
     console.log('decline')
 
+  }
+
+  getEmployees(): Observable<any | void> {
+
+    return this.http.get<any>(AUTH_API_NP + 'employees', httpOptions).pipe(map((result: any) => {
+      
+      return result['data'];
+
+    }),
+      catchError((err) => this.handlerError(err))
+    );
   }
 
   private handlerError(err:any): Observable<never> { //pasa error al login component

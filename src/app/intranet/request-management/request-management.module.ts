@@ -6,12 +6,13 @@ import { ViewSupervisorRequestsComponent } from './pages/view-supervisor-request
 import { ViewVisitorRequestsComponent } from './pages/view-visitor-requests/view-visitor-requests.component';
 import { ViewNeighborRequestsComponent } from './pages/view-neighbor-requests/view-neighbor-requests.component';
 import { LayoutsComponent } from './layouts/layouts.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterPipe } from './shared/pipes/filter.pipe';
 import { SortByPipe } from './shared/pipes/sort-by.pipe';
 import { SortBy2Pipe } from './shared/pipes/sort-by2.pipe';
 import { Filter2Pipe } from './shared/pipes/filter2.pipe';
 import { HttpClientModule } from '@angular/common/http';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -31,7 +32,10 @@ import { HttpClientModule } from '@angular/common/http';
     CommonModule,
     RequestManagementRoutingModule,
     FormsModule,
-    HttpClientModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    NgSelectModule
+
   ]
 })
 export class RequestManagementModule { }

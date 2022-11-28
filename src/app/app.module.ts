@@ -14,6 +14,7 @@ import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { FormBuilder } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from './shared/services/interceptor.service';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { InterceptorService } from './shared/services/interceptor.service';
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
-    HttpClientModule
+    HttpClientModule,
+    NgSelectModule
 
   ],
   providers: [

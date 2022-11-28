@@ -17,11 +17,7 @@ export class ViewSupervisorRequestsComponent implements OnInit {
   unassignedRequest: any[];
   unassignedRequest2: any[];
 
-
-
-  dataTable1: any;
-
-  numberRequest:any
+  public userloggedRut: any;
 
   name!:string;
 
@@ -37,6 +33,9 @@ export class ViewSupervisorRequestsComponent implements OnInit {
 
   ) {
 
+    this.userloggedRut = sessionStorage.getItem('auth-user')
+    console.log(this.userloggedRut)
+
     this.unassignedRequest = [];
 
     this.unassignedRequest2 = [];
@@ -47,6 +46,7 @@ export class ViewSupervisorRequestsComponent implements OnInit {
   ngOnInit(): void {
 
     this.date.getAll().subscribe( result => {
+      console.log(result)
 
       result.map((res: any)=>{
 
@@ -63,9 +63,10 @@ export class ViewSupervisorRequestsComponent implements OnInit {
   getAllRequest() {
   }
 
-  assingSocialAssistant (nroRequest: any) {
+  assingSocialAssistant (nroRequest: any, userloggedRut: any) {
+    
 
-    this.modalService.openModalData(AssignVisitorDatesComponent, nroRequest);
+    this.modalService.openModalData2(AssignVisitorDatesComponent, nroRequest, userloggedRut);
 
   }
 

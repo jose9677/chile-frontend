@@ -53,7 +53,7 @@ export class AuthService {
       const tokenDecode = this.tokenService.decodeToken(token);
 
       const userSession: any = tokenDecode;
-      this.tokenService.saveUser(userSession);
+      // this.tokenService.saveUser(userSession);
 
     }),
     catchError((err)=> this.handlerError(err))
