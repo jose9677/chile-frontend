@@ -28,7 +28,7 @@ export class DatesService {
 
 
   getForRut(rutNeighbor: any): Observable<any | void> {
-    return this.http.get<any>( AUTH_API_NP + 'joinUsersRequest/'+ rutNeighbor, httpOptions).pipe(map((result:any) => {
+    return this.http.get<any>( AUTH_API_NP + '| /'+ rutNeighbor, httpOptions).pipe(map((result:any) => {
       console.log(result);
       return result;
 

@@ -13,11 +13,9 @@
               <tr>
                 <th (click)="sortByService.dataSortBy('nroRequest')">Nro. Solicitud</th>
                 <th (click)="sortByService.dataSortBy('requestDate')">Fecha Solicitud</th>
-                <th (click)="sortByService.dataSortBy('fonasa')">Fonasa</th>
-                <th (click)="sortByService.dataSortBy('isapre')">Isapre</th>
-                <th (click)="sortByService.dataSortBy('service')">Servicio</th>
+                <th (click)="sortByService.dataSortBy('fonasa')">Tipo de Prevencion</th>               
                 <th (click)="sortByService.dataSortBy('dateOfVisit')">Fecha de Visita</th>
-                <th (click)="sortByService.dataSortBy('visitor')">Visitador</th>
+                <th (click)="sortByService.dataSortBy('visitor')">Asistente Social</th>
                 <th (click)="sortByService.dataSortBy('status')">Estatus</th>
                 <th >Opciones</th>
               </tr>
@@ -27,9 +25,7 @@
                 <tr *ngFor="let request of unassignedRequest | filter:sortByService.search:sortByService.page | sortBy:sortByService.dataSort:sortByService.order" >
                   <td >{{request.id }}</td>
                   <td>{{request.created_at}}</td>
-                  <td>{{request.fonasa}}</td>
-                  <td>{{request.isapre}}</td>
-                  <td>{{request.service}}</td>
+                  <td>Tipo de Prevencion + detalle </td>                  
                   <td>{{request.request_date}}</td>
                   <td>{{request.visitor}}</td>
                   <td>{{request.status}}</td>
