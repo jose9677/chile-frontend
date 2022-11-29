@@ -25,12 +25,12 @@
             <tbody>
                   <!-- <tr *ngFor="let request of unassignedRequest; index as i " > -->
                 <tr *ngFor="let request of unassignedRequest | filter:sortByService.search:sortByService.page | sortBy:sortByService.dataSort:sortByService.order" >
-                  <td >{{request.nroRequest }}</td>
-                  <td>{{request.requestDate}}</td>
+                  <td >{{request.id }}</td>
+                  <td>{{request.created_at}}</td>
                   <td>{{request.fonasa}}</td>
                   <td>{{request.isapre}}</td>
                   <td>{{request.service}}</td>
-                  <td>{{request.dateOfVisit}}</td>
+                  <td>{{request.request_date}}</td>
                   <td>{{request.visitor}}</td>
                   <td>{{request.status}}</td>
                   <td>

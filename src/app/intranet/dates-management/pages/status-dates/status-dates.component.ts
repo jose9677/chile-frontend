@@ -38,7 +38,7 @@ export class StatusDatesComponent implements OnInit {
   }
 
   requestForRut() {
-    this.date.getForIdRequest();
+
   }
 
   return() {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatesService } from 'src/app/intranet/dates-management/shared/services/dates.service';
 import { ModalsService } from 'src/app/shared/services/modals.service';
+import { any } from 'underscore';
 import { SortByTablesService } from '../../shared/services/sort-by-tables.service';
 
 @Component({
@@ -11,8 +12,10 @@ import { SortByTablesService } from '../../shared/services/sort-by-tables.servic
 })
 export class ViewNeighborRequestsComponent implements OnInit {
 
+  private rutNeighbor: any;
+
   unassignedRequest: any[];
-  unassignedRequest2: any[];
+
 
 
   constructor(
@@ -24,163 +27,34 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
 
   ) {
-    this.unassignedRequest = [
-      {
-        'nroRequest': "3",
-        'requestDate': "1/10/2022",
-        'fonasa': "tippo A",
-        'isapre': "No posee",
-        'service': "asss",
-        'dateOfVisit': '',
-        'visitor': "Pedro Perez",
-        'status': "Cita Pendiente",
 
-      },
-      {
-        'nroRequest': "4",
-        'requestDate': "3/10/2022",
-        'fonasa': "tippo A",
-        'isapre': "No posee",
-        'service': "asss",
-        'dateOfVisit': '',
-        'visitor': "Pedro Perez",
-        'status': "Cita Pendiente",
+    this.rutNeighbor = window.sessionStorage.getItem('auth-user');
 
-      },
-      {
-        'nroRequest': "2",
-        'requestDate': "12/10/2022",
-        'fonasa': "tippo A",
-        'isapre': "No posee",
-        'service': "asss",
-        'visitor': "Pedro Perez",
-        'status': "Cita Pendiente",
-      },
-      {
-        'nroRequest': "5",
-        'requestDate': "12/10/2022",
-        'fonasa': "tippo A",
-        'isapre': "No posee",
-        'service': "asss",
-        'visitor': "Pedro Perez",
-        'status': "Cita Pendiente",
-      },
-      {
-        'nroRequest': "5",
-        'requestDate': "12/10/2022",
-        'fonasa': "tippo A",
-        'isapre': "No posee",
-        'service': "asss",
-        'visitor': "Pedro Perez",
-        'status': "Cita Pendiente",
-      },
-      {
-        'nroRequest': "5",
-        'requestDate': "12/10/2022",
-        'fonasa': "tippo A",
-        'isapre': "No posee",
-        'service': "asss",
-        'visitor': "Zedro Perez",
-        'status': "Cita Pendiente",
-      },
-      {
-        'nroRequest': "1",
-        'requestDate': "12/10/2022",
-        'fonasa': "tippo c",
-        'isapre': "No posee",
-        'service': "asss",
-        'visitor': "Pedro Perez",
-        'status': "Cita Pendiente",
-      },
-
-
-
-
-    ];
-
-    this.unassignedRequest2 = [
-      {
-        'nroRequest': "3",
-        'requestDate': "1/10/2022",
-        'fonasa': "tippo A",
-        'isapre': "No posee",
-        'service': "asss",
-        'dateOfVisit': '',
-        'visitor': "Pedro Perez",
-        'status': "Cita Pendiente",
-
-      },
-      {
-        'nroRequest': "4",
-        'requestDate': "3/10/2022",
-        'fonasa': "tippo A",
-        'isapre': "No posee",
-        'service': "asss",
-        'dateOfVisit': '',
-        'visitor': "Pedro Perez",
-        'status': "Cita Pendiente",
-
-      },
-      {
-        'nroRequest': "2",
-        'requestDate': "12/10/2022",
-        'fonasa': "tippo A",
-        'isapre': "No posee",
-        'service': "asss",
-        'visitor': "Pedro Perez",
-        'status': "Cita Pendiente",
-      },
-      {
-        'nroRequest': "5",
-        'requestDate': "12/10/2022",
-        'fonasa': "tippo A",
-        'isapre': "No posee",
-        'service': "asss",
-        'visitor': "Pedro Perez",
-        'status': "Cita Pendiente",
-      },
-      {
-        'nroRequest': "5",
-        'requestDate': "12/10/2022",
-        'fonasa': "tippo A",
-        'isapre': "No posee",
-        'service': "asss",
-        'visitor': "Pedro Perez",
-        'status': "Cita Pendiente",
-      },
-      {
-        'nroRequest': "5",
-        'requestDate': "12/10/2022",
-        'fonasa': "tippo A",
-        'isapre': "No posee",
-        'service': "asss",
-        'visitor': "Zedro Perez",
-        'status': "Cita Pendiente",
-      },
-      {
-        'nroRequest': "1",
-        'requestDate': "12/10/2022",
-        'fonasa': "tippo c",
-        'isapre': "No posee",
-        'service': "asss",
-        'visitor': "Pedro Perez",
-        'status': "Cita Pendiente",
-      },
-    ]
+    this.unassignedRequest = [];
 
 
   }
 
   ngOnInit(): void {
 
-    this.getRequestForRut();
+
+    this.date.getForRut(this.rutNeighbor.replace(/["']/g, "")).subscribe( result => {
+      console.log(result);
+
+      result.map((res: any)=>{
+        result.fullName = result.names +' '+ result.lastname
+        this.unassignedRequest.push(res);
+      })
+      console.log(this.unassignedRequest)
+
+    })
+
+
 
 
   }
 
-  getRequestForRut() {
-    this.date.getForRut();
-  }
+
 
   viewDate (id_request: any) {
 

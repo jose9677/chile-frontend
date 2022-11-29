@@ -3,13 +3,13 @@
   <p class="p-4" style=" text-align: justify;">Seleccione el visitador encargado de atender la(s) solicitud(es) seleccionada(s)</p>
   <form class="forms-sample" [formGroup]="formAssignSocialAssistant" (ngSubmit)="assignSocialAssistant(formAssignSocialAssistant.value.rutSocialAssistant, $event);">
     <div class="row">
-      <div class="col-md-6 mb-3 ">
-        <label for="nameOfstreet" class="form-label">Seleccione un Visitador</label>
+      <div class="col-md-12 mb-3 ">
+        <label for="nameOfstreet" class="form-label">Seleccione un Asistente Social</label>
         <ng-select [items]="listRutSocialAssistant"
             class="form-control p-0"
-            bindLabel="names"
+            bindLabel="completeNames"
             bindValue="rut"
-            placeholder="Seleccione"
+            placeholder="Seleccione un Asistente Social"
             [(ngModel)]="selecterutSocialAssistant"
             formControlName="rutSocialAssistant"
             [ngClass]="{'is-invalid': ((formAssignSocialAssistant.controls.rutSocialAssistant.touched && formAssignSocialAssistant.value.rutSocialAssistant === null) || (isFormSubmitted && formAssignSocialAssistant.value.rutSocialAssistant === null))}"

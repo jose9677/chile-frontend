@@ -29,8 +29,8 @@
                   <td>{{request.request_date}}</td>
                   <td>{{request.rut}}</td>
                   <td>{{request.user_name + ',' + request.user_lastname}}</td>
-                  <td>{{request.street +', '+ request.way_number}}</td>
-                  <td>{{request.employee_rut}}</td>
+                  <td>{{request.street +' '+ request.way_number  +', '+ request.description +' '+ request.property_number}}</td>
+                  <td>{{(request.asistant_name ?? ' ') + " " + (request.asistant_lastname ?? ' ') }}</td>
                   <td>{{request.status}}</td>
                   <td>
                     <button (click)="assingSocialAssistant(request.id_request, request.rut)"><i class="mdi mdi-account-plus"></i></button>
@@ -86,11 +86,11 @@
                   <td>{{request.request_date}}</td>
                   <td>{{request.rut}}</td>
                   <td>{{request.user_name + ',' + request.user_lastname}}</td>
-                  <td>{{request.street +', '+ request.way_number}}</td>
-                  <td>{{request.employee_rut}}</td>
+                  <td>{{request.street +' '+ request.way_number  +', '+ request.description +' '+ request.property_number}}</td>
+                  <td>{{(request.asistant_name ?? ' ') + " " + (request.asistant_lastname ?? ' ') }}</td>
                   <td>{{request.status}}</td>
                   <td>
-                    <button (click)="editAssingSocialAssistant(request.nroRequest)"><i class="mdi mdi-pencil"></i></button>
+                    <button (click)="editAssingSocialAssistant(request.id_request)"><i class="mdi mdi-pencil"></i></button>
 
                   </td>
                 </tr>

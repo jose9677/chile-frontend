@@ -16,7 +16,7 @@ export class AssignVisitorDatesComponent implements OnInit {
 
   @Input () data: any; data2: any;
 
-  public errors: any = null;
+  private errors: any = null;
 
   public supUser: any;
 
@@ -26,7 +26,7 @@ export class AssignVisitorDatesComponent implements OnInit {
   public nroRequest: any;
   public rutsup: any;
 
-  listRutSocialAssistant: any[];
+  public listRutSocialAssistant: any[];
 
   public selecterutSocialAssistant: any = null;
 
@@ -39,42 +39,43 @@ export class AssignVisitorDatesComponent implements OnInit {
     private modalService2: ModalsService,
     private fb: FormBuilder,
     private datesService: DatesService
-  ) {   
+  ) {
 
-    this.listRutSocialAssistant= [];    
+    this.listRutSocialAssistant= [];
     this.supUser = window.sessionStorage.getItem("auth-user");
     console.log(this.supUser)
-    
+
   }
-  
+
   ngOnInit(): void {
-    
-    
+
+
     this.datesService.getEmployees().subscribe(result => {
 
       let res1: any[] = [];
-      
+
       result.map((res: any) => {
         if (res.supervisor_rut != this.supUser){
-          res1.push(res); 
-          console.log(res1)         
+          res.completeNames = res.names +' '+ res.lastname;
+          res1.push(res);
+          console.log(res1)
         }
       })
-      
+
       this.listRutSocialAssistant = res1;
-      
+
     },
     error => {
       this.errors = true;
       let title= "Registro Invalido";
       let message = "No se pudo realizar el registro del Usuario";
       this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
-      
+
     },
     () => {
-      
+
     });
-    
+
     this.nroRequest= this.data;
     this.rutsup = this.data2;
 
@@ -100,10 +101,10 @@ export class AssignVisitorDatesComponent implements OnInit {
     },
     () => {
 
-      
+
       this.isFormSubmitted = true;
       e.preventDefault();
-      
+
 
     });
 

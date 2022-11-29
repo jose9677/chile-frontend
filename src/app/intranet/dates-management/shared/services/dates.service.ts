@@ -27,16 +27,27 @@ export class DatesService {
   ) { }
 
 
-  getForRut() {
+  getForRut(rutNeighbor: any): Observable<any | void> {
+    return this.http.get<any>( AUTH_API_NP + 'joinUsersRequest/'+ rutNeighbor, httpOptions).pipe(map((result:any) => {
+      console.log(result);
+      return result;
 
-    console.log('getForRut')
-
+    }),
+    catchError((err)=> this.handlerError(err))
+    );
   }
 
 
-  getForIdRequest() {
+  getForIdRequest(idRequest: any): Observable<any | void> {
+    return this.http.get<any>( AUTH_API_NP + 'joinRequestUsers/'+ idRequest, httpOptions).pipe(map((result:any) => {
 
-    console.log("getForIdRequest")
+      return result[0];
+
+    }),
+    catchError((err)=> this.handlerError(err))
+    );
+
+
 
   }
 
@@ -55,7 +66,7 @@ export class DatesService {
   getAll(): Observable<any | void> {
     return this.http.get<any>( AUTH_API_NP + 'detailUserRequest', httpOptions).pipe(map((result:any) => {
 
-      return result['data'];
+      return result['data_User_Request'];
 
     }),
     catchError((err)=> this.handlerError(err))
@@ -75,10 +86,15 @@ export class DatesService {
     );
   }
 
-  getforSocialAssistant() {
+  getforSocialAssistant(rutSocialAssistant: any): Observable<any | void> {
 
-    console.log('get for social assistant')
+    return this.http.get<any>(AUTH_API_NP + 'joinRequestEmployee/' + rutSocialAssistant, httpOptions).pipe(map((result: any) => {
 
+      return result;
+
+    }),
+      catchError((err) => this.handlerError(err))
+    );
   }
 
   approbe() {
@@ -96,7 +112,7 @@ export class DatesService {
   getEmployees(): Observable<any | void> {
 
     return this.http.get<any>(AUTH_API_NP + 'employees', httpOptions).pipe(map((result: any) => {
-      
+
       return result['data'];
 
     }),

@@ -21,8 +21,7 @@ export class ViewSupervisorRequestsComponent implements OnInit {
 
   name!:string;
 
-  nameLastnameUser: string = 'Eduy Omaña'
-
+  
   constructor(
     private router: Router,
     public sortByService: SortByTablesService,
@@ -64,15 +63,15 @@ export class ViewSupervisorRequestsComponent implements OnInit {
   }
 
   assingSocialAssistant (nroRequest: any, userloggedRut: any) {
-    
+
 
     this.modalService.openModalData2(AssignVisitorDatesComponent, nroRequest, userloggedRut);
 
   }
 
-  editAssingSocialAssistant (nroRequest: any) {
+  editAssingSocialAssistant (id_request: any) {
 
-    this.router.navigate(['citas/editar-asistente-social'])
+    this.router.navigate(['citas/editar-asistente-social'],{queryParams: {id_request: id_request}})
 
 
   }
