@@ -1,1 +1,50 @@
 // Write your custom css/scss here
+
+$color-primary: #376B83;
+$color-secondary: #0eadb0;
+$light-bg: #e4f4f7;
+
+.table{
+    & thead{
+        background-color: $color-secondary;
+        color: white;
+    }
+    & th{
+        color: white !important;
+    }
+    
+    & tr:nth-child(even) {
+        background-color: $light-bg;
+    }
+
+    & td button{
+        background-color: transparent;
+        border: 0px;
+    }
+
+    & th button{
+        background-color: transparent;
+        border: 0px;
+    }
+    
+
+    text-align: center;
+    border: 0px solid transparent;
+    
+}
+
+.datasearch{
+    border: 0px;
+    border-bottom: $color-secondary solid 1px;
+}
+
+.input-group-text{
+    border: 0px;
+    border-bottom: $color-secondary solid 1px;
+    background-color: transparent;
+    border-radius: 0px;
+}
+
+i{
+    color: $color-primary;
+}
