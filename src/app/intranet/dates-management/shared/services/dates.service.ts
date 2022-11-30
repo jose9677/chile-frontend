@@ -28,7 +28,7 @@ export class DatesService {
 
 
   getForRut(rutNeighbor: any): Observable<any | void> {
-    return this.http.get<any>( AUTH_API_NP + '| /'+ rutNeighbor, httpOptions).pipe(map((result:any) => {
+    return this.http.get<any>( AUTH_API_NP + 'joinUsersRequest/'+ rutNeighbor, httpOptions).pipe(map((result:any) => {
       console.log(result);
       return result;
 
@@ -51,15 +51,25 @@ export class DatesService {
 
   }
 
-  confirm() {
+  confirm(statusRequest: any): Observable<any | void> {
+    return this.http.get<any>( AUTH_API_NP + 'approve-request/'+ statusRequest, httpOptions).pipe(map((result:any) => {
 
-    console.log('confirm')
+      return result;
+
+    }),
+    catchError((err)=> this.handlerError(err))
+    );
 
   }
 
-  reasign() {
+  reasign(statusRequest: any): Observable<any | void> {
+    return this.http.get<any>( AUTH_API_NP + 'approve-request/'+ statusRequest, httpOptions).pipe(map((result:any) => {
 
-    console.log('reasing')
+      return result;
+
+    }),
+    catchError((err)=> this.handlerError(err))
+    );
 
   }
 
@@ -79,7 +89,7 @@ export class DatesService {
 
       console.log('assignsocialassistant');
 
-      return result['data'];
+      return result;
 
     }),
       catchError((err) => this.handlerError(err))

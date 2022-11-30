@@ -33,7 +33,7 @@ const routes: Routes = [
         component: RegisterComponent
       },
       {
-        path: 'cambiar-contraseña',
+        path: 'cambiar-contrasena',
         component: RecoveryComponent
       },
       {

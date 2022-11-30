@@ -49,9 +49,6 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
     })
 
-
-
-
   }
 
 

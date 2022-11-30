@@ -317,8 +317,8 @@
                     autocomplete="current-password"
                     placeholder="Repita la contraseña"
                     formControlName="rePassword"
-                    [ngClass]="{'is-invalid': ((userRegister.controls.accesData.touched && userRegister.controls.accesData.controls.rePassword.errors) || (isFormSubmitted && userRegister.controls.accesData.value.proofOfAddress1 === ''))}">
-                      <div *ngIf="(userRegister.controls.accesData.touched && userRegister.controls.accesData.controls.rePassword.errors) || (isFormSubmitted && userRegister.controls.accesData.value.rePassword === '')" class="invalid-feedback">Contraseña no Coincide</div>
+                    [ngClass]="{'is-invalid': ((userRegister.controls.accesData.touched && userRegister.controls.accesData.controls.rePassword.errors?.equalTo)|| (isFormSubmitted && userRegister.controls.accesData.controls.rePassword.errors?.equalTo))}">
+                      <div *ngIf="(userRegister.controls.accesData.touched && userRegister.controls.accesData.controls.rePassword.errors?.equalTo) || (isFormSubmitted && userRegister.controls.accesData.controls.rePassword.errors?.equalTo)" class="invalid-feedback">Contraseña no Coincide</div>
                   </div>
                 </div>
               </div>
@@ -330,7 +330,10 @@
                   type="checkbox"
                   class="form-check-input"
                   id="formSwitch1"
-                  formControlName="authCheck">
+                  formControlName="authCheck"
+                  [ngClass]="{'is-invalid': ((userRegister.touched && userRegister.controls.value.authCheck === '') || (isFormSubmitted && userRegister.controls.authCheck.errors?.required))}">
+                      <!-- <div *ngIf="(userRegister.touched && userRegister.controls.authCheck.errors?.required) || (isFormSubmitted && userRegister.controls.value.authCheck === '')" class="invalid-feedback">Debe aceptar los terminos y condiciones </div> -->
+
                   <label class="form-check-label" for="formSwitch1">He leido y acepto los <a href="#">Términos y Condiciones</a> y la <a href="#">Politica de Privacidad</a></label>
                 </div>
 

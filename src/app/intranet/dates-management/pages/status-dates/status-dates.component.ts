@@ -18,7 +18,7 @@ export class StatusDatesComponent implements OnInit {
   constructor(
     private routerQuery: ActivatedRoute,
     private router: Router,
-    private date: DatesService
+    private dateService: DatesService
 
   ) {
 
@@ -28,18 +28,15 @@ export class StatusDatesComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.requestForRut();
-
+    this.dateService.getForIdRequest(this.idRequest).subscribe((result) => {
+      console.log(result)
+    })
   }
-
 
   ngOnDestroy() {
     this.idRequestSubscription.unsubscribe();
   }
 
-  requestForRut() {
-
-  }
 
   return() {
     this.router.navigate(['/solicitud/solicitudes-de-inscripcion'])
