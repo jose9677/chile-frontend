@@ -14,7 +14,7 @@
                 class="form-control"
                 id="Rut"
                 formControlName="rut"
-                placeholder="Ingrese su RUT"
+                placeholder="00000000-0"
                 [ngClass]="{'is-invalid': (userLogin.controls.rut.touched && userLogin.controls.rut.errors?.required) || (isFormSubmitted && userLogin.controls.rut.errors?.required)}"
                     >
                     <div *ngIf="(userLogin.controls.rut.touched && userLogin.controls.rut.errors?.required) || ( isFormSubmitted && userLogin.controls.rut.errors?.required)" class="invalid-feedback">Campo Requerido</div>
