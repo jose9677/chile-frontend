@@ -80,8 +80,8 @@ export class LoginComponent implements OnInit {
       this.userLogin.reset();
 
       this.errors = true;
-      let title: string = 'Error Login'
-      let message: string = "El Usuario No Puede Iniciar sesion";
+      let title: string = ''
+      let message: string = "Usuario o contraseña incorrectos , por favor verifique e intente nuevamente";
       this.modalService.OpenModalError2(ModalComponent, this.errors, title, message);
 
     },
