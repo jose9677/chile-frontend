@@ -196,7 +196,7 @@ export class RegisterComponent implements OnInit {
 
     console.log(this.today.toLocaleString())
 
-    let password = new FormControl('', Validators.required);
+    let password = new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}')]);
 
     this.userRegister= this.fb.group({
       names: ['',[Validators.required, ]],
