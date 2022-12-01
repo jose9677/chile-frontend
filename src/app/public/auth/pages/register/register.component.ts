@@ -298,10 +298,13 @@ export class RegisterComponent implements OnInit {
       console.log(result);
     },
     error => {
-      this.errors = true;
-      let title= "Registro Invalido";
-      let message = "No se pudo realizar el registro del Usuario";
-      this.modalService.OpenModalError2(ModalComponent, this.errors, title, message);
+      this.errors=error;
+      console.log('errors_login->',this.errors);
+      if( this.errors == '{"email":["The email has already been taken."]}'){
+        let title= "";
+        let message = "El correo electrónico que introdujo ya se encuentra asociado a otro usuario. Por favor verifique e intente nuevamente";
+        this.modalService.OpenModalError2(ModalComponent, true, title, message);
+      }
       this.isFormSubmitted = true;
 
     },

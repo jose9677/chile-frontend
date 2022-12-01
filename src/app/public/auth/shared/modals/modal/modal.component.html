@@ -1,31 +1,24 @@
-
-  <div class="modal-header container">
-    <div class="row">
-      <div class="col-12 content-img">
-        <img class=" px-4 " src="../assets/images/login/LogoLaReinaCorporacion-FondoBlanco1.png" alt="">
-      </div>
-
-      <div class="col-12 content-img2" *ngIf="error == true; else none">
-        <img class=" px-4" src="../assets/images/none.svg" alt="">
+<div class="p-3">
+  <div class="row d-flex justify-content-center">
+    <div class="row px-4 d-flex justify-content-center">
+      <div class="col-md-4 col-sm-10 text-center " *ngIf="error == true; else none">
+        <img class="card-img-top" src="../assets/images/none.svg" alt="">
       </div>
       <ng-template #none>
-        <div class="col-12 content-img2"><img class=" px-4" src="../assets/images/check.svg" alt=""></div>
+        <div class="col-md-4 col-sm-10 text-center">
+          <img class="card-img-top" src="../assets/images/check.svg" alt="">
+        </div>
       </ng-template>
-
-
     </div>
-
   </div>
   <div class="modal-body">
     <div class="col-12">
       <h2 class="text-muted fw-normal text-center titles "><strong> {{title}}</strong></h2>
     </div>
-      <p class="text-center">{{message}}</p>
+      <p class="p-4" style="text-align: justify;">{{message}}</p>
   </div>
-
-  <div class="modal-footer">
-    <button class="btn btn-success" type="button" (click)="modal.close()">ok</button>
+  <div class="position-relative text-center">
+    <button (click)="modal.close()" class="mt-1 me-2 mb-2 mb-md-0 btn btn-outline-primary style-outline">Cerrar</button>
   </div>
-
-
+</div>
 
