@@ -14,6 +14,8 @@ import { EnterRutComponent } from './pages/enter-rut/enter-rut.component';
 import { RecoveryComponent } from './pages/recovery/recovery.component';
 import { ValidateEmailComponent } from './pages/validate-email/validate-email.component';
 import { ModalsService } from 'src/app/shared/services/modals.service';
+import { TermsAndConditionsComponent } from './pages/register/terms-and-conditions/terms-and-conditions.component';
+import { PrivacyPolicyComponent } from './pages/register/privacy-policy/privacy-policy.component';
 
 const routes: Routes = [
   {
@@ -53,7 +55,9 @@ const routes: Routes = [
     ModalComponent,
     EnterRutComponent,
     RecoveryComponent,
-    ValidateEmailComponent],
+    ValidateEmailComponent,
+    TermsAndConditionsComponent,
+    PrivacyPolicyComponent],
   imports: [
     CommonModule,
     FormsModule,

@@ -331,7 +331,7 @@
                   class="form-check-input"
                   id="formSwitch1"
                   formControlName="authCheck">
-                  <label class="form-check-label" for="formSwitch1">He leido y acepto los <a href="#">Términos y Condiciones</a> y la <a href="#">Politica de Privacidad</a></label>
+                  <label class="form-check-label" for="formSwitch1">He leido y acepto los <a href="" (click)="$event.preventDefault();openTerminosyCondiciones()">Términos y Condiciones</a> y la <a href="" (click)="$event.preventDefault(); openPoliticadePrivacidad()">Politica de Privacidad</a></label>
                 </div>
 
               </div>

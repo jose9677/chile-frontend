@@ -7,7 +7,8 @@ import { ModalsService } from 'src/app/shared/services/modals.service';
 import { ModalComponent } from '../../shared/modals/modal/modal.component';
 import { AuthService } from '../../shared/services/auth.service';
 import { ValidateEmailComponent } from '../validate-email/validate-email.component';
-
+import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -311,7 +312,11 @@ export class RegisterComponent implements OnInit {
     this.rutSubscription.unsubscribe();
   }
 
-
-
+  openTerminosyCondiciones(){
+    this.modalService.openModal(TermsAndConditionsComponent)
+  }
+  openPoliticadePrivacidad(){
+    this.modalService.openModal(PrivacyPolicyComponent)
+  }
 
 }
