@@ -36,7 +36,7 @@ export class InterceptorService {
   }
 
   error(error: HttpErrorResponse){ //envia error al user service
-    window.sessionStorage.clear();
+    // window.sessionStorage.clear();
     console.log("Sucedio el Error");
     console.log("Registrado el log file");
     console.warn(error);

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LoggedService } from 'src/app/shared/services/logged.service';
+import { TokenService } from 'src/app/shared/services/token.service';
 import { ModalsService } from '../../../../shared/services/modals.service';
 import { ModalComponent } from '../../shared/modals/modal/modal.component';
 import { AuthService } from '../../shared/services/auth.service';
@@ -16,6 +17,8 @@ import { ForgetPasswordComponent } from '../forget-password/forget-password.comp
 export class LoginComponent implements OnInit {
 
   public errors: any = null;
+
+  public rutUser: any;
 
   returnUrl: any;
 
@@ -33,7 +36,8 @@ export class LoginComponent implements OnInit {
     private modalService: ModalsService,
     private fb: FormBuilder,
     private authService: AuthService,
-    private loggedService: LoggedService
+    private loggedService: LoggedService,
+    private tokenService: TokenService
 
     ) { }
 
@@ -62,7 +66,7 @@ export class LoginComponent implements OnInit {
       rut: this.userLogin.value.rut,
       password: this.userLogin.value.password
     }
-
+    window.sessionStorage.setItem('auth-user', JSON.stringify(dataLogin.rut));
     this.authService.login(dataLogin).subscribe(result => {
       console.log(result)
 
@@ -83,6 +87,7 @@ export class LoginComponent implements OnInit {
     },
     () => {
       this.isFormSubmitted = true;
+
 
       console.log(this.userLogin)
       this.router.navigate([this.returnUrl]);
