@@ -9,7 +9,7 @@
         </div>
         <div class="col-md-4 col-sm-12">
           <label for="" class="form-label colorTextPrimari">Fecha de Solicitud</label>
-          <input type="text" value={{unassignedRequest[0].solicitude_date}} disabled class="form-control">
+          <input type="text" value={{unassignedRequest[0].created_at}} disabled class="form-control">
         </div>
         <div class="col-md-4 col-sm-12">
           <label for="" class="form-label colorTextPrimari">Estatus</label>
@@ -37,7 +37,7 @@
         </div>
         <div class="col-md-4 col-sm-12">
           <label for="" class="form-label colorTextPrimari ">Hora de Visita</label>
-          <input type="text" value="3:00 pm" disabled class="form-control">
+          <input type="text" value={{unassignedRequest[0].visit_date}} disabled class="form-control">
         </div>
       </div>
     </div>

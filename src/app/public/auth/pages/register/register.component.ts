@@ -282,7 +282,7 @@ export class RegisterComponent implements OnInit {
 
       assurance: this.userRegister.controls.healthInformation.value.haveInsurance,
 
-      visit_date: this.today.toLocaleString(),
+      // visit_date: this.today.toLocaleString(),
 
       // preventionCertificate: this.userRegister.controls.documents.preventionCertificate,
       // proofOfAddress: this.userRegister.controls.documents.proofOfAddress,
