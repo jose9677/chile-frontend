@@ -9,6 +9,8 @@ const AUTH_API_NP = environment.urlApiNp;
 const TOKEN_KEY = 'access_token';
 
 
+
+
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -20,17 +22,26 @@ const httpOptions = {
 })
 export class DatesService {
 
+
+
   private errorMessage = '';
 
   constructor(
     private http: HttpClient
-  ) { }
+  ) {
+
+
+  }
 
 
   getForRut(rutNeighbor: any): Observable<any | void> {
     return this.http.get<any>( AUTH_API_NP + 'joinUsersRequest/'+ rutNeighbor, httpOptions).pipe(map((result:any) => {
+
       console.log(result);
+
       return result;
+
+
 
     }),
     catchError((err)=> this.handlerError(err))
@@ -41,7 +52,7 @@ export class DatesService {
   getForIdRequest(idRequest: any): Observable<any | void> {
     return this.http.get<any>( AUTH_API_NP + 'joinRequestUsers/'+ idRequest, httpOptions).pipe(map((result:any) => {
 
-      return result[0];
+      return result;
 
     }),
     catchError((err)=> this.handlerError(err))

@@ -23,15 +23,15 @@
             <tbody>
                   <!-- <tr *ngFor="let request of unassignedRequest; index as i " > -->
                 <tr *ngFor="let request of unassignedRequest | filter:sortByService.search:sortByService.page | sortBy:sortByService.dataSort:sortByService.order" >
-                  <td >{{request.id }}</td>
-                  <td>{{request.created_at}}</td>
-                  <td>Tipo de Prevencion + detalle </td>
+                  <td >{{request.id_request }}</td>
+                  <td>{{request.solicitude_date}}</td>
+                  <td>{{request.fullPeventionData}} </td>
                   <td>{{request.request_date}}</td>
-                  <td>{{request.visitor}}</td>
+                  <td>{{request.fullName}}</td>
                   <td>{{request.status}}</td>
                   <td>
-                    <button (click)="viewDate(request.id)" ><i class="mdi mdi-eye"></i></button>
-                    <button (click)="confirmDate(request.id)" ><i class="mdi mdi-calendar-check"></i></button>
+                    <button (click)="viewDate(request.id_request)" ><i class="mdi mdi-eye"></i></button>
+                    <button (click)="confirmDate(request.id_request)" ><i class="mdi mdi-calendar-check"></i></button>
                   </td>
                 </tr>
             </tbody>

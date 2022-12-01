@@ -15,6 +15,8 @@ import { ValidateEmailComponent } from '../validate-email/validate-email.compone
 })
 export class RegisterComponent implements OnInit {
 
+  private today: any;
+
   public errors: any = null;
 
   // public userRegister: FormGroup;
@@ -185,11 +187,13 @@ export class RegisterComponent implements OnInit {
 
       console.log(this.rut)
 
-
+      this.today = new Date();
     }
 
   ngOnInit(): void {
 
+
+    console.log(this.today.toLocaleString())
 
     let password = new FormControl('', Validators.required);
 
@@ -276,6 +280,8 @@ export class RegisterComponent implements OnInit {
       id_prevention_type_detail : this.detailPrevention,
 
       assurance: this.userRegister.controls.healthInformation.value.haveInsurance,
+
+      visit_date: this.today.toLocaleString(),
 
       // preventionCertificate: this.userRegister.controls.documents.preventionCertificate,
       // proofOfAddress: this.userRegister.controls.documents.proofOfAddress,

@@ -26,6 +26,7 @@ const httpOptions = {
 })
 export class AuthService {
 
+
   private errorMessage = '';
 
 
@@ -36,7 +37,11 @@ export class AuthService {
     private tokenService: TokenService,
     public loggedService: LoggedService
 
-  ) { }
+  ) {
+
+
+
+  }
 
 
 

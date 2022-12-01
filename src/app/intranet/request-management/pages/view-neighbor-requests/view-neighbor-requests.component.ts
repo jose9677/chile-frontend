@@ -14,8 +14,11 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
   private rutNeighbor: any;
 
+  public errors: any = null;
+
   unassignedRequest: any[];
 
+  private dataRequest: any;
 
 
   constructor(
@@ -27,6 +30,32 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
 
   ) {
+
+
+    const DataRequest: any = [
+      {
+      "rut": "6102995-K",
+      "names": "Esmeralda",
+      "lastname": "Fuentes",
+      "id_request": 3,
+      "id_prevention_type_detail": 1,
+      "visit_date": "2022-11-30 00:00:00",
+      "solicitude_date": "2022-11-30 02:27:50",
+      "request_date": "2025-09-05",
+      "prevention_detail": "A",
+      "prevention_type": "FONASA",
+      "id_status": 5,
+      "status": "REPROGRAMAR",
+      "visitor_rut": "31179870-6",
+      "employee_name": "Harry",
+      "employee_lastname": "Potter",
+      "id_document": 2,
+      "document_path": "C:\\xampp\\tmp\\phpC537.tmp",
+      "document_type": "DOMICILIO"
+      }
+    ]
+
+    this.dataRequest = DataRequest;
 
     this.rutNeighbor = window.sessionStorage.getItem('auth-user');
 
@@ -41,13 +70,35 @@ export class ViewNeighborRequestsComponent implements OnInit {
     this.date.getForRut(this.rutNeighbor.replace(/["']/g, "")).subscribe( result => {
       console.log(result);
 
+
+      if (result.length === 0) {
+        result = this.dataRequest
+        console.log(result);
+      }else {
+        result = result
+      }
+
       result.map((res: any)=>{
-        result.fullName = result.names +' '+ result.lastname
+        res.fullName = res.employee_name +' '+ res.employee_lastname
+        res.fullPeventionData = res.prevention_type +' Tipo: '+ res.prevention_detail
         this.unassignedRequest.push(res);
       })
       console.log(this.unassignedRequest)
 
-    })
+    },
+    error => {
+
+      this.errors = true;
+      // let title= "Registro Invalido";
+      // let message = "No se pudo realizar el registro del Usuario";
+      // this.modalService.OpenModalError2(ModalComponent, this.errors, title, message);
+      // this.isFormSubmitted = true;
+
+    },
+    () => {
+
+
+    });
 
   }
 

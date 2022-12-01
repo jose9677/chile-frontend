@@ -331,7 +331,7 @@
                   class="form-check-input"
                   id="formSwitch1"
                   formControlName="authCheck"
-                  [ngClass]="{'is-invalid': ((userRegister.touched && userRegister.controls.value.authCheck === '') || (isFormSubmitted && userRegister.controls.authCheck.errors?.required))}">
+                  [ngClass]="{'is-invalid': isFormSubmitted && userRegister.controls.authCheck.errors?.required}">
                       <!-- <div *ngIf="(userRegister.touched && userRegister.controls.authCheck.errors?.required) || (isFormSubmitted && userRegister.controls.value.authCheck === '')" class="invalid-feedback">Debe aceptar los terminos y condiciones </div> -->
 
                   <label class="form-check-label" for="formSwitch1">He leido y acepto los <a href="#">Términos y Condiciones</a> y la <a href="#">Politica de Privacidad</a></label>

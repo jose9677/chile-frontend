@@ -9,33 +9,31 @@
         </div>
         <div class="col-md-4 col-sm-12">
           <label for="" class="form-label colorTextPrimari">Fecha de Solicitud</label>
-          <input type="date" value="2020-07-31" disabled class="form-control">
+          <input type="text" value={{unassignedRequest[0].solicitude_date}} disabled class="form-control">
         </div>
         <div class="col-md-4 col-sm-12">
           <label for="" class="form-label colorTextPrimari">Estatus</label>
-          <input type="text" value="Por Asignar" disabled class="form-control">
+          <input type="text" value={{unassignedRequest[0].status}} disabled class="form-control">
         </div>
       </div>
       <div class="row mt-3 ">
         <div class="col-md-4 col-sm-12">
           <label for="" class="form-label colorTextPrimari ">Solicitante</label>
-          <input type="text" value="Pedro Perez" disabled class="form-control">
+          <input type="text" value={{unassignedRequest[0].fullNameUser}} disabled class="form-control">
         </div>
         <div class="col-md-8 col-sm-12">
           <label for="" class="form-label colorTextPrimari ">Dirección</label>
-          <textarea wrap="soft" style="overflow:hidden; resize:none;" value="" disabled class="form-control">Calle de ejemplo, Nro. 1234, Casa Doña Carmen</textarea>
+          <textarea wrap="soft" style="overflow:hidden; resize:none;" value={{unassignedRequest[0].fullDirection}} disabled class="form-control">Calle de ejemplo, Nro. 1234, Casa Doña Carmen</textarea>
         </div>
       </div>
       <div class="row mt-3 ">
         <div class="col-md-4 col-sm-12">
-          <label for="" class="form-label colorTextPrimari">Asistente Social</label>
-          <select class="form-control" disabled>
-            <option value="">Pedro Perez</option>
-          </select>
+          <label for="" class="form-label colorTextPrimari ">Asistente Social</label>
+          <input type="text" value={{unassignedRequest[0].fullName}} disabled class="form-control">
         </div>
         <div class="col-md-4 col-sm-12">
           <label for="" class="form-label colorTextPrimari ">Fecha de Visita</label>
-          <input type="text" value="31/10/2022" disabled class="form-control">
+          <input type="text" value={{unassignedRequest[0].request_date}} disabled class="form-control">
         </div>
         <div class="col-md-4 col-sm-12">
           <label for="" class="form-label colorTextPrimari ">Hora de Visita</label>
@@ -50,25 +48,10 @@
       <div class="col-md-6 col-sm-12">
           <div class="row">
             <div class="col-md-6 col-sm-12">
-              <label for="" class="form-label colorTextPrimari ">Fonasa</label>
+              <label for="" class="form-label colorTextPrimari ">Tipo de Prevencion </label>
             </div>
             <div class="col-md-6">
-             <input type="text" name="" id="" class="form-control" value="Tipo A" disabled>
-            </div>
-          </div>
-      </div>
-      <div class="col-md-4 col-sm-12 text-center d-flex align-items-center">
-        <a href="">Certificado.pdf <i class="ms-4 h4 feather icon-eye"></i></a>
-      </div>
-    </div>
-    <div class="row mt-3 justify-content-center">
-      <div class="col-md-6 col-sm-12">
-          <div class="row">
-            <div class="col-md-6 col-sm-12">
-              <label for="" class="form-label colorTextPrimari ">Isapre</label>
-            </div>
-            <div class="col-md-6">
-              <input type="text" name="" id="" class="form-control" value="No Posee" disabled>
+             <input type="text" name="" id="" class="form-control" value={{unassignedRequest[0].fullPeventionData}} disabled>
             </div>
           </div>
       </div>
@@ -83,7 +66,7 @@
               <label for="" class="form-label colorTextPrimari ">Recibo de Servicio</label>
             </div>
             <div class="col-md-6">
-              <input type="text" name="" id="" class="form-control" value="ENEL" disabled>
+              <input type="text" name="" id="" class="form-control" value={{unassignedRequest[0].document_path}} disabled>
             </div>
           </div>
       </div>
