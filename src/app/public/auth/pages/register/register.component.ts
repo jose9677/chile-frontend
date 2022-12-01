@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomValidators } from 'ngx-custom-validators';
 import { Subscription } from 'rxjs';
@@ -15,6 +15,8 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+
+  private today: any;
 
   public errors: any = null;
 
@@ -186,11 +188,15 @@ export class RegisterComponent implements OnInit {
 
       console.log(this.rut)
 
-
+      this.today = new Date();
     }
 
   ngOnInit(): void {
 
+
+    console.log(this.today.toLocaleString())
+
+    let password = new FormControl('', Validators.required);
 
     this.userRegister= this.fb.group({
       names: ['',[Validators.required, ]],
@@ -201,8 +207,6 @@ export class RegisterComponent implements OnInit {
       email: ['', [Validators.required, CustomValidators.email]],
       landLine: ['', [Validators.required, Validators.minLength(9), CustomValidators.number]],
       mobilePhone: ['', [Validators.required, Validators.minLength(9), CustomValidators.number]],
-
-
 
       address: this.fb.group({
         // typeOfRoad: ['', Validators.required],
@@ -225,11 +229,14 @@ export class RegisterComponent implements OnInit {
         proofOfAddress1: ['', Validators.required],
       }),
       accesData: this.fb.group({
-        password: ['', [Validators.required]],
-        rePassword: ['', ],
+        // password: ['', [Validators.required]],
+        password: password,
+        rePassword: ['', [Validators.required, CustomValidators.equalTo(password)]],
       }),
       authCheck: ['',[Validators.required]]
     })
+
+
 
 
 
@@ -275,11 +282,13 @@ export class RegisterComponent implements OnInit {
 
       assurance: this.userRegister.controls.healthInformation.value.haveInsurance,
 
+      visit_date: this.today.toLocaleString(),
+
       // preventionCertificate: this.userRegister.controls.documents.preventionCertificate,
       // proofOfAddress: this.userRegister.controls.documents.proofOfAddress,
       // proofOfAddress1: this.userRegister.controls.documents.proofOfAddress1,
 
-      // terms_condition: this.userRegister.value.authCheck
+      terms_condition: this.userRegister.value.authCheck
     }
 
     console.log(dataUser);
@@ -293,10 +302,10 @@ export class RegisterComponent implements OnInit {
       let title= "Registro Invalido";
       let message = "No se pudo realizar el registro del Usuario";
       this.modalService.OpenModalError2(ModalComponent, this.errors, title, message);
+      this.isFormSubmitted = true;
 
     },
     () => {
-      this.isFormSubmitted = true;
       e.preventDefault();
       this.emailUser = this.userRegister.value.email;
       this.modalValidateEmail(this.emailUser);

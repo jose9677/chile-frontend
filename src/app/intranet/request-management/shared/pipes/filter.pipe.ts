@@ -15,11 +15,11 @@ export class FilterPipe implements PipeTransform {
     }
 
 
-    const resultSearch = value.filter(res => res.nroRequest?.toLowerCase().includes(search));
+    const resultSearch = value.filter(res => res.id_request?.includes(search));
 
-    const resultSearch2 = value.filter(res => res.fonasa?.toLowerCase().includes(search));
+    const resultSearch2 = value.filter(res => res.request_date?.toLowerCase().includes(search));
 
-    const resultSearch3 = value.filter(res => res.visitor?.toLowerCase().includes(search));
+    const resultSearch3 = value.filter(res => res.employee_rut?.toLowerCase().includes(search));
 
 
 

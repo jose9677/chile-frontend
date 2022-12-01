@@ -39,8 +39,8 @@ export class SortByTablesService {
   }
 
   onSearch(search: any) {
-    this.search = search.toLowerCase();
-    console.log(1)
+    this.search = search;
+    console.log(search)
 
   }
 

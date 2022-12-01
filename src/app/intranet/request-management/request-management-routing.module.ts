@@ -11,20 +11,20 @@ const routes: Routes = [
     component: LayoutsComponent,
     children: [
       {
-        path: 'supervisor',
+        path: 'asignar-asistente-social',
         component: ViewSupervisorRequestsComponent
       },
       {
-        path: 'visitor',
+        path: 'asignar-cita',
         component: ViewVisitorRequestsComponent
       },
       {
-        path: 'neihbor',
+        path: 'solicitudes-de-inscripcion',
         component: ViewNeighborRequestsComponent
       },
       {
         path: '',
-        redirectTo:'supervisor',
+        redirectTo:'solicitudes-de-inscripcion',
         pathMatch: 'full'
       }
     ]

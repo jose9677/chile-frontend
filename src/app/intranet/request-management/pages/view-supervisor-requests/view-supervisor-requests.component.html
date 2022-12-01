@@ -12,28 +12,28 @@
           <table class="table">
             <thead>
               <tr>
-                <th (click)="sortByService.dataSortBy('nroRequest')">Nro. Solicitud</th>
-                <th (click)="sortByService.dataSortBy('requestDate')">Fecha Solicitud</th>
-                <th (click)="sortByService.dataSortBy('comune')">Comuna</th>
-                <th (click)="sortByService.dataSortBy('neighborhood')">Barrio</th>
-                <th (click)="sortByService.dataSortBy('service')">Fecha de Visita</th>
-                <th (click)="sortByService.dataSortBy('visitor')">Visitador</th>
+                <th (click)="sortByService.dataSortBy('id_request')">Nro. Solicitud</th>
+                <th (click)="sortByService.dataSortBy('request_date')">Fecha Solicitud</th>
+                <th (click)="sortByService.dataSortBy('rut')">RUT</th>
+                <th (click)="sortByService.dataSortBy('user_name')">Nombres y Apellidos</th>
+                <th (click)="sortByService.dataSortBy('way_number')">Direccion</th>
+                <th (click)="sortByService.dataSortBy('employee_rut')">Asistente Social</th>
                 <th (click)="sortByService.dataSortBy('status')">Estatus</th>
                 <th >Opciones</th>
               </tr>
             </thead>
             <tbody>
                   <!-- <tr *ngFor="let request of unassignedRequest; index as i " > -->
-                <tr *ngFor="let request of unassignedRequest | filter2:sortByService.search:sortByService.page | sortBy:sortByService.dataSort:sortByService.order" >
-                  <td >{{request.nroRequest }}</td>
-                  <td>{{request.requestDate}}</td>
-                  <td>{{request.comune}}</td>
-                  <td>{{request.neighborhood}}</td>
-                  <td>{{request.dateOfVisit}}</td>
-                  <td>{{request.visitor}}</td>
+                <tr *ngFor="let request of unassignedRequest | filter:sortByService.search:sortByService.page | sortBy:sortByService.dataSort:sortByService.order" >
+                  <td >{{request.id_request }}</td>
+                  <td>{{request.request_date}}</td>
+                  <td>{{request.rut}}</td>
+                  <td>{{request.user_name + ',' + request.user_lastname}}</td>
+                  <td>{{request.street +' '+ request.way_number  +', '+ request.description +' '+ request.property_number}}</td>
+                  <td>{{(request.asistant_name ?? ' ') + " " + (request.asistant_lastname ?? ' ') }}</td>
                   <td>{{request.status}}</td>
                   <td>
-                    <button (click)="assingSocialAssistant(request.nroRequest)"><i class="mdi mdi-account-plus"></i></button>
+                    <button (click)="assingSocialAssistant(request.id_request, request.rut)"><i class="mdi mdi-account-plus"></i></button>
 
                   </td>
                 </tr>
@@ -69,28 +69,28 @@
           <table class="table">
             <thead>
               <tr>
-                <th (click)="sortByService.dataSortBy2('nroRequest')">Nro. Solicitud</th>
-                <th (click)="sortByService.dataSortBy2('requestDate')">Fecha Solicitud</th>
-                <th (click)="sortByService.dataSortBy2('comune')">Comuna</th>
-                <th (click)="sortByService.dataSortBy2('neighborhood')">Barrio</th>
-                <th (click)="sortByService.dataSortBy2('service')">Fecha de Visita</th>
-                <th (click)="sortByService.dataSortBy2('visitor')">Visitador</th>
-                <th (click)="sortByService.dataSortBy2('status')">Estatus</th>
+                <th (click)="sortByService.dataSortBy('id_request')">Nro. Solicitud</th>
+                <th (click)="sortByService.dataSortBy('request_date')">Fecha Solicitud</th>
+                <th (click)="sortByService.dataSortBy('rut')">RUT</th>
+                <th (click)="sortByService.dataSortBy('user_name')">Nombres y Apellidos</th>
+                <th (click)="sortByService.dataSortBy('way_number')">Direccion</th>
+                <th (click)="sortByService.dataSortBy('employee_rut')">Asistente Social</th>
+                <th (click)="sortByService.dataSortBy('status')">Estatus</th>
                 <th >Opciones</th>
               </tr>
             </thead>
             <tbody>
                   <!-- <tr *ngFor="let request of unassignedRequest; index as i " > -->
                 <tr *ngFor="let request of unassignedRequest2 | filter2:sortByService.search2:sortByService.page2 | sortBy2:sortByService.dataSort2:sortByService.order2" >
-                  <td >{{request.nroRequest }}</td>
-                  <td>{{request.requestDate}}</td>
-                  <td>{{request.comune}}</td>
-                  <td>{{request.neighborhood}}</td>
-                  <td>{{request.dateOfVisit}}</td>
-                  <td>{{request.visitor}}</td>
+                  <td >{{request.id_request }}</td>
+                  <td>{{request.request_date}}</td>
+                  <td>{{request.rut}}</td>
+                  <td>{{request.user_name + ',' + request.user_lastname}}</td>
+                  <td>{{request.street +' '+ request.way_number  +', '+ request.description +' '+ request.property_number}}</td>
+                  <td>{{(request.asistant_name ?? ' ') + " " + (request.asistant_lastname ?? ' ') }}</td>
                   <td>{{request.status}}</td>
                   <td>
-                    <button (click)="editAssingSocialAssistant(request.nroRequest)"><i class="mdi mdi-pencil"></i></button>
+                    <button (click)="editAssingSocialAssistant(request.id_request)"><i class="mdi mdi-pencil"></i></button>
 
                   </td>
                 </tr>

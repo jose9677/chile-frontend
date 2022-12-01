@@ -11,6 +11,28 @@ export const MENU: MenuItem[] = [
     link: '/dashboard'
   },
   {
+    label: 'La Reina',
+    isTitle: true
+  },
+  {
+    label: 'Gestion de Solicitudes',
+    icon: 'mail',
+    subItems: [
+      {
+        label: 'Solicitudes de Inscripcion',
+        link: '/solicitud/solicitudes-de-inscripcion',
+      },
+      {
+        label: 'Asignar Asistente Social',
+        link: '/solicitud/asignar-asistente-social'
+      },
+      {
+        label: 'Asignar Cita',
+        link: '/solicitud/asignar-cita'
+      },
+    ]
+  },
+  {
     label: 'Web Apps',
     isTitle: true
   },

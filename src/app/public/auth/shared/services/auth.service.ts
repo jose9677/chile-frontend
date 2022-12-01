@@ -25,7 +25,9 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
-  errorMessage = '';
+
+
+  private errorMessage = '';
 
 
 
@@ -35,14 +37,18 @@ export class AuthService {
     private tokenService: TokenService,
     public loggedService: LoggedService
 
-  ) { }
+  ) {
+
+
+
+  }
 
 
 
   login(authData: any): Observable<any | void >{
     return this.http.post<any>( AUTH_API + 'login', authData).pipe(map((result:any) => {
 
-      console.log('login User');
+      console.log(result);
 
       window.sessionStorage.removeItem('error_status');
 
@@ -52,7 +58,7 @@ export class AuthService {
       const tokenDecode = this.tokenService.decodeToken(token);
 
       const userSession: any = tokenDecode;
-      this.tokenService.saveUser(userSession);
+      // this.tokenService.saveUser(userSession);
 
     }),
     catchError((err)=> this.handlerError(err))
