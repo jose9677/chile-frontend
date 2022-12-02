@@ -52,6 +52,13 @@ export class ForgetPasswordComponent implements OnInit {
       this.errors = error;
       console.log('errors_login->',this.errors);
       // modal
+      if(this.errors='{ error: "User Does Not exists in Data Base" }'){
+        this.formForgetPassword.reset();
+        this.errors = true;
+        let title: any = 'Usuario no registrado';
+        let message: any  = `El Rut que introdujo no se encuentra en nuestra página`;
+        this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
+      }
       this.formForgetPassword.reset();
       this.errors = true;
       let title: any = 'Rut Invalido';
@@ -67,7 +74,7 @@ export class ForgetPasswordComponent implements OnInit {
       this.emailUser = 'Eduyeoh@gmail.com'
       let title: any = 'Recuperar Contraseña';
       let message: any = `Hemos enviado un mensaje con instrucciones a ${this.emailUser}. Si no lo encuentra en su bandeja de entrada, recuerde revisar en el correo no deseado `;
-      this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message)
+      this.modalService2.OpenModalError2(ModalComponent, false, title, message)
 
       this.modalService.close();
       this.router.navigate(['/auth/login']);

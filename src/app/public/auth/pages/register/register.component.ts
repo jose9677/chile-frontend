@@ -196,7 +196,7 @@ export class RegisterComponent implements OnInit {
 
     console.log(this.today.toLocaleString())
 
-    let password = new FormControl('', Validators.required);
+    let password = new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}')]);
 
     this.userRegister= this.fb.group({
       names: ['',[Validators.required, ]],
@@ -282,7 +282,7 @@ export class RegisterComponent implements OnInit {
 
       assurance: this.userRegister.controls.healthInformation.value.haveInsurance,
 
-      visit_date: this.today.toLocaleString(),
+      // visit_date: this.today.toLocaleString(),
 
       // preventionCertificate: this.userRegister.controls.documents.preventionCertificate,
       // proofOfAddress: this.userRegister.controls.documents.proofOfAddress,
@@ -298,10 +298,13 @@ export class RegisterComponent implements OnInit {
       console.log(result);
     },
     error => {
-      this.errors = true;
-      let title= "Registro Invalido";
-      let message = "No se pudo realizar el registro del Usuario";
-      this.modalService.OpenModalError2(ModalComponent, this.errors, title, message);
+      this.errors=error;
+      console.log('errors_login->',this.errors);
+      if( this.errors == '{"email":["The email has already been taken."]}'){
+        let title= "";
+        let message = "El correo electrónico que introdujo ya se encuentra asociado a otro usuario. Por favor verifique e intente nuevamente";
+        this.modalService.OpenModalError2(ModalComponent, true, title, message);
+      }
       this.isFormSubmitted = true;
 
     },

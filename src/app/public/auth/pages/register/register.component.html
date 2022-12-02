@@ -134,7 +134,7 @@
 
                 <div class="row">
                   <div class="col-md-6 mb-3 ">
-                    <label for="typeOfHousing" class="form-label">Casa/Departamente</label>
+                    <label for="typeOfHousing" class="form-label">Casa/Departamento</label>
                     <ng-select [items]="typeOfHousing"
                         class="form-control p-0"
                         bindLabel="name"
@@ -147,15 +147,22 @@
                     </ng-select>
                     <div *ngIf="(userRegister.controls.address.touched && userRegister.controls.address.value.typeOfHousing === null) || (isFormSubmitted && userRegister.controls.address.value.typeOfHousing === null)" class="invalid-feedback">Campo Requerido</div>
                   </div>
-
                   <div class="col-md-6 mb-3">
-                    <label for="nameHome" class="form-label">Número de Departamento</label>
+                    <label 
+                    *ngIf="(userRegister.controls.address.value.typeOfHousing == null)"
+                    for="nameHome" class="form-label">Número de Vivienda</label>
+                    <label 
+                    *ngIf="(userRegister.controls.address.value.typeOfHousing == 2)"
+                    for="nameHome" class="form-label">Número de Departamento</label>
+                    <label 
+                    *ngIf="(userRegister.controls.address.value.typeOfHousing == 1)"
+                    for="nameHome" class="form-label">Número de Casa</label>
                     <input
                     type="text"
                     class="form-control"
                     id="nameHome"
                     formControlName="nameHome"
-                    placeholder="Número del Departamento"
+                    placeholder="Especifique"
                     [ngClass]="{'is-invalid': ((userRegister.controls.address.touched && userRegister.controls.address.value.nameHome === '') || (isFormSubmitted && userRegister.controls.address.value.nameHome === ''))}"
                     >
                     <div *ngIf="(userRegister.controls.address.touched && userRegister.controls.address.value.nameHome === '') || (isFormSubmitted && userRegister.controls.address.value.nameHome === '')" class="invalid-feedback">Campo Requerido</div>
@@ -186,24 +193,23 @@
                     <div *ngIf="(userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.typeOfPrevention === null) || (isFormSubmitted && userRegister.controls.healthInformation.value.typeOfPrevention === null)" class="invalid-feedback">Campo Requerido</div>
                   </div>
 
-                  <div class="col-md-6 mb-3" *ngIf="userRegister.controls.healthInformation.controls.typeOfPrevention.value === 0">
-                    <label for="typeOfFonasa" class="form-label">Tipo de Fonasa</label>
-                    <ng-select [items]="typeOfFonasa"
-                        id="typeOfFonasa"
+                  <div class="col-md-6 mb-3" *ngIf="userRegister.controls.healthInformation.controls.typeOfPrevention.value === 1">
+                    <label for="typeOfCompany" class="form-label">Tipo de Fonasa</label>
+                    <ng-select [items]="typeOfCompany"
+                        id="typeOfCompany"
                         class="form-control p-0"
                         bindLabel="name"
                         bindValue="id"
-                        value="0"
-                        [(ngModel)]="selectedtypeOfFonasa"
-                        formControlName="typeOfFonasa"
+                        value = 0
+                        [(ngModel)]="selectedTypeOfCompany"
+                        formControlName="typeOfCompany"
                         placeholder="Seleccione"
-                        [ngClass]="{'is-invalid': ((userRegister.controls.healthInformation.controls.touched && userRegister.controls.healthInformation.controls.typeOfFonasa.value === '') || (isFormSubmitted && userRegister.controls.healthInformation.controls.typeOfFonasa.value === ''))}"
+                        [ngClass]="{'is-invalid': ((userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.typeOfcompany === '') || (isFormSubmitted && userRegister.controls.healthInformation.value.typeOfCompany === ''))}"
                         >
                     </ng-select>
-                    <div *ngIf="(userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.controls.typeOfFonasa.value === '') || (isFormSubmitted && userRegister.controls.healthInformation.controls.typeOfFonasa.value === '')" class="invalid-feedback">Campo Requerido</div>
+                    <div *ngIf="(userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.typeOfCompany === '') || (isFormSubmitted && userRegister.controls.healthInformation.value.typeOfCompany === '')" class="invalid-feedback">Campo Requerido</div>
                   </div>
-
-                  <div class="col-md-6 mb-3" *ngIf="userRegister.controls.healthInformation.controls.typeOfPrevention.value === 1">
+                  <div class="col-md-6 mb-3" *ngIf="userRegister.controls.healthInformation.controls.typeOfPrevention.value === 2">
                     <label for="typeOfCompany" class="form-label">Empresa</label>
                     <ng-select [items]="typeOfCompany"
                         id="typeOfCompany"
@@ -297,17 +303,20 @@
                     autocomplete="current-password"
                     placeholder="Ingrese una contraseña"
                     formControlName="password"
-                    [ngClass]="{'is-invalid': ((userRegister.controls.accesData.touched && userRegister.controls.accesData.value.password === '') || (isFormSubmitted && userRegister.controls.accesData.value.password === ''))}">
-                      <div *ngIf="(userRegister.controls.accesData.touched && userRegister.controls.accesData.value.password === '') || (isFormSubmitted && userRegister.controls.accesData.value.password === '')" class="invalid-feedback col-md-6 mb-3 info ">
-                          La contraseña de contener:
-                          <ul>
-                           <li>Al menos una letra Mayúscula</li>
-                           <li>Al menos una letra minúscula</li>
-                           <li>Al menos un número</li>
-                           <li>Al menos 8 digitos de longitud</li>
-                          </ul>
+                    [ngClass]="{'is-invalid': ((userRegister.controls.accesData.touched && userRegister.controls.accesData.value.password === '') || (isFormSubmitted && userRegister.controls.accesData.value.password === '') || (userRegister.controls.accesData.touched && userRegister.controls.accesData.controls.password.errors?.pattern) || (isFormSubmitted && userRegister.controls.accesData.controls.password.errors?.pattern))}">  
+                    <div *ngIf="(userRegister.controls.accesData.touched && userRegister.controls.accesData.value.password === '') || (isFormSubmitted && userRegister.controls.accesData.value.password === '') || (userRegister.controls.accesData.touched && userRegister.controls.accesData.controls.password.errors?.pattern) || (isFormSubmitted && userRegister.controls.accesData.controls.password.errors?.pattern)" class="invalid-feedback col-md-6 mb-3 info ">
+                          La contraseña no cumple con los parámetros
                       </div>
                   </div>
+                  <div class="col-md-6 mb-3 info ">
+                    La contraseña de contener:
+                    <ul>
+                     <li>Al menos una letra Mayúscula</li>
+                     <li>Al menos una letra minúscula</li>
+                     <li>Al menos un número</li>
+                     <li>Al menos 8 digitos de longitud</li>
+                    </ul>
+                 </div>
                   <div class="col-md-6 mb-3">
                     <label for="InputPassword2" class="form-label">Confirmar Contraseña</label>
                     <input
@@ -318,7 +327,7 @@
                     placeholder="Repita la contraseña"
                     formControlName="rePassword"
                     [ngClass]="{'is-invalid': ((userRegister.controls.accesData.touched && userRegister.controls.accesData.controls.rePassword.errors?.equalTo)|| (isFormSubmitted && userRegister.controls.accesData.controls.rePassword.errors?.equalTo))}">
-                      <div *ngIf="(userRegister.controls.accesData.touched && userRegister.controls.accesData.controls.rePassword.errors?.equalTo) || (isFormSubmitted && userRegister.controls.accesData.controls.rePassword.errors?.equalTo)" class="invalid-feedback">Contraseña no Coincide</div>
+                      <div *ngIf="(userRegister.controls.accesData.touched && userRegister.controls.accesData.controls.rePassword.errors?.equalTo) || (isFormSubmitted && userRegister.controls.accesData.controls.rePassword.errors?.equalTo)" class="invalid-feedback">La contraseña no coincide</div>
                   </div>
                 </div>
               </div>
@@ -331,11 +340,10 @@
                   class="form-check-input"
                   id="formSwitch1"
                   formControlName="authCheck"
-                  [ngClass]="{'is-invalid': isFormSubmitted && userRegister.controls.authCheck.errors?.required}">
+                  [ngClass]="{'is-invalid': (isFormSubmitted && userRegister.controls.authCheck.errors?.required)}">
                       <!-- <div *ngIf="(userRegister.touched && userRegister.controls.authCheck.errors?.required) || (isFormSubmitted && userRegister.controls.value.authCheck === '')" class="invalid-feedback">Debe aceptar los terminos y condiciones </div> -->
-
-                  
                   <label class="form-check-label" for="formSwitch1">He leido y acepto los <a href="" (click)="$event.preventDefault();openTerminosyCondiciones()">Términos y Condiciones</a> y la <a href="" (click)="$event.preventDefault(); openPoliticadePrivacidad()">Politica de Privacidad</a></label>
+                  <div *ngIf="(isFormSubmitted && userRegister.controls.authCheck.errors?.required)" class="invalid-feedback">Debe aceptar los términos y condiciones</div>
                 </div>
 
               </div>

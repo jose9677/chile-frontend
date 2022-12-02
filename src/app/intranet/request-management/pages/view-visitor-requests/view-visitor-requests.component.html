@@ -83,9 +83,9 @@
             <tbody>
                   <!-- <tr *ngFor="let request of unassignedRequest; index as i " > -->
                 <tr *ngFor="let request of unassignedRequest2 | filter2:sortByService.search2:sortByService.page2 | sortBy2:sortByService.dataSort2:sortByService.order2" >
-                  <td >{{request.id_request }}</td>
-                  <td>{{request.request_date}}</td>
-                  <td>{{request.rut}}</td>
+                  <td >{{request.id }}</td>
+                  <td>{{request.created_at}}</td>
+                  <td>{{request.rut_user}}</td>
                   <td>{{request.user_name + ',' + request.user_lastname}}</td>
                   <td>{{request.street +' '+ request.way_number  +', '+ request.description +' '+ request.property_number}}</td>
                   <td>{{(request.asistant_name ?? ' ') + " " + (request.asistant_lastname ?? ' ') }}</td>

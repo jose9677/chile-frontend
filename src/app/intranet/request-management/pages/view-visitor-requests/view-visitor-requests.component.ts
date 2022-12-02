@@ -16,6 +16,8 @@ export class ViewVisitorRequestsComponent implements OnInit {
   unassignedRequest: any[];
   unassignedRequest2: any[];
 
+  dataUser: any[];
+
 
 
 
@@ -47,33 +49,41 @@ export class ViewVisitorRequestsComponent implements OnInit {
   ngOnInit(): void {
 
     this.date.getforSocialAssistant(this.rutUserLogged.replace(/["']/g, "")).subscribe( result => {
-      console.log(result);
 
-      // result.map((res: any)=>{
+      console.log(result)
 
-      //   if (res.employee_rut != null) {
-      //     this.unassignedRequest2.push(res);
-      //   }else{
-      //     this.unassignedRequest.push(res);
-      //   }
-      // })
+      let dataUser= result.data_employe;
+      this.dataUser = dataUser
+      console.log(dataUser);
+
+      let datarequests= result.data_Neightbor;
+      console.log(datarequests);
+
+      datarequests.map((res: any)=>{
+
+        if (res.employee_rut != null) {
+          this.unassignedRequest2.push(res);
+        }else{
+          this.unassignedRequest.push(res);
+        }
+      })
       console.log(this.unassignedRequest)
 
     })
 
   }
 
-  assignDayDate (nroRequest: any) {
+  assignDayDate (id_request: any) {
 
-    this.router.navigate(['citas/asignar-fecha-de-cita'])
+    this.router.navigate(['citas/asignar-fecha-de-cita'], {queryParams: {id_request : id_request}});
 
 
 
   }
 
-  approveDates (nroRequest: any) {
+  approveDates (id_request: any) {
 
-    this.router.navigate(['citas/aprobar-cita'])
+    this.router.navigate(['citas/aprobar-cita'], {queryParams: {id_request : id_request}});
 
 
 
