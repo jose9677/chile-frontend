@@ -89,7 +89,7 @@
                     id="mobilePhone"
                     formControlName="mobilePhone"
                     prefix="+56" mask="  0  0000 - 0000" [showMaskTyped] = "false"
-                    [ngClass]="{'is-invalid': (userRegister.controls.mobilePhone.touched && userRegister.controls.mobilePhone.errors?.required) || (isFormSubmitted && userRegister.controls.mobilePhone.errors)}" placeholder="Introduce tu nombre"
+                    [ngClass]="{'is-invalid': (userRegister.controls.mobilePhone.touched && userRegister.controls.mobilePhone.errors?.required) || (isFormSubmitted && userRegister.controls.mobilePhone.errors)}"
                     >
                     <div *ngIf="(userRegister.controls.mobilePhone.touched && userRegister.controls.mobilePhone.errors?.required) || (isFormSubmitted && userRegister.controls.mobilePhone.errors)" class="invalid-feedback">Campo Requerido</div>
                   </div>
@@ -148,13 +148,13 @@
                     <div *ngIf="(userRegister.controls.address.touched && userRegister.controls.address.value.typeOfHousing === null) || (isFormSubmitted && userRegister.controls.address.value.typeOfHousing === null)" class="invalid-feedback">Campo Requerido</div>
                   </div>
                   <div class="col-md-6 mb-3">
-                    <label 
+                    <label
                     *ngIf="(userRegister.controls.address.value.typeOfHousing == null)"
                     for="nameHome" class="form-label">Número de Vivienda</label>
-                    <label 
+                    <label
                     *ngIf="(userRegister.controls.address.value.typeOfHousing == 2)"
                     for="nameHome" class="form-label">Número de Departamento</label>
-                    <label 
+                    <label
                     *ngIf="(userRegister.controls.address.value.typeOfHousing == 1)"
                     for="nameHome" class="form-label">Número de Casa</label>
                     <input
@@ -303,7 +303,7 @@
                     autocomplete="current-password"
                     placeholder="Ingrese una contraseña"
                     formControlName="password"
-                    [ngClass]="{'is-invalid': ((userRegister.controls.accesData.touched && userRegister.controls.accesData.value.password === '') || (isFormSubmitted && userRegister.controls.accesData.value.password === '') || (userRegister.controls.accesData.touched && userRegister.controls.accesData.controls.password.errors?.pattern) || (isFormSubmitted && userRegister.controls.accesData.controls.password.errors?.pattern))}">  
+                    [ngClass]="{'is-invalid': ((userRegister.controls.accesData.touched && userRegister.controls.accesData.value.password === '') || (isFormSubmitted && userRegister.controls.accesData.value.password === '') || (userRegister.controls.accesData.touched && userRegister.controls.accesData.controls.password.errors?.pattern) || (isFormSubmitted && userRegister.controls.accesData.controls.password.errors?.pattern))}">
                     <div *ngIf="(userRegister.controls.accesData.touched && userRegister.controls.accesData.value.password === '') || (isFormSubmitted && userRegister.controls.accesData.value.password === '') || (userRegister.controls.accesData.touched && userRegister.controls.accesData.controls.password.errors?.pattern) || (isFormSubmitted && userRegister.controls.accesData.controls.password.errors?.pattern)" class="invalid-feedback col-md-6 mb-3 info ">
                           La contraseña no cumple con los parámetros
                       </div>

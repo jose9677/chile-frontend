@@ -1,5 +1,5 @@
 <div class="card">
-   <form class="forms-sample container mb-5">
+   <form class="forms-sample container mb-5" [formGroup]="userRegister" (ngSubmit)="confirmRut($event)">
     <div class="row mt-5">
       <div class="row justify-content-evenly">
         <div class="col-md-5 col-sm-12 text-center">
@@ -9,39 +9,118 @@
       <div class="row mt-3 justify-content-evenly">
         <div class="col-md-5 col-sm-12">
           <label for="Rut" class="form-label colorTextPrimari">RUT</label>
-          <input id="Rut" type="text" class="form-control" placeholder="Rut">
+          <input id="Rut"
+          type="text"
+          class="form-control"
+          id="Rud"
+          formControlName = rutUser
+          placeholder="0000000-0"
+          [ngClass]="{'is-invalid': (userRegister.controls.rutUser.touched && userRegister.controls.rutUser.errors?.required) || (isFormSubmitted && userRegister.controls.rutUser.errors)}">
+          <div *ngIf="(userRegister.controls.rutUser.touched && userRegister.controls.rutUser.errors?.required) || (isFormSubmitted && userRegister.controls.rutUser.errors)" class="invalid-feedback">Campo Requerido</div>
         </div>
         <div class="col-md-5 col-sm-12">
+          <label for="supervisorOfstreet" class="form-label colorTextPrimari" *ngIf="userRegister.controls.RolOfstreet.value ==1">supervisor</label>
+          <ng-select
+          *ngIf="userRegister.controls.RolOfstreet.value ==1"
+          [items]="supervisorOfstreet"
+          class="form-control p-0"
+          bindLabel="name"
+          bindValue="id"
+          placeholder="Seleccione"
+          [(ngModel)]="selectedSupervisorStreet"
+          formControlName="supervisorOfstreet"
+          [ngClass]="{'is-invalid': ((userRegister.controls.supervisorOfstreet.touched && userRegister.controls.supervisorOfstreet.required) || (isFormSubmitted && userRegister.controls.supervisorOfstreet.value == null))}"
+          >
+          <div *ngIf="(userRegister.controls.supervisorOfstreet.touched && userRegister.controls.supervisorOfstreet.value == null) || (isFormSubmitted && userRegister.controls.supervisorOfstreet.value == null)" class="invalid-feedback">Campo Requerido</div>
+          </ng-select>
         </div>
       </div>
       <div class="row mt-3 justify-content-evenly">
         <div class="col-md-5 col-sm-12">
           <label for="Nombres" class="form-label colorTextPrimari">Nombres</label>
-          <input id="Nombres" type="text" class="form-control" placeholder="Nombres">
+          <input
+          id="Nombres"
+          type="text"
+          class="form-control"
+          placeholder="Nombres"
+          type="text"
+          formControlName="names"
+          [ngClass]="{'is-invalid': (userRegister.controls.names.touched && userRegister.controls.names.errors?.required) || (isFormSubmitted && userRegister.controls.names.errors)}"
+          >
+          <div *ngIf="(userRegister.controls.names.touched && userRegister.controls.names.errors?.required) || (isFormSubmitted && userRegister.controls.names.errors)" class="invalid-feedback">Campo Requerido</div>
+          <div class="text-danger mt-1" *ngIf="userRegister.controls.names.errors?.pattern">Este campo solo admite letas</div>
         </div>
         <div class="col-md-5 col-sm-12 ">
           <label for="Apellidos" class="form-label colorTextPrimari">Apellidos</label>
-          <input id="Apellidos" type="text" class="form-control" placeholder="Apellidos">
+          <input
+          id="Apellidos"
+          type="text"
+          class="form-control"
+          placeholder="Apellidos"
+          type="text"
+          formControlName="lastNames"
+          [ngClass]="{'is-invalid': (userRegister.controls.lastNames.touched && userRegister.controls.lastNames.errors?.required) || (isFormSubmitted && userRegister.controls.lastNames.errors)}" placeholder="Introduzca sus apellidos"
+          >
+          <div *ngIf="(userRegister.controls.lastNames.touched && userRegister.controls.lastNames.errors?.required) || (isFormSubmitted && userRegister.controls.lastNames.errors)" class="invalid-feedback">Campo Requerido</div>
+          <div class="text-danger mt-1" *ngIf="userRegister.controls.lastNames.errors?.pattern">Este campo solo admite letas</div>
         </div>
       </div>
       <div class="row mt-3 justify-content-evenly ">
         <div class="col-md-5 col-sm-12">
-          <label for="" class="form-label colorTextPrimari ">Fecha de Visita</label>
-          <input type="date" class="form-control form-date">
+          <label for="" class="form-label colorTextPrimari ">Fecha de Nacimiento</label>
+          <input
+          type="date"
+          class="form-control form-date"
+          type="date"
+          id="FechaDeNacimiento"
+          formControlName="datesBirth"
+          [ngClass]="{'is-invalid': (userRegister.controls.datesBirth.touched && userRegister.controls.datesBirth.errors?.required) || (isFormSubmitted && userRegister.controls.datesBirth.errors)}"
+          >
+          <div *ngIf="(userRegister.controls.datesBirth.touched && userRegister.controls.datesBirth.errors?.required) || (isFormSubmitted && userRegister.controls.datesBirth.errors)" class="invalid-feedback">Campo Requerido</div>
+          <div class="text-danger mt-1" *ngIf="userRegister.controls.datesBirth.errors?.date">Error al ingresar la frecha de nacimiento</div>
         </div>
         <div class="col-md-5 col-sm-12 mt-2 ">
-          <label for="Correo Electrónico" class="form-label colorTextPrimari">Correo Electrónico</label>
-          <input id="Correo Electrónico" type="email" class="form-control" placeholder="Correo Electrónico">
+          <label for="email" class="form-label colorTextPrimari">Correo Electrónico</label>
+          <input
+          type="email"
+          class="form-control"
+          placeholder="Correo Electrónico"
+          type="email"
+          id="email"
+          formControlName="email"
+          [ngClass]="{'is-invalid': (userRegister.controls.email.touched && userRegister.controls.email.errors?.required) || (isFormSubmitted && userRegister.controls.email.errors) ||(userRegister.controls.email.errors?.email)}"
+          >
+          <div *ngIf="(userRegister.controls.email.touched && userRegister.controls.email.errors?.required) || (isFormSubmitted && userRegister.controls.email.errors)" class="invalid-feedback">Campo Requerido</div>
+          <div class="text-danger mt-1" *ngIf="userRegister.controls.email.errors?.email">Verifique el formato de email</div>
         </div>
       </div>
       <div class="row mt-3 justify-content-evenly">
         <div class="col-md-5 col-sm-12 mt-2 ">
-          <label for="Teléfono Fijo" class="form-label colorTextPrimari">Teléfono Fijo</label>
-          <input id="Teléfono Fijo" type="text" class="form-control" placeholder="Teléfono Fijo">
+          <label for="TeléfonoFijo" class="form-label colorTextPrimari">Teléfono Fijo</label>
+          <input
+          id="TeléfonoFijo"
+          class="form-control"
+          placeholder="Teléfono Fijo"
+          type="tel"
+          formControlName="landLine"
+          prefix="+56" mask="  0  0000 - 0000"
+          [showMaskTyped] = "false"
+          [ngClass]="{'is-invalid': (userRegister.controls.landLine.touched && userRegister.controls.landLine.errors?.required) || (isFormSubmitted && userRegister.controls.landLine.errors)}"
+          >
+          <div *ngIf="(userRegister.controls.landLine.touched && userRegister.controls.landLine.errors?.required) || (isFormSubmitted && userRegister.controls.email.errors)" class="invalid-feedback">Campo Requerido</div>
         </div>
         <div class="col-md-5 col-sm-12 mt-2">
-          <label for="Teléfono Movil" class="form-label colorTextPrimari">Teléfono Movil</label>
-          <input id="Teléfono Movil" type="text" class="form-control" placeholder="Teléfono Movil">
+          <label for="TeléfonoMovil" class="form-label colorTextPrimari">Teléfono Movil</label>
+          <input
+          id="TeléfonoMovil"
+          type="text"
+          class="form-control"
+          type="text"
+          formControlName="mobilePhone"
+          prefix="+56" mask="  0  0000 - 0000" [showMaskTyped] = "false"
+          [ngClass]="{'is-invalid': (userRegister.controls.mobilePhone.touched && userRegister.controls.mobilePhone.errors?.required) || (isFormSubmitted && userRegister.controls.mobilePhone.errors)}"
+          >
+          <div *ngIf="(userRegister.controls.mobilePhone.touched && userRegister.controls.mobilePhone.errors?.required) || (isFormSubmitted && userRegister.controls.mobilePhone.errors)" class="invalid-feedback">Campo Requerido</div>
         </div>
       </div>
       <div class="row mt-4 justify-content-evenly">
@@ -59,10 +138,19 @@
       <h3 class="colorTextPrimari text-center">Datos de Acceso</h3><br>
       <div class="row mt-3 justify-content-evenly">
         <div class="col-md-5 col-sm-12 mt-2">
-          <label for="Rol de Usuario" class="form-label colorTextPrimari">Rol de Usuario</label>
-          <select id="Rol de Usuario" class="form-control form-select" placeholder="Rol de Usuario">
-            <option value="">Rol Admin</option>
-          </select>
+          <label for="RolOfstreet" class="form-label colorTextPrimari">Rol de Usuario</label>
+          <ng-select
+          [items]="RolOfstreet"
+          class="form-control p-0"
+          bindLabel="name"
+          bindValue="id"
+          placeholder="Seleccione"
+          [(ngModel)]="selectedStreet"
+          formControlName="RolOfstreet"
+          [ngClass]="{'is-invalid': ((userRegister.controls.RolOfstreet.touched && userRegister.controls.RolOfstreet.required) || (isFormSubmitted && userRegister.controls.RolOfstreet.value == null))}"
+          >
+          <div *ngIf="(userRegister.controls.RolOfstreet.touched && userRegister.controls.RolOfstreet.value == null) || (isFormSubmitted && userRegister.controls.RolOfstreet.value == null)" class="invalid-feedback">Campo Requerido</div>
+          </ng-select>
         </div>
         <div class="col-md-5 col-sm-12"></div>
       </div>
@@ -83,6 +171,7 @@
       </div>
     </div>
   </form>
- </div>
+</div>
+<p>{{userRegister.controls.RolOfstreet.value}}</p>
 
 
