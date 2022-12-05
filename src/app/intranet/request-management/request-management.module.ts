@@ -13,6 +13,7 @@ import { SortBy2Pipe } from './shared/pipes/sort-by2.pipe';
 import { Filter2Pipe } from './shared/pipes/filter2.pipe';
 import { HttpClientModule } from '@angular/common/http';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ViewAdminRequestsComponent } from './pages/view-admin-requests/view-admin-requests.component';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ViewSupervisorRequestsComponent,
     ViewVisitorRequestsComponent,
     ViewNeighborRequestsComponent,
+    ViewAdminRequestsComponent,
     LayoutsComponent,
     FilterPipe,
     SortByPipe,

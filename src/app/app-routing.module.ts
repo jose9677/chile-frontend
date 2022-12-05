@@ -81,7 +81,7 @@ const routes: Routes = [
         path: 'privado',
         loadChildren: () => import('./private/private.module').then(m => m.PrivateModule)
       },
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: '', redirectTo: 'solicitud', pathMatch: 'full' },
       // { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },

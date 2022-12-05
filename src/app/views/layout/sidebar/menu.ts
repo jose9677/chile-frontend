@@ -15,11 +15,11 @@ export const MENU: MenuItem[] = [
     isTitle: true
   },
   {
-    label: 'Gestion de Solicitudes',
+    label: 'Solicitudes',
     icon: 'mail',
     subItems: [
       {
-        label: 'Solicitudes de Inscripcion',
+        label: 'Estado de Inscripcíon',
         link: '/solicitud/solicitudes-de-inscripcion',
       },
       {
@@ -29,6 +29,10 @@ export const MENU: MenuItem[] = [
       {
         label: 'Asignar Cita',
         link: '/solicitud/asignar-cita'
+      },
+      {
+        label: 'Resumen de Solicitudes',
+        link: '/solicitud/escritorio'
       },
     ]
   },

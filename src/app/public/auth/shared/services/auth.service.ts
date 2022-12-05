@@ -40,7 +40,7 @@ export class AuthService {
 
   ) {
 
-
+    this.checkToken();
 
   }
 
@@ -59,7 +59,7 @@ export class AuthService {
       const tokenDecode = this.tokenService.decodeToken(token);
 
       const userSession: any = tokenDecode;
-      // this.tokenService.saveUser(userSession);
+      this.tokenService.saveUser(userSession);
 
     }),
     catchError((err)=> this.handlerError(err))
@@ -178,21 +178,22 @@ export class AuthService {
 
   logOut(): void {
     console.log('sesion cerrada');
-
     window.sessionStorage.clear();
-    this.loggedService.changeLoggedStatus= false;
-    this.router.navigate(['/login']);
+    // this.loggedService.changeLoggedStatus= false;
+    this.router.navigate(['/auth/login']);
   }
 
   public checkToken(): void {
     const userToken: any = window.sessionStorage.getItem(TOKEN_KEY);
     const isExpired = this.tokenService.helper.isTokenExpired(userToken);
-
+    
+    console.log('CheckToken');
+    
     if (isExpired == true) {
       console.log('is Expired', isExpired);
       this.logOut();
-      // window.sessionStorage.clear();
-      this.router.navigate(['/login']);
+      // // window.sessionStorage.clear();
+      // this.router.navigate(['/login']);
     }else{
       console.log('is Expired', isExpired);
     }
