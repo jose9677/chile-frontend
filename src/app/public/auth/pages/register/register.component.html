@@ -123,7 +123,7 @@
                     class="form-control"
                     id="numberStreet"
                     formControlName="numberStreet"
-                    placeholder="Número"
+                    placeholder="Especifique"
                     [ngClass]="{'is-invalid': ((userRegister.controls.address.touched && userRegister.controls.address.value.numberStreet === '') || (isFormSubmitted && userRegister.controls.address.value.numberStreet === ''))}"
                     >
                     <div *ngIf="(userRegister.controls.address.touched && userRegister.controls.address.value.numberStreet === '') || (isFormSubmitted && userRegister.controls.address.value.numberStreet === '')" class="invalid-feedback">Campo Requerido</div>
@@ -345,7 +345,7 @@
                     placeholder="Ingrese una contraseña"
                     formControlName="password"
                     [ngClass]="{'is-invalid': ((userRegister.controls.accesData.touched && userRegister.controls.accesData.value.password === '') || (isFormSubmitted && userRegister.controls.accesData.value.password === '') || (userRegister.controls.accesData.touched && userRegister.controls.accesData.controls.password.errors?.pattern) || (isFormSubmitted && userRegister.controls.accesData.controls.password.errors?.pattern))}">
-                    <div *ngIf="(userRegister.controls.accesData.touched && userRegister.controls.accesData.value.password === '') || (isFormSubmitted && userRegister.controls.accesData.value.password === '') || (userRegister.controls.accesData.touched && userRegister.controls.accesData.controls.password.errors?.pattern) || (isFormSubmitted && userRegister.controls.accesData.controls.password.errors?.pattern)" class="invalid-feedback col-md-6 mb-3 info ">
+                    <div *ngIf="(userRegister.controls.accesData.touched && userRegister.controls.accesData.value.password === '') || (isFormSubmitted && userRegister.controls.accesData.value.password === '') || (userRegister.controls.accesData.touched && userRegister.controls.accesData.controls.password.errors?.pattern) || (isFormSubmitted && userRegister.controls.accesData.controls.password.errors?.pattern)" class="invalid-feedback col-md-6 mb-3">
                           La contraseña no cumple con los parámetros
                       </div>
                   </div>

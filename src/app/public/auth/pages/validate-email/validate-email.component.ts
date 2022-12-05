@@ -67,8 +67,9 @@ export class ValidateEmailComponent implements OnInit {
       this.router.navigate(['/auth/login']);
 
       let title: any = 'Registro Exitoso'
+      let errors: any = false
       let message:any = `Se ha generado una solicitud de forma exitosa. Recibirá un correo electrónico con sus datos de acceso al sistema donde podra consultar el estatus de su solicitud`;
-      this.modalService2.OpenModalError2(ModalComponent, this. errors, title, message );
+      this.modalService2.OpenModalError2(ModalComponent, errors, title, message );
 
     });
 
