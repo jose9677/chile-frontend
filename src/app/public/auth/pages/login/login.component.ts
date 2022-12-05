@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit {
       rut: this.userLogin.value.rut,
       password: this.userLogin.value.password
     }
-    window.sessionStorage.setItem('auth-user', JSON.stringify(dataLogin.rut));
+    // window.sessionStorage.setItem('auth-user', JSON.stringify(dataLogin.rut));
     this.authService.login(dataLogin).subscribe(result => {
       console.log(result)
 

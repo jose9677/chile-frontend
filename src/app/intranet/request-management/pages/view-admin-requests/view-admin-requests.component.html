@@ -1,0 +1,60 @@
+<div class="row card">
+    <div class="col-md-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+            <h6 class="card-title">Solicitudes sin Asignar</h6>
+            <div class="table-responsive">
+                <div class="dataTable-search">
+                <input type="text" placeholder="Buscar..." #txtSearch (keyup)="sortByService.onSearch(txtSearch.value)">
+                <i class="mdi mdi-magnify"></i>
+                </div>
+                    <table class="table">
+                    <thead>
+                        <tr>
+                        <th (click)="sortByService.dataSortBy('id_request')">Nro. Solicitud</th>
+                        <th (click)="sortByService.dataSortBy('request_date')">Fecha Solicitud</th>
+                        <th (click)="sortByService.dataSortBy('rut')">RUT</th>
+                        <th (click)="sortByService.dataSortBy('user_name')">Nombres y Apellidos</th>
+                        <th (click)="sortByService.dataSortBy('way_number')">Direccion</th>
+                        <th (click)="sortByService.dataSortBy('employee_rut')">Supervisor</th>
+                        <th (click)="sortByService.dataSortBy('employee_rut')">Asistente Social</th>
+                        <th (click)="sortByService.dataSortBy('status')">Estatus</th>
+                        <th >Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <!-- <tr *ngFor="let request of unassignedRequest; index as i " > -->
+                        <tr *ngFor="let request of unassignedRequest | filter:sortByService.search:sortByService.page | sortBy:sortByService.dataSort:sortByService.order" >
+                            <td >{{request.id }}</td>
+                            <td>{{request.created_at}}</td>
+                            <td>{{request.rut_user}}</td>
+                            <td>{{request.names + ',' + request.lastname}}</td>
+                            <td>{{request.street +' '+ request.way_number  +', '+ request.description +' '+ request.property_number}}</td>
+                            <td>{{(request.asistant_name ?? ' ') + " " + (request.asistant_lastname ?? ' ') }}</td>
+                            <td>{{(request.asistant_name ?? ' ') + " " + (request.asistant_lastname ?? ' ') }}</td>
+                            <td>{{request.status}}</td>
+                            <td>
+                            <!-- <button (click)="assingSocialAssistant(request.id_request, request.rut)"><i class="mdi mdi-account-plus"></i></button> -->
+        
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        <th>
+                        </th>
+                        <th>
+                            <button (click)="sortByService.prevPage()" [disabled]="sortByService.page === 0"><i class="mdi mdi-arrow-left-bold"></i></button>
+                            <button (click)="sortByService.nextPage()"  [disabled]="(unassignedRequest | filter:sortByService.search:sortByService.page).length === 0" ><i class="mdi mdi-arrow-right-bold"></i></button>
+        
+                        </th>
+                        </tr>
+                    </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  
+  

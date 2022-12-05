@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { RouteAccessGuard } from 'src/app/shared/guards/route-access.guard';
 import { LayoutsComponent } from './layouts/layouts.component';
+import { ViewAdminRequestsComponent } from './pages/view-admin-requests/view-admin-requests.component';
 import { ViewNeighborRequestsComponent } from './pages/view-neighbor-requests/view-neighbor-requests.component';
 import { ViewSupervisorRequestsComponent } from './pages/view-supervisor-requests/view-supervisor-requests.component';
 import { ViewVisitorRequestsComponent } from './pages/view-visitor-requests/view-visitor-requests.component';
@@ -23,8 +25,13 @@ const routes: Routes = [
         component: ViewNeighborRequestsComponent
       },
       {
-        path: '',
-        redirectTo:'solicitudes-de-inscripcion',
+        path: 'escritorio',
+        component: ViewAdminRequestsComponent
+      },
+      {
+        path: '**',
+        // redirectTo:'solicitudes-de-inscripcion',
+        canActivate: [RouteAccessGuard],
         pathMatch: 'full'
       }
     ]
