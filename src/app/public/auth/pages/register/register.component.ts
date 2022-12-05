@@ -16,7 +16,7 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 })
 export class RegisterComponent implements OnInit {
 
-  private today: any;
+  public today: any;
 
   public errors: any = null;
 
@@ -59,10 +59,6 @@ export class RegisterComponent implements OnInit {
 
   public selectedhaveInsurance: any = null;
 
-  public id_document_type: any[];
-
-  public selectedid_document_type: any = null;
-
 
   public emailUser: any = '';
 
@@ -70,7 +66,6 @@ export class RegisterComponent implements OnInit {
 
   private rut: string = '';
 
-  private detailPrevention: any;
 
   public file: File;
   public selectFiles: any[];
@@ -82,6 +77,10 @@ export class RegisterComponent implements OnInit {
     private authServices: AuthService,
     private routerQuery: ActivatedRoute
     ) {
+
+      this.today = new Date()
+      this.today = `${this.today.getFullYear()}-${this.today.getMonth()}-${this.today.getDate()}`
+      console.log(this.today)
 
       this.selectFiles = [];
 
@@ -120,18 +119,6 @@ export class RegisterComponent implements OnInit {
         }
       ];
 
-      this.id_document_type= [
-        {
-          'id': 1 ,
-          'name': 'Domicilio'
-        },
-        {
-          'id': 2,
-          'name': 'Preision'
-        }
-      ];
-
-
       this.rutSubscription = this.routerQuery.queryParams.subscribe(rut => this.rut= rut.rut)
 
       console.log(this.rut)
@@ -152,6 +139,7 @@ export class RegisterComponent implements OnInit {
 
       this.locations = result.locations;
       this.preventions_types = result.preventions_types;
+      this.property_types = result.property_types
 
       result.preventions_types_details.map((res: any) => {
         if (res.id_prevention_type === 1) {
@@ -164,7 +152,6 @@ export class RegisterComponent implements OnInit {
         }
       });
 
-      this.property_types = result.property_types
 
 
 
@@ -204,16 +191,11 @@ export class RegisterComponent implements OnInit {
       healthInformation: this.fb.group({
         preventions_types: ['', Validators.required],
         preventions_types_details: ['', ],
-        // typeOfCompany: ['', ],
         haveInsurance: ['', Validators.required]
       }),
 
-      // documents: this.fb.group({
-      //   preventionCertificate: ['', Validators.required],
-      //   proofOfAddress: ['', Validators.required],
-      //   proofOfAddress1: ['', Validators.required],
-      // }),
       documents: this.fb.array([]),
+      documents2: this.fb.array([]),
 
       accesData: this.fb.group({
         password: password,
@@ -229,23 +211,36 @@ export class RegisterComponent implements OnInit {
   get documents() {
     return this.userRegister.controls["documents"] as FormArray;
   }
+  get documents2() {
+    return this.userRegister.controls["documents2"] as FormArray;
+  }
 
 
   addDocument() {
     console.log(1)
     const documentForm = this.fb.group({
         document_path: ['', Validators.required],
-        id_document_type: ['', Validators.required]
     });
 
-
     this.documents.push(documentForm);
+  }
 
+  addDocument2() {
+    console.log(1)
+    const documentForm = this.fb.group({
+        document_path: ['', Validators.required],
+    });
+
+    this.documents2.push(documentForm);
   }
 
   deleteDocument(DocumentIndex: number) {
     this.documents.removeAt(DocumentIndex);
-}
+  }
+
+  deleteDocument2(DocumentIndex: number) {
+    this.documents2.removeAt(DocumentIndex);
+  }
 
 
   modalValidateEmail(email: any) {
@@ -253,18 +248,8 @@ export class RegisterComponent implements OnInit {
   }
 
   onRegister(e: Event) {
+    this.isFormSubmitted = true;
     console.log(this.userRegister);
-
-    // if (this.userRegister.controls.healthInformation.controls.preventions_types.value === 0) {
-    //   this.detailPrevention = this.userRegister.controls.healthInformation.value.preventions_types_details;
-    // }
-    // else if (this.userRegister.controls.healthInformation.controls.preventions_types.value === 1){
-    //   this.detailPrevention = this.userRegister.controls.healthInformation.value.typeOfCompany;
-
-    // }else {
-
-    // }
-
     const dataUser = {
       rut : this.rut,
       names: this.userRegister.value.names,
@@ -279,7 +264,7 @@ export class RegisterComponent implements OnInit {
       way_number: this.userRegister.controls.address.value.numberStreet,
       id_property_type: this.userRegister.controls.address.value.property_types,
       property_number: this.userRegister.controls.address.value.nameHome,
-      id_prevention_type_detail : this.detailPrevention,
+      id_prevention_type_detail : this.userRegister.controls.healthInformation.value.preventions_types_details,
       assurance: this.userRegister.controls.healthInformation.value.haveInsurance,
 
       terms_condition: this.userRegister.value.authCheck,
@@ -294,11 +279,12 @@ export class RegisterComponent implements OnInit {
 
     }
 
-
     this.authServices.register(dataUser).subscribe(result => {
+
       console.log(result);
     },
     error => {
+      this.isFormSubmitted = false;
       this.errors=error;
       console.log('errors_login->',this.errors);
       if( this.errors == '{"email":["The email has already been taken."]}'){
@@ -306,21 +292,18 @@ export class RegisterComponent implements OnInit {
         let message = "El correo electrónico que introdujo ya se encuentra asociado a otro usuario. Por favor verifique e intente nuevamente";
         this.modalService.OpenModalError2(ModalComponent, true, title, message);
       }
-      this.isFormSubmitted = true;
 
     },
     () => {
-      e.preventDefault();
 
-      this.emailUser = this.userRegister.value.email;
-      this.modalValidateEmail(this.emailUser);
-      this.router.navigate(['auth/login']);
+      e.preventDefault();
+      this.uploadFiles();
 
     });
 
   }
 
-  dataFile(event: any, index: any, id_document_type: any) {
+  selectdataFile(event: any, index: any, id_document_type: any) {
     this.file = <File>event.target.files[0];
     this.selectFiles.push({'fileData': this.file, 'id_document_type': id_document_type});
     console.log(this.selectFiles);
@@ -337,42 +320,20 @@ export class RegisterComponent implements OnInit {
       this.authServices.uploadFiles(fileData, id_document_type).subscribe((res) =>
          {
             console.log(res);
-        })
-    })
+          },
+          error => {
+
+          },
+          () => {
 
 
-
-    // this.files.forEach( file => {
-    //   console.log(file.document_path)
-    //   id_document_type = file.id_document_type;
-    //   console.log(id_document_type)
-    //   formfileData.append('document_path', file.document_path.name);
-    //   console.log(formfileData);
-
-
-    //   this.authServices.uploadFiles(id_document_type, formfileData).subscribe((res) =>
-    //      {
-    //         console.log(res);
-    //     })
-    // })
-
-
-
-
-    // let documents = this.userRegister.controls.documents.value;
-    //   console.log(documents);
-
-    // this.files.map((res: any) => {
-
-    //   console.log(res)
-
-    //    this.authServices.uploadFiles(res.id_document_type, res.file.file.name).subscribe((res) =>
-    //    {
-    //       console.log(res);
-    //   })
-
-    // })
-  }
+          })
+      })
+      this.emailUser = this.userRegister.value.email;
+      this.modalValidateEmail(this.emailUser);
+      this.isFormSubmitted = false;
+      this.router.navigate(['auth/login']);
+    }
 
 
 

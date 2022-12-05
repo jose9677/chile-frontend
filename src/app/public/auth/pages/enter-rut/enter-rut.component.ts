@@ -16,6 +16,8 @@ export class EnterRutComponent implements OnInit {
 
   public errors: any = null;
 
+  rut : any;
+
   public isFormSubmitted: boolean;
 
   public formRutUser = this.fb.group({
@@ -36,8 +38,12 @@ export class EnterRutComponent implements OnInit {
 
   confirmRut(e: Event) {
 
+    this.rut = this.formRutUser.value.rutUser;
+    this.rut = this.rut.replace(/\.|,/g, "")
+    console.log(this.rut)
+
     const dataRutUser= {
-      rut: this.formRutUser.value.rutUser
+      rut: this.rut
     }
 
     this.authServices.validateRut(dataRutUser).subscribe( result => {
@@ -54,7 +60,7 @@ export class EnterRutComponent implements OnInit {
     () => {
 
       this.modalService.close()
-      this.router.navigate(['/auth/registro'], { queryParams: { rut: this.formRutUser.value.rutUser } });
+      this.router.navigate(['/auth/registro'], { queryParams: { rut: this.rut } });
 
 
     });
