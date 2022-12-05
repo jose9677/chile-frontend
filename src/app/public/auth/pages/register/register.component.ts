@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, Validators} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomValidators } from 'ngx-custom-validators';
 import { Subscription } from 'rxjs';
@@ -31,38 +31,38 @@ export class RegisterComponent implements OnInit {
   public selectedRoadId: any = null;
 
 
-  public nameOfstreet: any[]= [];
+  public locations: any[]= [];
 
   public selectedStreet: any = null;
 
 
-  public typeOfHousing: any[]= [];
+  public property_types: any[]= [];
 
   public selectedHousing: any = null;
 
 
-  public typeOfPrevention: any[];
+  public preventions_types: any[];
 
   public selectedPrevention: any = null;
 
 
-  public typeOfFonasa: any[];
+  public preventions_types_details: any[];
 
-  public selectedtypeOfFonasa: any = "";
+  public preventions_types_details2: any[];
 
-  public typeOfCompany: any[];
+  public preventions_types_details3: any[];
 
-  public selectedTypeOfCompany: any = "";
+  public selectedpreventions_types_details: any = "";
 
 
   public haveInsurance: any[];
 
   public selectedhaveInsurance: any = null;
 
+  public id_document_type: any[];
 
-  public proofOfAddress: any[];
+  public selectedid_document_type: any = null;
 
-  public selectedproofOfAddress: any = null;
 
   public emailUser: any = '';
 
@@ -72,6 +72,9 @@ export class RegisterComponent implements OnInit {
 
   private detailPrevention: any;
 
+  public file: File;
+  public selectFiles: any[];
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -79,6 +82,9 @@ export class RegisterComponent implements OnInit {
     private authServices: AuthService,
     private routerQuery: ActivatedRoute
     ) {
+
+      this.selectFiles = [];
+
 
       this.typeOfRoad = [
         {
@@ -91,76 +97,17 @@ export class RegisterComponent implements OnInit {
         }
       ];
 
-      this.nameOfstreet = [
-        {
-          'id': 1 ,
-          'name': 'Calle#1'
-        },
-        {
-          'id': 2,
-          'name': 'Calle#2'
-        }
-      ];
+      this.locations = [];
 
-      this.typeOfHousing = [
-        {
-          'id': 1 ,
-          'name': 'Casa'
-        },
-        {
-          'id': 2,
-          'name': 'Departamento'
-        }
-      ]
+      this.property_types = []
 
-      this.typeOfPrevention= [
-        {
-          'id': 1 ,
-          'name': 'Fonasa'
-        },
-        {
-          'id': 2,
-          'name': 'Isapre'
-        }
-      ];
+      this.preventions_types= [];
 
-      this.typeOfFonasa= [
-        {
-          'id': 1 ,
-          'name': 'Na'
-        },
-        {
-          'id': 2,
-          'name': 'fB'
-        },
-        {
-          'id': 3 ,
-          'name': 'fC'
-        },
-        {
-          'id': 4,
-          'name': 'fD'
-        }
-      ];
+      this.preventions_types_details= [];
+      this.preventions_types_details2= [];
+      this.preventions_types_details3= [];
 
-      this.typeOfCompany= [
-        {
-          'id': 1 ,
-          'name': 'Na'
-        },
-        {
-          'id': 2,
-          'name': 'cB'
-        },
-        {
-          'id': 3 ,
-          'name': 'cC'
-        },
-        {
-          'id': 4,
-          'name': 'cD'
-        }
-      ];
+
 
       this.haveInsurance= [
         {
@@ -173,28 +120,67 @@ export class RegisterComponent implements OnInit {
         }
       ];
 
-      this.proofOfAddress= [
+      this.id_document_type= [
         {
           'id': 1 ,
-          'name': 'Tipo1'
+          'name': 'Domicilio'
         },
         {
           'id': 2,
-          'name': 'Tipo2'
+          'name': 'Preision'
         }
       ];
+
 
       this.rutSubscription = this.routerQuery.queryParams.subscribe(rut => this.rut= rut.rut)
 
       console.log(this.rut)
 
-      this.today = new Date();
+
+
+
     }
 
   ngOnInit(): void {
 
+    this.isFormSubmitted = false;
 
-    console.log(this.today.toLocaleString())
+
+    this.authServices.dropdownInfo().subscribe((result) => {
+
+      console.log(result)
+
+      this.locations = result.locations;
+      this.preventions_types = result.preventions_types;
+
+      result.preventions_types_details.map((res: any) => {
+        if (res.id_prevention_type === 1) {
+          this.preventions_types_details.push(res);
+        } else if (res.id_prevention_type === 2) {
+          this.preventions_types_details2.push(res);
+
+        }else {
+          this.preventions_types_details3.push(res);
+        }
+      });
+
+      this.property_types = result.property_types
+
+
+
+
+
+
+
+
+    }, error => {
+
+    },
+    () =>{
+
+    })
+
+
 
     let password = new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}')]);
 
@@ -209,27 +195,27 @@ export class RegisterComponent implements OnInit {
       mobilePhone: ['', [Validators.required, Validators.minLength(9), CustomValidators.number]],
 
       address: this.fb.group({
-        // typeOfRoad: ['', Validators.required],
-        nameOfstreet: ['', Validators.required],
+        locations: ['', Validators.required],
         numberStreet: ['', [Validators.required, CustomValidators.number]],
-        typeOfHousing: ['', Validators.required],
+        property_types: ['', Validators.required],
         nameHome: ['', Validators.required],
       }),
 
       healthInformation: this.fb.group({
-        typeOfPrevention: ['', Validators.required],
-        typeOfFonasa: ['', ],
-        typeOfCompany: ['', ],
+        preventions_types: ['', Validators.required],
+        preventions_types_details: ['', ],
+        // typeOfCompany: ['', ],
         haveInsurance: ['', Validators.required]
       }),
 
-      documents: this.fb.group({
-        preventionCertificate: ['', Validators.required],
-        proofOfAddress: ['', Validators.required],
-        proofOfAddress1: ['', Validators.required],
-      }),
+      // documents: this.fb.group({
+      //   preventionCertificate: ['', Validators.required],
+      //   proofOfAddress: ['', Validators.required],
+      //   proofOfAddress1: ['', Validators.required],
+      // }),
+      documents: this.fb.array([]),
+
       accesData: this.fb.group({
-        // password: ['', [Validators.required]],
         password: password,
         rePassword: ['', [Validators.required, CustomValidators.equalTo(password)]],
       }),
@@ -238,30 +224,46 @@ export class RegisterComponent implements OnInit {
 
 
 
+  }
+
+  get documents() {
+    return this.userRegister.controls["documents"] as FormArray;
+  }
 
 
+  addDocument() {
+    console.log(1)
+    const documentForm = this.fb.group({
+        document_path: ['', Validators.required],
+        id_document_type: ['', Validators.required]
+    });
 
-    this.isFormSubmitted = false;
+
+    this.documents.push(documentForm);
 
   }
+
+  deleteDocument(DocumentIndex: number) {
+    this.documents.removeAt(DocumentIndex);
+}
+
 
   modalValidateEmail(email: any) {
     this.modalService.openModalData(ValidateEmailComponent, email);
   }
 
-
   onRegister(e: Event) {
     console.log(this.userRegister);
 
-    if (this.userRegister.controls.healthInformation.controls.typeOfPrevention.value === 0) {
-      this.detailPrevention = this.userRegister.controls.healthInformation.value.typeOfFonasa;
-    }
-    else if (this.userRegister.controls.healthInformation.controls.typeOfPrevention.value === 1){
-      this.detailPrevention = this.userRegister.controls.healthInformation.value.typeOfCompany;
+    // if (this.userRegister.controls.healthInformation.controls.preventions_types.value === 0) {
+    //   this.detailPrevention = this.userRegister.controls.healthInformation.value.preventions_types_details;
+    // }
+    // else if (this.userRegister.controls.healthInformation.controls.preventions_types.value === 1){
+    //   this.detailPrevention = this.userRegister.controls.healthInformation.value.typeOfCompany;
 
-    }else {
+    // }else {
 
-    }
+    // }
 
     const dataUser = {
       rut : this.rut,
@@ -273,25 +275,24 @@ export class RegisterComponent implements OnInit {
       mobile_phone: this.userRegister.value.mobilePhone,
       password: this.userRegister.controls.accesData.value.password,
 
-      id_location: this.userRegister.controls.address.value.nameOfstreet,
+      id_location: this.userRegister.controls.address.value.locations,
       way_number: this.userRegister.controls.address.value.numberStreet,
-      id_property_type: this.userRegister.controls.address.value.typeOfHousing,
+      id_property_type: this.userRegister.controls.address.value.property_types,
       property_number: this.userRegister.controls.address.value.nameHome,
-
       id_prevention_type_detail : this.detailPrevention,
-
       assurance: this.userRegister.controls.healthInformation.value.haveInsurance,
 
-      // visit_date: this.today.toLocaleString(),
+      terms_condition: this.userRegister.value.authCheck,
 
-      // preventionCertificate: this.userRegister.controls.documents.preventionCertificate,
-      // proofOfAddress: this.userRegister.controls.documents.proofOfAddress,
-      // proofOfAddress1: this.userRegister.controls.documents.proofOfAddress1,
+      id_status: 1,
+      applicant_at_home: false,
+      prevention_is_valid: false,
+      location_is_valid: false,
+      comments: null,
+      is_active: false,
+      rut_match: false,
 
-      terms_condition: this.userRegister.value.authCheck
     }
-
-    console.log(dataUser);
 
 
     this.authServices.register(dataUser).subscribe(result => {
@@ -310,6 +311,7 @@ export class RegisterComponent implements OnInit {
     },
     () => {
       e.preventDefault();
+
       this.emailUser = this.userRegister.value.email;
       this.modalValidateEmail(this.emailUser);
       this.router.navigate(['auth/login']);
@@ -317,6 +319,61 @@ export class RegisterComponent implements OnInit {
     });
 
   }
+
+  dataFile(event: any, index: any, id_document_type: any) {
+    this.file = <File>event.target.files[0];
+    this.selectFiles.push({'fileData': this.file, 'id_document_type': id_document_type});
+    console.log(this.selectFiles);
+  }
+
+
+  uploadFiles() {
+
+    this.selectFiles.map((file) => {
+
+      let fileData = file.fileData;
+      let id_document_type = file.id_document_type
+
+      this.authServices.uploadFiles(fileData, id_document_type).subscribe((res) =>
+         {
+            console.log(res);
+        })
+    })
+
+
+
+    // this.files.forEach( file => {
+    //   console.log(file.document_path)
+    //   id_document_type = file.id_document_type;
+    //   console.log(id_document_type)
+    //   formfileData.append('document_path', file.document_path.name);
+    //   console.log(formfileData);
+
+
+    //   this.authServices.uploadFiles(id_document_type, formfileData).subscribe((res) =>
+    //      {
+    //         console.log(res);
+    //     })
+    // })
+
+
+
+
+    // let documents = this.userRegister.controls.documents.value;
+    //   console.log(documents);
+
+    // this.files.map((res: any) => {
+
+    //   console.log(res)
+
+    //    this.authServices.uploadFiles(res.id_document_type, res.file.file.name).subscribe((res) =>
+    //    {
+    //       console.log(res);
+    //   })
+
+    // })
+  }
+
 
 
 
@@ -330,5 +387,9 @@ export class RegisterComponent implements OnInit {
   openPoliticadePrivacidad(){
     this.modalService.openModal(PrivacyPolicyComponent)
   }
+
+
+
+
 
 }

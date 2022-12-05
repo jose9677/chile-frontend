@@ -53,7 +53,6 @@ export class RecoveryComponent implements OnInit {
     this.tokenUrl = this.url1.queryParams['api_token'];
     console.log(2+'->'+this.tokenUrl)
 
-
     this.isFormSubmitted = true;
     console.log(this.formRecoveryPassword);
 
