@@ -7,6 +7,7 @@ import {environment} from '../../../../../environments/environment';
 import { Router } from '@angular/router';
 import { LoggedService } from 'src/app/shared/services/logged.service';
 import { TokenService } from 'src/app/shared/services/token.service';
+import { select } from 'underscore';
 
 
 
@@ -81,6 +82,26 @@ export class AuthService {
     return this.http.post( AUTH_API + 'registerNeighbor', dataUser, httpOptions).pipe(map((result:any) => {
 
       console.log('Register_User-Res->', result);
+
+    }),
+    catchError((err)=> this.handlerError(err))
+    );
+  }
+
+
+  uploadFiles(fileData: File, id_document_type: any): Observable<any>{
+    console.log(fileData)
+
+    const formfileData = new FormData();
+
+
+    formfileData.append('document_path', fileData);
+     console.log(formfileData)
+
+    return this.http.post( AUTH_API_NP + 'file/' + id_document_type , formfileData).pipe(map((result:any) => {
+
+
+      console.log('uploadFiles-Res->', result);
 
     }),
     catchError((err)=> this.handlerError(err))
@@ -175,6 +196,16 @@ export class AuthService {
     }else{
       console.log('is Expired', isExpired);
     }
+  }
+
+  dropdownInfo(): Observable<any>{
+    return this.http.get<any>( AUTH_API_NP + 'dropdownInfo', httpOptions).pipe(map((result:any) => {
+
+      return result
+
+    }),
+    catchError((err)=> this.handlerError(err))
+    );
   }
 
   private handlerError(err:any): Observable<never> { //pasa error al login component
