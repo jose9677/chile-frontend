@@ -48,3 +48,14 @@ $light-bg: #e4f4f7;
 i{
     color: $color-primary;
 }
+
+button.file_add{
+    color: $color-secondary;
+    background-color: transparent;
+    border: 0px;
+}
+
+.info{
+    color: $color-primary;
+    font-size: 0.7em;
+}

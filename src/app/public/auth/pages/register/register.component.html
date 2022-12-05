@@ -10,7 +10,7 @@
       <div class="row d-flex justify-content-center">
         <div class="col-md-11 ps-md-0 justify-content-center">
           <div class="auth-form-wrapper px-4 py-5">
-            <img class="card-img-top px-7" src="../assets/images/login/LogoLaReinaCorporacion-FondoBlanco1.png" alt=""><br><br>
+            <img class="card-img-top px-7" src="../assets/images/login/SaludAtuAlcanceLogo.png" alt=""><br><br>
             <h2 class="text-muted fw-normal text-center titles "><strong>Registro</strong></h2><br>
             <form class="forms-sample" [formGroup]="userRegister" (ngSubmit)="onRegister($event)">
 
@@ -150,6 +150,9 @@
                   </div>
                   <div class="col-md-6 mb-3">
                     <label
+                    *ngIf="(userRegister.controls.address.value.property_types == null)"
+                    for="nameHome" class="form-label">Número de Vivienda</label>
+                    <label
                     *ngIf="(userRegister.controls.address.value.property_types == 1)"
                     for="nameHome" class="form-label">Número de {{(property_types[0].description).toLowerCase()}}</label>
                     <label
@@ -177,7 +180,7 @@
 
                 <div class="row">
                   <div class="col-md-6 mb-3">
-                    <label for="preventions_types" class="form-label">Tipo de Prevención</label>
+                    <label for="preventions_types" class="form-label">Tipo de Previsión</label>
                     <ng-select [items]="preventions_types"
                         id="preventions_types"
                         class="form-control p-0"
@@ -271,7 +274,7 @@
                       <h5 class="colorTextPrimari pb-3">Certificado de Previsión</h5>
                     </div>
                     <div class="col-md-6">
-                      <button [disabled]="" type="button" mat-mini-fab (click)="addDocument() ">
+                      <button [disabled]="" type="button" mat-mini-fab (click)="addDocument() " class="file_add">
                         + Haga click aqui para Adjuntar
                       </button>
                     </div>
@@ -279,9 +282,9 @@
                   <ng-container *ngFor="let documentForm of documents.controls; let i = index">
                     <div [formGroupName]="i">
                         <div class="row">
-                          <div class="col-md-11">
+                          <div class="col-md-8">
                             <input
-                          class="form-control"
+                          class="form-control mb-4"
                           type="file"
                           id="document_path"
                           formControlName="document_path"
@@ -298,10 +301,10 @@
                 <ng-container formArrayName="documents2">
                   <div class="row">
                     <div class="col-md-6">
-                      <h5 class="colorTextPrimari pb-3">Comprobante de domicilio</h5>
+                      <h5 class="colorTextPrimari pb-3">Comprobante de Domicilio</h5>
                     </div>
                     <div class="col-md-6">
-                      <button [disabled]="" type="button" mat-mini-fab (click)="addDocument2() ">
+                      <button [disabled]="" type="button" mat-mini-fab (click)="addDocument2()" class="file_add">
                        + Haga click aqui para Adjuntar
                       </button>
                     </div>
@@ -310,9 +313,9 @@
                     <div [formGroupName]="i">
                         <div class="row" >
 
-                          <div class="col-md-11">
+                          <div class="col-md-8">
                             <input
-                          class="form-control"
+                          class="form-control mb-4"
                           type="file"
                           id="document_path"
                           formControlName="document_path"
