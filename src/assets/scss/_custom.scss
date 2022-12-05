@@ -4,6 +4,10 @@ $color-primary: #376B83;
 $color-secondary: #0eadb0;
 $light-bg: #e4f4f7;
 
+.color-secondary{
+    color: $color-secondary;
+}
+
 .table{
     & thead{
         background-color: $color-secondary;
@@ -11,6 +15,9 @@ $light-bg: #e4f4f7;
     }
     & th{
         color: white !important;
+    }
+    & td {
+        vertical-align: middle;
     }
     
     & tr:nth-child(even) {
@@ -36,6 +43,7 @@ $light-bg: #e4f4f7;
 .datasearch{
     border: 0px;
     border-bottom: $color-secondary solid 1px;
+    margin-bottom: 10px;
 }
 
 .input-group-text{
@@ -47,6 +55,10 @@ $light-bg: #e4f4f7;
 
 i{
     color: $color-primary;
+}
+
+button i{
+    color: $color-secondary;
 }
 
 button.file_add{
