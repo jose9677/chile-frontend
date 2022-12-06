@@ -12,13 +12,19 @@ import { SortByTablesService } from '../../shared/services/sort-by-tables.servic
 })
 export class ViewAdminRequestsComponent implements OnInit {
 
+  countSolicitudes: any;
+
+  rejectRequest: any;
+
+  approveRequest: any;
+
   unassignedRequest: any[];
 
   public userloggedRut: any;
 
   name!:string;
 
-  
+
   constructor(
     private router: Router,
     public sortByService: SortByTablesService,
@@ -32,6 +38,12 @@ export class ViewAdminRequestsComponent implements OnInit {
     this.userloggedRut = sessionStorage.getItem('auth-user')
     console.log(this.userloggedRut)
 
+    this.countSolicitudes = 0;
+
+    this.rejectRequest = 0;
+
+    this.approveRequest = 0;
+
     this.unassignedRequest = [];
 
 
@@ -40,14 +52,25 @@ export class ViewAdminRequestsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.date.getAll().subscribe( result => {
+    this.date.getAllRequest().subscribe( result => {
       console.log(result)
 
-      result.map((res: any)=>{
-        this.unassignedRequest.push(res);
-      })
+      this.unassignedRequest = result.data_complete;
+
+      this.countSolicitudes = result.count_solicitudes['0']?.count;
+
+      this.rejectRequest = result.reject_Request['0']?.count;
+
+      this.approveRequest = result.approve_Request['0']?.count;
+
+
+
+
+      // result.map((res: any)=>{
+      //   this.unassignedRequest.push(res);
+      // })
 
     })
-  }  
+  }
 
 }

@@ -8,6 +8,15 @@
             <input type="text" placeholder="Buscar..." #txtSearch (keyup)="sortByService.onSearch(txtSearch.value)">
             <i class="mdi mdi-magnify"></i>
           </div> -->
+
+          <div class="card">
+            <h2> Numero de solicitudes: {{countSolicitudes}}</h2>
+            <h2> Solicitudes Aprobadas: {{approveRequest}}</h2>
+            <h2> Solicitudes Rechazada: {{rejectRequest}}</h2>
+
+          </div>
+
+
           <div class="input-group col-md-4 mb-3">
             <input type="text" class="form-control" placeholder="Buscar..." #txtSearch (keyup)="sortByService.onSearch(txtSearch.value)">
             <div class="input-group-append">
@@ -31,12 +40,12 @@
                     <tbody>
                             <!-- <tr *ngFor="let request of unassignedRequest; index as i " > -->
                         <tr *ngFor="let request of unassignedRequest | filter:sortByService.search:sortByService.page | sortBy:sortByService.dataSort:sortByService.order" >
-                            <td >{{request.id }}</td>
-                            <td>{{request.created_at}}</td>
+                            <td >{{request.id_request }}</td>
+                            <td>{{request.request_date}}</td>
                             <td>{{request.rut_user}}</td>
-                            <td>{{request.names + ',' + request.lastname}}</td>
+                            <td>{{request.user_name + ',' + request.user_lastname}}</td>
                             <td>{{request.street +' '+ request.way_number  +', '+ request.description +' '+ request.property_number}}</td>
-                            <td>{{(request.asistant_name ?? ' ') + " " + (request.asistant_lastname ?? ' ') }}</td>
+                            <td>{{(request.supervisor_names ?? ' ') + " " + (request.supervisor_lastname ?? ' ') }}</td>
                             <td>{{(request.asistant_name ?? ' ') + " " + (request.asistant_lastname ?? ' ') }}</td>
                             <td>{{request.status}}</td>
                             <td>

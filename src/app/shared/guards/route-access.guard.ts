@@ -24,23 +24,18 @@ export class RouteAccessGuard implements CanActivate {
       console.log(this.rolUser)
 
       if ( this.rolUser == 1) {
-        alert('vecino')
         return this.router.navigate(['/solicitud/solicitudes-de-inscripcion'])
       }
       else if (this.rolUser == 2) {
-        alert('Asistente Social')
         return this.router.navigate(['/solicitud/asignar-cita'])
       }
       else if (this.rolUser == 3) {
-        alert('Supervisor')
         return this.router.navigate(['/solicitud/asignar-asistente-social'])
       }
       else if (this.rolUser == 4) {
-        alert('Administrador')
         return this.router.navigate(['/solicitud/escritorio'])
       }
       else if (this.rolUser == 5) {
-        alert('Soporte')
         return this.router.navigate(['/solicitud/escritorio'])
       }
 

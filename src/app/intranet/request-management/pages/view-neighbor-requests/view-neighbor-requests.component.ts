@@ -32,30 +32,6 @@ export class ViewNeighborRequestsComponent implements OnInit {
   ) {
 
 
-    const DataRequest: any = [
-      {
-      "rut": "6102995-K",
-      "names": "Esmeralda",
-      "lastname": "Fuentes",
-      "id_request": 3,
-      "id_prevention_type_detail": 1,
-      "visit_date": "2022-11-30 00:00:00",
-      "solicitude_date": "2022-11-30 02:27:50",
-      "request_date": "2025-09-05",
-      "prevention_detail": "A",
-      "prevention_type": "FONASA",
-      "id_status": 5,
-      "status": "REPROGRAMAR",
-      "visitor_rut": "31179870-6",
-      "employee_name": "Harry",
-      "employee_lastname": "Potter",
-      "id_document": 2,
-      "document_path": "C:\\xampp\\tmp\\phpC537.tmp",
-      "document_type": "DOMICILIO"
-      }
-    ]
-
-    this.dataRequest = DataRequest;
 
     this.rutNeighbor = window.sessionStorage.getItem('auth-user');
 
@@ -71,15 +47,9 @@ export class ViewNeighborRequestsComponent implements OnInit {
       console.log(result);
 
 
-      if (result.length === 0) {
-        result = this.dataRequest
-        console.log(result);
-      }else {
-        result = result
-      }
 
       result.map((res: any)=>{
-        res.fullName = res.employee_name +' '+ res.employee_lastname
+        res.fullName = res.assistant_names +' '+ res.assistant_lastname
         res.fullPeventionData = res.prevention_type +' - '+ res.prevention_detail
         this.unassignedRequest.push(res);
       })

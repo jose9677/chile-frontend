@@ -21,7 +21,7 @@ export class ViewSupervisorRequestsComponent implements OnInit {
 
   name!:string;
 
-  
+
   constructor(
     private router: Router,
     public sortByService: SortByTablesService,
@@ -44,17 +44,19 @@ export class ViewSupervisorRequestsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.date.getAll().subscribe( result => {
+    const rutSupervisor= 0;
+
+    this.date.getForRurSupervisor(rutSupervisor).subscribe( result => {
       console.log(result)
 
-      result.map((res: any)=>{
+      // result.map((res: any)=>{
 
-          if (res.employee_rut != null) {
-            this.unassignedRequest2.push(res);
-          }else{
-            this.unassignedRequest.push(res);
-          }
-      })
+      //     if (res.employee_rut != null) {
+      //       this.unassignedRequest2.push(res);
+      //     }else{
+      //       this.unassignedRequest.push(res);
+      //     }
+      // })
 
     })
   }

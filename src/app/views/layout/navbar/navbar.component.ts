@@ -10,12 +10,19 @@ import { AuthService } from 'src/app/public/auth/shared/services/auth.service';
 })
 export class NavbarComponent implements OnInit {
 
+  fullNamesUser: any;
+  rutUser: any;
+
   constructor(
-    @Inject(DOCUMENT) private document: Document, 
+    @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
     private router: Router,
     private authService: AuthService
-  ) { }
+  ) {
+
+    this.fullNamesUser= window.sessionStorage.getItem('full-names')
+    this.rutUser= window.sessionStorage.getItem('auth-user')
+   }
 
   ngOnInit(): void {
   }

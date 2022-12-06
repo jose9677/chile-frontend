@@ -30,9 +30,9 @@
                   <!-- <tr *ngFor="let request of unassignedRequest; index as i " > -->
                 <tr *ngFor="let request of unassignedRequest | filter:sortByService.search:sortByService.page | sortBy:sortByService.dataSort:sortByService.order" >
                   <td >{{request.id_request }}</td>
-                  <td>{{request.solicitude_date}}</td>
-                  <td>{{request.fullPeventionData}} </td>
                   <td>{{request.request_date}}</td>
+                  <td>{{request.fullPeventionData}} </td>
+                  <td>{{request.visit_date}}</td>
                   <td>{{request.fullName}}</td>
                   <td>{{request.status}}</td>
                   <td>
