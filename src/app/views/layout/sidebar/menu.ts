@@ -16,7 +16,7 @@ export const MENU: MenuItem[] = [
   // },
   {
     label: 'Solicitudes',
-    icon: 'mail',
+    icon: 'file-text',
     subItems: [
       {
         role: 1,
