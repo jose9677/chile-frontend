@@ -71,7 +71,7 @@ export class ForgetPasswordComponent implements OnInit {
       // modal
       console.log(this.formForgetPassword)
       // this.router.navigate([this.returnUrl]);
-      this.emailUser = 'Eduyeoh@gmail.com'
+      this.emailUser = 'su Correo Electronico'
       let title: any = 'Recuperar Contraseña';
       let message: any = `Hemos enviado un mensaje con instrucciones a ${this.emailUser}. Si no lo encuentra en su bandeja de entrada, recuerde revisar en el correo no deseado `;
       this.modalService2.OpenModalError2(ModalComponent, false, title, message)

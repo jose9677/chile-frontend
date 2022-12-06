@@ -15,13 +15,8 @@ export class Access5Guard implements CanActivate {
 
       this.rolUser = sessionStorage.getItem('rol-user');
 
+      return false
 
-      if ( this.rolUser == 5 ) {
-
-        return true;
-      }else {
-        return false
-      }
   }
 
 }

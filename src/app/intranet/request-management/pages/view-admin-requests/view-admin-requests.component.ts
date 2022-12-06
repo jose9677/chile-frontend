@@ -59,9 +59,9 @@ export class ViewAdminRequestsComponent implements OnInit {
 
       this.countSolicitudes = result.count_solicitudes['0']?.count;
 
-      this.rejectRequest = result.reject_Request['0']?.count;
+      this.rejectRequest = result.reject_Request.length;
 
-      this.approveRequest = result.approve_Request['0']?.count;
+      this.approveRequest = result.approve_Request.length;
 
 
 
