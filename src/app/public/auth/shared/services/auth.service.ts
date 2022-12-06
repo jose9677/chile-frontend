@@ -179,6 +179,9 @@ export class AuthService {
   logOut(): void {
     console.log('sesion cerrada');
     window.sessionStorage.clear();
+    window.sessionStorage.removeItem('rol-user');
+    window.sessionStorage.removeItem('access_token');
+    window.sessionStorage.removeItem('auth-user');
     // this.loggedService.changeLoggedStatus= false;
     this.router.navigate(['/auth/login']);
   }
@@ -186,9 +189,9 @@ export class AuthService {
   public checkToken(): void {
     const userToken: any = window.sessionStorage.getItem(TOKEN_KEY);
     const isExpired = this.tokenService.helper.isTokenExpired(userToken);
-    
+
     console.log('CheckToken');
-    
+
     if (isExpired == true) {
       console.log('is Expired', isExpired);
       this.logOut();

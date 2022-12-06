@@ -80,7 +80,7 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
       result.map((res: any)=>{
         res.fullName = res.employee_name +' '+ res.employee_lastname
-        res.fullPeventionData = res.prevention_type +' Tipo: '+ res.prevention_detail
+        res.fullPeventionData = res.prevention_type +' - '+ res.prevention_detail
         this.unassignedRequest.push(res);
       })
       console.log(this.unassignedRequest)

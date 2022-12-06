@@ -247,5 +247,15 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     }
   };
 
+  hidden(role: any): boolean {
+    let roleUser = window.sessionStorage.getItem("rol-user")
+
+    if (roleUser == role){
+      return false
+    }else{
+      return true
+    }
+  }
+
 
 }
