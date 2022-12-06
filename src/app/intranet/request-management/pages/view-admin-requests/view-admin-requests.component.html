@@ -6,6 +6,24 @@
     </div>
 </div>
 <br>
+<div class="row d-flex justify-content-center">
+    <div class="col-md-4">
+        <div class="card resumebox p-3 mb-2 text-center">
+            <h3>Solicitudes Generadas:<br>{{countSolicitudes}}</h3>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card resumebox p-3 mb-2 text-center">
+            <h3>Solicitudes Aprobadas:<br>{{approveRequest}}</h3>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card resumebox p-3 mb-2 text-center">
+            <h3>Solicitudes Rechazadas:<br>{{rejectRequest}}</h3>
+        </div>
+    </div>
+</div>
+<br>
 <div class="row">
     <div class="col-md-12">
         <div class="card stretch-card">
@@ -16,15 +34,6 @@
             <input type="text" placeholder="Buscar..." #txtSearch (keyup)="sortByService.onSearch(txtSearch.value)">
             <i class="mdi mdi-magnify"></i>
           </div> -->
-
-          <div class="card">
-            <h2> Numero de solicitudes: {{countSolicitudes}}</h2>
-            <h2> Solicitudes Aprobadas: {{approveRequest}}</h2>
-            <h2> Solicitudes Rechazada: {{rejectRequest}}</h2>
-
-          </div>
-
-
           <div class="input-group col-md-4 mb-3">
             <input type="text" class="form-control" placeholder="Buscar..." #txtSearch (keyup)="sortByService.onSearch(txtSearch.value)">
             <div class="input-group-append">
@@ -51,7 +60,7 @@
                             <td >{{request.id_request }}</td>
                             <td>{{request.request_date}}</td>
                             <td>{{request.rut_user}}</td>
-                            <td>{{request.user_name + ',' + request.user_lastname}}</td>
+                            <td>{{request.user_name + ' ' + request.user_lastname}}</td>
                             <td>{{request.street +' '+ request.way_number  +', '+ request.description +' '+ request.property_number}}</td>
                             <td>{{(request.supervisor_names ?? ' ') + " " + (request.supervisor_lastname ?? ' ') }}</td>
                             <td>{{(request.asistant_name ?? ' ') + " " + (request.asistant_lastname ?? ' ') }}</td>
