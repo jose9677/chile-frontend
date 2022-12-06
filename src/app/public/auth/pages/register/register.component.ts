@@ -52,6 +52,8 @@ export class RegisterComponent implements OnInit {
 
   public preventions_types_details3: any[];
 
+  public preventions_types_details4: any[];
+
   public selectedpreventions_types_details: any = "";
 
 
@@ -105,6 +107,7 @@ export class RegisterComponent implements OnInit {
       this.preventions_types_details= [];
       this.preventions_types_details2= [];
       this.preventions_types_details3= [];
+      this.preventions_types_details4= [];
 
 
 
@@ -147,8 +150,12 @@ export class RegisterComponent implements OnInit {
         } else if (res.id_prevention_type === 2) {
           this.preventions_types_details2.push(res);
 
-        }else {
+        } else if (res.id_prevention_type === 3) {
           this.preventions_types_details3.push(res);
+
+        }
+        else {
+          this.preventions_types_details4.push(res);
         }
       });
 
@@ -284,7 +291,7 @@ export class RegisterComponent implements OnInit {
       console.log(result);
     },
     error => {
-      this.isFormSubmitted = false;
+      // this.isFormSubmitted = false;
       this.errors=error;
       console.log('errors_login->',this.errors);
       if( this.errors == '{"email":["The email has already been taken."]}'){
@@ -348,9 +355,4 @@ export class RegisterComponent implements OnInit {
   openPoliticadePrivacidad(){
     this.modalService.openModal(PrivacyPolicyComponent)
   }
-
-
-
-
-
 }

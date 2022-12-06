@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { Access1Guard } from 'src/app/shared/guards/access-1.guard';
 import { Access2Guard } from 'src/app/shared/guards/access-2.guard';
 import { Access3Guard } from 'src/app/shared/guards/access-3.guard';
+import { Access5Guard } from 'src/app/shared/guards/access-5.guard';
 import { LayoutDatesComponent } from './layouts/layout-dates/layout-dates.component';
 import { ApproveDatesComponent } from './pages/approve-dates/approve-dates.component';
 import { AssignDayDatesComponent } from './pages/assign-day-dates/assign-day-dates.component';
@@ -31,7 +32,7 @@ const routes: Routes = [
       {
         path: 'confirmar-cita',
         component: ConfirmDatesComponent,
-        canActivate: [Access1Guard]
+        canActivate: [Access5Guard]
       },
       {
         path: 'asignar-asistente-social',
