@@ -13,7 +13,7 @@
                         <tr>
                         <th (click)="sortByService.dataSortBy('id_request')">Nro. Solicitud</th>
                         <th (click)="sortByService.dataSortBy('request_date')">Fecha Solicitud</th>
-                        <th (click)="sortByService.dataSortBy('rut')">RUT</th>
+                        <th (click)="sortByService.dataSortBy('rut')">RUT Vecino</th>
                         <th (click)="sortByService.dataSortBy('user_name')">Nombres y Apellidos</th>
                         <th (click)="sortByService.dataSortBy('way_number')">Direccion</th>
                         <th (click)="sortByService.dataSortBy('employee_rut')">Supervisor</th>
@@ -35,7 +35,7 @@
                             <td>{{request.status}}</td>
                             <td>
                             <!-- <button (click)="assingSocialAssistant(request.id_request, request.rut)"><i class="mdi mdi-account-plus"></i></button> -->
-        
+
                             </td>
                         </tr>
                     </tbody>
@@ -46,7 +46,7 @@
                         <th>
                             <button (click)="sortByService.prevPage()" [disabled]="sortByService.page === 0"><i class="mdi mdi-arrow-left-bold"></i></button>
                             <button (click)="sortByService.nextPage()"  [disabled]="(unassignedRequest | filter:sortByService.search:sortByService.page).length === 0" ><i class="mdi mdi-arrow-right-bold"></i></button>
-        
+
                         </th>
                         </tr>
                     </tfoot>
@@ -56,5 +56,5 @@
         </div>
     </div>
 </div>
-  
-  
+
+
