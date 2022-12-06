@@ -47,7 +47,7 @@ export class AuthService {
 
 
   login(authData: any): Observable<any | void >{
-    return this.http.post<any>( AUTH_API + 'login', authData).pipe(map((result:any) => {
+    return this.http.post<any>( AUTH_API + 'login', authData, httpOptions).pipe(map((result:any) => {
 
       console.log(result);
 
@@ -144,7 +144,7 @@ export class AuthService {
 
 
   activateUser(user:any, rol:any): Observable<any>{
-    return this.http.put<any>( AUTH_API + 'active-user/'+ user, rol ,httpOptions).pipe(map((result:any) => {
+    return this.http.put<any>( AUTH_API + 'active-user/'+ user, rol , httpOptions).pipe(map((result:any) => {
 
       console.log('activate_User-Res->', result);
 
