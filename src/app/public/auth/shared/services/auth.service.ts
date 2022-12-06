@@ -40,7 +40,7 @@ export class AuthService {
 
   ) {
 
-    this.checkToken();
+    // this.checkToken();
 
   }
 

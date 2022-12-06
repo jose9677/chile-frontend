@@ -12,12 +12,14 @@ export class AuthGuard implements CanActivate {
     ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    
     const isLoggedin = this.loggedService.isLoggedObservable
     console.log(isLoggedin || null)
 
     const isLoggedin2 = sessionStorage.getItem('isLoggedin')
 
       if (isLoggedin2) {
+
       console.log(this.loggedService.isLoggedObservable)
 
       // logged in so return true

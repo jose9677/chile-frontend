@@ -355,4 +355,7 @@ export class RegisterComponent implements OnInit {
   openPoliticadePrivacidad(){
     this.modalService.openModal(PrivacyPolicyComponent)
   }
+
+  
+
 }
