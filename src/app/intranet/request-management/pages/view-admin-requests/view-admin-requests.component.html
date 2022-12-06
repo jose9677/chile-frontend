@@ -2,12 +2,18 @@
     <div class="col-md-12 stretch-card">
         <div class="card">
             <div class="card-body">
-            <h6 class="card-title">Solicitudes sin Asignar</h6>
+            <h3 class="colorTextPrimari pb-3">Resumen de Solicitudes</h3>
             <div class="table-responsive">
-                <div class="dataTable-search">
-                <input type="text" placeholder="Buscar..." #txtSearch (keyup)="sortByService.onSearch(txtSearch.value)">
-                <i class="mdi mdi-magnify"></i>
-                </div>
+                <!-- <div class="col-md-6 datasearch">
+            <input type="text" placeholder="Buscar..." #txtSearch (keyup)="sortByService.onSearch(txtSearch.value)">
+            <i class="mdi mdi-magnify"></i>
+          </div> -->
+          <div class="input-group col-md-4 mb-3">
+            <input type="text" class="form-control" placeholder="Buscar..." #txtSearch (keyup)="sortByService.onSearch(txtSearch.value)">
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2"><i class="mdi mdi-magnify"></i></span>
+            </div>
+          </div>
                     <table class="table">
                     <thead>
                         <tr>
@@ -44,8 +50,8 @@
                         <th>
                         </th>
                         <th>
-                            <button (click)="sortByService.prevPage()" [disabled]="sortByService.page === 0"><i class="mdi mdi-arrow-left-bold"></i></button>
-                            <button (click)="sortByService.nextPage()"  [disabled]="(unassignedRequest | filter:sortByService.search:sortByService.page).length === 0" ><i class="mdi mdi-arrow-right-bold"></i></button>
+                            <button class="color-secondary" (click)="sortByService.prevPage()" [disabled]="sortByService.page === 0"><i class="mdi mdi-arrow-left-bold"></i>  Anterior  </button>
+                            <button class="color-secondary" (click)="sortByService.nextPage()"  [disabled]="(unassignedRequest | filter:sortByService.search:sortByService.page).length === 0" >  Siguiente  <i class="mdi mdi-arrow-right-bold"></i></button>
         
                         </th>
                         </tr>
