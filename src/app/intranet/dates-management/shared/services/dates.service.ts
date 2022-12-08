@@ -42,7 +42,6 @@ export class DatesService {
       return result['data_User_Request'];
 
 
-
     }),
     catchError((err)=> this.handlerError(err))
     );
@@ -118,11 +117,22 @@ export class DatesService {
     );
   }
 
+  programVisitDate(idRequest: any, Date: any): Observable<any | void> {
+
+    return this.http.put<any>(AUTH_API_NP + 'programVisitDate/'+ idRequest, Date).pipe(map((result: any) => {
+
+      return result;
+
+    }),
+      catchError((err) => this.handlerError(err))
+    );
+  }
+
   getForRurSupervisor(rutSupervisor: any): Observable<any | void> {
 
-    return this.http.get<any>(AUTH_API_NP + 'detailsSupervisor/' + rutSupervisor, httpOptions).pipe(map((result: any) => {
+    return this.http.get<any>(AUTH_API_NP + 'detailsSupervisor/' + rutSupervisor).pipe(map((result: any) => {
 
-      return result['message'];
+      return result
 
     }),
       catchError((err) => this.handlerError(err))

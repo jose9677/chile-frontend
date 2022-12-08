@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   returnUrl: any;
 
-  public isFormSubmitted: Boolean;
+  public isFormSubmitted: boolean;
 
   public userLogin = this.fb.group({
     rut: ['', Validators.required],

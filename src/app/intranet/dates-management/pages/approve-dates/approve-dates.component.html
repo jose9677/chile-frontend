@@ -1,6 +1,6 @@
 
  <div class="card">
-  <form class="forms-sample container pb-5 px-5">
+  <form class="forms-sample container pb-5 px-5" [formGroup]="formApprove" (ngSubmit)="approve($event)">
     <div class="row mt-5 justify-content-center">
       <h3 class="colorTextPrimari">Datos de la Solicitud</h3><br>
       <div class="row mt-3">
@@ -10,48 +10,48 @@
         </div>
         <div class="col-md-4 col-sm-12">
           <label for="" class="form-label colorTextPrimari">Fecha de Solicitud</label>
-          <input type="date" value={{unassignedRequest[0].created_at}} disabled class="form-control">
+          <input type="datetime-local" value={{dataRequest[0]?.request_date}} disabled class="form-control">
         </div>
         <div class="col-md-4 col-sm-12">
           <label for="" class="form-label colorTextPrimari">Estatus</label>
-          <input type="text" value={{unassignedRequest[0].status}} disabled class="form-control">
+          <input type="text" value={{dataRequest[0]?.status}} disabled class="form-control">
         </div>
       </div>
       <div class="row mt-3 ">
         <div class="col-md-4 col-sm-12">
           <label for="" class="form-label colorTextPrimari ">Solicitante</label>
-          <input type="text" value={{unassignedRequest[0].fullNameUser}} disabled class="form-control">
+          <input type="text" value={{dataRequest[0]?.fullNameUser}} disabled class="form-control">
         </div>
         <div class="col-md-8 col-sm-12">
           <label for="" class="form-label colorTextPrimari ">Dirección</label>
-          <textarea wrap="soft" style="overflow:hidden; resize:none;" value={{unassignedRequest[0].fullDirection}} disabled class="form-control"></textarea>
+          <textarea wrap="soft" style="overflow:hidden; resize:none;" value={{dataRequest[0]?.fullDirection}} disabled class="form-control"></textarea>
         </div>
       </div>
       <div class="row">
         <div class="col-md-4 col-sm-12">
           <label for="" class="form-label colorTextPrimari ">RUT</label>
-          <input type="text" value={{unassignedRequest[0].rut}} disabled class="form-control">
+          <input type="text" value={{dataRequest[0]?.rut}} disabled class="form-control">
         </div>
         <div class="col-md-4 col-sm-12">
           <label for="" class="form-label colorTextPrimari ">Teléfono Fijo</label>
-          <input type="text" value={{unassignedRequest[0].landline}} disabled class="form-control">
+          <input type="text" value={{dataRequest[0]?.landline}} disabled class="form-control">
         </div>
         <div class="col-md-4 col-sm-12">
           <label for="" class="form-label colorTextPrimari ">Teléfono Móvil</label>
-          <input type="text" value={{unassignedRequest[0].mobile_phone}} disabled class="form-control">
+          <input type="text" value={{dataRequest[0]?.mobile_phone}} disabled class="form-control">
         </div>
       </div>
       <div class="row mt-3 ">
         <div class="col-md-4 col-sm-12">
           <label for="" class="form-label colorTextPrimari">Asistente Social</label>
           <select class="form-control" disabled>
-            <option value="">{{unassignedRequest[0].fullName}}</option>
+            <option value="">{{dataRequest[0]?.fullName}}</option>
           </select>
         </div>
         <div class="col-md-4 col-sm-12">
           <label for="" class="form-label colorTextPrimari ">Fecha de Visita</label>
-          <input type="text" value={{unassignedRequest[0].visit_date}} disabled class="form-control">
-        </div>        
+          <input type="datetime-local" value={{dataRequest[0]?.visit_date}} disabled class="form-control">
+        </div>
       </div>
     </div>
     <div class="row mt-5 justify-content-center">
@@ -61,7 +61,7 @@
           <label for="" class="form-label colorTextPrimari ">Tipo de Prevención</label>
         </div>
         <div class="col-md-4 col-sm-12 ms-6">
-          <input type="text" value={{unassignedRequest[0].fullPeventionData}} disabled class="form-control">
+          <input type="text" value={{dataRequest[0]?.fullPeventionData}} disabled class="form-control">
         </div>
         <div class="col-md-4 col-sm-12 ms-4">
           <a href="">Certificado.pdf <i class="ms-4 h4 feather icon-eye"></i></a>
@@ -88,9 +88,13 @@
           <div class="row mb-3">
             <label for="" class="col-sm-8 col-form-label">¿Solicitante en el Domicilio?</label>
             <div class="col-sm-3">
-              <select class="form-select form-control">
-                <option value="">Si</option>
-                <option value="">No</option>
+              <select
+              class="form-select form-control"
+              formControlName="applicantAtResidence"
+              >
+                <option value=""></option>
+                <option value="true">Si</option>
+                <option value="false">No</option>
               </select>
             </div>
           </div>
@@ -99,9 +103,13 @@
           <div class="row mb-3">
             <label for="" class="col-sm-8 col-form-label">¿Certificado de Prevención Válido?</label>
             <div class="col-sm-3">
-              <select class="form-select form-control">
-                <option value="">Si</option>
-                <option value="">No</option>
+              <select
+              class="form-select form-control"
+              formControlName="validPreventionCertificate"
+              >
+                <option value=""></option>
+                <option value="true">Si</option>
+                <option value="false">No</option>
               </select>
             </div>
           </div>
@@ -110,9 +118,13 @@
           <div class="row mb-3">
             <label for="" class="col-sm-8 col-form-label">¿Comprobante de Domicilio Válido?</label>
             <div class="col-sm-3">
-              <select class="form-select form-control">
-                <option value="">Si</option>
-                <option value="">No</option>
+              <select
+              class="form-select form-control"
+              formControlName="validProofOfAddress"
+              >
+                <option value=""></option>
+                <option value="true">Si</option>
+                <option value="false">No</option>
               </select>
             </div>
           </div>
@@ -121,9 +133,13 @@
           <div class="row mb-3">
             <label for="" class="col-sm-8 col-form-label">¿RUT Coincide?</label>
             <div class="col-sm-3">
-              <select class="form-select form-control">
-                <option value="">Si</option>
-                <option value="">No</option>
+              <select
+              class="form-select form-control"
+              formControlName="DoesRUTMatch"
+              >
+                <option value=""></option>
+                <option value="true">Si</option>
+                <option value="false">No</option>
               </select>
             </div>
           </div>
@@ -134,7 +150,11 @@
           <div class="row mb-3">
             <label for="" class="col-sm-3 col-form-label">Observaciones/Comentarios</label>
             <div class="col-sm-7">
-              <textarea class="form-control" style="resize:none;"></textarea>
+              <textarea
+              class="form-control"
+              style="resize:none;"
+              formControlName="Observations"
+              ></textarea>
             </div>
           </div>
         </div>
@@ -143,13 +163,13 @@
     <br>
     <div class="row justify-content-center">
       <div class="col-md-2 col-sm-12">
-       <button class="btn btn-primary style w-100 h-100" (click)="$event.preventDefault();openGenerateCredential()">Aprobar</button> <!--ojo el event.preventDefault() evita que el formulario recargue la pagina -->
+       <button type="submit" class="btn btn-primary style w-100 h-100" (click)="$event.preventDefault()">Aprobar</button> <!--ojo el event.preventDefault() evita que el formulario recargue la pagina -->
       </div>
       <div class="col-md-2 col-sm-12">
-        <button class="btn btn-outline-primary style-outline w-100 h-100" (click)=" $event.preventDefault(); openRejectRequestComponent()">Rechazar</button>
+        <button type="button" class="btn btn-outline-primary style-outline w-100 h-100" (click)=" $event.preventDefault(); openRejectRequestComponent()">Rechazar</button>
       </div>
       <div class="col-md-2 col-sm-12">
-        <button class="btn btn-primary style w-100 h-100">Cancelar</button>
+        <button class="btn btn-primary style w-100 h-100" type="button" (click)="return()">Cancelar</button>
       </div>
     </div>
   </form>

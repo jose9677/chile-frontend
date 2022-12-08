@@ -44,7 +44,7 @@ export class ViewSupervisorRequestsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const rutSupervisor= 0;
+    const rutSupervisor= window.sessionStorage.getItem('auth-user');
 
     this.date.getForRurSupervisor(rutSupervisor).subscribe( result => {
       console.log(result)

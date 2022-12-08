@@ -54,18 +54,6 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/general/general.module').then(m => m.GeneralModule)
       },
       {
-        path: 'supervisor',
-        loadChildren: () => import('./intranet/supervisors/supervisors.module').then(m => m.SupervisorsModule)
-      },
-      {
-        path: 'vecino',
-        loadChildren: () => import('./intranet/neighbor/neighbor.module').then(m => m.NeighborModule)
-      },
-      {
-        path: 'visitador',
-        loadChildren: () => import('./intranet/visitors/visitors.module').then(m => m.VisitorsModule)
-      },
-      {
         path: 'solicitud',
         loadChildren: () => import('./intranet/request-management/request-management.module').then(m => m.RequestManagementModule)
       },
