@@ -46,17 +46,17 @@ export class ViewSupervisorRequestsComponent implements OnInit {
 
     const rutSupervisor= window.sessionStorage.getItem('auth-user');
 
-    this.date.getForRurSupervisor(rutSupervisor).subscribe( result => {
+    this.date.getAllRequest().subscribe( result => {
       console.log(result)
 
-      // result.map((res: any)=>{
+      result.data_complete.map((res: any)=>{
 
-      //     if (res.employee_rut != null) {
-      //       this.unassignedRequest2.push(res);
-      //     }else{
-      //       this.unassignedRequest.push(res);
-      //     }
-      // })
+          if (res.assistant_rut != null) {
+            this.unassignedRequest2.push(res);
+          }else{
+            this.unassignedRequest.push(res);
+          }
+      })
 
     })
   }

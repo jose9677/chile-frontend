@@ -84,12 +84,11 @@ export class AssignVisitorDatesComponent implements OnInit {
   assignSocialAssistant(rutSocialAssistant: any, e: Event) {
 
     const assignData: any = {
-      'rut': this.rutsup,
-      'id_request': this.nroRequest,
-      'employee_rut': rutSocialAssistant
+
+      'rut': rutSocialAssistant
 
     }
-    this.datesService.assignSocialAssistant(assignData).subscribe(result => {
+    this.datesService.assignSocialAssistant(this.nroRequest ,assignData).subscribe(result => {
       return console.log(result);
     },
     error => {

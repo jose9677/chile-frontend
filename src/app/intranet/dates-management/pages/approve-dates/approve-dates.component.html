@@ -1,6 +1,6 @@
 
  <div class="card">
-  <form class="forms-sample container pb-5 px-5" [formGroup]="formApprove" (ngSubmit)="approve($event)">
+  <form class="forms-sample container pb-5 px-5" [formGroup]="formApprove" >
     <div class="row mt-5 justify-content-center">
       <h3 class="colorTextPrimari">Datos de la Solicitud</h3><br>
       <div class="row mt-3">
@@ -163,7 +163,7 @@
     <br>
     <div class="row justify-content-center">
       <div class="col-md-2 col-sm-12">
-       <button type="submit" class="btn btn-primary style w-100 h-100" (click)="$event.preventDefault()">Aprobar</button> <!--ojo el event.preventDefault() evita que el formulario recargue la pagina -->
+       <button type="submit" class="btn btn-primary style w-100 h-100" (click)="approve( idRequest, $event)">Aprobar</button> <!--ojo el event.preventDefault() evita que el formulario recargue la pagina -->
       </div>
       <div class="col-md-2 col-sm-12">
         <button type="button" class="btn btn-outline-primary style-outline w-100 h-100" (click)=" $event.preventDefault(); openRejectRequestComponent()">Rechazar</button>
