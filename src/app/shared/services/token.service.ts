@@ -17,7 +17,11 @@ export class TokenService {
 
   constructor(
     private router: Router,
-  ) { }
+  ) {
+
+    this.checkToken();
+
+   }
 
 
   // public signOut(): void {
@@ -61,5 +65,21 @@ export class TokenService {
       return JSON.parse(user);
     }
     return {};
+  }
+
+  public checkToken(): void {
+    const userToken: any = window.sessionStorage.getItem(TOKEN_KEY);
+    const isExpired = this.helper.isTokenExpired(userToken);
+
+    console.log('CheckToken');
+
+    if (isExpired == true) {
+      console.log('is Expired', isExpired);
+      // this.logOut();
+      window.sessionStorage.clear();
+      // this.router.navigate(['/login']);
+    }else{
+      console.log('is Expired', isExpired);
+    }
   }
 }

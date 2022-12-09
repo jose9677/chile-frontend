@@ -74,9 +74,27 @@ export class ApproveDatesComponent implements OnInit {
 
   }
 
-  approve( e: Event ) {
+  approve( idRequest: any, e: Event ) {
 
-    console.log(this.formApprove);
+    const dataRequest = {
+      "applicant_at_home": this.formApprove.controls.applicantAtResidence.value,
+      "prevention_is_valid": this.formApprove.controls.validProofOfAddress.value,
+      "location_is_valid": this.formApprove.controls.DoesRUTMatch.value,
+      "rut_match": this.formApprove.controls.DoesRUTMatch.value
+
+    }
+
+    this.datesService.approbe(idRequest, dataRequest).subscribe((result) => {
+
+      console.log(result)
+
+    },
+    error => {
+
+    },
+    () => {
+
+    })
 
     this.openGenerateCredential();
 

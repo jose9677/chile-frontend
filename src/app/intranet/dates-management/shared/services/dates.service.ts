@@ -61,8 +61,8 @@ export class DatesService {
 
   }
 
-  confirm(statusRequest: any): Observable<any | void> {
-    return this.http.get<any>( AUTH_API_NP + 'approve-request/'+ statusRequest, httpOptions).pipe(map((result:any) => {
+  confirmRequest(idRequest: any): Observable<any | void> {
+    return this.http.put<any>( AUTH_API_NP + 'confirmNeightbor/'+ idRequest, httpOptions).pipe(map((result:any) => {
 
       return result;
 
@@ -72,8 +72,8 @@ export class DatesService {
 
   }
 
-  reasign(statusRequest: any): Observable<any | void> {
-    return this.http.get<any>( AUTH_API_NP + 'approve-request/'+ statusRequest, httpOptions).pipe(map((result:any) => {
+  reasignRequest(idRequest: any): Observable<any | void> {
+    return this.http.put<any>( AUTH_API_NP + 'reprogramDate/'+ idRequest, httpOptions).pipe(map((result:any) => {
 
       return result;
 
@@ -93,9 +93,9 @@ export class DatesService {
     );
   }
 
-  assignSocialAssistant(assignData: any): Observable<any | void> {
+  assignSocialAssistant(idRequest:any, assignData: any): Observable<any | void> {
 
-    return this.http.post<any>(AUTH_API_NP + 'add_employeeRut', assignData, httpOptions).pipe(map((result: any) => {
+    return this.http.post<any>(AUTH_API_NP + 'add-visitor/'+ idRequest, assignData).pipe(map((result: any) => {
 
       console.log('assignsocialassistant');
 
@@ -128,9 +128,9 @@ export class DatesService {
     );
   }
 
-  getForRurSupervisor(rutSupervisor: any): Observable<any | void> {
+  getForRurSupervisor(): Observable<any | void> {
 
-    return this.http.get<any>(AUTH_API_NP + 'detailsSupervisor/' + rutSupervisor).pipe(map((result: any) => {
+    return this.http.get<any>(AUTH_API_NP + 'detail-request').pipe(map((result: any) => {
 
       return result
 
@@ -139,16 +139,15 @@ export class DatesService {
     );
   }
 
-  approbe() {
+  approbe( idRequest: any, dataRequest:any): Observable<any | void> {
 
-    console.log('approve')
+    return this.http.put<any>(AUTH_API_NP + 'approve-request/' + idRequest, dataRequest).pipe(map((result: any) => {
 
-  }
+      return result
 
-  decline() {
-
-    console.log('decline')
-
+    }),
+      catchError((err) => this.handlerError(err))
+    );
   }
 
   getEmployees(): Observable<any | void> {
@@ -175,3 +174,4 @@ export class DatesService {
   }
 
 }
+

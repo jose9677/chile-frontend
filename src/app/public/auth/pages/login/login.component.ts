@@ -61,6 +61,9 @@ export class LoginComponent implements OnInit {
 
     e.preventDefault();
 
+    this.isFormSubmitted = true;
+
+
 
     const dataLogin = {
       rut: this.userLogin.value.rut,
@@ -76,17 +79,20 @@ export class LoginComponent implements OnInit {
       this.errors = error;
       console.log('errors_login->',this.errors.message);
       // modal
+      if (this.isFormSubmitted && this.userLogin.status == "VALID" ) {
 
-      this.userLogin.reset();
+        this.userLogin.reset();
 
-      this.errors = true;
-      let title: string = ''
-      let message: string = "Usuario o contraseña incorrectos , por favor verifique e intente nuevamente";
-      this.modalService.OpenModalError2(ModalComponent, this.errors, title, message);
+        this.errors = true;
+        let title: string = ''
+        let message: string = "Usuario o contraseña incorrectos , por favor verifique e intente nuevamente";
+        this.modalService.OpenModalError2(ModalComponent, this.errors, title, message);
+      }
+
 
     },
     () => {
-      this.isFormSubmitted = true;
+      this.isFormSubmitted = false;
 
 
       console.log(this.userLogin)

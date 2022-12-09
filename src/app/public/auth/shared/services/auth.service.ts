@@ -7,7 +7,6 @@ import {environment} from '../../../../../environments/environment';
 import { Router } from '@angular/router';
 import { LoggedService } from 'src/app/shared/services/logged.service';
 import { TokenService } from 'src/app/shared/services/token.service';
-import { select } from 'underscore';
 
 
 
@@ -186,21 +185,21 @@ export class AuthService {
     this.router.navigate(['/auth/login']);
   }
 
-  public checkToken(): void {
-    const userToken: any = window.sessionStorage.getItem(TOKEN_KEY);
-    const isExpired = this.tokenService.helper.isTokenExpired(userToken);
+  // public checkToken(): void {
+  //   const userToken: any = window.sessionStorage.getItem(TOKEN_KEY);
+  //   const isExpired = this.tokenService.helper.isTokenExpired(userToken);
 
-    console.log('CheckToken');
+  //   console.log('CheckToken');
 
-    if (isExpired == true) {
-      console.log('is Expired', isExpired);
-      this.logOut();
-      // // window.sessionStorage.clear();
-      // this.router.navigate(['/login']);
-    }else{
-      console.log('is Expired', isExpired);
-    }
-  }
+  //   if (isExpired == true) {
+  //     console.log('is Expired', isExpired);
+  //     this.logOut();
+  //     // // window.sessionStorage.clear();
+  //     // this.router.navigate(['/login']);
+  //   }else{
+  //     console.log('is Expired', isExpired);
+  //   }
+  // }
 
   dropdownInfo(): Observable<any>{
     return this.http.get<any>( AUTH_API_NP + 'dropdownInfo', httpOptions).pipe(map((result:any) => {

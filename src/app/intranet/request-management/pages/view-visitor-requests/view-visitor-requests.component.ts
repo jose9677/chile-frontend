@@ -61,10 +61,10 @@ export class ViewVisitorRequestsComponent implements OnInit {
 
       datarequests.map((res: any)=>{
 
-        if (res.visit_date != null) {
-          this.unassignedRequest2.push(res);
-        }else{
+        if (res.id_status != 4) {
           this.unassignedRequest.push(res);
+        }else{
+          this.unassignedRequest2.push(res);
         }
       })
       console.log(this.unassignedRequest)

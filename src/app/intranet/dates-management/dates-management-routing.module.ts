@@ -32,7 +32,7 @@ const routes: Routes = [
       {
         path: 'confirmar-cita',
         component: ConfirmDatesComponent,
-        canActivate: [Access5Guard]
+        canActivate: [Access1Guard]
       },
       {
         path: 'asignar-asistente-social',

@@ -124,12 +124,11 @@ export class EditAssignVisitorDatesComponent implements OnInit {
   assignSocialAssistant(rutSocialAssistant: any, e: Event) {
 
     const assignData: any = {
-      'rut': this.rut,
-      'id_request': this.idRequest,
-      'employee_rut': rutSocialAssistant
+
+      'rut': rutSocialAssistant
 
     }
-    this.dateService.assignSocialAssistant(assignData).subscribe(result => {
+    this.dateService.assignSocialAssistant(this.idRequest, assignData).subscribe(result => {
       return console.log(result);
     },
     error => {
