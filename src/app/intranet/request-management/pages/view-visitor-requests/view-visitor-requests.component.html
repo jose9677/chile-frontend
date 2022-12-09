@@ -94,7 +94,7 @@
                   <td>{{(request.assistant_name ?? ' ') + " " + (request.assistant_lastname ?? ' ') }}</td>
                   <td>{{request.status}}</td>
                   <td>
-                    <button (click)="approveDates(request.id)"><i class="mdi mdi-calendar-today"></i></button>
+                    <button (click)="approveDates(request.id)" *ngIf="request.id_status == 4"><i class="mdi mdi-calendar-today"></i></button>
 
                   </td>
                 </tr>

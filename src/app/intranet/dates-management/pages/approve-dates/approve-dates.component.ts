@@ -100,6 +100,32 @@ export class ApproveDatesComponent implements OnInit {
 
   }
 
+  decline( idRequest: any, e: Event ) {
+
+    const dataRequest = {
+      "applicant_at_home": this.formApprove.controls.applicantAtResidence.value,
+      "prevention_is_valid": this.formApprove.controls.validProofOfAddress.value,
+      "location_is_valid": this.formApprove.controls.DoesRUTMatch.value,
+      "rut_match": this.formApprove.controls.DoesRUTMatch.value
+
+    }
+
+    this.datesService.approbe(idRequest, dataRequest).subscribe((result) => {
+
+      console.log(result)
+
+    },
+    error => {
+
+    },
+    () => {
+
+    })
+
+    this.openGenerateCredential();
+
+  }
+
   openGenerateCredential() {
     this.modalService.openModal(GenerateCredentialComponent);
   }
@@ -108,7 +134,7 @@ export class ApproveDatesComponent implements OnInit {
   }
 
   return() {
-    this.router.navigate(['/solicitud/asignar-cita'])
+    this.router.navigate(['/'])
 
   }
 

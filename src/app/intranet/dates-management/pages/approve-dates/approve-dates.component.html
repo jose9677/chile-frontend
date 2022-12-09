@@ -166,7 +166,7 @@
        <button type="submit" class="btn btn-primary style w-100 h-100" (click)="approve( idRequest, $event)">Aprobar</button> <!--ojo el event.preventDefault() evita que el formulario recargue la pagina -->
       </div>
       <div class="col-md-2 col-sm-12">
-        <button type="button" class="btn btn-outline-primary style-outline w-100 h-100" (click)=" $event.preventDefault(); openRejectRequestComponent()">Rechazar</button>
+        <button type="button" class="btn btn-outline-primary style-outline w-100 h-100" (click)="openRejectRequestComponent(); decline(idRequest, $event)">Rechazar</button>
       </div>
       <div class="col-md-2 col-sm-12">
         <button class="btn btn-primary style w-100 h-100" type="button" (click)="return()">Cancelar</button>

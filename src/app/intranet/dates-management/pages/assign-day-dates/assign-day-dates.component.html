@@ -51,6 +51,7 @@
         type="datetime-local"
         class="form-control"
         formControlName="dateVisit"
+        value={{dataRequest[0]?.visit_date}}        
         >
       </div>
     </div>
@@ -84,8 +85,8 @@
   </div>
   <br>
   <div class="d-flex flex-row justify-content-evenly pt-4">
-    <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 style">Asignar Cita</button>
-    <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 style-outline">Cancelar</button>
+    <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 style" [disabled]="dataRequest[0]?.id_status == 3 ">Asignar Cita</button>
+    <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 style-outline" routerLink="/">Cancelar</button>
   </div>
 </form>
 </div>
