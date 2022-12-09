@@ -12,6 +12,7 @@ import { AssignDayDatesComponent } from './pages/assign-day-dates/assign-day-dat
 import { ApproveDatesComponent } from './pages/approve-dates/approve-dates.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { VisitorDataComponent } from './pages/visitor-data/visitor-data.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     EditAssignVisitorDatesComponent,
     AssignDayDatesComponent,
     ApproveDatesComponent,
+    VisitorDataComponent,
 
   ],
   imports: [

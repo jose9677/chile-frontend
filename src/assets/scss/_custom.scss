@@ -7,7 +7,9 @@ $light-bg: #e4f4f7;
 .color-secondary{
     color: $color-secondary;
 }
-
+div.modal-content{
+  width: auto !important;
+}
 .table{
     & thead{
         background-color: $color-secondary;
@@ -19,7 +21,7 @@ $light-bg: #e4f4f7;
     & td {
         vertical-align: middle;
     }
-    
+
     & tr:nth-child(even) {
         background-color: $light-bg;
     }
@@ -33,11 +35,11 @@ $light-bg: #e4f4f7;
         background-color: transparent;
         border: 0px;
     }
-    
+
 
     text-align: center;
     border: 0px solid transparent;
-    
+
 }
 
 .datasearch{

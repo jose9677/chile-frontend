@@ -29,7 +29,14 @@
       <div class="row mt-3 ">
         <div class="col-md-4 col-sm-12">
           <label for="" class="form-label colorTextPrimari ">Asistente Social</label>
-          <input type="text" value={{unassignedRequest[0]?.fullName}} disabled class="form-control">
+          <div class="row">
+            <div class="col-md-5">
+              <input type="text" value={{unassignedRequest[0]?.fullName}} disabled class="form-control">
+            </div>
+            <a class="col-md-3 mt-1" (click)="visitador()">
+              <i class="h4 feather icon-eye"></i>
+            </a>
+          </div>
         </div>
         <div class="col-md-4 col-sm-12">
           <label for="" class="form-label colorTextPrimari ">Fecha de Visita</label>

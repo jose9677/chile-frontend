@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DatesService } from '../../shared/services/dates.service';
-
+import { ModalsService } from 'src/app/shared/services/modals.service';
+import { VisitorDataComponent } from '../visitor-data/visitor-data.component';
 @Component({
   selector: 'app-status-dates',
   templateUrl: './status-dates.component.html',
@@ -25,7 +26,8 @@ export class StatusDatesComponent implements OnInit {
   constructor(
     private routerQuery: ActivatedRoute,
     private router: Router,
-    private dateService: DatesService
+    private dateService: DatesService,
+    private modalService: ModalsService,
 
   ) {
 
@@ -78,6 +80,10 @@ export class StatusDatesComponent implements OnInit {
   return() {
     this.router.navigate(['/solicitud/solicitudes-de-inscripcion'])
 
+  }
+
+  visitador(){
+    this.modalService.openModal(VisitorDataComponent)
   }
 
 }
