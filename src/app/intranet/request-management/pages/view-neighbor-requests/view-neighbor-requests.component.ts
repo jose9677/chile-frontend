@@ -49,7 +49,7 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
 
       result.map((res: any)=>{
-        res.fullName = res.assistant_names +' '+ res.assistant_lastname
+        res.fullName = (res.assistant_names ?? ' ') +' '+ (res.assistant_lastname ?? ' ')
         res.fullPeventionData = res.prevention_type +' - '+ res.prevention_detail
         this.unassignedRequest.push(res);
       })

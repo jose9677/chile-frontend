@@ -136,6 +136,7 @@
               <select
               class="form-select form-control"
               formControlName="DoesRUTMatch"
+              value="true"
               >
                 <option value=""></option>
                 <option value="true">Si</option>
@@ -163,10 +164,10 @@
     <br>
     <div class="row justify-content-center">
       <div class="col-md-2 col-sm-12">
-       <button type="submit" class="btn btn-primary style w-100 h-100" (click)="approve( idRequest, $event)">Aprobar</button> <!--ojo el event.preventDefault() evita que el formulario recargue la pagina -->
+       <button type="submit" class="btn btn-primary style w-100 h-100" (click)="approve( idRequest, $event)"[disabled]="(dataRequest[0]?.id_status == 6) || (dataRequest[0]?.id_status == 7)">Aprobar</button> <!--ojo el event.preventDefault() evita que el formulario recargue la pagina -->
       </div>
       <div class="col-md-2 col-sm-12">
-        <button type="button" class="btn btn-outline-primary style-outline w-100 h-100" (click)="openRejectRequestComponent(); decline(idRequest, $event)">Rechazar</button>
+        <button type="button" class="btn btn-outline-primary style-outline w-100 h-100" (click)="openRejectRequestComponent(); decline(idRequest, $event)" [disabled]="(dataRequest[0]?.id_status == 6) || (dataRequest[0]?.id_status == 7)" >Rechazar</button>
       </div>
       <div class="col-md-2 col-sm-12">
         <button class="btn btn-primary style w-100 h-100" type="button" (click)="return()">Cancelar</button>

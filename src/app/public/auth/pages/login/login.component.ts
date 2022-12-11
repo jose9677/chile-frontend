@@ -63,8 +63,6 @@ export class LoginComponent implements OnInit {
 
     this.isFormSubmitted = true;
 
-
-
     const dataLogin = {
       rut: this.userLogin.value.rut,
       password: this.userLogin.value.password

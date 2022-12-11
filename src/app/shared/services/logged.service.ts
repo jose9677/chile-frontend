@@ -7,6 +7,8 @@ import { BehaviorSubject, map, Observable } from 'rxjs';
 export class LoggedService {
   private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<any>(sessionStorage.getItem("isLoggedin"));
 
+  constructor() { }
+
   get isLoggedObservable(): Observable<boolean> {
     return this.loggedIn.asObservable();
   }
@@ -26,5 +28,4 @@ export class LoggedService {
     }));
   }
 
-  constructor() { }
 }

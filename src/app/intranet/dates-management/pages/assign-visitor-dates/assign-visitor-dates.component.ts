@@ -24,7 +24,7 @@ export class AssignVisitorDatesComponent implements OnInit {
   public isFormSubmitted: Boolean;
 
   public nroRequest: any;
-  public rutsup: any;
+  public assistantRut: any;
 
   public listRutSocialAssistant: any[];
 
@@ -49,20 +49,25 @@ export class AssignVisitorDatesComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.nroRequest= this.data;
+    this.assistantRut = this.data2;
 
-    this.datesService.getEmployees().subscribe(result => {
+
+    this.datesService.getEmployees(this.supUser.replace(/["']/g, "")).subscribe(result => {
 
       let res1: any[] = [];
 
       result.map((res: any) => {
-        if (res.supervisor_rut != this.supUser){
-          res.completeNames = res.names +' '+ res.lastname;
-          res1.push(res);
-          console.log(res1)
-        }
+
+        res.completeNames = res.names +' '+ res.lastname;
+        res1.push(res);
+
       })
 
       this.listRutSocialAssistant = res1;
+
+      this.selecterutSocialAssistant = this.assistantRut;
+
 
     },
     error => {
@@ -74,10 +79,11 @@ export class AssignVisitorDatesComponent implements OnInit {
     },
     () => {
 
+
+
     });
 
-    this.nroRequest= this.data;
-    this.rutsup = this.data2;
+
 
   }
 

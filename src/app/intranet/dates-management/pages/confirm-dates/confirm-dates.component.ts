@@ -29,16 +29,11 @@ export class ConfirmDatesComponent implements OnInit {
   private router: Router,
   private datesService: DatesService,
 
-
-
   ) {
 
     this.unassignedRequest = [];
 
-
     this.idRequestSubscription = this.routerquery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
-
-
 
   }
 

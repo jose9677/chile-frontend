@@ -24,9 +24,10 @@
                     class="form-control"
                     id="exampleInputUsername1"
                     formControlName="names"
-                    [ngClass]="{'is-invalid': (userRegister.controls.names.touched && userRegister.controls.names.errors?.required) || (isFormSubmitted && userRegister.controls.names.errors)}" placeholder="Introduzca sus nombres"
+                    [ngClass]="{'is-invalid': (userRegister.controls.names.touched && userRegister.controls.names.errors) || (isFormSubmitted && userRegister.controls.names.errors)}" placeholder="Introduzca sus nombres"
                     >
-                    <div *ngIf="(userRegister.controls.names.touched && userRegister.controls.names.errors?.required) || (isFormSubmitted && userRegister.controls.names.errors)" class="invalid-feedback">Campo Requerido</div>
+                    <div *ngIf="(userRegister.controls.names.touched && userRegister.controls.names.errors?.required) || (isFormSubmitted && userRegister.controls.names.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+
                     <div class="text-danger mt-1" *ngIf="userRegister.controls.names.errors?.pattern">Este campo solo admite letas</div>
                   </div>
                   <div class="col-md-6 mb-3">
@@ -36,9 +37,9 @@
                     class="form-control"
                     id="lastNames"
                     formControlName="lastNames"
-                    [ngClass]="{'is-invalid': (userRegister.controls.lastNames.touched && userRegister.controls.lastNames.errors?.required) || (isFormSubmitted && userRegister.controls.lastNames.errors)}" placeholder="Introduzca sus apellidos"
+                    [ngClass]="{'is-invalid': (userRegister.controls.lastNames.touched && userRegister.controls.lastNames.errors) || (isFormSubmitted && userRegister.controls.lastNames.errors)}" placeholder="Introduzca sus apellidos"
                     >
-                    <div *ngIf="(userRegister.controls.lastNames.touched && userRegister.controls.lastNames.errors?.required) || (isFormSubmitted && userRegister.controls.lastNames.errors)" class="invalid-feedback">Campo Requerido</div>
+                    <div *ngIf="(userRegister.controls.lastNames.touched && userRegister.controls.lastNames.errors?.required) || (isFormSubmitted && userRegister.controls.lastNames.errors?.required)" class="invalid-feedback">Campo Requerido</div>
                     <div class="text-danger mt-1" *ngIf="userRegister.controls.lastNames.errors?.pattern">Este campo solo admite letas</div>
                   </div>
                 </div>
@@ -51,10 +52,9 @@
                     class="form-control"
                     id="datesBirth"
                     formControlName="datesBirth"
-                    [ngClass]="{'is-invalid': (userRegister.controls.datesBirth.touched && userRegister.controls.datesBirth.errors?.required) || (isFormSubmitted && userRegister.controls.datesBirth.errors)}"
+                    [ngClass]="{'is-invalid': (userRegister.controls.datesBirth.touched && userRegister.controls.datesBirth.errors) || (isFormSubmitted && userRegister.controls.datesBirth.errors)}"
                     >
-                    <div *ngIf="(userRegister.controls.datesBirth.touched && userRegister.controls.datesBirth.errors?.required) || (isFormSubmitted && userRegister.controls.datesBirth.errors)" class="invalid-feedback">Campo Requerido</div>
-                    <div class="text-danger mt-1" *ngIf="userRegister.controls.datesBirth.errors?.date">Error al ingresar la frecha de nacimiento</div>
+                    <div *ngIf="(userRegister.controls.datesBirth.touched && userRegister.controls.datesBirth.errors?.required) || (isFormSubmitted && userRegister.controls.datesBirth.errors?.required)" class="invalid-feedback">Campo Requerido</div>
                   </div>
                   <div class="col-md-6 mb-3">
                     <label for="email" class="form-label">Email</label>
@@ -63,9 +63,10 @@
                     class="form-control"
                     id="email"
                     formControlName="email"
-                    [ngClass]="{'is-invalid': (userRegister.controls.email.touched && userRegister.controls.email.errors?.required) || (isFormSubmitted && userRegister.controls.email.errors)}" placeholder="Introduzca su email"
+                    [ngClass]="{'is-invalid': (userRegister.controls.email.touched && userRegister.controls.email.errors) || (isFormSubmitted && userRegister.controls.email.errors)}" placeholder="Introduzca su email"
                     >
                     <div *ngIf="(userRegister.controls.email.touched && userRegister.controls.email.errors?.required) || (isFormSubmitted && userRegister.controls.email.errors)" class="invalid-feedback">Campo Requerido</div>
+
                     <div class="text-danger mt-1" *ngIf="userRegister.controls.email.errors?.email">Verifique el formato de email</div>
                   </div>
                 </div>
@@ -78,9 +79,9 @@
                     id="landLine"
                     formControlName="landLine"
                     prefix="+56" mask="  0  0000 - 0000" [showMaskTyped] = "false"
-                    [ngClass]="{'is-invalid': (userRegister.controls.landLine.touched && userRegister.controls.landLine.errors?.required) || (isFormSubmitted && userRegister.controls.landLine.errors)}"
+                    [ngClass]="{'is-invalid': (userRegister.controls.landLine.touched && userRegister.controls.landLine.errors) || (isFormSubmitted && userRegister.controls.landLine.errors)}"
                     >
-                    <div *ngIf="(userRegister.controls.landLine.touched && userRegister.controls.landLine.errors?.required) || (isFormSubmitted && userRegister.controls.email.errors)" class="invalid-feedback">Campo Requerido</div>
+                    <div *ngIf="(userRegister.controls.landLine.touched && userRegister.controls.landLine.errors?.required) || (isFormSubmitted && userRegister.controls.landLine.errors?.required)" class="invalid-feedback">Campo Requerido</div>
                   </div>
                   <div class="col-md-6 mb-3">
                     <label for="mobilePhone" class="form-label">Teléfono Móvil</label>
@@ -90,9 +91,9 @@
                     id="mobilePhone"
                     formControlName="mobilePhone"
                     prefix="+56" mask="  0  0000 - 0000" [showMaskTyped] = "false"
-                    [ngClass]="{'is-invalid': (userRegister.controls.mobilePhone.touched && userRegister.controls.mobilePhone.errors?.required) || (isFormSubmitted && userRegister.controls.mobilePhone.errors)}"
+                    [ngClass]="{'is-invalid': (userRegister.controls.mobilePhone.touched && userRegister.controls.mobilePhone.errors) || (isFormSubmitted && userRegister.controls.mobilePhone.errors)}"
                     >
-                    <div *ngIf="(userRegister.controls.mobilePhone.touched && userRegister.controls.mobilePhone.errors?.required) || (isFormSubmitted && userRegister.controls.mobilePhone.errors)" class="invalid-feedback">Campo Requerido</div>
+                    <div *ngIf="(userRegister.controls.mobilePhone.touched && userRegister.controls.mobilePhone.errors?.required) || (isFormSubmitted && userRegister.controls.mobilePhone.errors?.required)" class="invalid-feedback">Campo Requerido</div>
                   </div>
                 </div>
               </div>
@@ -110,7 +111,7 @@
                         placeholder="Seleccione"
                         [(ngModel)]="selectedStreet"
                         formControlName="locations"
-                        [ngClass]="{'is-invalid': ((userRegister.controls.address.touched && userRegister.controls.address.value.locations === null) || (isFormSubmitted && userRegister.controls.address.value.locations === null))}"
+                        [ngClass]="{'is-invalid': ((userRegister.controls.address.touched && userRegister.controls.address.controls.locations.errors) || (isFormSubmitted && userRegister.controls.address.controls.locations.errors))}"
                         >
                     </ng-select>
                     <div *ngIf="(userRegister.controls.address.touched && userRegister.controls.address.value.locations === null) || (isFormSubmitted && userRegister.controls.address.value.locations === null)" class="invalid-feedback">Campo Requerido</div>
@@ -124,11 +125,9 @@
                     id="numberStreet"
                     formControlName="numberStreet"
                     placeholder="Especifique"
-                    [ngClass]="{'is-invalid': ((userRegister.controls.address.touched && userRegister.controls.address.value.numberStreet === '') || (isFormSubmitted && userRegister.controls.address.value.numberStreet === ''))}"
+                    [ngClass]="{'is-invalid': ((userRegister.controls.address.touched && userRegister.controls.address.controls.numberStreet.errors) || (isFormSubmitted && userRegister.controls.address.controls.numberStreet.errors))}"
                     >
-                    <div *ngIf="(userRegister.controls.address.touched && userRegister.controls.address.value.numberStreet === '') || (isFormSubmitted && userRegister.controls.address.value.numberStreet === '')" class="invalid-feedback">Campo Requerido</div>
-
-                    <div class="text-danger mt-1" *ngIf="userRegister.controls.address.controls.numberStreet.errors?.number">Este campo solo admite Números</div>
+                    <div *ngIf="(userRegister.controls.address.touched && userRegister.controls.address.controls.numberStreet.errors?.required) || (isFormSubmitted && userRegister.controls.address.controls.numberStreet.errors?.required)" class="invalid-feedback">Campo Requerido</div>
 
                   </div>
                 </div>
@@ -143,10 +142,10 @@
                         placeholder="Seleccione"
                         [(ngModel)]="selectedHousing"
                         formControlName="property_types"
-                        [ngClass]="{'is-invalid': ((userRegister.controls.address.touched && userRegister.controls.address.value.property_types === null) || (isFormSubmitted && userRegister.controls.address.value.property_types === null))}"
+                        [ngClass]="{'is-invalid': ((userRegister.controls.address.touched && userRegister.controls.address.controls.property_types.errors) || (isFormSubmitted && userRegister.controls.address.controls.property_types.errors))}"
                         >
                     </ng-select>
-                    <div *ngIf="(userRegister.controls.address.touched && userRegister.controls.address.value.property_types === null) || (isFormSubmitted && userRegister.controls.address.value.property_types === null)" class="invalid-feedback">Campo Requerido</div>
+                    <div *ngIf="(userRegister.controls.address.touched && userRegister.controls.address.controls.property_types.errors?.required) || (userRegister.controls.address.controls.property_types.errors?.required)" class="invalid-feedback">Campo Requerido</div>
                   </div>
                   <div class="col-md-6 mb-3">
                     <label
@@ -164,11 +163,9 @@
                     id="nameHome"
                     formControlName="nameHome"
                     placeholder="Especifique"
-                    [ngClass]="{'is-invalid': ((userRegister.controls.address.touched && userRegister.controls.address.value.nameHome === '') || (isFormSubmitted && userRegister.controls.address.value.nameHome === ''))}"
+                    [ngClass]="{'is-invalid': ((userRegister.controls.address.touched && userRegister.controls.address.controls.nameHome.errors) || (isFormSubmitted && userRegister.controls.address.controls.nameHome.errors))}"
                     >
-                    <div *ngIf="(userRegister.controls.address.touched && userRegister.controls.address.value.nameHome === '') || (isFormSubmitted && userRegister.controls.address.value.nameHome === '')" class="invalid-feedback">Campo Requerido</div>
-
-                    <div class="text-danger mt-1" *ngIf="userRegister.controls.address.controls.nameHome.errors?.required"></div>
+                    <div *ngIf="(userRegister.controls.address.touched && userRegister.controls.address.controls.nameHome.errors?.required) || (isFormSubmitted && userRegister.controls.address.controls.nameHome.errors?.required)" class="invalid-feedback">Campo Requerido</div>
 
                   </div>
                 </div>
@@ -189,15 +186,16 @@
                         [(ngModel)]="selectedPrevention"
                         formControlName="preventions_types"
                         placeholder="Seleccione"
-                        [ngClass]="{'is-invalid': ((userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.preventions_types === null) || (isFormSubmitted && userRegister.controls.healthInformation.value.preventions_types === null))}"
+                        [ngClass]="{'is-invalid': ((userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.controls.preventions_types.errors) || (isFormSubmitted && userRegister.controls.healthInformation.controls.preventions_types.errors))}"
                         >
                     </ng-select>
-                    <div *ngIf="(userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.preventions_types === null) || (isFormSubmitted && userRegister.controls.healthInformation.value.preventions_types === null)" class="invalid-feedback">Campo Requerido</div>
+                    <div *ngIf="(userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.controls.preventions_types.errors?.required) || (isFormSubmitted && userRegister.controls.healthInformation.controls.preventions_types.errors?.required)" class="invalid-feedback">Campo Requerido</div>
                   </div>
 
                   <div class="col-md-6 mb-3" *ngIf="userRegister.controls.healthInformation.controls.preventions_types.value === 1">
                     <label for="preventions_types_details" class="form-label">Tipo de {{(preventions_types[0].prevention_type).toLowerCase()}}</label>
-                    <ng-select [items]="preventions_types_details"
+                    <ng-select
+                        [items]="preventions_types_details"
                         id="preventions_types_details"
                         class="form-control p-0"
                         bindLabel="prevention_detail"
@@ -247,7 +245,7 @@
                   </div>
 
                   <div class="col-md-6 mb-3" *ngIf="userRegister.controls.healthInformation.controls.preventions_types.value === 4">
-                    <label for="preventions_types_details" class="form-label">Tipo de {{(preventions_types[2].prevention_type).toLowerCase()}}</label>
+                    <label for="preventions_types_details" class="form-label">Tipo de {{(preventions_types[3].prevention_type).toLowerCase()}}</label>
                     <ng-select [items]="preventions_types_details4"
                         id="preventions_types_details"
                         class="form-control p-0"
@@ -301,9 +299,9 @@
                   <ng-container *ngFor="let documentForm of documents.controls; let i = index">
                     <div [formGroupName]="i">
                         <div class="row">
-                          <div class="col-md-8">
+                          <div class="col-md-8 mb-4">
                             <input
-                          class="form-control mb-4"
+                          class="form-control"
                           type="file"
                           id="document_path"
                           formControlName="document_path"
@@ -332,9 +330,9 @@
                     <div [formGroupName]="i">
                         <div class="row" >
 
-                          <div class="col-md-8">
+                          <div class="col-md-8 mb-4">
                             <input
-                          class="form-control mb-4"
+                          class="form-control"
                           type="file"
                           id="document_path"
                           formControlName="document_path"
@@ -394,26 +392,28 @@
               <br>
               <div class="mb-3 d-flex flex-row justify-content-center">
 
-                <div class="form-check form-switch mb-2 colorTextPrimari">
-                  <input
+                <div class="form-check form-switch mb-2 colorTextPrimari"
+                >
+                <input
                   type="checkbox"
                   class="form-check-input"
                   id="formSwitch1"
                   formControlName="authCheck"
-                  [ngClass]="{'is-invalid': (isFormSubmitted && userRegister.controls.authCheck.errors?.required)}">
+                  (change)="authCkech()"
+                  [ngClass]="{'is-invalid': (userRegister.controls.authCheck.touched && userRegister.controls.authCheck.errors || isFormSubmitted && userRegister.controls.authCheck.errors)}">
                       <!-- <div *ngIf="(userRegister.touched && userRegister.controls.authCheck.errors?.required) || (isFormSubmitted && userRegister.controls.value.authCheck === '')" class="invalid-feedback">Debe aceptar los terminos y condiciones </div> -->
-                  <label class="form-check-label" for="formSwitch1">He leido y acepto los <a href="" (click)="$event.preventDefault();openTerminosyCondiciones()">Términos y Condiciones</a> y la <a href="" (click)="$event.preventDefault(); openPoliticadePrivacidad()">Politica de Privacidad</a></label>
+                  <label class="form-check-label" for="formSwitch1">He leido y acepto los <a href="" (click)="openTerminosyCondiciones()">Términos y Condiciones</a> y la <a href="" (click)="openPoliticadePrivacidad()">Politica de Privacidad</a></label>
                   <div *ngIf="(isFormSubmitted && userRegister.controls.authCheck.errors?.required)" class="invalid-feedback">Debe aceptar los términos y condiciones</div>
                 </div>
 
               </div>
               <div class="d-flex flex-row  justify-content-evenly">
                 <!-- <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="onRegister($event)">Sign up</button> -->
-                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 style" >Registrarme</button>
+                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 style" [disabled]="((isFormSubmitted || isFormSubmitted && userRegister.valid) && isFormSubmitted && userRegister.invalid)" >Registrarme</button>
                 <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 style-outline" routerLink="/auth/login">
                   Cancelar
                 </button>
-              </div>             
+              </div>
             </form>
           </div>
         </div>

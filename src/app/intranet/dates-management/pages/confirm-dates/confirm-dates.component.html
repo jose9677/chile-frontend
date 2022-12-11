@@ -46,10 +46,10 @@
     <div class="flex-row pt-4">
       <div class="row">
         <div class="col-3">
-          <button type="submit" class=" w-100 btn btn-primary me-2 mb-2 mb-md-0 style" (click)="confirmDate(idRequest)">Confirmar Cita</button>
+          <button type="submit" class=" w-100 btn btn-primary me-2 mb-2 mb-md-0 style" (click)="confirmDate(idRequest)" [disabled]="(unassignedRequest[0]?.id_status == 4) || (unassignedRequest[0]?.id_status == 5)">Confirmar Cita</button>
         </div>
         <div class="col-3">
-          <button type="submit" class="w-100 h-100 btn btn-outline-primary style-outline me-2 mb-2 mb-md-0 style" (click)="reasignDate(idRequest)" [disabled]="unassignedRequest[0]?.id_status == 5">Reprogramar</button>
+          <button type="submit" class="w-100 h-100 btn btn-outline-primary style-outline me-2 mb-2 mb-md-0 style" (click)="reasignDate(idRequest)" [disabled]="(unassignedRequest[0]?.id_status == 4) || (unassignedRequest[0]?.id_status == 5)">Reprogramar</button>
         </div>
       </div>
     </div>

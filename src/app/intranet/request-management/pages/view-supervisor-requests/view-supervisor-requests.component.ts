@@ -64,10 +64,10 @@ export class ViewSupervisorRequestsComponent implements OnInit {
   getAllRequest() {
   }
 
-  assingSocialAssistant (nroRequest: any, userloggedRut: any) {
+  assingSocialAssistant (nroRequest: any, visitorRut: any) {
 
 
-    this.modalService.openModalData2(AssignVisitorDatesComponent, nroRequest, userloggedRut);
+    this.modalService.openModalData2(AssignVisitorDatesComponent, nroRequest, visitorRut);
 
   }
 

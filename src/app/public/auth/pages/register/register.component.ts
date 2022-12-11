@@ -72,6 +72,8 @@ export class RegisterComponent implements OnInit {
   public file: File;
   public selectFiles: any[];
 
+  public isAuthCheckReadOnly: boolean;
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -80,8 +82,10 @@ export class RegisterComponent implements OnInit {
     private routerQuery: ActivatedRoute
     ) {
 
+      this.isAuthCheckReadOnly = false;
+
       this.today = new Date()
-      this.today = `${this.today.getFullYear()}-${this.today.getMonth()}-${this.today.getDate()}`
+      this.today = `${this.today.getFullYear()}-${(this.today.getMonth())+1}-${this.today.getDate()}`
       console.log(this.today)
 
       this.selectFiles = [];
@@ -160,13 +164,6 @@ export class RegisterComponent implements OnInit {
       });
 
 
-
-
-
-
-
-
-
     }, error => {
 
     },
@@ -179,18 +176,16 @@ export class RegisterComponent implements OnInit {
     let password = new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}')]);
 
     this.userRegister= this.fb.group({
-      names: ['',[Validators.required, ]],
-      // names: ['',[Validators.required, Validators.pattern("^(?=.{3,15}$)[A-ZÁÉÍÓÚ][a-zñáéíóú]+(?: [A-ZÁÉÍÓÚ][a-zñáéíóú]+)?$")]],
-      lastNames: ['', [Validators.required, ]],
-      // lastNames: ['', [Validators.required, Validators.pattern("^(?=.{3,15}$)[A-ZÁÉÍÓÚ][a-zñáéíóú]+(?: [A-ZÁÉÍÓÚ][a-zñáéíóú]+)?$")]],
-      datesBirth: ['', [Validators.required, CustomValidators.date]],
+      names: ['',[Validators.required, Validators.pattern(/^([a-zA-ZáéíóúüÁÉÍÓÚÜñÑ]{2,60}[\,\-\.]{0,1}[\s]{0,1}){1,3}$/)]],
+      lastNames: ['', [Validators.required, Validators.pattern(/^([a-zA-ZáéíóúüÁÉÍÓÚÜñÑ]{2,60}[\,\-\.]{0,1}[\s]{0,1}){1,3}$/)]],
+      datesBirth: ['', [Validators.required]],
       email: ['', [Validators.required, CustomValidators.email]],
-      landLine: ['', [Validators.required, Validators.minLength(9), CustomValidators.number]],
-      mobilePhone: ['', [Validators.required, Validators.minLength(9), CustomValidators.number]],
+      landLine: ['', [Validators.required, Validators.minLength(9)]],
+      mobilePhone: ['', [Validators.required, Validators.minLength(9)]],
 
       address: this.fb.group({
         locations: ['', Validators.required],
-        numberStreet: ['', [Validators.required, CustomValidators.number]],
+        numberStreet: ['', [Validators.required]],
         property_types: ['', Validators.required],
         nameHome: ['', Validators.required],
       }),
@@ -211,7 +206,11 @@ export class RegisterComponent implements OnInit {
       authCheck: ['',[Validators.required]]
     })
 
+    this.addDocument();
 
+    this.addDocument2();
+
+    console.log(this.userRegister)
 
   }
 
@@ -224,7 +223,6 @@ export class RegisterComponent implements OnInit {
 
 
   addDocument() {
-    console.log(1)
     const documentForm = this.fb.group({
         document_path: ['', Validators.required],
     });
@@ -233,7 +231,6 @@ export class RegisterComponent implements OnInit {
   }
 
   addDocument2() {
-    console.log(1)
     const documentForm = this.fb.group({
         document_path: ['', Validators.required],
     });
@@ -255,8 +252,10 @@ export class RegisterComponent implements OnInit {
   }
 
   onRegister(e: Event) {
+    e.preventDefault();
+
     this.isFormSubmitted = true;
-    console.log(this.userRegister);
+
     const dataUser = {
       rut : this.rut,
       names: this.userRegister.value.names,
@@ -286,28 +285,29 @@ export class RegisterComponent implements OnInit {
 
     }
 
-    this.authServices.register(dataUser).subscribe(result => {
+    if ((this.isFormSubmitted && this.userRegister.status == "VALID" )) {
 
-      console.log(result);
-    },
-    error => {
-      // this.isFormSubmitted = false;
-      this.errors=error;
-      console.log('errors_login->',this.errors);
-      if( this.errors == '{"email":["The email has already been taken."]}'){
-        let title= "";
-        let message = "El correo electrónico que introdujo ya se encuentra asociado a otro usuario. Por favor verifique e intente nuevamente";
-        this.modalService.OpenModalError2(ModalComponent, true, title, message);
-      }
+      this.authServices.register(dataUser).subscribe(result => {
 
-    },
-    () => {
+        console.log(result);
+      },
+      error => {
+        this.errors=error;
 
-      e.preventDefault();
-      this.uploadFiles();
+        console.log('errors_login->',this.errors);
+        if( this.errors == '{"email":["The email has already been taken."]}'){
+          let title= "";
+          let message = "El correo electrónico que introdujo ya se encuentra asociado a otro usuario. Por favor verifique e intente nuevamente";
+          this.modalService.OpenModalError2(ModalComponent, true, title, message);
+        }
 
-    });
+      },
+      () => {
 
+        this.uploadFiles();
+
+      });
+    }
   }
 
   selectdataFile(event: any, index: any, id_document_type: any) {
@@ -356,6 +356,13 @@ export class RegisterComponent implements OnInit {
     this.modalService.openModal(PrivacyPolicyComponent)
   }
 
-  
+  authCkech() {
+    // this.isAuthCheckReadOnly = true;
+    // console.log(this.isAuthCheckReadOnly)
+
+
+  }
+
+
 
 }

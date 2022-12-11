@@ -150,11 +150,11 @@ export class DatesService {
     );
   }
 
-  getEmployees(): Observable<any | void> {
+  getEmployees(rutSupervisor: any): Observable<any | void> {
 
-    return this.http.get<any>(AUTH_API_NP + 'employees', httpOptions).pipe(map((result: any) => {
+    return this.http.get<any>(AUTH_API_NP + 'detailsSupervisor/' + rutSupervisor).pipe(map((result: any) => {
 
-      return result['data'];
+      return result['message'];
 
     }),
       catchError((err) => this.handlerError(err))
