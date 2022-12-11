@@ -400,16 +400,16 @@
                   id="formSwitch1"
                   formControlName="authCheck"
                   (change)="authCkech()"
-                  [ngClass]="{'is-invalid': (userRegister.controls.authCheck.touched && userRegister.controls.authCheck.errors || isFormSubmitted && userRegister.controls.authCheck.errors)}">
-                      <!-- <div *ngIf="(userRegister.touched && userRegister.controls.authCheck.errors?.required) || (isFormSubmitted && userRegister.controls.value.authCheck === '')" class="invalid-feedback">Debe aceptar los terminos y condiciones </div> -->
+                  [ngClass]="{'is-invalid': ((userRegister.controls.authCheck.touched && userRegister.controls.authCheck.errors || isFormSubmitted && userRegister.controls.authCheck.errors) || (userRegister.controls.authCheck.touched && userRegister.controls.authCheck.value == false || isFormSubmitted && userRegister.controls.authCheck.value == false))}">
+
                   <label class="form-check-label" for="formSwitch1">He leido y acepto los <a href="" (click)="openTerminosyCondiciones()">Términos y Condiciones</a> y la <a href="" (click)="openPoliticadePrivacidad()">Politica de Privacidad</a></label>
-                  <div *ngIf="(isFormSubmitted && userRegister.controls.authCheck.errors?.required)" class="invalid-feedback">Debe aceptar los términos y condiciones</div>
+                  <div *ngIf="(isFormSubmitted && userRegister.controls.authCheck.errors?.required) || (userRegister.controls.authCheck.touched && userRegister.controls.authCheck.value == false || isFormSubmitted && userRegister.controls.authCheck.value == false)" class="invalid-feedback">Debe aceptar los términos y condiciones</div>
                 </div>
 
               </div>
               <div class="d-flex flex-row  justify-content-evenly">
                 <!-- <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="onRegister($event)">Sign up</button> -->
-                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 style" [disabled]="((isFormSubmitted || isFormSubmitted && userRegister.valid) && isFormSubmitted && userRegister.invalid)" >Registrarme</button>
+                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 style" [disabled]="((isFormSubmitted || isFormSubmitted && (userRegister.valid || userRegister.controls.authCheck.value != true)) && (isFormSubmitted && (userRegister.invalid || userRegister.controls.authCheck.value != true)))" >Registrarme</button>
                 <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 style-outline" routerLink="/auth/login">
                   Cancelar
                 </button>

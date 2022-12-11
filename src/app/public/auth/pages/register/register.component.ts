@@ -285,7 +285,7 @@ export class RegisterComponent implements OnInit {
 
     }
 
-    if ((this.isFormSubmitted && this.userRegister.status == "VALID" )) {
+    if ((this.isFormSubmitted && this.userRegister.status == "VALID" && this.userRegister.controls.authCheck.value == true)) {
 
       this.authServices.register(dataUser).subscribe(result => {
 
