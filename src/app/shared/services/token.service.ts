@@ -77,7 +77,7 @@ export class TokenService {
       console.log('is Expired', isExpired);
       // this.logOut();
       window.sessionStorage.clear();
-      this.router.navigate(['auth/login']);
+      // this.router.navigate(['auth/login']);
     }else{
       console.log('is Expired', isExpired);
     }

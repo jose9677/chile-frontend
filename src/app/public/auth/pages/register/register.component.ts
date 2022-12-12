@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, Validators} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomValidators } from 'ngx-custom-validators';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ModalsService } from 'src/app/shared/services/modals.service';
 import { ModalComponent } from '../../shared/modals/modal/modal.component';
 import { AuthService } from '../../shared/services/auth.service';
 import { ValidateEmailComponent } from '../validate-email/validate-email.component';
 import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { LoggedService } from 'src/app/shared/services/logged.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -23,7 +24,11 @@ export class RegisterComponent implements OnInit {
   // public userRegister: FormGroup;
   public userRegister: any;
 
-  public isFormSubmitted: Boolean;
+  public isUserRegiter: Observable<boolean>;
+
+  public isFormSubmitted: boolean;
+
+  public documentIsValid: boolean;
 
 
   public typeOfRoad: any[]= [];
@@ -72,17 +77,17 @@ export class RegisterComponent implements OnInit {
   public file: File;
   public selectFiles: any[];
 
-  public isAuthCheckReadOnly: boolean;
+
+
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private modalService: ModalsService,
     private authServices: AuthService,
-    private routerQuery: ActivatedRoute
+    private routerQuery: ActivatedRoute,
+    private loggedServices: LoggedService
     ) {
-
-      this.isAuthCheckReadOnly = false;
 
       this.today = new Date()
       this.today = `${this.today.getFullYear()}-${(this.today.getMonth())+1}-${this.today.getDate()}`
@@ -138,6 +143,9 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
 
     this.isFormSubmitted = false;
+    this.isUserRegiter = this.loggedServices.isRegisterUserObservable;
+    this.documentIsValid = false;
+
 
 
     this.authServices.dropdownInfo().subscribe((result) => {
@@ -285,6 +293,7 @@ export class RegisterComponent implements OnInit {
 
     }
 
+
     if ((this.isFormSubmitted && this.userRegister.status == "VALID" && this.userRegister.controls.authCheck.value == true)) {
 
       this.authServices.register(dataUser).subscribe(result => {
@@ -308,12 +317,66 @@ export class RegisterComponent implements OnInit {
 
       });
     }
+
+
   }
 
-  selectdataFile(event: any, index: any, id_document_type: any) {
+
+  selectdataFile(event: any, index: any, id_document_type: any): void {
     this.file = <File>event.target.files[0];
-    this.selectFiles.push({'fileData': this.file, 'id_document_type': id_document_type});
-    console.log(this.selectFiles);
+    // console.log(this.file);
+    this.documentIsValid = true;
+
+    console.log(this.file)
+
+    if ( this.file != undefined ) {
+
+      if ( this.file.type == "image/jpeg" || this.file.type == "application/pdf" || this.file.type == "image/png") {
+
+
+        this.selectFiles.push({'fileData': this.file, 'id_document_type': id_document_type});
+        console.log(this.selectFiles);
+
+        this.documentIsValid = false;
+
+      } else {
+
+        this.documentIsValid = false;
+
+        if (id_document_type == 1) {
+
+          this.deleteDocument(index);
+          this.addDocument();
+          this.documentIsValid = false;
+
+
+        } else {
+
+          this.deleteDocument2(index);
+          this.addDocument2();
+          this.documentIsValid = false;
+
+        }
+
+      }
+
+    } else {
+
+      console.log(this.selectFiles);
+      this.deleteDocument(index);
+      this.addDocument();
+
+      this.deleteDocument2(index);
+      this.addDocument2();
+
+      this.selectFiles =[]
+      console.log(this.selectFiles);
+      this.documentIsValid = false;
+
+    }
+
+
+
   }
 
 
@@ -333,13 +396,14 @@ export class RegisterComponent implements OnInit {
           },
           () => {
 
-
           })
-      })
-      this.emailUser = this.userRegister.value.email;
-      this.modalValidateEmail(this.emailUser);
-      this.isFormSubmitted = false;
-      this.router.navigate(['auth/login']);
+        })
+
+        this.loggedServices.changeisRegisterUserStatus = true;
+        this.isFormSubmitted = false;
+        this.emailUser = this.userRegister.value.email;
+        this.modalValidateEmail(this.emailUser);
+
     }
 
 
@@ -355,14 +419,6 @@ export class RegisterComponent implements OnInit {
   openPoliticadePrivacidad(){
     this.modalService.openModal(PrivacyPolicyComponent)
   }
-
-  authCkech() {
-    // this.isAuthCheckReadOnly = true;
-    // console.log(this.isAuthCheckReadOnly)
-
-
-  }
-
 
 
 }

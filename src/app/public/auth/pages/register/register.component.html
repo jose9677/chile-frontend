@@ -285,13 +285,11 @@
                 <ng-container formArrayName="documents">
                   <div class="row">
                     <div
-                    class="col-md-6"
-                    [ngClass]="{'is-invalid': ((userRegister.controls.documents.touched && userRegister.controls.documents.value.document_path == '') || (isFormSubmitted && userRegister.controls.documents.value.document_path === ''))}"
-                    >
+                    class="col-md-6">
                       <h5 class="colorTextPrimari pb-3">Certificado de Previsión</h5>
                     </div>
                     <div class="col-md-6">
-                      <button [disabled]="" type="button" mat-mini-fab (click)="addDocument() " class="file_add">
+                      <button type="button" mat-mini-fab (click)="addDocument() " class="file_add">
                         + Haga click aqui para Adjuntar
                       </button>
                     </div>
@@ -304,11 +302,15 @@
                           class="form-control"
                           type="file"
                           id="document_path"
+                          [readOnly] ="(userRegister.controls.documents.value[i].document_path != '') ? true : false "
                           formControlName="document_path"
                           (change)="selectdataFile($event, i, 1)"
                           [ngClass]="{'is-invalid': ((userRegister.controls.documents.touched && userRegister.controls.documents.value[i].document_path == '') || (isFormSubmitted && userRegister.controls.documents.value[i].document_path === ''))}"
                           >
                           <div *ngIf="(userRegister.controls.documents.touched && userRegister.controls.documents.value[i].document_path === '') || (isFormSubmitted && userRegister.controls.documents.value[i].document_path === '')" class="invalid-feedback">Campo Requerido</div>
+
+                          <div *ngIf="(userRegister.controls.documents.touched && documentIsValid != true) || (isFormSubmitted && documentIsValid != true )" class="invalid-feedback">Este campo solo admite formatos de archivos pdf, jpeg, png</div>
+
                           </div>
                           <i class=" col-md-1 mdi mdi-close-circle" (click)="deleteDocument(i)"></i>
                         </div>
@@ -321,7 +323,7 @@
                       <h5 class="colorTextPrimari pb-3">Comprobante de Domicilio</h5>
                     </div>
                     <div class="col-md-6">
-                      <button [disabled]="" type="button" mat-mini-fab (click)="addDocument2()" class="file_add">
+                      <button type="button" mat-mini-fab (click)="addDocument2()" class="file_add">
                        + Haga click aqui para Adjuntar
                       </button>
                     </div>
@@ -336,10 +338,14 @@
                           type="file"
                           id="document_path"
                           formControlName="document_path"
+                          [readOnly]="(userRegister.controls.documents2.value[i].document_path != '') ? true : false "
                           (change)="selectdataFile($event, i, 2)"
                           [ngClass]="{'is-invalid': ((userRegister.controls.documents2.touched && userRegister.controls.documents2.value[i].document_path == '') || (isFormSubmitted && userRegister.controls.documents2.value[i].document_path === ''))}"
                           >
                           <div *ngIf="(userRegister.controls.documents2.touched && userRegister.controls.documents2.value[i].document_path === '') || (isFormSubmitted && userRegister.controls.documents2.value[i].document_path === '')" class="invalid-feedback">Campo Requerido</div>
+
+                          <div *ngIf="(userRegister.controls.documents2.touched && documentIsValid != true) || (isFormSubmitted && documentIsValid != true )" class="invalid-feedback">Este campo solo admite formatos de archivos pdf, jpeg, png</div>
+
                           </div>
                           <i class=" col-md-1 mdi mdi-close-circle" (click)="deleteDocument2(i)"></i>
                         </div>
@@ -399,7 +405,6 @@
                   class="form-check-input"
                   id="formSwitch1"
                   formControlName="authCheck"
-                  (change)="authCkech()"
                   [ngClass]="{'is-invalid': ((userRegister.controls.authCheck.touched && userRegister.controls.authCheck.errors || isFormSubmitted && userRegister.controls.authCheck.errors) || (userRegister.controls.authCheck.touched && userRegister.controls.authCheck.value == false || isFormSubmitted && userRegister.controls.authCheck.value == false))}">
 
                   <label class="form-check-label" for="formSwitch1">He leido y acepto los <a href="" (click)="openTerminosyCondiciones()">Términos y Condiciones</a> y la <a href="" (click)="openPoliticadePrivacidad()">Politica de Privacidad</a></label>

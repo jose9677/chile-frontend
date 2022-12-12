@@ -15,13 +15,13 @@
                 id="Rud"
                 formControlName = rutUser
                 placeholder="0000000-0"
-                [ngClass]="{'is-invalid': (formRutUser.controls.rutUser.touched && formRutUser.controls.rutUser.errors?.required) || (isFormSubmitted && formRutUser.controls.rutUser.errors)}"
+                [ngClass]="{'is-invalid': (formRutUser.controls.rutUser.touched && formRutUser.controls.rutUser.errors) || (isFormSubmitted && formRutUser.controls.rutUser.errors)}"
                     >
-                    <div *ngIf="(formRutUser.controls.rutUser.touched && formRutUser.controls.rutUser.errors?.required) || (isFormSubmitted && formRutUser.controls.rutUser.errors)" class="invalid-feedback">Campo Requerido</div>
+                    <div *ngIf="(formRutUser.controls.rutUser.touched && formRutUser.controls.rutUser.errors?.required) || (isFormSubmitted && formRutUser.controls.rutUser.errors?.required)" class="invalid-feedback">Campo Requerido</div>
               </div>
 
               <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 style">Continuar</button>
+                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 style" [disabled]=" isFormSubmitted ">Continuar</button>
               </div>
               <a routerLink="/auth/login" (click)="modalService.dismiss()" class="d-block mt-3 text-muted text-center">¿Ya tienes Cuenta? <span class="link" >Inicia Sesión</span></a>
             </form>

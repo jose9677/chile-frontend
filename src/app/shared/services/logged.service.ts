@@ -28,4 +28,18 @@ export class LoggedService {
     }));
   }
 
+
+  private isRegisterUser: BehaviorSubject<boolean> = new BehaviorSubject<any>(false);
+
+  get isRegisterUserObservable(): Observable<boolean> {
+    return this.isRegisterUser.asObservable()
+
+  }
+
+  set changeisRegisterUserStatus(isRegisterUserStatus : boolean) {
+    this.isRegisterUser.next(isRegisterUserStatus)
+
+  }
+
+
 }
