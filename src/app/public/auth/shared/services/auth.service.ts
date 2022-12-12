@@ -141,6 +141,16 @@ export class AuthService {
     );
   }
 
+  // refreshOtp (rutUser: any): Observable<any>{
+  //   return this.http.put( AUTH_API_NP + 'refresh-otp/' + rutUser).pipe(map((result:any) => {
+
+  //     console.log('Validate_Email-Res->', result);
+
+  //   }),
+  //   catchError((err)=> this.handlerError(err))
+  //   );
+  // }
+
 
   activateUser(user:any, rol:any): Observable<any>{
     return this.http.put<any>( AUTH_API + 'active-user/'+ user, rol , httpOptions).pipe(map((result:any) => {

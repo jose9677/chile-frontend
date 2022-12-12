@@ -8,11 +8,11 @@
             <h2 class="text-muted fw-normal text-center titles "><strong> Registro</strong></h2><br>
             <form class="forms-sample" [formGroup]="formRutUser" (ngSubmit)="confirmRut($event)">
               <div class="mb-3 mt-3">
-                <label for="exampleInputEmail1" class="form-label colorTextPrimari">Ingrese su RUT</label>
+                <label for="Rut" class="form-label colorTextPrimari">Ingrese su RUT</label>
                 <input
                 type="text"
                 class="form-control"
-                id="Rud"
+                id="Rut"
                 formControlName = rutUser
                 placeholder="0000000-0"
                 [ngClass]="{'is-invalid': (formRutUser.controls.rutUser.touched && formRutUser.controls.rutUser.errors) || (isFormSubmitted && formRutUser.controls.rutUser.errors)}"

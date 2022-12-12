@@ -255,8 +255,8 @@ export class RegisterComponent implements OnInit {
   }
 
 
-  modalValidateEmail(email: any) {
-    this.modalService.openModalData(ValidateEmailComponent, email);
+  modalValidateEmail(email: any, rutUser: any) {
+    this.modalService.openModalData2(ValidateEmailComponent, email, rutUser);
   }
 
   onRegister(e: Event) {
@@ -402,9 +402,9 @@ export class RegisterComponent implements OnInit {
         this.loggedServices.changeisRegisterUserStatus = true;
         this.isFormSubmitted = false;
         this.emailUser = this.userRegister.value.email;
-        this.modalValidateEmail(this.emailUser);
+        this.modalValidateEmail(this.emailUser, this.rut);
 
-    }
+  }
 
 
 

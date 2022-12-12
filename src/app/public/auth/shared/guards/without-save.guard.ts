@@ -33,7 +33,7 @@ export class WithoutSaveGuard implements CanDeactivate<unknown> {
       console.log(this.isRegisterUser);
 
       if (this.isRegisterUser != true) {
-        return confirm('¿Quieres Salir sin Guardar los Cambion?')
+        return confirm('¿Quieres Salir sin Guardar los Cambios?')
       }else {
         return true
       }

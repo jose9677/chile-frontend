@@ -22,7 +22,7 @@
               </div>
 
               <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 style">Aceptar</button>
+                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 style" [disabled]="isFormSubmitted" >Aceptar</button>
                 <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 style-outline" (click)="modalService.dismiss()">
                   Regresar
                 </button>
