@@ -30,7 +30,7 @@
                 <th (click)="sortByService.dataSortBy('request_date')">Fecha Solicitud</th>
                 <th (click)="sortByService.dataSortBy('rut')">RUT</th>
                 <th (click)="sortByService.dataSortBy('user_name')">Nombres y Apellidos</th>
-                <th (click)="sortByService.dataSortBy('way_number')">Direccion</th>
+                <th (click)="sortByService.dataSortBy('way_number')">Dirección</th>
                 <th (click)="sortByService.dataSortBy('request_date')">Fecha Visita</th>
                 <th (click)="sortByService.dataSortBy('employee_rut')">Asistente Social</th>
                 <th (click)="sortByService.dataSortBy('status')">Estatus</th>
@@ -40,16 +40,16 @@
             <tbody>
                   <!-- <tr *ngFor="let request of unassignedRequest; index as i " > -->
                 <tr *ngFor="let request of unassignedRequest | filter2:sortByService.search:sortByService.page | sortBy:sortByService.dataSort:sortByService.order" >
-                  <td >{{request.id}}</td>
-                  <td>{{request.created_at}}</td>
-                  <td>{{request.rut_user}}</td>
-                  <td>{{request.names + ',' + request.lastname}}</td>
-                  <td>{{request.street +' '+ request.way_number  +', '+ request.description +' '+ request.property_number}}</td>
-                  <td>{{request.visit_date}}</td>
+                  <td >{{(request.id ?? ' ')}}</td>
+                  <td>{{(request.created_at ?? ' ')}}</td>
+                  <td>{{(request.rut_user ?? ' ')}}</td>
+                  <td>{{(request.names ?? ' ') + ',' + (request.lastname ?? ' ')}}</td>
+                  <td>{{(request.street ?? ' ') +' '+ (request.way_number ?? ' ')  +', '+ (request.description ?? ' ') +' '+ (request.property_number ?? ' ')}}</td>
+                  <td>{{(request.visit_date ?? ' ')}}</td>
                   <td>{{(request.assistant_name ?? ' ') + " " + (request.assistant_lastname ?? ' ') }}</td>
-                  <td>{{request.status}}</td>
+                  <td>{{(request.status ?? ' ')}}</td>
                   <td>
-                    <button (click)="assignDayDate(request.id)" ><i class="mdi mdi-calendar-blank"></i></button>
+                    <button (click)="assignDayDate(request.id)" ><i class="mdi mdi-check-circle"></i></button>
                   </td>
                 </tr>
             </tbody>
@@ -70,8 +70,6 @@
     </div>
   </div>
 </div>
-
-
 
 <div class="row">
   <div class="col-md-12">
@@ -106,14 +104,14 @@
             <tbody>
                   <!-- <tr *ngFor="let request of unassignedRequest; index as i " > -->
                 <tr *ngFor="let request of unassignedRequest2 | filter2:sortByService.search2:sortByService.page2 | sortBy2:sortByService.dataSort2:sortByService.order2" >
-                  <td >{{request.id}}</td>
-                  <td>{{request.created_at}}</td>
-                  <td>{{request.rut_user}}</td>
-                  <td>{{request.name + ',' + request.lastname}}</td>
-                  <td>{{request.street +' '+ request.way_number  +', '+ request.description +' '+ request.property_number}}</td>
-                  <td>{{request.visit_date}}</td>
+                  <td >{{(request.id ?? ' ')}}</td>
+                  <td>{{(request.created_at ?? ' ')}}</td>
+                  <td>{{(request.rut_user ?? ' ')}}</td>
+                  <td>{{(request.name ?? ' ') + ',' + (request.lastname ?? ' ')}}</td>
+                  <td>{{(request.street ?? ' ') +' '+ (request.way_number ?? ' ')  +', '+ (request.description ?? ' ') +' '+ (request.property_number ?? ' ')}}</td>
+                  <td>{{(request.visit_date ?? ' ')}}</td>
                   <td>{{(request.assistant_name ?? ' ') + " " + (request.assistant_lastname ?? ' ') }}</td>
-                  <td>{{request.status}}</td>
+                  <td>{{(request.status ?? ' ')}}</td>
                   <td>
                     <button (click)="approveDates(request.id)" *ngIf="request.id_status == 4"><i class="mdi mdi-calendar-today"></i></button>
 
