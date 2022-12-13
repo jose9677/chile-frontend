@@ -6,6 +6,9 @@ import { ViewUsersComponent } from './pages/view-users/view-users.component';
 import { CreateUsersComponent } from './pages/create-users/create-users.component';
 import { EditUserComponent } from './pages/edit-user/edit-user.component';
 import { LayoutAdminUsersComponent } from './pages/layouts/layout-admin-users/layout-admin-users.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxMaskModule } from 'ngx-mask';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -17,7 +20,11 @@ import { LayoutAdminUsersComponent } from './pages/layouts/layout-admin-users/la
   ],
   imports: [
     CommonModule,
-    PrivateRoutingModule
+    PrivateRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgSelectModule,
+    NgxMaskModule.forRoot(),
   ]
 })
 export class PrivateModule { }
