@@ -34,7 +34,6 @@ export class ApproveDatesComponent implements OnInit {
   })
 
 
-
   constructor(
     private modalService: ModalsService,
     private routerquery: ActivatedRoute,
@@ -77,7 +76,7 @@ export class ApproveDatesComponent implements OnInit {
 
   }
 
-  approve( idRequest: any, e: Event ) {
+  approve( idRequest: any, e: Event ): void {
     e.preventDefault();
     
     this.isFormSubmitted = true;
@@ -87,50 +86,64 @@ export class ApproveDatesComponent implements OnInit {
       "applicant_at_home": this.formApprove.controls.applicantAtResidence.value,
       "prevention_is_valid": this.formApprove.controls.validProofOfAddress.value,
       "location_is_valid": this.formApprove.controls.DoesRUTMatch.value,
-      "rut_match": this.formApprove.controls.DoesRUTMatch.value
+      "rut_match": this.formApprove.controls.DoesRUTMatch.value,
+      "comments": this.formApprove.controls.Observations.value
 
     }
 
-    this.datesService.approbe(idRequest, dataRequest).subscribe((result) => {
+    if ( this.formApprove.status == "VALID" ) {
 
-      console.log(result)
-
-    },
-    error => {
-
-    },
-    () => {
-
-    })
-
-    this.openGenerateCredential();
+      this.datesService.approbe(idRequest, dataRequest).subscribe((result) => {
+  
+        console.log(result)
+  
+      },
+      error => {
+  
+      },
+      () => {
+  
+      })
+  
+      
+      this.openGenerateCredential();
+    }
+    
 
   }
 
-  decline( idRequest: any, e: Event ) {
+  deny( idRequest: any, e: Event ):void {
     e.preventDefault();
+
+    this.isFormSubmitted = true;
 
     const dataRequest = {
       "applicant_at_home": this.formApprove.controls.applicantAtResidence.value,
       "prevention_is_valid": this.formApprove.controls.validProofOfAddress.value,
       "location_is_valid": this.formApprove.controls.DoesRUTMatch.value,
-      "rut_match": this.formApprove.controls.DoesRUTMatch.value
+      "rut_match": this.formApprove.controls.DoesRUTMatch.value,
+      "comments": this.formApprove.controls.Observations.value
 
     }
 
-    this.datesService.approbe(idRequest, dataRequest).subscribe((result) => {
+    if ( this.formApprove.status == "VALID" ) {
 
-      console.log(result)
+      this.datesService.approbe(idRequest, dataRequest).subscribe((result) => {
+  
+        console.log(result)
+  
+      },
+      error => {
+  
+      },
+      () => {
+      })
+      
+      this.openRejectRequestComponent()    
 
-    },
-    error => {
 
-    },
-    () => {
+    }
 
-    })
-
-    this.openGenerateCredential();
 
   }
 

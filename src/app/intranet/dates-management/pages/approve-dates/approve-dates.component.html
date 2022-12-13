@@ -91,14 +91,13 @@
               <select
               class="form-select form-control"
               formControlName="applicantAtResidence"
-              [ngClass]="{'is-invalid': (formApprove.controls.applicantAtResidence.touched && formApprove.controls.applicantAtResidence.errors?.required) || (isFormSubmitted && formApprove.controls.applicantAtResidence.errors)}"
-                    >
-                    <div *ngIf="(formApprove.controls.applicantAtResidence.touched && formApprove.controls.applicantAtResidence.errors?.required) || (isFormSubmitted && formApprove.controls.applicantAtResidence.errors)" class="invalid-feedback">Campo Requerido</div>
-              >
+              [ngClass]="{'is-invalid': (formApprove.controls.applicantAtResidence.touched && formApprove.controls.applicantAtResidence.errors?.required) || (isFormSubmitted && formApprove.controls.applicantAtResidence.errors)}">
+                    
                 <option value=""></option>
                 <option value="true">Si</option>
                 <option value="false">No</option>
               </select>
+                <div *ngIf="(formApprove.controls.applicantAtResidence.touched && formApprove.controls.applicantAtResidence.errors?.required) || (isFormSubmitted && formApprove.controls.applicantAtResidence.errors)" class="invalid-feedback">Campo Requerido</div>
             </div>
           </div>
         </div>
@@ -109,11 +108,13 @@
               <select
               class="form-select form-control"
               formControlName="validPreventionCertificate"
-              >
+              [ngClass]="{'is-invalid': (formApprove.controls.validPreventionCertificate.touched && formApprove.controls.validPreventionCertificate.errors?.required) || (isFormSubmitted && formApprove.controls.validPreventionCertificate.errors)}">
+                    
                 <option value=""></option>
                 <option value="true">Si</option>
                 <option value="false">No</option>
               </select>
+                <div *ngIf="(formApprove.controls.validPreventionCertificate.touched && formApprove.controls.validPreventionCertificate.errors?.required) || (isFormSubmitted && formApprove.controls.validPreventionCertificate.errors)" class="invalid-feedback">Campo Requerido</div>
             </div>
           </div>
         </div>
@@ -124,11 +125,13 @@
               <select
               class="form-select form-control"
               formControlName="validProofOfAddress"
-              >
+              [ngClass]="{'is-invalid': (formApprove.controls.validProofOfAddress.touched && formApprove.controls.validProofOfAddress.errors?.required) || (isFormSubmitted && formApprove.controls.validProofOfAddress.errors)}">
+                    
                 <option value=""></option>
                 <option value="true">Si</option>
                 <option value="false">No</option>
               </select>
+                <div *ngIf="(formApprove.controls.validProofOfAddress.touched && formApprove.controls.validProofOfAddress.errors?.required) || (isFormSubmitted && formApprove.controls.validProofOfAddress.errors)" class="invalid-feedback">Campo Requerido</div>
             </div>
           </div>
         </div>
@@ -140,11 +143,13 @@
               class="form-select form-control"
               formControlName="DoesRUTMatch"
               value="true"
-              >
+              [ngClass]="{'is-invalid': (formApprove.controls.DoesRUTMatch.touched && formApprove.controls.DoesRUTMatch.errors?.required) || (isFormSubmitted && formApprove.controls.DoesRUTMatch.errors)}">
+                    
                 <option value=""></option>
                 <option value="true">Si</option>
                 <option value="false">No</option>
               </select>
+                <div *ngIf="(formApprove.controls.DoesRUTMatch.touched && formApprove.controls.DoesRUTMatch.errors?.required) || (isFormSubmitted && formApprove.controls.DoesRUTMatch.errors)" class="invalid-feedback">Campo Requerido</div>
             </div>
           </div>
         </div>
@@ -166,19 +171,21 @@
     </div>
     <br>
     <div class="row justify-content-center">
-      <!-- <div class="col-md-2 col-sm-12">
-       <button type="submit" class="btn btn-primary style w-100 h-100" (click)="approve( idRequest, $event)"[disabled]=" formApprove.invalid || ((formApprove.valid && formApprove.value.applicantAtResidence != 'true') ||  ( formApprove.valid && formApprove.value.validPreventionCertificate != 'true') || (formApprove.valid && formApprove.value.validProofOfAddress != 'true') || (formApprove.valid && formApprove.value.DoesRUTMatch != 'true' ))">Aprobar</button> 
-      </div>
-      <div class="col-md-2 col-sm-12">
-        <button type="button" class="btn btn-outline-primary style-outline w-100 h-100" (click)="openRejectRequestComponent(); decline(idRequest, $event)" [disabled]=" formApprove.invalid || ((formApprove.valid && formApprove.value.applicantAtResidence == 'true') ||  ( formApprove.valid && formApprove.value.validPreventionCertificate == 'true') || (formApprove.valid && formApprove.value.validProofOfAddress == true ) || (formApprove.valid && formApprove.value.DoesRUTMatch == 'true' )) " >Rechazar</button>
-      </div> -->
 
-      <div class="col-md-2 col-sm-12">
-        <button type="submit" class="btn btn-primary style w-100 h-100" (click)="approve( idRequest, $event)"[disabled]=" formApprove.invalid || ((formApprove.valid && formApprove.value.applicantAtResidence != 'true') ||  ( formApprove.valid && formApprove.value.validPreventionCertificate != 'true') || (formApprove.valid && formApprove.value.validProofOfAddress != 'true') || (formApprove.valid && formApprove.value.DoesRUTMatch != 'true' ))">Aprobar</button> <!--ojo el event.preventDefault() evita que el formulario recargue la pagina -->
-       </div>
-       <div class="col-md-2 col-sm-12">
-         <button type="button" class="btn btn-outline-primary style-outline w-100 h-100" (click)="openRejectRequestComponent(); decline(idRequest, $event)" [disabled]="" >Rechazar</button>
-       </div>
+      <div class="col-md-2 col-sm-12" *ngIf="formApprove.valid && ((formApprove.valid && formApprove.value.applicantAtResidence == 'true') &&  ( formApprove.valid && formApprove.value.validPreventionCertificate == 'true') && (formApprove.valid && formApprove.value.validProofOfAddress == 'true') && (formApprove.valid && formApprove.value.DoesRUTMatch == 'true' )); else decline">
+
+        <button type="submit" class="btn btn-primary style w-100 h-100" (click)="approve( idRequest, $event)" >Aprobar</button> 
+
+      </div>
+
+      <ng-template #decline>
+
+        <div class="col-md-2 col-sm-12">
+           <button type="button" class="btn btn-outline-primary style-outline w-100 h-100" (click)="deny(idRequest, $event)">Rechazar</button>
+        </div>
+        
+      </ng-template>
+      
       <div class="col-md-2 col-sm-12">
         <button class="btn btn-primary style w-100 h-100" type="button" (click)="return()">Cancelar</button>
       </div>
