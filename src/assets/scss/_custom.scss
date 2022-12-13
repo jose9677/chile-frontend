@@ -4,6 +4,12 @@ $color-primary: #376B83;
 $color-secondary: #0eadb0;
 $light-bg: #e4f4f7;
 
+.color-secondary{
+    color: $color-secondary;
+}
+div.modal-content{
+  width: auto !important;
+}
 .table{
     & thead{
         background-color: $color-secondary;
@@ -12,7 +18,10 @@ $light-bg: #e4f4f7;
     & th{
         color: white !important;
     }
-    
+    & td {
+        vertical-align: middle;
+    }
+
     & tr:nth-child(even) {
         background-color: $light-bg;
     }
@@ -26,16 +35,17 @@ $light-bg: #e4f4f7;
         background-color: transparent;
         border: 0px;
     }
-    
+
 
     text-align: center;
     border: 0px solid transparent;
-    
+
 }
 
 .datasearch{
     border: 0px;
     border-bottom: $color-secondary solid 1px;
+    margin-bottom: 10px;
 }
 
 .input-group-text{
@@ -47,4 +57,31 @@ $light-bg: #e4f4f7;
 
 i{
     color: $color-primary;
+}
+
+button i{
+    color: $color-secondary;
+}
+
+button.file_add{
+    color: $color-secondary;
+    background-color: transparent;
+    border: 0px;
+}
+
+.info{
+    color: $color-primary;
+    font-size: 0.7em;
+}
+
+.header{
+    background-color: $color-secondary;
+    color: white;
+    font-weight: bold;
+}
+
+.resumebox{
+    background-color: $color-primary;
+    color: white;
+    font-weight: bold;
 }

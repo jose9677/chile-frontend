@@ -4,24 +4,24 @@
       <div class="row d-flex justify-content-center">
         <div class="col-md-11 ps-md-0 "> -->
           <div class="auth-form-wrapper px-4 py-5 ">
-            <img class="card-img-top px-4" src="../assets/images/login/LogoLaReinaCorporacion-FondoBlanco1.png" alt=""><br><br>
+            <img class="card-img-top px-4" src="../assets/images/login/SaludAtuAlcanceLogo.png" alt=""><br><br>
             <h2 class="text-muted fw-normal text-center titles "><strong> Registro</strong></h2><br>
             <form class="forms-sample" [formGroup]="formRutUser" (ngSubmit)="confirmRut($event)">
               <div class="mb-3 mt-3">
-                <label for="exampleInputEmail1" class="form-label colorTextPrimari">Ingrese su RUT</label>
+                <label for="Rut" class="form-label colorTextPrimari">Ingrese su RUT</label>
                 <input
                 type="text"
                 class="form-control"
-                id="Rud"
+                id="Rut"
                 formControlName = rutUser
                 placeholder="0000000-0"
-                [ngClass]="{'is-invalid': (formRutUser.controls.rutUser.touched && formRutUser.controls.rutUser.errors?.required) || (isFormSubmitted && formRutUser.controls.rutUser.errors)}"
+                [ngClass]="{'is-invalid': (formRutUser.controls.rutUser.touched && formRutUser.controls.rutUser.errors) || (isFormSubmitted && formRutUser.controls.rutUser.errors)}"
                     >
-                    <div *ngIf="(formRutUser.controls.rutUser.touched && formRutUser.controls.rutUser.errors?.required) || (isFormSubmitted && formRutUser.controls.rutUser.errors)" class="invalid-feedback">Campo Requerido</div>
+                    <div *ngIf="(formRutUser.controls.rutUser.touched && formRutUser.controls.rutUser.errors?.required) || (isFormSubmitted && formRutUser.controls.rutUser.errors?.required)" class="invalid-feedback">Campo Requerido</div>
               </div>
 
               <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 style">Continuar</button>
+                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 style" [disabled]=" isFormSubmitted ">Continuar</button>
               </div>
               <a routerLink="/auth/login" (click)="modalService.dismiss()" class="d-block mt-3 text-muted text-center">¿Ya tienes Cuenta? <span class="link" >Inicia Sesión</span></a>
             </form>

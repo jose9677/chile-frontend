@@ -35,29 +35,29 @@ export class ErrorPageComponent implements OnInit, OnDestroy {
     switch(this.type) {
       case '404':
         if (!this.title) {
-          this.title = 'Page Not Found'
+          this.title = 'Página no encontrada'
         }
         if (!this.desc) {
-          this.desc = 'Oopps!! The page you were looking for doesn\'t exist.'
+          this.desc = 'Lo sentimos, pero la página solicitada no existe.'
         }
         break;
       case '500':
         if (!this.title) {
-          this.title = 'Internal server error'
+          this.title = 'No pudimos procesar tu petición'
         }
         if (!this.desc) {
-          this.desc = 'Oopps!! There wan an error. Please try agin later.'
+          this.desc = 'Lo sentimos, hubo un error. Por favor intenta de nuevo más tarde.'
         }
         break;
       default:
         // if (!this.type) {
-          this.type = 'Ooops..';
+          this.type = 'Lo sentimos..';
         // }
         if (!this.title) {
-          this.title = 'Something went wrong';
+          this.title = 'Algo salió mal';
         }
         if (!this.desc) {
-          this.desc = 'Looks like something went wrong.<br>' + 'We\'re working on it';
+          this.desc = 'Parece que algo salió mal.<br>' + 'estamos trabajando para solucionarlo';
         }
     }
   }

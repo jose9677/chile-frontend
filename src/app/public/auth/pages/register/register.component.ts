@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, Validators} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomValidators } from 'ngx-custom-validators';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ModalsService } from 'src/app/shared/services/modals.service';
 import { ModalComponent } from '../../shared/modals/modal/modal.component';
 import { AuthService } from '../../shared/services/auth.service';
 import { ValidateEmailComponent } from '../validate-email/validate-email.component';
 import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { LoggedService } from 'src/app/shared/services/logged.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -16,14 +17,18 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 })
 export class RegisterComponent implements OnInit {
 
-  private today: any;
+  public today: any;
 
   public errors: any = null;
 
   // public userRegister: FormGroup;
   public userRegister: any;
 
-  public isFormSubmitted: Boolean;
+  public isUserRegiter: Observable<boolean>;
+
+  public isFormSubmitted: boolean;
+
+  public documentIsValid: boolean;
 
 
   public typeOfRoad: any[]= [];
@@ -31,28 +36,30 @@ export class RegisterComponent implements OnInit {
   public selectedRoadId: any = null;
 
 
-  public nameOfstreet: any[]= [];
+  public locations: any[]= [];
 
   public selectedStreet: any = null;
 
 
-  public typeOfHousing: any[]= [];
+  public property_types: any[]= [];
 
   public selectedHousing: any = null;
 
 
-  public typeOfPrevention: any[];
+  public preventions_types: any[];
 
   public selectedPrevention: any = null;
 
 
-  public typeOfFonasa: any[];
+  public preventions_types_details: any[];
 
-  public selectedtypeOfFonasa: any = "";
+  public preventions_types_details2: any[];
 
-  public typeOfCompany: any[];
+  public preventions_types_details3: any[];
 
-  public selectedTypeOfCompany: any = "";
+  public preventions_types_details4: any[];
+
+  public selectedpreventions_types_details: any = "";
 
 
   public haveInsurance: any[];
@@ -60,25 +67,34 @@ export class RegisterComponent implements OnInit {
   public selectedhaveInsurance: any = null;
 
 
-  public proofOfAddress: any[];
-
-  public selectedproofOfAddress: any = null;
-
   public emailUser: any = '';
 
   rutSubscription: Subscription;
 
   private rut: string = '';
 
-  private detailPrevention: any;
+
+  public file: File;
+  public selectFiles: any[];
+
+
+
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private modalService: ModalsService,
     private authServices: AuthService,
-    private routerQuery: ActivatedRoute
+    private routerQuery: ActivatedRoute,
+    private loggedServices: LoggedService
     ) {
+
+      this.today = new Date()
+      this.today = `${this.today.getFullYear()}-${(this.today.getMonth())+1}-${this.today.getDate()}`
+      console.log(this.today)
+
+      this.selectFiles = [];
+
 
       this.typeOfRoad = [
         {
@@ -91,76 +107,18 @@ export class RegisterComponent implements OnInit {
         }
       ];
 
-      this.nameOfstreet = [
-        {
-          'id': 1 ,
-          'name': 'Calle#1'
-        },
-        {
-          'id': 2,
-          'name': 'Calle#2'
-        }
-      ];
+      this.locations = [];
 
-      this.typeOfHousing = [
-        {
-          'id': 1 ,
-          'name': 'Casa'
-        },
-        {
-          'id': 2,
-          'name': 'Departamento'
-        }
-      ]
+      this.property_types = []
 
-      this.typeOfPrevention= [
-        {
-          'id': 1 ,
-          'name': 'Fonasa'
-        },
-        {
-          'id': 2,
-          'name': 'Isapre'
-        }
-      ];
+      this.preventions_types= [];
 
-      this.typeOfFonasa= [
-        {
-          'id': 1 ,
-          'name': 'Na'
-        },
-        {
-          'id': 2,
-          'name': 'fB'
-        },
-        {
-          'id': 3 ,
-          'name': 'fC'
-        },
-        {
-          'id': 4,
-          'name': 'fD'
-        }
-      ];
+      this.preventions_types_details= [];
+      this.preventions_types_details2= [];
+      this.preventions_types_details3= [];
+      this.preventions_types_details4= [];
 
-      this.typeOfCompany= [
-        {
-          'id': 1 ,
-          'name': 'Na'
-        },
-        {
-          'id': 2,
-          'name': 'cB'
-        },
-        {
-          'id': 3 ,
-          'name': 'cC'
-        },
-        {
-          'id': 4,
-          'name': 'cD'
-        }
-      ];
+
 
       this.haveInsurance= [
         {
@@ -173,95 +131,138 @@ export class RegisterComponent implements OnInit {
         }
       ];
 
-      this.proofOfAddress= [
-        {
-          'id': 1 ,
-          'name': 'Tipo1'
-        },
-        {
-          'id': 2,
-          'name': 'Tipo2'
-        }
-      ];
-
       this.rutSubscription = this.routerQuery.queryParams.subscribe(rut => this.rut= rut.rut)
 
       console.log(this.rut)
 
-      this.today = new Date();
+
+
+
     }
 
   ngOnInit(): void {
 
+    this.isFormSubmitted = false;
+    this.isUserRegiter = this.loggedServices.isRegisterUserObservable;
+    this.documentIsValid = false;
 
-    console.log(this.today.toLocaleString())
+
+
+    this.authServices.dropdownInfo().subscribe((result) => {
+
+      console.log(result)
+
+      this.locations = result.locations;
+      this.preventions_types = result.preventions_types;
+      this.property_types = result.property_types
+
+      result.preventions_types_details.map((res: any) => {
+        if (res.id_prevention_type === 1) {
+          this.preventions_types_details.push(res);
+        } else if (res.id_prevention_type === 2) {
+          this.preventions_types_details2.push(res);
+
+        } else if (res.id_prevention_type === 3) {
+          this.preventions_types_details3.push(res);
+
+        }
+        else {
+          this.preventions_types_details4.push(res);
+        }
+      });
+
+
+    }, error => {
+
+    },
+    () =>{
+
+    })
+
+
 
     let password = new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}')]);
 
     this.userRegister= this.fb.group({
-      names: ['',[Validators.required, ]],
-      // names: ['',[Validators.required, Validators.pattern("^(?=.{3,15}$)[A-ZÁÉÍÓÚ][a-zñáéíóú]+(?: [A-ZÁÉÍÓÚ][a-zñáéíóú]+)?$")]],
-      lastNames: ['', [Validators.required, ]],
-      // lastNames: ['', [Validators.required, Validators.pattern("^(?=.{3,15}$)[A-ZÁÉÍÓÚ][a-zñáéíóú]+(?: [A-ZÁÉÍÓÚ][a-zñáéíóú]+)?$")]],
-      datesBirth: ['', [Validators.required, CustomValidators.date]],
+      names: ['',[Validators.required, Validators.pattern(/^([a-zA-ZáéíóúüÁÉÍÓÚÜñÑ]{2,60}[\,\-\.]{0,1}[\s]{0,1}){1,3}$/)]],
+      lastNames: ['', [Validators.required, Validators.pattern(/^([a-zA-ZáéíóúüÁÉÍÓÚÜñÑ]{2,60}[\,\-\.]{0,1}[\s]{0,1}){1,3}$/)]],
+      datesBirth: ['', [Validators.required]],
       email: ['', [Validators.required, CustomValidators.email]],
-      landLine: ['', [Validators.required, Validators.minLength(9), CustomValidators.number]],
-      mobilePhone: ['', [Validators.required, Validators.minLength(9), CustomValidators.number]],
+      landLine: ['', [Validators.required, Validators.minLength(9)]],
+      mobilePhone: ['', [Validators.required, Validators.minLength(9)]],
 
       address: this.fb.group({
-        // typeOfRoad: ['', Validators.required],
-        nameOfstreet: ['', Validators.required],
-        numberStreet: ['', [Validators.required, CustomValidators.number]],
-        typeOfHousing: ['', Validators.required],
+        locations: ['', Validators.required],
+        numberStreet: ['', [Validators.required]],
+        property_types: ['', Validators.required],
         nameHome: ['', Validators.required],
       }),
 
       healthInformation: this.fb.group({
-        typeOfPrevention: ['', Validators.required],
-        typeOfFonasa: ['', ],
-        typeOfCompany: ['', ],
+        preventions_types: ['', Validators.required],
+        preventions_types_details: ['', ],
         haveInsurance: ['', Validators.required]
       }),
 
-      documents: this.fb.group({
-        preventionCertificate: ['', Validators.required],
-        proofOfAddress: ['', Validators.required],
-        proofOfAddress1: ['', Validators.required],
-      }),
+      documents: this.fb.array([]),
+      documents2: this.fb.array([]),
+
       accesData: this.fb.group({
-        // password: ['', [Validators.required]],
         password: password,
         rePassword: ['', [Validators.required, CustomValidators.equalTo(password)]],
       }),
       authCheck: ['',[Validators.required]]
     })
 
+    this.addDocument();
 
+    this.addDocument2();
 
-
-
-
-    this.isFormSubmitted = false;
+    console.log(this.userRegister)
 
   }
 
-  modalValidateEmail(email: any) {
-    this.modalService.openModalData(ValidateEmailComponent, email);
+  get documents() {
+    return this.userRegister.controls["documents"] as FormArray;
+  }
+  get documents2() {
+    return this.userRegister.controls["documents2"] as FormArray;
   }
 
+
+  addDocument() {
+    const documentForm = this.fb.group({
+        document_path: ['', Validators.required],
+    });
+
+    this.documents.push(documentForm);
+  }
+
+  addDocument2() {
+    const documentForm = this.fb.group({
+        document_path: ['', Validators.required],
+    });
+
+    this.documents2.push(documentForm);
+  }
+
+  deleteDocument(DocumentIndex: number) {
+    this.documents.removeAt(DocumentIndex);
+  }
+
+  deleteDocument2(DocumentIndex: number) {
+    this.documents2.removeAt(DocumentIndex);
+  }
+
+
+  modalValidateEmail(email: any, rutUser: any) {
+    this.modalService.openModalData2(ValidateEmailComponent, email, rutUser);
+  }
 
   onRegister(e: Event) {
-    console.log(this.userRegister);
+    e.preventDefault();
 
-    if (this.userRegister.controls.healthInformation.controls.typeOfPrevention.value === 0) {
-      this.detailPrevention = this.userRegister.controls.healthInformation.value.typeOfFonasa;
-    }
-    else if (this.userRegister.controls.healthInformation.controls.typeOfPrevention.value === 1){
-      this.detailPrevention = this.userRegister.controls.healthInformation.value.typeOfCompany;
-
-    }else {
-
-    }
+    this.isFormSubmitted = true;
 
     const dataUser = {
       rut : this.rut,
@@ -273,50 +274,138 @@ export class RegisterComponent implements OnInit {
       mobile_phone: this.userRegister.value.mobilePhone,
       password: this.userRegister.controls.accesData.value.password,
 
-      id_location: this.userRegister.controls.address.value.nameOfstreet,
+      id_location: this.userRegister.controls.address.value.locations,
       way_number: this.userRegister.controls.address.value.numberStreet,
-      id_property_type: this.userRegister.controls.address.value.typeOfHousing,
+      id_property_type: this.userRegister.controls.address.value.property_types,
       property_number: this.userRegister.controls.address.value.nameHome,
-
-      id_prevention_type_detail : this.detailPrevention,
-
+      id_prevention_type_detail : this.userRegister.controls.healthInformation.value.preventions_types_details,
       assurance: this.userRegister.controls.healthInformation.value.haveInsurance,
 
-      // visit_date: this.today.toLocaleString(),
+      terms_condition: this.userRegister.value.authCheck,
 
-      // preventionCertificate: this.userRegister.controls.documents.preventionCertificate,
-      // proofOfAddress: this.userRegister.controls.documents.proofOfAddress,
-      // proofOfAddress1: this.userRegister.controls.documents.proofOfAddress1,
+      id_status: 1,
+      applicant_at_home: false,
+      prevention_is_valid: false,
+      location_is_valid: false,
+      comments: null,
+      is_active: false,
+      rut_match: false,
 
-      terms_condition: this.userRegister.value.authCheck
     }
 
-    console.log(dataUser);
 
+    if ((this.isFormSubmitted && this.userRegister.status == "VALID" && this.userRegister.controls.authCheck.value == true)) {
 
-    this.authServices.register(dataUser).subscribe(result => {
-      console.log(result);
-    },
-    error => {
-      this.errors=error;
-      console.log('errors_login->',this.errors);
-      if( this.errors == '{"email":["The email has already been taken."]}'){
-        let title= "";
-        let message = "El correo electrónico que introdujo ya se encuentra asociado a otro usuario. Por favor verifique e intente nuevamente";
-        this.modalService.OpenModalError2(ModalComponent, true, title, message);
-      }
-      this.isFormSubmitted = true;
+      this.authServices.register(dataUser).subscribe(result => {
 
-    },
-    () => {
-      e.preventDefault();
-      this.emailUser = this.userRegister.value.email;
-      this.modalValidateEmail(this.emailUser);
-      this.router.navigate(['auth/login']);
+        console.log(result);
+      },
+      error => {
+        this.errors=error;
 
-    });
+        console.log('errors_login->',this.errors);
+        if( this.errors == '{"email":["The email has already been taken."]}'){
+          let title= "";
+          let message = "El correo electrónico que introdujo ya se encuentra asociado a otro usuario. Por favor verifique e intente nuevamente";
+          this.modalService.OpenModalError2(ModalComponent, true, title, message);
+        }
+
+      },
+      () => {
+
+        this.uploadFiles();
+
+      });
+    }
+
 
   }
+
+
+  selectdataFile(event: any, index: any, id_document_type: any): void {
+    this.file = <File>event.target.files[0];
+    // console.log(this.file);
+    this.documentIsValid = true;
+
+    console.log(this.file)
+
+    if ( this.file != undefined ) {
+
+      if ( this.file.type == "image/jpeg" || this.file.type == "application/pdf" || this.file.type == "image/png") {
+
+
+        this.selectFiles.push({'fileData': this.file, 'id_document_type': id_document_type});
+        console.log(this.selectFiles);
+
+        this.documentIsValid = false;
+
+      } else {
+
+        this.documentIsValid = false;
+
+        if (id_document_type == 1) {
+
+          this.deleteDocument(index);
+          this.addDocument();
+          this.documentIsValid = false;
+
+
+        } else {
+
+          this.deleteDocument2(index);
+          this.addDocument2();
+          this.documentIsValid = false;
+
+        }
+
+      }
+
+    } else {
+
+      console.log(this.selectFiles);
+      this.deleteDocument(index);
+      this.addDocument();
+
+      this.deleteDocument2(index);
+      this.addDocument2();
+
+      this.selectFiles =[]
+      console.log(this.selectFiles);
+      this.documentIsValid = false;
+
+    }
+
+
+
+  }
+
+
+  uploadFiles() {
+
+    this.selectFiles.map((file) => {
+
+      let fileData = file.fileData;
+      let id_document_type = file.id_document_type
+
+      this.authServices.uploadFiles(fileData, id_document_type).subscribe((res) =>
+         {
+            console.log(res);
+          },
+          error => {
+
+          },
+          () => {
+
+          })
+        })
+
+        this.loggedServices.changeisRegisterUserStatus = true;
+        this.isFormSubmitted = false;
+        this.emailUser = this.userRegister.value.email;
+        this.modalValidateEmail(this.emailUser, this.rut);
+
+  }
+
 
 
 
@@ -330,5 +419,6 @@ export class RegisterComponent implements OnInit {
   openPoliticadePrivacidad(){
     this.modalService.openModal(PrivacyPolicyComponent)
   }
+
 
 }

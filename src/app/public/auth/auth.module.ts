@@ -16,6 +16,8 @@ import { ValidateEmailComponent } from './pages/validate-email/validate-email.co
 import { ModalsService } from 'src/app/shared/services/modals.service';
 import { TermsAndConditionsComponent } from './pages/register/terms-and-conditions/terms-and-conditions.component';
 import { PrivacyPolicyComponent } from './pages/register/privacy-policy/privacy-policy.component';
+import { WithoutSaveGuard } from './shared/guards/without-save.guard';
+import { CheckLoginGuard } from './shared/guards/check-login.guard';
 
 const routes: Routes = [
   {
@@ -24,7 +26,8 @@ const routes: Routes = [
     children: [
       {
         path: 'login',
-        component: LoginComponent
+        component: LoginComponent,
+        canActivate: [CheckLoginGuard]
       },
       {
         path: 'recuperar-contraseña',
@@ -32,7 +35,8 @@ const routes: Routes = [
       },
       {
         path: 'registro',
-        component: RegisterComponent
+        component: RegisterComponent,
+        canDeactivate: [WithoutSaveGuard]
       },
       {
         path: 'cambiar-contrasena',
@@ -70,6 +74,8 @@ const routes: Routes = [
   ],
   providers: [
     ModalsService,
+    
+
   ]
 })
 export class AuthModule { }

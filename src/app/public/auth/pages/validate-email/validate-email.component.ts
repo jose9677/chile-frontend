@@ -15,12 +15,13 @@ import { AuthService } from '../../shared/services/auth.service';
 })
 export class ValidateEmailComponent implements OnInit {
 
-  @Input() data:any;
+  @Input() data: any; data2: any;
 
 
-  emailUser: any= '';
+  emailUser: any;
+  rutUser: any;
 
-  public errors: any = null;
+  public errors: boolean;
 
   public isFormSubmitted: boolean;
 
@@ -37,7 +38,9 @@ export class ValidateEmailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.isFormSubmitted = false;
     this.emailUser = this.data;
+    this.rutUser = this.data2;
     console.log(this.data);
     console.log(this.emailUser);
 
@@ -45,9 +48,15 @@ export class ValidateEmailComponent implements OnInit {
 
   validateEmail(e: Event) {
 
+    e.preventDefault();
+    this.isFormSubmitted = true;
+
+
     const dataOtp = {
       otp: this.formValidateEmail.value.otpUser,
     }
+
+
 
     this.authService.validateEmail( dataOtp ).subscribe(result => {
 
@@ -55,20 +64,21 @@ export class ValidateEmailComponent implements OnInit {
 
     },
     error => {
+      this.isFormSubmitted = false;
       this.errors = true;
-      let message: any = 'La clave que introdujo no es la correcta, por favor verifique e intente nuevamente'
-      let title = 'Clave Invalida'
-      this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message)
+      let title: any = 'Clave Invalida';
+      let message: any = 'La clave que introdujo no es la correcta, por favor verifique e intente nuevamente';
+      this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
 
     },
     () => {
       this.modalService.close();
 
       this.router.navigate(['/auth/login']);
-
-      let title: any = 'Registro Exitoso'
+      let errors: any = false
+      let title: any = 'Registro Exitoso';
       let message:any = `Se ha generado una solicitud de forma exitosa. Recibirá un correo electrónico con sus datos de acceso al sistema donde podra consultar el estatus de su solicitud`;
-      this.modalService2.OpenModalError2(ModalComponent, this. errors, title, message );
+      this.modalService2.OpenModalError2(ModalComponent, errors, title, message );
 
     });
 
@@ -76,9 +86,13 @@ export class ValidateEmailComponent implements OnInit {
   }
 
   resendKey() {
+
+
+
+    let errors = false;
     let title: any = "Reenvio de clave de un solo uso"
     let message:any = "Clave de un solo Uso Reenviada a su correo electronico";
-    this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
+    this.modalService2.OpenModalError2(ModalComponent, errors, title, message);
 
   }
 

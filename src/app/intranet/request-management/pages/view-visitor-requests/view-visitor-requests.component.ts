@@ -32,8 +32,8 @@ export class ViewVisitorRequestsComponent implements OnInit {
   constructor(
     private router: Router,
     public sortByService: SortByTablesService,
-    private modal : ModalsService,
-    private date: DatesService
+    private modalServices : ModalsService,
+    private dateServices: DatesService
 
 
 
@@ -48,7 +48,7 @@ export class ViewVisitorRequestsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.date.getforSocialAssistant(this.rutUserLogged.replace(/["']/g, "")).subscribe( result => {
+    this.dateServices.getforSocialAssistant(this.rutUserLogged.replace(/["']/g, "")).subscribe( result => {
 
       console.log(result)
 
@@ -61,7 +61,7 @@ export class ViewVisitorRequestsComponent implements OnInit {
 
       datarequests.map((res: any)=>{
 
-        if (res.employee_rut != null) {
+        if (res.id_status == 4 || res.id_status == 6 || res.id_status == 7   ) {
           this.unassignedRequest2.push(res);
         }else{
           this.unassignedRequest.push(res);
@@ -69,7 +69,14 @@ export class ViewVisitorRequestsComponent implements OnInit {
       })
       console.log(this.unassignedRequest)
 
+    },
+    error => {
+
+    },
+    () => {
+
     })
+
 
   }
 
@@ -84,8 +91,6 @@ export class ViewVisitorRequestsComponent implements OnInit {
   approveDates (id_request: any) {
 
     this.router.navigate(['citas/aprobar-cita'], {queryParams: {id_request : id_request}});
-
-
 
   }
 

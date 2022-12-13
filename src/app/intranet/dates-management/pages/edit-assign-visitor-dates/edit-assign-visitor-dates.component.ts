@@ -20,17 +20,21 @@ export class EditAssignVisitorDatesComponent implements OnInit {
 
   private errors: any = null;
 
-  public isFormSubmitted: Boolean;
+  public isFormSubmitted: boolean;
 
 
   public idRequest: any;
   public dateCreate: any;
   public status: any;
+  public idStatus: any;
   public fullName: any;
   public dateVisit: any;
   public rut: any;
   public rutSocialAssistant: any;
   public addres: any;
+  public landLine: any;
+  public mobilePhone: any;
+  public typePrevention: any;
 
   public supUser: any;
 
@@ -64,50 +68,59 @@ export class EditAssignVisitorDatesComponent implements OnInit {
 
   ngOnInit(): void {
 
-      this.idRequestSubscription= this.routerQuery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
+    this.isFormSubmitted = false;
 
-      this.dateService.getEmployees().subscribe(result => {
+    this.idRequestSubscription= this.routerQuery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
 
-        let res1: any[] = [];
+    this.dateService.getEmployees(this.supUser.replace(/["']/g, "")).subscribe(result => {
 
-        result.map((res: any) => {
-          if (res.supervisor_rut != this.supUser){
-            res.fullNames = res.names +' '+ res.lastname;
-            res1.push(res);
-          }
-        })
+      let res1: any[] = [];
 
-        return this.listRutSocialAssistant = res1;
-
-      },
-      error => {
-        this.errors = true;
-        let title= "Registro Invalido";
-        let message = "No se pudo realizar el registro del Usuario";
-        this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
-
-      },
-      () => {
-
-      });
-
-      this.dateService.getForIdRequest(this.idRequest).subscribe(dataRequest => {
-
-        console.log(dataRequest)
-
-        this.dataRequest = dataRequest;
-        this.dateCreate = dataRequest.created_at;
-        this.status = dataRequest.id_status;
-        this.fullNames = dataRequest.names + ' ' + dataRequest.lastname;
-        this.dateVisit = dataRequest.request_date;
-        this.addres = 1;
-        this.selecterutSocialAssistant = this.listRutSocialAssistant[0];
-
-
-
-
+      result.map((res: any) => {
+        res.fullNames = res.names +' '+ res.lastname;
+        res1.push(res);
       })
 
+      return this.listRutSocialAssistant = res1;
+
+    },
+    error => {
+      this.errors = true;
+      let title= "Registro Invalido";
+      let message = "No se pudo realizar el registro del Usuario";
+      this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
+
+    },
+    () => {
+
+    });
+
+    this.dateService.getForIdRequest(this.idRequest).subscribe(dataRequest => {
+
+      console.log(dataRequest)
+
+
+
+      this.dataRequest = dataRequest;
+      this.dateCreate = dataRequest[0]?.request_date;
+      this.status = dataRequest[0]?.status;
+      this.idStatus = dataRequest[0]?.id_status;
+      this.fullNames = dataRequest[0]?.names + ' ' + dataRequest[0]?.lastname;
+      this.dateVisit = dataRequest[0]?.visit_date;
+      this.addres = dataRequest[0]?.street + ' ' + dataRequest[0]?.way_number + ' ' + dataRequest[0]?.description + ' ' + dataRequest[0]?.property_number;
+      this.rut = dataRequest[0]?.rut;
+      this.landLine = dataRequest[0]?.landline;
+      this.mobilePhone = dataRequest[0]?.mobile_phone;
+
+      this.typePrevention = dataRequest[0]?.prevention_type +' - '+ dataRequest[0]?.prevention_detail;
+
+      this.selecterutSocialAssistant = dataRequest[0]?.rut_assistant;
+
+
+    })
+
+    console.log(this.listRutSocialAssistant);
+    console.log(this.selecterutSocialAssistant);
 
 
   }
@@ -123,17 +136,18 @@ export class EditAssignVisitorDatesComponent implements OnInit {
 
   assignSocialAssistant(rutSocialAssistant: any, e: Event) {
 
+    this.isFormSubmitted = true
+
     const assignData: any = {
-      'rut': this.rut,
-      'id_request': this.idRequest,
-      'employee_rut': rutSocialAssistant
+
+      'rut': rutSocialAssistant
 
     }
-    this.dateService.assignSocialAssistant(assignData).subscribe(result => {
+    this.dateService.assignSocialAssistant(this.idRequest, assignData).subscribe(result => {
       return console.log(result);
     },
     error => {
-      this.errors = true;
+      this.errors = false;
       let title= "Registro Invalido";
       let message = "No se pudo realizar el registro del Usuario";
       this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
@@ -142,8 +156,10 @@ export class EditAssignVisitorDatesComponent implements OnInit {
     () => {
 
 
-      this.isFormSubmitted = true;
+      this.isFormSubmitted = false;
       e.preventDefault();
+      console.log(this.listRutSocialAssistant);
+      console.log(this.selecterutSocialAssistant);
 
 
     });

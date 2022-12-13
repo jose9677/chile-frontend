@@ -7,6 +7,7 @@ import { ModalsService } from 'src/app/shared/services/modals.service';
 import { ModalComponent } from 'src/app/public/auth/shared/modals/modal/modal.component';
 import { AuthService } from 'src/app/public/auth/shared/services/auth.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { PrivateService } from '../../share/services/private.service';
 
 
 
@@ -39,6 +40,7 @@ export class CreateUsersComponent implements OnInit {
     private fb: FormBuilder,
     private modalService: ModalsService,
     private authServices: AuthService,
+    private privateService:PrivateService,
     private routerQuery: ActivatedRoute,
     // public modalService3: NgbActiveModal, da ERROR y la pantalla se vuelve loca
     private modalService2: ModalsService,
@@ -82,6 +84,14 @@ export class CreateUsersComponent implements OnInit {
 
     })
 
+    this.privateService.roles().subscribe(dataRequest => {
+
+      console.log(dataRequest)
+
+
+
+    })
+
   }
   onRegister(e: Event){
     console.log(this.userRegister);
@@ -114,6 +124,7 @@ export class CreateUsersComponent implements OnInit {
     () => {
       e.preventDefault();
       this.router.navigate(['privado/Crear-usuario']);
+      this.isFormSubmitted = false;
 
     });
   }

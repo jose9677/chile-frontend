@@ -1,34 +1,42 @@
 import { MenuItem } from './menu.model';
 
 export const MENU: MenuItem[] = [
-  {
-    label: 'Main',
-    isTitle: true
-  },
+  // {
+  //   label: 'Main',
+  //   isTitle: true
+  // },
   // {
   //   label: 'Dashboard',
   //   icon: 'home',
   //   link: '/dashboard'
   // },
+  // {
+  //   label: 'La Reina',
+  //   isTitle: true
+  // },
   {
-    label: 'La Reina',
-    isTitle: true
-  },
-  {
-    label: 'Gestion de Solicitudes',
-    icon: 'mail',
+    label: 'Solicitudes',
+    icon: 'file-text',
     subItems: [
       {
-        label: 'Solicitudes de Inscripcion',
+        role: 1,
+        label: 'Estado de Inscripcíon',
         link: '/solicitud/solicitudes-de-inscripcion',
       },
       {
+        role: 3,
         label: 'Asignar Asistente Social',
         link: '/solicitud/asignar-asistente-social'
       },
       {
+        role:2,
         label: 'Asignar Cita',
         link: '/solicitud/asignar-cita'
+      },
+      {
+        role: 4,
+        label: 'Resumen de Solicitudes',
+        link: '/solicitud/escritorio'
       },
     ]
   },

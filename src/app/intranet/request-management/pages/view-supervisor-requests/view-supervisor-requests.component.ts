@@ -21,7 +21,7 @@ export class ViewSupervisorRequestsComponent implements OnInit {
 
   name!:string;
 
-  
+
   constructor(
     private router: Router,
     public sortByService: SortByTablesService,
@@ -44,12 +44,14 @@ export class ViewSupervisorRequestsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.date.getAll().subscribe( result => {
+    const rutSupervisor= window.sessionStorage.getItem('auth-user');
+
+    this.date.getAllRequest().subscribe( result => {
       console.log(result)
 
-      result.map((res: any)=>{
+      result.data_complete.map((res: any)=>{
 
-          if (res.employee_rut != null) {
+          if (res.assistant_rut != null) {
             this.unassignedRequest2.push(res);
           }else{
             this.unassignedRequest.push(res);
@@ -62,10 +64,10 @@ export class ViewSupervisorRequestsComponent implements OnInit {
   getAllRequest() {
   }
 
-  assingSocialAssistant (nroRequest: any, userloggedRut: any) {
+  assingSocialAssistant (nroRequest: any, visitorRut: any) {
 
 
-    this.modalService.openModalData2(AssignVisitorDatesComponent, nroRequest, userloggedRut);
+    this.modalService.openModalData2(AssignVisitorDatesComponent, nroRequest, visitorRut);
 
   }
 

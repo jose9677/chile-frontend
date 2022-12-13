@@ -1,4 +1,4 @@
-<form class="forms-sample container pb-5 px-5" [formGroup]="formAssignSocialAssistant" (ngSubmit)="assignSocialAssistant(formAssignSocialAssistant.rutSocialAssistant, $event)" >
+<form class="forms-sample container pb-5 px-5" [formGroup]="formAssignSocialAssistant" (ngSubmit)="assignSocialAssistant(formAssignSocialAssistant.value.rutSocialAssistant, $event)" >
   <div class="row mt-5 justify-content-center">
     <h3 class="colorTextPrimari">Datos de la Solicitud</h3><br>
     <div class="row mt-3">
@@ -18,31 +18,32 @@
     <div class="row mt-3 ">
       <div class="col-md-4 col-sm-12">
         <label for="" class="form-label colorTextPrimari ">Solicitante</label>
-        <input type="text" value={{fullName}} disabled class="form-control">
+        <input type="text" value={{fullNames}} disabled class="form-control">
       </div>
       <div class="col-md-8 col-sm-12">
         <label for="" class="form-label colorTextPrimari ">Dirección</label>
-        <textarea wrap="soft" style="overflow:hidden; resize:none;" value="" disabled class="form-control">{{addres}}</textarea>
+        <textarea wrap="soft" style="overflow:hidden; resize:none;" value={{addres}} disabled class="form-control"></textarea>
       </div>
     </div>
     <div class="row">
       <div class="col-md-4 col-sm-12">
         <label for="" class="form-label colorTextPrimari ">RUT</label>
-        <input type="text" value="88765456-K" disabled class="form-control">
+        <input type="text" value={{rut}} disabled class="form-control">
       </div>
       <div class="col-md-4 col-sm-12">
         <label for="" class="form-label colorTextPrimari ">Teléfono Fijo</label>
-        <input type="text" value="+56 00 0000 0000" disabled class="form-control">
+        <input type="text" value= "56 + {{landLine}}" disabled class="form-control">
       </div>
       <div class="col-md-4 col-sm-12">
         <label for="" class="form-label colorTextPrimari ">Teléfono Móvil</label>
-        <input type="text" value="+56 00 0000 0000" disabled class="form-control">
+        <input type="text" value= "56 + {{mobilePhone}}" disabled class="form-control">
       </div>
     </div>
     <div class="row mt-3 ">
       <div class="col-md-4 col-sm-12">
         <label for="nameOfstreet" class="form-label">Seleccione un Visitador</label>
         <ng-select [items]="listRutSocialAssistant"
+            [readonly]="(idStatus != 2) ? true : false"
             class="form-control p-0"
             bindLabel="fullNames"
             bindValue="rut"
@@ -55,12 +56,8 @@
         <div *ngIf="(formAssignSocialAssistant.controls.rutSocialAssistant.touched && formAssignSocialAssistant.value.rutSocialAssistant === null) || (isFormSubmitted && formAssignSocialAssistant.value.rutSocialAssistant === null)" class="invalid-feedback">Campo Requerido</div>
       </div>
       <div class="col-md-4 col-sm-12">
-        <label for="" class="form-label colorTextPrimari ">Fecha de Visita</label>
+        <label for="" class="form-label colorTextPrimari ">Fecha y hora de Visita</label>
         <input type="text" value={{dateVisit}} disabled class="form-control">
-      </div>
-      <div class="col-md-4 col-sm-12">
-        <label for="" class="form-label colorTextPrimari ">Hora de Visita</label>
-        <input type="text" value="-" disabled class="form-control">
       </div>
     </div>
   </div>
@@ -72,7 +69,7 @@
         <label for="" class="form-label colorTextPrimari ">Tipo de Prevención</label>
       </div>
       <div class="col-md-4 col-sm-12 ms-6">
-        <input type="text" value="Fonasa" disabled class="form-control">
+        <input type="text" value="{{typePrevention}}" disabled class="form-control">
       </div>
       <div class="col-md-4 col-sm-12 ms-4">
         <a href="">Certificado.pdf <i class="ms-4 h4 feather icon-eye"></i></a>
@@ -94,7 +91,7 @@
   </div>
   <br>
   <div class="d-flex flex-row justify-content-evenly pt-4">
-    <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 style">Asignar</button>
+    <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 style" [disabled]="idStatus != 2">Asignar</button>
     <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 style-outline" (click)="return()">Cancelar</button>
   </div>
 </form>

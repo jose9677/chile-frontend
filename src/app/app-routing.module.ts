@@ -54,18 +54,6 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/general/general.module').then(m => m.GeneralModule)
       },
       {
-        path: 'supervisor',
-        loadChildren: () => import('./intranet/supervisors/supervisors.module').then(m => m.SupervisorsModule)
-      },
-      {
-        path: 'vecino',
-        loadChildren: () => import('./intranet/neighbor/neighbor.module').then(m => m.NeighborModule)
-      },
-      {
-        path: 'visitador',
-        loadChildren: () => import('./intranet/visitors/visitors.module').then(m => m.VisitorsModule)
-      },
-      {
         path: 'solicitud',
         loadChildren: () => import('./intranet/request-management/request-management.module').then(m => m.RequestManagementModule)
       },
@@ -81,7 +69,7 @@ const routes: Routes = [
         path: 'privado',
         loadChildren: () => import('./private/private.module').then(m => m.PrivateModule)
       },
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: '', redirectTo: 'solicitud', pathMatch: 'full' },
       // { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },
@@ -90,8 +78,8 @@ const routes: Routes = [
     component: ErrorPageComponent,
     data: {
       'type': 404,
-      'title': 'Page Not Found',
-      'desc': 'Oopps!! The page you were looking for doesn\'t exist.'
+      'title': 'Página no encontrada',
+      'desc': 'Lo sentimos, pero la página solicitada no existe.'
     }
   },
   {

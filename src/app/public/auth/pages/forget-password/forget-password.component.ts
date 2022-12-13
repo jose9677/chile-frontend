@@ -41,45 +41,54 @@ export class ForgetPasswordComponent implements OnInit {
 
   validateUser(e: Event) {
 
+
     const dataForgetPassword = {
       rut: this.formForgetPassword.value.rutUser,
     }
-    console.log(dataForgetPassword)
-    this.authService.validateUser(dataForgetPassword).subscribe( result => {
-      console.log(result)
-    },
-    error => {  //recibe error del user services
-      this.errors = error;
-      console.log('errors_login->',this.errors);
-      // modal
-      if(this.errors='{ error: "User Does Not exists in Data Base" }'){
-        this.formForgetPassword.reset();
-        this.errors = true;
-        let title: any = 'Usuario no registrado';
-        let message: any  = `El Rut que introdujo no se encuentra en nuestra página`;
-        this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
-      }
-      this.formForgetPassword.reset();
-      this.errors = true;
-      let title: any = 'Rut Invalido';
-      let message: any  = `El Rut que introdujo no es correcto, por favor verifique e intente nuevamente`;
-      this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
 
-    },
-    () => {
+    if (this.formForgetPassword.status == "VALID") {
+
       this.isFormSubmitted = true;
-      // modal
-      console.log(this.formForgetPassword)
-      // this.router.navigate([this.returnUrl]);
-      this.emailUser = 'Eduyeoh@gmail.com'
-      let title: any = 'Recuperar Contraseña';
-      let message: any = `Hemos enviado un mensaje con instrucciones a ${this.emailUser}. Si no lo encuentra en su bandeja de entrada, recuerde revisar en el correo no deseado `;
-      this.modalService2.OpenModalError2(ModalComponent, false, title, message)
 
-      this.modalService.close();
-      this.router.navigate(['/auth/login']);
+      this.authService.validateUser(dataForgetPassword).subscribe( result => {
+        console.log(result)
+      },
+      error => {  //recibe error del user services
+        this.errors = error;
+        console.log('errors_login->',this.errors);
+        // modal
+        if(this.errors='{ error: "User Does Not exists in Data Base" }'){
+          this.formForgetPassword.reset();
+          this.errors = true;
+          let title: any = 'Usuario no registrado';
+          let message: any  = `"El Rut que introdujo no se encuentra registrado en el sistema`;
+          this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
+          this.isFormSubmitted = false;
+        } else {
 
-    });
+          this.formForgetPassword.reset();
+          this.errors = true;
+          let title: any = 'Rut Invalido';
+          let message: any  = `El Rut que introdujo no es correcto, por favor verifique e intente nuevamente`;
+          this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
+          this.isFormSubmitted = false;
+        }
+
+      },
+      () => {
+        // modal
+        console.log(this.formForgetPassword)
+        this.emailUser = 'su Correo Electronico'
+        let title: any = 'Recuperar Contraseña';
+        let message: any = `Hemos enviado un mensaje con instrucciones a ${this.emailUser}. Si no lo encuentra en su bandeja de entrada, recuerde revisar en el correo no deseado `;
+        this.modalService2.OpenModalError2(ModalComponent, false, title, message)
+
+        this.modalService.close();
+        this.router.navigate(['/auth/login']);
+
+      });
+
+    }
 
 
 

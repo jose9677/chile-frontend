@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   returnUrl: any;
 
-  public isFormSubmitted: Boolean;
+  public isFormSubmitted: boolean;
 
   public userLogin = this.fb.group({
     rut: ['', Validators.required],
@@ -61,12 +61,13 @@ export class LoginComponent implements OnInit {
 
     e.preventDefault();
 
+    this.isFormSubmitted = true;
 
     const dataLogin = {
       rut: this.userLogin.value.rut,
       password: this.userLogin.value.password
     }
-    window.sessionStorage.setItem('auth-user', JSON.stringify(dataLogin.rut));
+    // window.sessionStorage.setItem('auth-user', JSON.stringify(dataLogin.rut));
     this.authService.login(dataLogin).subscribe(result => {
       console.log(result)
 
@@ -76,17 +77,20 @@ export class LoginComponent implements OnInit {
       this.errors = error;
       console.log('errors_login->',this.errors.message);
       // modal
+      if (this.isFormSubmitted && this.userLogin.status == "VALID" ) {
 
-      this.userLogin.reset();
+        this.userLogin.reset();
 
-      this.errors = true;
-      let title: string = ''
-      let message: string = "Usuario o contraseña incorrectos , por favor verifique e intente nuevamente";
-      this.modalService.OpenModalError2(ModalComponent, this.errors, title, message);
+        this.errors = true;
+        let title: string = ''
+        let message: string = "Usuario o contraseña incorrectos , por favor verifique e intente nuevamente";
+        this.modalService.OpenModalError2(ModalComponent, this.errors, title, message);
+      }
+
 
     },
     () => {
-      this.isFormSubmitted = true;
+      this.isFormSubmitted = false;
 
 
       console.log(this.userLogin)

@@ -9,36 +9,40 @@
         </div>
         <div class="col-md-4 col-sm-12">
           <label for="" class="form-label colorTextPrimari">Fecha de Solicitud</label>
-          <input type="text" value={{unassignedRequest[0].created_at}} disabled class="form-control">
+          <input type="text" value={{unassignedRequest[0]?.request_date}} disabled class="form-control">
         </div>
         <div class="col-md-4 col-sm-12">
           <label for="" class="form-label colorTextPrimari">Estatus</label>
-          <input type="text" value={{unassignedRequest[0].status}} disabled class="form-control">
+          <input type="text" value={{unassignedRequest[0]?.status}} disabled class="form-control">
         </div>
       </div>
       <div class="row mt-3 ">
         <div class="col-md-4 col-sm-12">
           <label for="" class="form-label colorTextPrimari ">Solicitante</label>
-          <input type="text" value={{unassignedRequest[0].fullNameUser}} disabled class="form-control">
+          <input type="text" value={{unassignedRequest[0]?.fullNameUser}} disabled class="form-control">
         </div>
         <div class="col-md-8 col-sm-12">
           <label for="" class="form-label colorTextPrimari ">Dirección</label>
-          <textarea wrap="soft" style="overflow:hidden; resize:none;" value={{unassignedRequest[0].fullDirection}} disabled class="form-control">Calle de ejemplo, Nro. 1234, Casa Doña Carmen</textarea>
+          <textarea wrap="soft" style="overflow:hidden; resize:none;" value={{unassignedRequest[0]?.fullDirection}} disabled class="form-control"></textarea>
         </div>
       </div>
       <div class="row mt-3 ">
         <div class="col-md-4 col-sm-12">
           <label for="" class="form-label colorTextPrimari ">Asistente Social</label>
-          <input type="text" value={{unassignedRequest[0].fullName}} disabled class="form-control">
+          <div class="row">
+            <div class="col-md-5">
+              <input type="text" value={{unassignedRequest[0]?.fullName}} disabled class="form-control">
+            </div>
+            <a class="col-md-3 mt-1" (click)="visitador() ">
+              <i class="h4 feather icon-eye"></i>
+            </a>
+          </div>
         </div>
         <div class="col-md-4 col-sm-12">
           <label for="" class="form-label colorTextPrimari ">Fecha de Visita</label>
-          <input type="text" value={{unassignedRequest[0].request_date}} disabled class="form-control">
+          <input type="text" value={{unassignedRequest[0]?.visit_date}} disabled class="form-control">
         </div>
-        <div class="col-md-4 col-sm-12">
-          <label for="" class="form-label colorTextPrimari ">Hora de Visita</label>
-          <input type="text" value={{unassignedRequest[0].visit_date}} disabled class="form-control">
-        </div>
+
       </div>
     </div>
     <div class="row mt-5 justify-content-center">
@@ -51,7 +55,7 @@
               <label for="" class="form-label colorTextPrimari ">Tipo de Prevencion </label>
             </div>
             <div class="col-md-6">
-             <input type="text" name="" id="" class="form-control" value={{unassignedRequest[0].fullPeventionData}} disabled>
+             <input type="text" name="" id="" class="form-control" value={{unassignedRequest[0]?.fullPeventionData}} disabled>
             </div>
           </div>
       </div>
@@ -66,7 +70,7 @@
               <label for="" class="form-label colorTextPrimari ">Recibo de Servicio</label>
             </div>
             <div class="col-md-6">
-              <input type="text" name="" id="" class="form-control" value={{unassignedRequest[0].document_path}} disabled>
+              <input type="text" name="" id="" class="form-control" value={{unassignedRequest[0]?.document_path}} disabled>
             </div>
           </div>
       </div>
@@ -75,11 +79,11 @@
       </div>
     </div>
     <br>
-    <div class="row mt-3 justify-content-center">
+    <!-- <div class="row mt-3 justify-content-center">
         <div>
           <a href="" class=" d-flex align-items-center fs-4"><i class="ms-5 mdi mdi-file-pdf-box " style="font-size: 50px;"></i><strong> Ver Credencial</strong></a>
         </div>
-    </div>
+    </div> -->
     <div class="d-flex flex-row justify-content-evenly pt-4">
       <div>
         <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="return()" >Regresar</button>

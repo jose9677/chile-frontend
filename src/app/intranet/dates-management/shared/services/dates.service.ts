@@ -35,12 +35,11 @@ export class DatesService {
 
 
   getForRut(rutNeighbor: any): Observable<any | void> {
-    return this.http.get<any>( AUTH_API_NP + 'joinUsersRequest/'+ rutNeighbor, httpOptions).pipe(map((result:any) => {
+    return this.http.get<any>( AUTH_API_NP + 'detail-neightbor/'+ rutNeighbor, httpOptions).pipe(map((result:any) => {
 
       console.log(result);
 
-      return result;
-
+      return result['data_User_Request'];
 
 
     }),
@@ -62,8 +61,8 @@ export class DatesService {
 
   }
 
-  confirm(statusRequest: any): Observable<any | void> {
-    return this.http.get<any>( AUTH_API_NP + 'approve-request/'+ statusRequest, httpOptions).pipe(map((result:any) => {
+  confirmRequest(idRequest: any): Observable<any | void> {
+    return this.http.put<any>( AUTH_API_NP + 'confirmNeightbor/'+ idRequest, httpOptions).pipe(map((result:any) => {
 
       return result;
 
@@ -73,8 +72,8 @@ export class DatesService {
 
   }
 
-  reasign(statusRequest: any): Observable<any | void> {
-    return this.http.get<any>( AUTH_API_NP + 'approve-request/'+ statusRequest, httpOptions).pipe(map((result:any) => {
+  reasignRequest(idRequest: any): Observable<any | void> {
+    return this.http.put<any>( AUTH_API_NP + 'reprogramDate/'+ idRequest, httpOptions).pipe(map((result:any) => {
 
       return result;
 
@@ -84,19 +83,19 @@ export class DatesService {
 
   }
 
-  getAll(): Observable<any | void> {
-    return this.http.get<any>( AUTH_API_NP + 'detailUserRequest', httpOptions).pipe(map((result:any) => {
+  getAllRequest(): Observable<any | void> {
+    return this.http.get<any>( AUTH_API_NP + 'request-assigned', httpOptions).pipe(map((result:any) => {
 
-      return result['data_User_Request'];
+      return result;
 
     }),
     catchError((err)=> this.handlerError(err))
     );
   }
 
-  assignSocialAssistant(assignData: any): Observable<any | void> {
+  assignSocialAssistant(idRequest:any, assignData: any): Observable<any | void> {
 
-    return this.http.post<any>(AUTH_API_NP + 'add_employeeRut', assignData, httpOptions).pipe(map((result: any) => {
+    return this.http.post<any>(AUTH_API_NP + 'add-visitor/'+ idRequest, assignData).pipe(map((result: any) => {
 
       console.log('assignsocialassistant');
 
@@ -118,23 +117,44 @@ export class DatesService {
     );
   }
 
-  approbe() {
+  programVisitDate(idRequest: any, Date: any): Observable<any | void> {
 
-    console.log('approve')
+    return this.http.put<any>(AUTH_API_NP + 'programVisitDate/'+ idRequest, Date).pipe(map((result: any) => {
 
+      return result;
+
+    }),
+      catchError((err) => this.handlerError(err))
+    );
   }
 
-  decline() {
+  getForRurSupervisor(): Observable<any | void> {
 
-    console.log('decline')
+    return this.http.get<any>(AUTH_API_NP + 'detail-request').pipe(map((result: any) => {
 
+      return result
+
+    }),
+      catchError((err) => this.handlerError(err))
+    );
   }
 
-  getEmployees(): Observable<any | void> {
+  approbe( idRequest: any, dataRequest:any): Observable<any | void> {
 
-    return this.http.get<any>(AUTH_API_NP + 'employees', httpOptions).pipe(map((result: any) => {
+    return this.http.put<any>(AUTH_API_NP + 'approve-request/' + idRequest, dataRequest).pipe(map((result: any) => {
 
-      return result['data'];
+      return result
+
+    }),
+      catchError((err) => this.handlerError(err))
+    );
+  }
+
+  getEmployees(rutSupervisor: any): Observable<any | void> {
+
+    return this.http.get<any>(AUTH_API_NP + 'detailsSupervisor/' + rutSupervisor).pipe(map((result: any) => {
+
+      return result['message'];
 
     }),
       catchError((err) => this.handlerError(err))
@@ -154,3 +174,4 @@ export class DatesService {
   }
 
 }
+

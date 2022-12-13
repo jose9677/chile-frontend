@@ -39,14 +39,14 @@ export class AuthService {
 
   ) {
 
-
+    // this.checkToken();
 
   }
 
 
 
   login(authData: any): Observable<any | void >{
-    return this.http.post<any>( AUTH_API + 'login', authData).pipe(map((result:any) => {
+    return this.http.post<any>( AUTH_API + 'login', authData, httpOptions).pipe(map((result:any) => {
 
       console.log(result);
 
@@ -58,7 +58,7 @@ export class AuthService {
       const tokenDecode = this.tokenService.decodeToken(token);
 
       const userSession: any = tokenDecode;
-      // this.tokenService.saveUser(userSession);
+      this.tokenService.saveUser(userSession);
 
     }),
     catchError((err)=> this.handlerError(err))
@@ -81,6 +81,26 @@ export class AuthService {
     return this.http.post( AUTH_API + 'registerNeighbor', dataUser, httpOptions).pipe(map((result:any) => {
 
       console.log('Register_User-Res->', result);
+
+    }),
+    catchError((err)=> this.handlerError(err))
+    );
+  }
+
+
+  uploadFiles(fileData: File, id_document_type: any): Observable<any>{
+    console.log(fileData)
+
+    const formfileData = new FormData();
+
+
+    formfileData.append('document_path', fileData);
+     console.log(formfileData)
+
+    return this.http.post( AUTH_API_NP + 'file/' + id_document_type , formfileData).pipe(map((result:any) => {
+
+
+      console.log('uploadFiles-Res->', result);
 
     }),
     catchError((err)=> this.handlerError(err))
@@ -121,9 +141,19 @@ export class AuthService {
     );
   }
 
+  // refreshOtp (rutUser: any): Observable<any>{
+  //   return this.http.put( AUTH_API_NP + 'refresh-otp/' + rutUser).pipe(map((result:any) => {
+
+  //     console.log('Validate_Email-Res->', result);
+
+  //   }),
+  //   catchError((err)=> this.handlerError(err))
+  //   );
+  // }
+
 
   activateUser(user:any, rol:any): Observable<any>{
-    return this.http.put<any>( AUTH_API + 'active-user/'+ user, rol ,httpOptions).pipe(map((result:any) => {
+    return this.http.put<any>( AUTH_API + 'active-user/'+ user, rol , httpOptions).pipe(map((result:any) => {
 
       console.log('activate_User-Res->', result);
 
@@ -157,24 +187,38 @@ export class AuthService {
 
   logOut(): void {
     console.log('sesion cerrada');
-
     window.sessionStorage.clear();
-    this.loggedService.changeLoggedStatus= false;
-    this.router.navigate(['/login']);
+    window.sessionStorage.removeItem('rol-user');
+    window.sessionStorage.removeItem('access_token');
+    window.sessionStorage.removeItem('auth-user');
+    // this.loggedService.changeLoggedStatus= false;
+    this.router.navigate(['/auth/login']);
   }
 
-  public checkToken(): void {
-    const userToken: any = window.sessionStorage.getItem(TOKEN_KEY);
-    const isExpired = this.tokenService.helper.isTokenExpired(userToken);
+  // public checkToken(): void {
+  //   const userToken: any = window.sessionStorage.getItem(TOKEN_KEY);
+  //   const isExpired = this.tokenService.helper.isTokenExpired(userToken);
 
-    if (isExpired == true) {
-      console.log('is Expired', isExpired);
-      this.logOut();
-      // window.sessionStorage.clear();
-      this.router.navigate(['/login']);
-    }else{
-      console.log('is Expired', isExpired);
-    }
+  //   console.log('CheckToken');
+
+  //   if (isExpired == true) {
+  //     console.log('is Expired', isExpired);
+  //     this.logOut();
+  //     // // window.sessionStorage.clear();
+  //     // this.router.navigate(['/login']);
+  //   }else{
+  //     console.log('is Expired', isExpired);
+  //   }
+  // }
+
+  dropdownInfo(): Observable<any>{
+    return this.http.get<any>( AUTH_API_NP + 'dropdownInfo', httpOptions).pipe(map((result:any) => {
+
+      return result
+
+    }),
+    catchError((err)=> this.handlerError(err))
+    );
   }
 
   private handlerError(err:any): Observable<never> { //pasa error al login component

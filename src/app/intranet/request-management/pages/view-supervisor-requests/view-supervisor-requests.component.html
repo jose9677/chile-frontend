@@ -1,13 +1,27 @@
+<div class="row">
+  <div class="col-md-12">
+      <div class="card header p-3">
+          <h2>Solicitudes</h2>
+      </div>
+  </div>
+</div>
+<br>
 
-<div class="row card">
-  <div class="col-md-12 stretch-card">
+<div class="row pb-3">
+  <div class="col-md-12">
     <div class="card">
       <div class="card-body">
-        <h6 class="card-title">Solicitudes sin Asignar</h6>
+        <h3 class="colorTextPrimari pb-3">Solicitudes sin Asignar</h3>
         <div class="table-responsive">
-          <div class="dataTable-search">
+          <!-- <div class="dataTable-search">
             <input type="text" placeholder="Buscar..." #txtSearch (keyup)="sortByService.onSearch(txtSearch.value)">
             <i class="mdi mdi-magnify"></i>
+          </div> -->
+          <div class="input-group col-md-4 mb-3">
+            <input type="text" class="form-control" placeholder="Buscar..." #txtSearch (keyup)="sortByService.onSearch(txtSearch.value)">
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2"><i class="mdi mdi-magnify"></i></span>
+            </div>
           </div>
           <table class="table">
             <thead>
@@ -25,15 +39,15 @@
             <tbody>
                   <!-- <tr *ngFor="let request of unassignedRequest; index as i " > -->
                 <tr *ngFor="let request of unassignedRequest | filter:sortByService.search:sortByService.page | sortBy:sortByService.dataSort:sortByService.order" >
-                  <td >{{request.id }}</td>
-                  <td>{{request.created_at}}</td>
+                  <td >{{request.id_request }}</td>
+                  <td>{{request.request_date}}</td>
                   <td>{{request.rut_user}}</td>
-                  <td>{{request.names + ',' + request.lastname}}</td>
+                  <td>{{request.user_name + ',' + request.user_lastname}}</td>
                   <td>{{request.street +' '+ request.way_number  +', '+ request.description +' '+ request.property_number}}</td>
-                  <td>{{(request.asistant_name ?? ' ') + " " + (request.asistant_lastname ?? ' ') }}</td>
+                  <td>{{(request.assistant_name ?? ' ') + " " + (request.assistant_lastname ?? ' ') }}</td>
                   <td>{{request.status}}</td>
                   <td>
-                    <button (click)="assingSocialAssistant(request.id_request, request.rut)"><i class="mdi mdi-account-plus"></i></button>
+                    <button (click)="assingSocialAssistant(request.id_request, request.assistant_rut)"><i class="mdi mdi-account-plus"></i></button>
 
                   </td>
                 </tr>
@@ -43,8 +57,8 @@
                 <th>
                 </th>
                 <th>
-                  <button (click)="sortByService.prevPage()" [disabled]="sortByService.page === 0"><i class="mdi mdi-arrow-left-bold"></i></button>
-                  <button (click)="sortByService.nextPage()"  [disabled]="(unassignedRequest | filter:sortByService.search:sortByService.page).length === 0" ><i class="mdi mdi-arrow-right-bold"></i></button>
+                  <button (click)="sortByService.prevPage()" [disabled]="sortByService.page === 0"><i class="mdi mdi-arrow-left-bold"></i>  Anterior  </button>
+                  <button (click)="sortByService.nextPage()"  [disabled]="(unassignedRequest | filter:sortByService.search:sortByService.page).length === 0" >  Siguiente  <i class="mdi mdi-arrow-right-bold"></i></button>
 
                 </th>
               </tr>
@@ -56,15 +70,21 @@
   </div>
 </div>
 
-<div class="row card">
-  <div class="col-md-12 stretch-card">
+<div class="row">
+  <div class="col-md-12">
     <div class="card">
       <div class="card-body">
-        <h6 class="card-title">Solicitudes Asignadas</h6>
+        <h3 class="colorTextPrimari pb-3">Solicitudes Asignadas</h3>
         <div class="table-responsive">
-          <div class="dataTable-search">
+          <!-- <div class="dataTable-search">
             <input type="text" placeholder="Buscar..." #txtSearch2 (keyup)="sortByService.onSearch2(txtSearch2.value)">
             <i class="mdi mdi-magnify"></i>
+          </div> -->
+          <div class="input-group col-md-4 mb-3">
+            <input type="text" class="form-control" placeholder="Buscar..." #txtSearch (keyup)="sortByService.onSearch(txtSearch.value)">
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2"><i class="mdi mdi-magnify"></i></span>
+            </div>
           </div>
           <table class="table">
             <thead>
@@ -82,12 +102,12 @@
             <tbody>
                   <!-- <tr *ngFor="let request of unassignedRequest; index as i " > -->
                 <tr *ngFor="let request of unassignedRequest2 | filter2:sortByService.search2:sortByService.page2 | sortBy2:sortByService.dataSort2:sortByService.order2" >
-                  <td >{{request.id }}</td>
-                  <td>{{request.created_at}}</td>
-                  <td>{{request.rut}}</td>
+                  <td >{{request.id_request }}</td>
+                  <td>{{request.request_date}}</td>
+                  <td>{{request.rut_user}}</td>
                   <td>{{request.user_name + ',' + request.user_lastname}}</td>
                   <td>{{request.street +' '+ request.way_number  +', '+ request.description +' '+ request.property_number}}</td>
-                  <td>{{(request.asistant_name ?? ' ') + " " + (request.asistant_lastname ?? ' ') }}</td>
+                  <td>{{(request.assistant_name ?? ' ') + " " + (request.assistant_lastname ?? ' ') }}</td>
                   <td>{{request.status}}</td>
                   <td>
                     <button (click)="editAssingSocialAssistant(request.id_request)"><i class="mdi mdi-pencil"></i></button>
@@ -100,8 +120,8 @@
                 <th>
                 </th>
                 <th>
-                  <button (click)="sortByService.prevPage2()" [disabled]="sortByService.page2 === 0"><i class="mdi mdi-arrow-left-bold"></i></button>
-                  <button (click)="sortByService.nextPage2()"  [disabled]="(unassignedRequest2 | filter:sortByService.search2:sortByService.page2).length === 0" ><i class="mdi mdi-arrow-right-bold"></i></button>
+                  <button (click)="sortByService.prevPage2()" [disabled]="sortByService.page2 === 0"><i class="mdi mdi-arrow-left-bold"></i>  Anterior  </button>
+                  <button (click)="sortByService.nextPage2()"  [disabled]="(unassignedRequest2 | filter:sortByService.search2:sortByService.page2).length === 0" >  Siguiente  <i class="mdi mdi-arrow-right-bold"></i></button>
 
                 </th>
               </tr>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ModalsService } from 'src/app/shared/services/modals.service';
@@ -19,68 +20,31 @@ export class ApproveDatesComponent implements OnInit {
 
   public idRequest: any;
 
-  public unassignedRequest: any[];
-  private dataRequest: any;
+  public dataRequest: any[];
+
+  public formApprove = this.fb.group ({
+    applicantAtResidence: ['', []],
+    validPreventionCertificate: ['', []],
+    validProofOfAddress: ['', []],
+    DoesRUTMatch: ['', []],
+    Observations: ['', []]
+
+  })
+
+
 
   constructor(
     private modalService: ModalsService,
     private routerquery: ActivatedRoute,
     private router: Router,
     private datesService: DatesService,
+    private fb: FormBuilder
 
-  ) { 
-
-    this.unassignedRequest = [];
-
+  ) {
 
     this.idRequestSubscription = this.routerquery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
 
-
-    const DataRequest: any = [
-      {
-        "rut": "6102995-K",
-        "names": "Esmeralda",
-        "lastname": "Fuentes",
-        "f_nac": "1999-01-16",
-        "email": "vecino5@gmail.com",
-        "password": "$2y$10$aQ8PrFuH.hoiNUgIvDHCF.UrFbw2Ux0BFLxGh7QDQ5J3jvhmIG6ey",
-        "landline": 2125742371,
-        "mobile_phone": 4242218958,
-        "employee": false,
-        "supervisor_rut": null,
-        "otp": null,
-        "email_active": true,
-        "profile_pic": null,
-        "id_rol": 1,
-        "remember_token": null,
-        "created_at": "2022-11-30 02:27:50",
-        "updated_at": "2022-12-01 05:25:44",
-        "deleted_at": null,
-        "api_token": null,
-        "id": 3,
-        "rut_user": "6102995-K",
-        "id_prevention_type_detail": 1,
-        "assurance": true,
-        "id_location": 1,
-        "way_number": 715,
-        "id_property_type": 1,
-        "property_number": 1,
-        "terms_condition": null,
-        "request_date": "2025-09-05 00:00:00",
-        "id_status": 5,
-        "rut_employee": "31179870-6",
-        "visit_date": "2022-11-30 00:00:00",
-        "applicant_at_home": true,
-        "prevention_is_valid": true,
-        "location_is_valid": true,
-        "comments": null,
-        "is_active": null,
-        "rut_match": null
-    }
-    ]
-
-    this.dataRequest = DataRequest;
-
+    this.dataRequest = [];
 
   }
 
@@ -97,16 +61,68 @@ export class ApproveDatesComponent implements OnInit {
       }
 
       result.map((res: any)=>{
-        res.fullName = res.employee_name +' '+ res.employee_lastname;
-        res.fullNameUser = res.name +' '+ res.lastname;
-        res.fullPeventionData = res.prevention_type +' Tipo: '+ res.prevention_detail;
-        res.fullDirection = res.way_number + 'faltan';
+        res.fullName = res.names_assistant +' '+ res.lastname_assistant;
+        res.fullNameUser = res.names +' '+ res.lastname;
+        res.fullPeventionData = res.prevention_type +' - '+ res.prevention_detail;
+        res.fullDirection = res.street + ' ' + res.way_number + ', ' + res.description + ' ' + res.property_number;
 
-        this.unassignedRequest.push(res);
+
+        this.dataRequest.push(res);
       })
-      console.log(this.unassignedRequest)      
 
     })
+
+  }
+
+  approve( idRequest: any, e: Event ) {
+
+    const dataRequest = {
+      "applicant_at_home": this.formApprove.controls.applicantAtResidence.value,
+      "prevention_is_valid": this.formApprove.controls.validProofOfAddress.value,
+      "location_is_valid": this.formApprove.controls.DoesRUTMatch.value,
+      "rut_match": this.formApprove.controls.DoesRUTMatch.value
+
+    }
+
+    this.datesService.approbe(idRequest, dataRequest).subscribe((result) => {
+
+      console.log(result)
+
+    },
+    error => {
+
+    },
+    () => {
+
+    })
+
+    this.openGenerateCredential();
+
+  }
+
+  decline( idRequest: any, e: Event ) {
+
+    const dataRequest = {
+      "applicant_at_home": this.formApprove.controls.applicantAtResidence.value,
+      "prevention_is_valid": this.formApprove.controls.validProofOfAddress.value,
+      "location_is_valid": this.formApprove.controls.DoesRUTMatch.value,
+      "rut_match": this.formApprove.controls.DoesRUTMatch.value
+
+    }
+
+    this.datesService.approbe(idRequest, dataRequest).subscribe((result) => {
+
+      console.log(result)
+
+    },
+    error => {
+
+    },
+    () => {
+
+    })
+
+    this.openGenerateCredential();
 
   }
 
@@ -117,12 +133,14 @@ export class ApproveDatesComponent implements OnInit {
     this.modalService.openModal(RejectRequestComponent);
   }
 
+  return() {
+    this.router.navigate(['/'])
+
+  }
+
+
   ngOnDestroy() {
     this.idRequestSubscription.unsubscribe();
   }
 
-  return() {
-    this.router.navigate(['/solicitud/solicitudes-de-inscripcion'])
-
-  }
 }
