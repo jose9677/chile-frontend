@@ -25,6 +25,8 @@ export class AssignDayDatesComponent implements OnInit {
 
   public today: any;
 
+  private idStatus: any;
+
 
 
 
@@ -44,35 +46,56 @@ export class AssignDayDatesComponent implements OnInit {
 
     this.dataRequest = [];
 
+    this.idStatus = '',
+
     this.today = new Date()
     this.today = `${this.today.getFullYear()}-${(this.today.getMonth())+1}-${this.today.getDate()}`
     console.log(this.today)
 
+
+    
+
    }
 
   ngOnInit(): void {
-    this.isFormSubmitted = false
+    this.isFormSubmitted = false   
 
+    
     this.datesService.getForIdRequest(this.idRequest).subscribe((result) => {
       console.log(result)
-
+      
       result.map((res: any) => {
         res.fullName = res.names_assistant +' '+ res.lastname_assistant;
         res.fullNameUser = res.names +' '+ res.lastname;
         res.fullPeventionData = res.prevention_type +'-'+ res.prevention_detail;
-        res.fullDirection = res.street + ' ' + res.way_number + ', ' + res.description + ' ' + res.property_number;
-
+        res.fullDirection = res.street + ' ' + res.way_number + ', ' + res.description + ' ' + res.property_number;        
+        
         this.dataRequest.push(res);
-      });
 
+        this.idStatus = res.id_status
+
+      });      
+                  
     },
     error => {
-
+      
     },
     () => {
-
-
+      
+      if ( this.idStatus == 2 ) {
+        let error = false;
+        let title= "";
+        let message = "Por favor póngase en contacto con el vecino para coordinar una fecha y hora de visita de mutuo acuerdo, puesto que una vez reagendada la cita, la misma queda automáticamente confirmada sin interacción del vecino";
+        this.modalService.OpenModalError2(ModalComponent, error, title, message);
+      }
+      
     })
+
+
+   
+
+   
+
   }
 
 
@@ -103,7 +126,6 @@ export class AssignDayDatesComponent implements OnInit {
         let title= "Cita Asignada Exitosamente";
         let message = "La cita fue asignada de forma exitosa";
         this.modalService.OpenModalError2(ModalComponent, error, title, message);
-
 
       })
 

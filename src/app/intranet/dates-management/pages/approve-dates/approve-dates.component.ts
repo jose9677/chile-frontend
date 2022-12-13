@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ModalsService } from 'src/app/shared/services/modals.service';
@@ -14,6 +14,8 @@ import { RejectRequestComponent } from './reject-request/reject-request.componen
 })
 export class ApproveDatesComponent implements OnInit {
 
+  public isFormSubmitted: boolean;
+
   private errors: boolean;
 
   private idRequestSubscription: Subscription;
@@ -23,11 +25,11 @@ export class ApproveDatesComponent implements OnInit {
   public dataRequest: any[];
 
   public formApprove = this.fb.group ({
-    applicantAtResidence: ['', []],
-    validPreventionCertificate: ['', []],
-    validProofOfAddress: ['', []],
-    DoesRUTMatch: ['', []],
-    Observations: ['', []]
+    applicantAtResidence: ['', [ Validators.required ]],
+    validPreventionCertificate: ['', [ Validators.required ]],
+    validProofOfAddress: ['', [ Validators.required]],
+    DoesRUTMatch: ['', [ Validators.required]],
+    Observations: ['', [ ]]
 
   })
 
@@ -41,6 +43,8 @@ export class ApproveDatesComponent implements OnInit {
     private fb: FormBuilder
 
   ) {
+
+    this.isFormSubmitted = false;
 
     this.idRequestSubscription = this.routerquery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
 
@@ -69,12 +73,15 @@ export class ApproveDatesComponent implements OnInit {
 
         this.dataRequest.push(res);
       })
-
     })
 
   }
 
   approve( idRequest: any, e: Event ) {
+    e.preventDefault();
+    
+    this.isFormSubmitted = true;
+
 
     const dataRequest = {
       "applicant_at_home": this.formApprove.controls.applicantAtResidence.value,
@@ -101,6 +108,7 @@ export class ApproveDatesComponent implements OnInit {
   }
 
   decline( idRequest: any, e: Event ) {
+    e.preventDefault();
 
     const dataRequest = {
       "applicant_at_home": this.formApprove.controls.applicantAtResidence.value,
