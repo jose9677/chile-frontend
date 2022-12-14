@@ -78,10 +78,13 @@ export class ConfirmDatesComponent implements OnInit {
       let title= "Reprogramar Cita";
       let message = "El visitador se pondra en contacto con usted a través de una llamada telefónica para acordar una nueva fecha y hora de la visita.";
       this.modalService.OpenModalError2(ModalComponent, this.errors, title, message);
+      this.router.navigate(['/solicitud/solicitudes-de-inscripcion']);
+
 
     });
 
   }
+
   confirmDate(idRequest: any){
 
     this.datesService.confirmRequest(idRequest).subscribe((result) => {
@@ -97,6 +100,7 @@ export class ConfirmDatesComponent implements OnInit {
       let title= "Cita Confirmada";
       let message = "Su cita a sido confirmada con exito";
       this.modalService.OpenModalError2(ModalComponent, this.errors, title, message);
+      this.router.navigate(['/solicitud/solicitudes-de-inscripcion']);
 
     });
   }
@@ -106,7 +110,7 @@ export class ConfirmDatesComponent implements OnInit {
   }
 
   return() {
-    this.router.navigate(['/solicitud/solicitudes-de-inscripcion'])
+    this.router.navigate(['/solicitud/solicitudes-de-inscripcion']);
 
   }
 
