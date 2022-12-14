@@ -407,7 +407,7 @@
                   formControlName="authCheck"
                   [ngClass]="{'is-invalid': ((userRegister.controls.authCheck.touched && userRegister.controls.authCheck.errors || isFormSubmitted && userRegister.controls.authCheck.errors) || (userRegister.controls.authCheck.touched && userRegister.controls.authCheck.value == false || isFormSubmitted && userRegister.controls.authCheck.value == false))}">
 
-                  <label class="form-check-label" for="formSwitch1">He leído y acepto los <a (click)="openTerminosyCondiciones()">Términos y Condiciones</a> y la <a (click)="openPoliticadePrivacidad()">Política de Privacidad</a></label>
+                  <label class="form-check-label" for="formSwitch1">He leído y acepto los <a (click)="openTerminosyCondiciones()" class="link">Términos y Condiciones</a> y la <a (click)="openPoliticadePrivacidad()" class="link">Política de Privacidad</a></label>
                   <div *ngIf="(isFormSubmitted && userRegister.controls.authCheck.errors?.required) || (userRegister.controls.authCheck.touched && userRegister.controls.authCheck.value == false || isFormSubmitted && userRegister.controls.authCheck.value == false)" class="invalid-feedback">Debe aceptar los términos y condiciones</div>
                 </div>
 

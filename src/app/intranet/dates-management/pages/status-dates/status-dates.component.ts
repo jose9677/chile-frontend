@@ -50,7 +50,7 @@ export class StatusDatesComponent implements OnInit {
       result.map((res: any)=>{
         res.fullName = (res.names_assistant ?? '') +' '+ (res.lastname_assistant ?? '');
         res.fullNameUser = res.names +' '+ res.lastname;
-        res.fullPeventionData = res.prevention_type +'-'+ res.prevention_detail;
+        res.fullPeventionData = res.prevention_type +' - '+ res.prevention_detail;
         res.fullDirection = res.street + ' ' + res.way_number + ', ' + res.description + ' ' + res.property_number;
 
         this.unassignedRequest.push(res);

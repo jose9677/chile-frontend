@@ -20,18 +20,17 @@
                   formControlName="password"
                   [ngClass]="{'is-invalid': ((formRecoveryPassword.touched && formRecoveryPassword.controls.password.errors) || (isFormSubmitted && formRecoveryPassword.controls.password.errors))}">
                     <div *ngIf="(formRecoveryPassword.touched && formRecoveryPassword.controls.password.errors?.required) || (isFormSubmitted && formRecoveryPassword.controls.password.errors?.required)" class="invalid-feedback col-md-6 mb-3 ">
-                      Campo Requerido
-
+                      La contraseña no cumple con los parámetros
                     </div>
-                    <div *ngIf="(formRecoveryPassword.touched && formRecoveryPassword.controls.password.errors?.pattern) || (isFormSubmitted && formRecoveryPassword.controls.password.errors?.pattern)" class="invalid-feedback col-md-6 mb-3 ">
-                        La contraseña de contener:
-                        <ul>
-                         <li>Al menos una letra Mayúscula</li>
-                         <li>Al menos una letra minúscula</li>
-                         <li>Al menos un número</li>
-                         <li>Al menos 8 dígitos de longitud</li>
-                        </ul>
-                    </div>
+                    <div class="info pt-2">
+                      La contraseña de contener:
+                      <ul>
+                       <li>Al menos una letra Mayúscula</li>
+                       <li>Al menos una letra minúscula</li>
+                       <li>Al menos un número</li>
+                       <li>Al menos 8 dígitos de longitud</li>
+                      </ul>
+                  </div>
                 </div>
                 <div class="mb-3">
                   <label for="InputPassword2" class="form-label colorTextPrimari">Confirmar Contraseña</label>

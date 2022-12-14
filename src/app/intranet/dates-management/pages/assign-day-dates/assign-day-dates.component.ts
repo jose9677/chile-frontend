@@ -67,7 +67,7 @@ export class AssignDayDatesComponent implements OnInit {
       result.map((res: any) => {
         res.fullName = res.names_assistant +' '+ res.lastname_assistant;
         res.fullNameUser = res.names +' '+ res.lastname;
-        res.fullPeventionData = res.prevention_type +'-'+ res.prevention_detail;
+        res.fullPeventionData = res.prevention_type +' - '+ res.prevention_detail;
         res.fullDirection = res.street + ' ' + res.way_number + ', ' + res.description + ' ' + res.property_number;        
         
         this.dataRequest.push(res);
@@ -82,7 +82,7 @@ export class AssignDayDatesComponent implements OnInit {
     },
     () => {
       
-      if ( this.idStatus == 2 ) {
+      if ( this.idStatus == 5 ) {
         let error = false;
         let title= "";
         let message = "Por favor póngase en contacto con el vecino para coordinar una fecha y hora de visita de mutuo acuerdo, puesto que una vez reagendada la cita, la misma queda automáticamente confirmada sin interacción del vecino";
