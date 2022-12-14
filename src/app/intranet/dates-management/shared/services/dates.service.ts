@@ -152,7 +152,7 @@ export class DatesService {
 
   getEmployees(rutSupervisor: any): Observable<any | void> {
 
-    return this.http.get<any>(AUTH_API_NP + 'detailsSupervisor/' + rutSupervisor).pipe(map((result: any) => {
+    return this.http.get<any>(AUTH_API_NP + 'detailsAssistant/' + rutSupervisor).pipe(map((result: any) => {
 
       return result['message'];
 

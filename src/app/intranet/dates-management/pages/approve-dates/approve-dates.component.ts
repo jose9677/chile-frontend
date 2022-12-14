@@ -102,11 +102,15 @@ export class ApproveDatesComponent implements OnInit {
   
       },
       () => {
+        
+        this.openGenerateCredential();
+
+        this.router.navigate(['/solicitud/asignar-cita']);
+
   
       })
   
       
-      this.openGenerateCredential();
     }
     
 
