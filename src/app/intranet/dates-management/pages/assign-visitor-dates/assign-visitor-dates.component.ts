@@ -1,4 +1,3 @@
-import { typeWithParameters } from '@angular/compiler/src/render3/util';
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -88,6 +87,8 @@ export class AssignVisitorDatesComponent implements OnInit {
   }
 
   assignSocialAssistant(rutSocialAssistant: any, e: Event) {
+    this.isFormSubmitted = true;
+    e.preventDefault();
 
     const assignData: any = {
 
@@ -116,8 +117,6 @@ export class AssignVisitorDatesComponent implements OnInit {
 
 
     console.log(rutSocialAssistant);
-    this.isFormSubmitted = true;
-    e.preventDefault();
 
   }
 }

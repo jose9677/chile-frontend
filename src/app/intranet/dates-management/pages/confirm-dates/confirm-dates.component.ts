@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { ModalComponent } from 'src/app/public/auth/shared/modals/modal/modal.component';
 import { ModalsService } from 'src/app/shared/services/modals.service';
 import { DatesService } from '../../shared/services/dates.service';
+import { VisitorDataComponent } from '../visitor-data/visitor-data.component';
 
 @Component({
   selector: 'app-confirm-dates',
@@ -107,5 +108,9 @@ export class ConfirmDatesComponent implements OnInit {
   return() {
     this.router.navigate(['/solicitud/solicitudes-de-inscripcion'])
 
+  }
+
+  visitador(){
+    this.modalService.openModal(VisitorDataComponent)
   }
 }

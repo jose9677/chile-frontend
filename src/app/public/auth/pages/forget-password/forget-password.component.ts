@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Event, Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -9,7 +9,9 @@ import { AuthService } from '../../shared/services/auth.service';
 @Component({
   selector: 'app-forget-password',
   templateUrl: './forget-password.component.html',
-  styleUrls: ['./forget-password.component.scss']
+  styleUrls: ['./forget-password.component.scss'],
+  encapsulation: ViewEncapsulation.None
+
 })
 export class ForgetPasswordComponent implements OnInit {
 

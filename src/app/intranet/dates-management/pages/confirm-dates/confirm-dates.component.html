@@ -26,16 +26,17 @@
           <textarea wrap="soft" style="overflow:hidden; resize:none;" value={{unassignedRequest[0]?.fullDirection}} disabled class="form-control"></textarea>
         </div>
       </div>
-      <div class="row mt-3 ">
-        <div class="col-md-4 col-sm-12">
-          <label for="" class="form-label colorTextPrimari">Asistente Social</label>
+      <div class="row mt-4 ">
+        <div class="row col-md-4 col-sm-12">
+          <label for="" class="form-label colorTextPrimari col-md-12">Asistente Social</label>
           <input
           type="text"
-          class="form-control"
+          class="form-control col"
           value = {{unassignedRequest[0]?.fullName}}
           disabled>
-
-
+          <a class="col-3 mt-1" (click)="visitador() ">
+            <i class="h4 feather icon-eye"></i>
+          </a>
         </div>
         <div class="col-md-4 col-sm-12">
           <label for="" class="form-label colorTextPrimari ">Fecha de Visita</label>
