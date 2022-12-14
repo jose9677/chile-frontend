@@ -40,6 +40,15 @@ export class PrivateService {
     catchError((err)=> this.handlerError(err))
     );
   }
+  supervisor(): Observable<any>{
+    return this.http.get<any>( AUTH_API_NP + 'detailsSupervisor', httpOptions).pipe(map((result:any) => {
+
+      return result
+
+    }),
+    catchError((err)=> this.handlerError(err))
+    );
+  }
   private handlerError(err:any): Observable<never> { //pasa error al login component
     let errorMessage= 'An error ocurred';
     if (err) {

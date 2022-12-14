@@ -78,7 +78,7 @@ export class AuthService {
 
 
   register(dataUser: any): Observable<any>{
-    return this.http.post( AUTH_API + 'registerNeighbor', dataUser, httpOptions).pipe(map((result:any) => {
+    return this.http.post( AUTH_API + 'registerEmployee', dataUser, httpOptions).pipe(map((result:any) => {
 
       console.log('Register_User-Res->', result);
 

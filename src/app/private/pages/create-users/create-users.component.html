@@ -18,22 +18,7 @@
           [ngClass]="{'is-invalid': (userRegister.controls.rutUser.touched && userRegister.controls.rutUser.errors?.required) || (isFormSubmitted && userRegister.controls.rutUser.errors)}">
           <div *ngIf="(userRegister.controls.rutUser.touched && userRegister.controls.rutUser.errors?.required) || (isFormSubmitted && userRegister.controls.rutUser.errors)" class="invalid-feedback">Campo Requerido</div>
         </div>
-        <div class="col-md-5 col-sm-12">
-          <label for="supervisorOfstreet" class="form-label colorTextPrimari" *ngIf="userRegister.controls.RolOfstreet.value ==1">supervisor</label>
-          <ng-select
-          *ngIf="userRegister.controls.RolOfstreet.value ==1"
-          [items]="supervisorOfstreet"
-          class="form-control p-0"
-          bindLabel="name"
-          bindValue="id"
-          placeholder="Seleccione"
-          [(ngModel)]="selectedSupervisorStreet"
-          formControlName="supervisorOfstreet"
-          [ngClass]="{'is-invalid': ((userRegister.controls.supervisorOfstreet.touched && userRegister.controls.supervisorOfstreet.required) || (isFormSubmitted && userRegister.controls.supervisorOfstreet.value == null))}"
-          >
-          <div *ngIf="(userRegister.controls.supervisorOfstreet.touched && userRegister.controls.supervisorOfstreet.value == null) || (isFormSubmitted && userRegister.controls.supervisorOfstreet.value == null)" class="invalid-feedback">Campo Requerido</div>
-          </ng-select>
-        </div>
+        <div class="col-md-5 col-sm-12"></div>
       </div>
       <div class="row mt-3 justify-content-evenly">
         <div class="col-md-5 col-sm-12">
@@ -125,10 +110,38 @@
       </div>
       <div class="row mt-4 justify-content-evenly">
         <div class="col-md-5 col-sm-12">
-          <h4 class="colorTextPrimari">Fotografía de Perfil</h4>
-          <a href="" class="mt-2">+  Haga click aqui para agregar</a>
-          <p class="col-md-12 col-sm-12 colorTextPrimari mt-1">Solo admite archivos .jpg, .jpeg y .png
-           Tamaño máximo 8 Mb</p>
+          <ng-container formArrayName="documents">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="row">
+                  <h5 class="colorTextPrimari pb-3">Fotografía de Perfil</h5>
+                </div>
+                <p class="col-md-12 col-sm-12 colorTextPrimari mt-1">Solo admite archivos .jpg, .jpeg y .png
+                  Tamaño máximo 8 Mb</p>
+              </div>
+            </div>
+            <ng-container *ngFor="let documentForm of documents.controls; let i = index">
+              <div [formGroupName]="i">
+                  <div class="row" >
+                    <div class="col-md-8 mb-4">
+                      <input
+                      class="form-control"
+                      type="file"
+                      id="document_path"
+                      [readOnly] ="(userRegister.controls.documents.value[i].document_path != '') ? true : false "
+                      formControlName="document_path"
+                      (change)="selectdataFile($event, i, 1)"
+                      [ngClass]="{'is-invalid': ((userRegister.controls.documents.touched && userRegister.controls.documents.value[i].document_path == '') || (isFormSubmitted && userRegister.controls.documents.value[i].document_path === ''))}"
+                      >
+                      <div *ngIf="(userRegister.controls.documents.touched && userRegister.controls.documents.value[i].document_path === '') || (isFormSubmitted && userRegister.controls.documents.value[i].document_path === '')" class="invalid-feedback">Campo Requerido</div>
+
+                      <div *ngIf="(userRegister.controls.documents.touched && documentIsValid != true) || (isFormSubmitted && documentIsValid != true )" class="invalid-feedback">Este campo solo admite formatos de archivos jpeg, png</div>
+
+                    </div>
+                  </div>
+              </div>
+            </ng-container>
+          </ng-container>
         </div>
         <div class="col-md-5 col-ms-12">
         </div>
@@ -147,12 +160,27 @@
           placeholder="Seleccione"
           [(ngModel)]="selectedStreet"
           formControlName="RolOfstreet"
-          [ngClass]="{'is-invalid': ((userRegister.controls.RolOfstreet.touched && userRegister.controls.RolOfstreet.required) || (isFormSubmitted && userRegister.controls.RolOfstreet.value == null))}"
+          [ngClass]="{'is-invalid': ((userRegister.controls.RolOfstreet.touched && userRegister.controls.RolOfstreet.errors?.required) || (isFormSubmitted && userRegister.controls.RolOfstreet.value == null))}"
           >
-          <div *ngIf="(userRegister.controls.RolOfstreet.touched && userRegister.controls.RolOfstreet.value == null) || (isFormSubmitted && userRegister.controls.RolOfstreet.value == null)" class="invalid-feedback">Campo Requerido</div>
-          </ng-select>
+        </ng-select>
+        <div *ngIf="(userRegister.controls.RolOfstreet.touched && userRegister.controls.RolOfstreet.value == null)||(isFormSubmitted && userRegister.controls.RolOfstreet.value == null)" class="invalid-feedback">Campo Requerido</div>
         </div>
-        <div class="col-md-5 col-sm-12"></div>
+        <div class="col-md-5 col-sm-12">
+          <label for="supervisorOfstreet" class="form-label colorTextPrimari" *ngIf="userRegister.controls.RolOfstreet.value ==2">supervisor</label>
+          <ng-select
+          *ngIf="userRegister.controls.RolOfstreet.value ==2"
+          [items]="supervisorOfstreet"
+          class="form-control p-0"
+          bindLabel="names"
+          bindValue="rut"
+          placeholder="Seleccione"
+          [(ngModel)]="selectedSupervisorStreet"
+          formControlName="supervisorOfstreet"
+          [ngClass]="{'is-invalid': ((userRegister.controls.supervisorOfstreet.touched && userRegister.controls.supervisorOfstreet.errors?.required) || (isFormSubmitted && userRegister.controls.supervisorOfstreet.value == null))}"
+          >
+        </ng-select>
+        <div *ngIf="(userRegister.controls.supervisorOfstreet.touched && userRegister.controls.supervisorOfstreet.value == null) || (isFormSubmitted && userRegister.controls.supervisorOfstreet.value == null)" class="invalid-feedback">Campo Requerido</div>
+        </div>
       </div>
     </div>
     <div class="row mt-5 justify-content-evenly">
