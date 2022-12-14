@@ -10,7 +10,7 @@ import { AuthService } from '../../shared/services/auth.service';
   selector: 'app-recovery',
   templateUrl: './recovery.component.html',
   styleUrls: ['./recovery.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  // encapsulation: ViewEncapsulation.None
 
 })
 export class RecoveryComponent implements OnInit {
