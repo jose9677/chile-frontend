@@ -143,7 +143,7 @@ export class DatesService {
 
     return this.http.put<any>(AUTH_API_NP + 'approve-request/' + idRequest, dataRequest).pipe(map((result: any) => {
 
-      return result
+      return result;
 
     }),
       catchError((err) => this.handlerError(err))

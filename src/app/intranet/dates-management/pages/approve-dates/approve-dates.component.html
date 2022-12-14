@@ -163,7 +163,11 @@
               class="form-control"
               style="resize:none;"
               formControlName="Observations"
+              [ngClass]="{'is-invalid': (formApprove.controls.Observations.touched && formApprove.controls.Observations.errors?.required) || (isFormSubmitted && formApprove.controls.Observations.errors)}">
+
               ></textarea>
+              <div *ngIf="(formApprove.controls.Observations.touched && formApprove.controls.Observations.errors?.required) || (isFormSubmitted && formApprove.controls.Observations.errors)" class="invalid-feedback">Campo Requerido</div>
+
             </div>
           </div>
         </div>
