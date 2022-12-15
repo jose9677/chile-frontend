@@ -14,54 +14,58 @@ import { DatesService } from '../../../shared/services/dates.service';
 })
 export class RejectRequestComponent implements OnInit {
 
-  @Input() data: any; data2: any;  
+  @Input() data: any; data2: any;
 
-  
+
 
   constructor(
     public modalService: NgbActiveModal,
     private modalsService:ModalsService,
     private datesService: DatesService,
     private router: Router
-  ) { 
-    
-    
+  ) {
+
+
   }
-  
+
   ngOnInit(): void {
-    
+
   }
-  
+
   confirmDeny (e: Event) {
-    e.preventDefault();   
-    
-    this.datesService.approbe(this.data2, this.data).subscribe((result) => {
-      
+
+    e.preventDefault();
+
+    let idRequest = this.data2;
+    let dataRequest = this.data;
+
+    this.datesService.approbe(idRequest, dataRequest).subscribe((result) => {
+
       console.log(result);
-      
+
     },
 
     error => {
 
-      console.log(error);
-      
+      let errors = true;
+      let title= "Solicitud Rechazada";
+      let message = "La Solicitud fue fue Rechazada";
+      this.modalsService.OpenModalError2(ModalComponent, errors, title, message);
+
+      this.router.navigate(['/solicitud/asignar-cita']);
+
+      this.modalService.close();
+
+
     },
     () => {
 
-      
-      let error = true;
-      let title= "Solicitud Rechazada";
-      let message = "La Solicitud fue fue Rechazada";
-      this.modalsService.OpenModalError2(ModalComponent, error, title, message);
-      
-      this.router.navigate(['/solicitud/asignar-cita']);
-      
-      this.modalService.close();
+
 
 
     })
 
   }
-  
+
 
 }

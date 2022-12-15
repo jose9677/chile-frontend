@@ -23,11 +23,12 @@
 
               <div class="d-flex justify-content-center">
                 <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 style" [disabled]="isFormSubmitted" >Aceptar</button>
-                <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 style-outline" (click)="modalService.dismiss()">
+
+                <button type="button" class="btn btn-outline-primary mb-2 mb-md-0 style-outline" (click)="restartUser($event)" [disabled]="isFormSubmitted">
                   Regresar
                 </button>
               </div>
-              <a class="d-block mt-3 text-muted text-center" (click)="resendKey($event)" >¿No recibio el correo?<span class="link" >Reenviar Clave</span></a>
+              <a class="d-block mt-3 text-muted text-center" (click)="resendKey($event)" >¿No recibió el correo?<span class="link" >Reenviar Clave</span></a>
             </form>
           </div>
         <!-- </div>

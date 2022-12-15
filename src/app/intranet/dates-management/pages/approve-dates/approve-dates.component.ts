@@ -78,7 +78,7 @@ export class ApproveDatesComponent implements OnInit {
 
   approve( idRequest: any, e: Event ): void {
     e.preventDefault();
-    
+
     this.isFormSubmitted = true;
 
 
@@ -94,26 +94,21 @@ export class ApproveDatesComponent implements OnInit {
     if ( this.formApprove.status == "VALID" ) {
 
       this.datesService.approbe(idRequest, dataRequest).subscribe((result) => {
-  
+
         console.log(result)
-  
+
       },
       error => {
-  
+
       },
       () => {
-        
+
         this.openGenerateCredential();
 
         this.router.navigate(['/solicitud/asignar-cita']);
 
-  
       })
-  
-      
     }
-    
-
   }
 
   deny( idRequest: any, e: Event ):void {
@@ -132,21 +127,21 @@ export class ApproveDatesComponent implements OnInit {
     }
 
     if ( this.formApprove.status == "VALID" ) {
-      
+
       this.openRejectRequestComponent( dataRequest, idRequest );
 
     }
   }
 
-  openRejectRequestComponent( dataRequest: any , idRequest: any ){   
-    
+  openRejectRequestComponent( dataRequest: any , idRequest: any ){
+
     this.modalService.openModalData2(RejectRequestComponent, dataRequest, idRequest);
   }
-  
+
   openGenerateCredential() {
     this.modalService.openModal(GenerateCredentialComponent);
   }
-  
+
   return() {
     this.router.navigate(['/solicitud/asignar-cita']);
 
