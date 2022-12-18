@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatesService } from 'src/app/intranet/dates-management/shared/services/dates.service';
+import { ModalComponent } from 'src/app/public/auth/shared/modals/modal/modal.component';
 import { ModalsService } from 'src/app/shared/services/modals.service';
 import { SortByTablesService } from '../../shared/services/sort-by-tables.service';
 
@@ -32,7 +33,7 @@ export class ViewVisitorRequestsComponent implements OnInit {
   constructor(
     private router: Router,
     public sortByService: SortByTablesService,
-    private modalServices : ModalsService,
+    private modalService : ModalsService,
     private dateServices: DatesService
 
 
@@ -48,6 +49,12 @@ export class ViewVisitorRequestsComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.getforSocialAssistant();
+
+  }
+
+  getforSocialAssistant() {
+
     this.dateServices.getforSocialAssistant(this.rutUserLogged.replace(/["']/g, "")).subscribe( result => {
 
       console.log(result)
@@ -61,10 +68,10 @@ export class ViewVisitorRequestsComponent implements OnInit {
 
       datarequests.map((res: any)=>{
 
-        if (res.id_status == 4 || res.id_status == 6 || res.id_status == 7   ) {
-          this.unassignedRequest2.push(res);
-        }else{
+        if (res.id_status == 2 || res.id_status == 5   ) {
           this.unassignedRequest.push(res);
+        }else{
+          this.unassignedRequest2.push(res);
         }
       })
       console.log(this.unassignedRequest)
@@ -75,8 +82,8 @@ export class ViewVisitorRequestsComponent implements OnInit {
     },
     () => {
 
-    })
 
+    })
 
   }
 

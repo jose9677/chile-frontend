@@ -26,16 +26,17 @@
           <textarea wrap="soft" style="overflow:hidden; resize:none;" value={{unassignedRequest[0]?.fullDirection}} disabled class="form-control"></textarea>
         </div>
       </div>
-      <div class="row mt-3 ">
-        <div class="col-md-4 col-sm-12">
-          <label for="" class="form-label colorTextPrimari">Asistente Social</label>
+      <div class="row mt-4 ">
+        <div class="row col-md-4 col-sm-12">
+          <label for="" class="form-label colorTextPrimari col-md-12">Asistente Social</label>
           <input
           type="text"
-          class="form-control"
+          class="form-control col"
           value = {{unassignedRequest[0]?.fullName}}
           disabled>
-
-
+          <a class="col-3 mt-1" (click)="visitador() ">
+            <i class="h4 feather icon-eye"></i>
+          </a>
         </div>
         <div class="col-md-4 col-sm-12">
           <label for="" class="form-label colorTextPrimari ">Fecha de Visita</label>
@@ -60,7 +61,7 @@
       <div class="col-md-6 col-sm-12">
           <div class="row">
             <div class="col-md-6 col-sm-12">
-              <label for="" class="form-label colorTextPrimari ">Tipo de Prevencion </label>
+              <label for="" class="form-label colorTextPrimari ">Certificado de Previsión</label>
             </div>
             <div class="col-md-6">
              <input type="text" name="" id="" class="form-control" value={{unassignedRequest[0]?.fullPeventionData}} disabled>
@@ -68,22 +69,19 @@
           </div>
       </div>
       <div class="col-md-4 col-sm-12 text-center d-flex align-items-center">
-        <a href="">Certificado.pdf <i class="ms-4 h4 feather icon-eye"></i></a>
+        <a href={{unassignedRequest[0]?.doc_srv_path}} target="_blank">{{unassignedRequest[0]?.document_path}}<i class="ms-4 h4 feather icon-eye"></i></a>
       </div>
     </div>
     <div class="row mt-3 justify-content-center">
       <div class="col-md-6 col-sm-12">
           <div class="row">
             <div class="col-md-6 col-sm-12">
-              <label for="" class="form-label colorTextPrimari ">Recibo de Servicio</label>
-            </div>
-            <div class="col-md-6">
-              <input type="text" name="" id="" class="form-control" value={{unassignedRequest[0]?.document_path}} disabled>
+              <label for="" class="form-label colorTextPrimari ">Comprobante de Domicilio</label>
             </div>
           </div>
       </div>
       <div class="col-md-4 col-sm-12 text-center d-flex align-items-center">
-        <a href="">Recibo.jpeg<i class="ms-5 h4 feather icon-eye"></i></a>
+        <a href={{unassignedRequest[1]?.doc_srv_path}} target="_blank">{{unassignedRequest[1]?.document_path}}<i class="ms-5 h4 feather icon-eye"></i></a>
       </div>
     </div>
     <br>

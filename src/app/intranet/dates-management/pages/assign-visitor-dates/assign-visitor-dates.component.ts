@@ -1,4 +1,3 @@
-import { typeWithParameters } from '@angular/compiler/src/render3/util';
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -88,6 +87,8 @@ export class AssignVisitorDatesComponent implements OnInit {
   }
 
   assignSocialAssistant(rutSocialAssistant: any, e: Event) {
+    this.isFormSubmitted = true;
+    e.preventDefault();
 
     const assignData: any = {
 
@@ -106,18 +107,21 @@ export class AssignVisitorDatesComponent implements OnInit {
     },
     () => {
 
+      this.errors = false;
+      let title= "Asistente Social Asignado";
+      let message = "El Asistente Social a sido asignado de forma exitosa";
+      this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
+
 
       this.isFormSubmitted = true;
-      e.preventDefault();
 
-
+      setTimeout(this.reloadPage, 3000);
     });
 
-
-
-    console.log(rutSocialAssistant);
-    this.isFormSubmitted = true;
-    e.preventDefault();
-
   }
+
+  reloadPage() {
+    window.location.reload();
+  }
+
 }

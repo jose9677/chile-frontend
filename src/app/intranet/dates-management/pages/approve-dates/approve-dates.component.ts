@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ModalsService } from 'src/app/shared/services/modals.service';
@@ -14,6 +14,8 @@ import { RejectRequestComponent } from './reject-request/reject-request.componen
 })
 export class ApproveDatesComponent implements OnInit {
 
+  public isFormSubmitted: boolean;
+
   private errors: boolean;
 
   private idRequestSubscription: Subscription;
@@ -23,14 +25,13 @@ export class ApproveDatesComponent implements OnInit {
   public dataRequest: any[];
 
   public formApprove = this.fb.group ({
-    applicantAtResidence: ['', []],
-    validPreventionCertificate: ['', []],
-    validProofOfAddress: ['', []],
-    DoesRUTMatch: ['', []],
-    Observations: ['', []]
+    applicantAtResidence: ['', [ Validators.required ]],
+    validPreventionCertificate: ['', [ Validators.required ]],
+    validProofOfAddress: ['', [ Validators.required ]],
+    DoesRUTMatch: ['', [ Validators.required ]],
+    Observations: ['', [ Validators.required ]]
 
   })
-
 
 
   constructor(
@@ -41,6 +42,8 @@ export class ApproveDatesComponent implements OnInit {
     private fb: FormBuilder
 
   ) {
+
+    this.isFormSubmitted = false;
 
     this.idRequestSubscription = this.routerquery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
 
@@ -69,72 +72,78 @@ export class ApproveDatesComponent implements OnInit {
 
         this.dataRequest.push(res);
       })
-
     })
 
   }
 
-  approve( idRequest: any, e: Event ) {
+  approve( idRequest: any, e: Event ): void {
+    e.preventDefault();
+
+    this.isFormSubmitted = true;
+
 
     const dataRequest = {
       "applicant_at_home": this.formApprove.controls.applicantAtResidence.value,
       "prevention_is_valid": this.formApprove.controls.validProofOfAddress.value,
       "location_is_valid": this.formApprove.controls.DoesRUTMatch.value,
-      "rut_match": this.formApprove.controls.DoesRUTMatch.value
+      "rut_match": this.formApprove.controls.DoesRUTMatch.value,
+      "comments": this.formApprove.controls.Observations.value
 
     }
 
-    this.datesService.approbe(idRequest, dataRequest).subscribe((result) => {
+    if ( this.formApprove.status == "VALID" ) {
 
-      console.log(result)
+      this.datesService.approbe(idRequest, dataRequest).subscribe((result) => {
 
-    },
-    error => {
+        console.log(result)
 
-    },
-    () => {
+      },
+      error => {
 
-    })
+      },
+      () => {
 
-    this.openGenerateCredential();
+        this.openGenerateCredential();
 
+        this.router.navigate(['/solicitud/asignar-cita']);
+
+      })
+    }
   }
 
-  decline( idRequest: any, e: Event ) {
+  deny( idRequest: any, e: Event ):void {
+    e.preventDefault();
+
+    this.isFormSubmitted = true;
 
     const dataRequest = {
+
       "applicant_at_home": this.formApprove.controls.applicantAtResidence.value,
       "prevention_is_valid": this.formApprove.controls.validProofOfAddress.value,
       "location_is_valid": this.formApprove.controls.DoesRUTMatch.value,
-      "rut_match": this.formApprove.controls.DoesRUTMatch.value
+      "rut_match": this.formApprove.controls.DoesRUTMatch.value,
+      "comments": this.formApprove.controls.Observations.value
 
     }
 
-    this.datesService.approbe(idRequest, dataRequest).subscribe((result) => {
+    if ( this.formApprove.status == "VALID" ) {
 
-      console.log(result)
+      this.openRejectRequestComponent( dataRequest, idRequest );
 
-    },
-    error => {
+    }
+  }
 
-    },
-    () => {
+  openRejectRequestComponent( dataRequest: any , idRequest: any ){
 
-    })
-
-    this.openGenerateCredential();
-
+    this.modalService.openModalData2(RejectRequestComponent, dataRequest, idRequest);
   }
 
   openGenerateCredential() {
     this.modalService.openModal(GenerateCredentialComponent);
   }
-  openRejectRequestComponent(){
-    this.modalService.openModal(RejectRequestComponent);
-  }
 
   return() {
-    this.router.navigate(['/'])
+    this.router.navigate(['/solicitud/asignar-cita']);
 
   }
 

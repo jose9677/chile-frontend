@@ -42,7 +42,7 @@
                   <td >{{request.id_request }}</td>
                   <td>{{request.request_date}}</td>
                   <td>{{request.rut_user}}</td>
-                  <td>{{request.user_name + ',' + request.user_lastname}}</td>
+                  <td>{{request.user_name + ' ' + request.user_lastname}}</td>
                   <td>{{request.street +' '+ request.way_number  +', '+ request.description +' '+ request.property_number}}</td>
                   <td>{{(request.assistant_name ?? ' ') + " " + (request.assistant_lastname ?? ' ') }}</td>
                   <td>{{request.status}}</td>
@@ -57,8 +57,8 @@
                 <th>
                 </th>
                 <th>
-                  <button (click)="sortByService.prevPage()" [disabled]="sortByService.page === 0"><i class="mdi mdi-arrow-left-bold"></i>  Anterior  </button>
-                  <button (click)="sortByService.nextPage()"  [disabled]="(unassignedRequest | filter:sortByService.search:sortByService.page).length === 0" >  Siguiente  <i class="mdi mdi-arrow-right-bold"></i></button>
+                  <button class="color-secondary" (click)="sortByService.prevPage()" [disabled]="sortByService.page === 0"><i class="mdi mdi-arrow-left-bold"></i>  Anterior  </button>
+                  <button class="color-secondary" (click)="sortByService.nextPage()"  [disabled]="(unassignedRequest | filter:sortByService.search:sortByService.page).length === 0" >  Siguiente  <i class="mdi mdi-arrow-right-bold"></i></button>
 
                 </th>
               </tr>
@@ -105,7 +105,7 @@
                   <td >{{request.id_request }}</td>
                   <td>{{request.request_date}}</td>
                   <td>{{request.rut_user}}</td>
-                  <td>{{request.user_name + ',' + request.user_lastname}}</td>
+                  <td>{{request.user_name + ' ' + request.user_lastname}}</td>
                   <td>{{request.street +' '+ request.way_number  +', '+ request.description +' '+ request.property_number}}</td>
                   <td>{{(request.assistant_name ?? ' ') + " " + (request.assistant_lastname ?? ' ') }}</td>
                   <td>{{request.status}}</td>
@@ -120,8 +120,8 @@
                 <th>
                 </th>
                 <th>
-                  <button (click)="sortByService.prevPage2()" [disabled]="sortByService.page2 === 0"><i class="mdi mdi-arrow-left-bold"></i>  Anterior  </button>
-                  <button (click)="sortByService.nextPage2()"  [disabled]="(unassignedRequest2 | filter:sortByService.search2:sortByService.page2).length === 0" >  Siguiente  <i class="mdi mdi-arrow-right-bold"></i></button>
+                  <button class="color-secondary" (click)="sortByService.prevPage2()" [disabled]="sortByService.page2 === 0"><i class="mdi mdi-arrow-left-bold"></i>  Anterior  </button>
+                  <button class="color-secondary" (click)="sortByService.nextPage2()"  [disabled]="(unassignedRequest2 | filter:sortByService.search2:sortByService.page2).length === 0" >  Siguiente  <i class="mdi mdi-arrow-right-bold"></i></button>
 
                 </th>
               </tr>

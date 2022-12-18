@@ -40,7 +40,7 @@
   background-repeat: none;
   background-position: center;
   background-size: cover;
-  height: 100vh;
+  // height: 100vh;
 
 }
 :root{
@@ -95,7 +95,7 @@ button.style-outline:hover{
   color: #fff;
 }
 
-span.link{
+span.link, a.link{
   color: #00acb0;
   text-decoration: underline;
   font-weight: bold;

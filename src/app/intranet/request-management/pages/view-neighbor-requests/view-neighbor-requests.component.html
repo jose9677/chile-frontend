@@ -44,7 +44,7 @@
                   <td>{{(request.fullName )}}</td>
                   <td>{{request.status}}</td>
                   <td>
-                    <button (click)="viewDate(request.id_request)" ><i class="mdi mdi-eye" style="font-size: 1.5em;"></i></button>
+                    <button *ngIf="request.id_status != 1" (click)="viewDate(request.id_request)" ><i class="mdi mdi-eye" style="font-size: 1.5em;"></i></button>
                     <button  *ngIf="request.id_status == 3" (click)="confirmDate(request.id_request)" ><i class="mdi mdi-calendar-check" style="font-size: 1.5em;"></i></button>
                   </td>
                 </tr>

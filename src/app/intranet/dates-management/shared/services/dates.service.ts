@@ -143,7 +143,7 @@ export class DatesService {
 
     return this.http.put<any>(AUTH_API_NP + 'approve-request/' + idRequest, dataRequest).pipe(map((result: any) => {
 
-      return result
+      return result;
 
     }),
       catchError((err) => this.handlerError(err))
@@ -152,7 +152,7 @@ export class DatesService {
 
   getEmployees(rutSupervisor: any): Observable<any | void> {
 
-    return this.http.get<any>(AUTH_API_NP + 'detailsSupervisor/' + rutSupervisor).pipe(map((result: any) => {
+    return this.http.get<any>(AUTH_API_NP + 'detailsAssistant/' + rutSupervisor).pipe(map((result: any) => {
 
       return result['message'];
 
@@ -160,6 +160,25 @@ export class DatesService {
       catchError((err) => this.handlerError(err))
     );
   }
+
+  detailsVisitor( rutVisitor: any ): Observable<any | void> {
+
+    return this.http.get<any>( AUTH_API_NP + 'detailsVisitor/' + rutVisitor ).pipe(map((result: any) => {
+
+      return result;
+
+    }),
+      catchError((err) => this.handlerError(err))
+    );
+  }
+
+
+
+
+
+
+
+
 
   private handlerError(err:any): Observable<never> { //pasa error al login component
     let errorMessage= 'An error ocurred';

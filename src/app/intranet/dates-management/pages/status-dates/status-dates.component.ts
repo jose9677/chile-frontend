@@ -35,10 +35,6 @@ export class StatusDatesComponent implements OnInit {
 
     this.unassignedRequest = [];
 
-
-
-
-
   }
 
   ngOnInit(): void {
@@ -50,7 +46,7 @@ export class StatusDatesComponent implements OnInit {
       result.map((res: any)=>{
         res.fullName = (res.names_assistant ?? '') +' '+ (res.lastname_assistant ?? '');
         res.fullNameUser = res.names +' '+ res.lastname;
-        res.fullPeventionData = res.prevention_type +'-'+ res.prevention_detail;
+        res.fullPeventionData = res.prevention_type +' - '+ res.prevention_detail;
         res.fullDirection = res.street + ' ' + res.way_number + ', ' + res.description + ' ' + res.property_number;
 
         this.unassignedRequest.push(res);
@@ -62,7 +58,6 @@ export class StatusDatesComponent implements OnInit {
     error => {
 
       this.errors = true;
-
 
 
     },
@@ -83,7 +78,7 @@ export class StatusDatesComponent implements OnInit {
   }
 
   visitador(){
-    this.modalService.openModal(VisitorDataComponent)
+    this.modalService.openModalData(VisitorDataComponent, this.unassignedRequest[0]?.rut_assistant)
   }
 
 }

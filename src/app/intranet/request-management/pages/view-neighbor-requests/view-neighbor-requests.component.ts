@@ -42,6 +42,13 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.getForRut();
+
+
+
+  }
+
+  getForRut() {
 
     this.date.getForRut(this.rutNeighbor.replace(/["']/g, "")).subscribe( result => {
       console.log(result);
@@ -69,9 +76,7 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
 
     });
-
   }
-
 
 
   viewDate (id_request: any) {
@@ -87,7 +92,6 @@ export class ViewNeighborRequestsComponent implements OnInit {
   }
 
   createDate () {
-
     this.router.navigate(['citas/crear-cita'])
   }
 

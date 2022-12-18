@@ -141,15 +141,15 @@ export class AuthService {
     );
   }
 
-  // refreshOtp (rutUser: any): Observable<any>{
-  //   return this.http.put( AUTH_API_NP + 'refresh-otp/' + rutUser).pipe(map((result:any) => {
+  refreshOtp (rutUser: any): Observable<any>{
+    return this.http.put( AUTH_API_NP + 'refresh-otp', rutUser).pipe(map((result:any) => {
 
-  //     console.log('Validate_Email-Res->', result);
+      console.log('refreshotp-Res->', result);
 
-  //   }),
-  //   catchError((err)=> this.handlerError(err))
-  //   );
-  // }
+    }),
+    catchError((err)=> this.handlerError(err))
+    );
+  }
 
 
   activateUser(user:any, rol:any): Observable<any>{
@@ -186,7 +186,7 @@ export class AuthService {
 
 
   logOut(): void {
-    console.log('sesion cerrada');
+    console.log('sesión cerrada');
     window.sessionStorage.clear();
     window.sessionStorage.removeItem('rol-user');
     window.sessionStorage.removeItem('access_token');
@@ -195,21 +195,6 @@ export class AuthService {
     this.router.navigate(['/auth/login']);
   }
 
-  // public checkToken(): void {
-  //   const userToken: any = window.sessionStorage.getItem(TOKEN_KEY);
-  //   const isExpired = this.tokenService.helper.isTokenExpired(userToken);
-
-  //   console.log('CheckToken');
-
-  //   if (isExpired == true) {
-  //     console.log('is Expired', isExpired);
-  //     this.logOut();
-  //     // // window.sessionStorage.clear();
-  //     // this.router.navigate(['/login']);
-  //   }else{
-  //     console.log('is Expired', isExpired);
-  //   }
-  // }
 
   dropdownInfo(): Observable<any>{
     return this.http.get<any>( AUTH_API_NP + 'dropdownInfo', httpOptions).pipe(map((result:any) => {
@@ -220,6 +205,21 @@ export class AuthService {
     catchError((err)=> this.handlerError(err))
     );
   }
+
+
+  restartUser(rutUser: any): Observable<any | void> {
+
+    return this.http.delete<any>(AUTH_API_NP + 'restartUser/' + rutUser).pipe(map((result: any) => {
+
+      return result['message'];
+
+    }),
+      catchError((err) => this.handlerError(err))
+    );
+  }
+
+
+
 
   private handlerError(err:any): Observable<never> { //pasa error al login component
     let errorMessage= 'An error ocurred';

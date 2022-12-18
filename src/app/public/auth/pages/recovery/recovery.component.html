@@ -6,12 +6,11 @@
           <div class="auth-form-wrapper px-4 py-5 ">
             <img class="card-img-top px-4" src="../assets/images/login/SaludAtuAlcanceLogo.png" alt=""><br><br>
             <h2 class="text-muted fw-normal text-center titles "><strong> Contraseña de acceso </strong></h2><br>
-            <p class="colorTextPrimari text-center">Por favor cree una contraseña para ser utilizada para acceder al sistema</p>
+            <p class="colorTextPrimari text-center">Por favor cree una contraseña para ser utilizada para acceder al sistema</p><br>
             <form class="forms-sample" [formGroup]="formRecoveryPassword" (ngSubmit)="recoveryPassword($event)">
               <!-- <h3 class="colorTextPrimari pb-3">Datos de Acceso</h3> -->
-              <div class="row">
-                <div class="col-md-10 mb-3">
-                  <label for="inputPassword1" class="form-label">Contraseña</label>
+                <div class="mb-3">
+                  <label for="inputPassword1" class="form-label colorTextPrimari">Contraseña</label>
                   <input
                   type="password"
                   class="form-control"
@@ -19,19 +18,22 @@
                   autocomplete="current-password"
                   placeholder="Ingrese una contraseña"
                   formControlName="password"
-                  [ngClass]="{'is-invalid': ((formRecoveryPassword.controls.touched && formRecoveryPassword.value.password === '') || (isFormSubmitted && formRecoveryPassword.value.password === ''))}">
-                    <div *ngIf="(formRecoveryPassword.controls.touched && formRecoveryPassword.value.password === '') || (isFormSubmitted && formRecoveryPassword.value.password === '')" class="invalid-feedback col-md-6 mb-3 info ">
-                        La contraseña de contener:
-                        <ul>
-                         <li>Al menos una letra Mayúscula</li>
-                         <li>Al menos una letra minúscula</li>
-                         <li>Al menos un número</li>
-                         <li>Al menos 8 digitos de longitud</li>
-                        </ul>
+                  [ngClass]="{'is-invalid': ((formRecoveryPassword.touched && formRecoveryPassword.controls.password.errors) || (isFormSubmitted && formRecoveryPassword.controls.password.errors))}">
+                    <div *ngIf="(formRecoveryPassword.touched && formRecoveryPassword.controls.password.errors?.required) || (isFormSubmitted && formRecoveryPassword.controls.password.errors?.required)" class="invalid-feedback col-md-6 mb-3 ">
+                      La contraseña no cumple con los parámetros
                     </div>
+                    <div class="info pt-2">
+                      La contraseña de contener:
+                      <ul>
+                       <li>Al menos una letra Mayúscula</li>
+                       <li>Al menos una letra minúscula</li>
+                       <li>Al menos un número</li>
+                       <li>Al menos 8 dígitos de longitud</li>
+                      </ul>
+                  </div>
                 </div>
-                <div class="col-md-10 mb-3">
-                  <label for="InputPassword2" class="form-label">Confirmar Contraseña</label>
+                <div class="mb-3">
+                  <label for="InputPassword2" class="form-label colorTextPrimari">Confirmar Contraseña</label>
                   <input
                   type="password"
                   class="form-control"
@@ -39,13 +41,13 @@
                   autocomplete="current-password"
                   placeholder="Repita la contraseña"
                   formControlName="rePassword"
-                  [ngClass]="{'is-invalid': ((formRecoveryPassword.controls.touched && formRecoveryPassword.controls.rePassword.errors) || (isFormSubmitted && formRecoveryPassword.value.proofOfAddress1 === ''))}">
-                    <div *ngIf="(formRecoveryPassword.controls.touched && formRecoveryPassword.controls.rePassword.errors) || (isFormSubmitted && formRecoveryPassword.value.rePassword === '')" class="invalid-feedback">Contraseña no Coincide</div>
+                  [ngClass]="{'is-invalid': ((formRecoveryPassword.touched && formRecoveryPassword.controls.rePassword.errors) || (isFormSubmitted && formRecoveryPassword.controls.rePassword.errors))}">
+                    <div *ngIf="(formRecoveryPassword.touched && formRecoveryPassword.controls.rePassword.errors?.equalTo) || (isFormSubmitted && formRecoveryPassword.value.rePassword.errors?.equalTo)" class="invalid-feedback">Contraseña no Coincide</div>
                 </div>
-              </div>
+
 
               <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 style">Continuar</button>
+                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 style" [disabled]="isFormSubmitted && !formRecoveryPassword.valid " >Continuar</button>
               </div>
               <a routerLink="/auth/login"  class="d-block mt-3 text-muted text-center"><span class="link" >Volver al Inicio de Sesión</span></a>
             </form>
