@@ -65,13 +65,13 @@
     <h3 class="colorTextPrimari">Documentos</h3><br>
     <div class="row mt-3">
       <div class="col-md-3 col-sm-12">
-        <label for="" class="form-label colorTextPrimari ">Certificado de Previsión</label>
+        <label for={{dataRequest[0]?.document_path}} class="form-label colorTextPrimari ">Certificado de Previsión</label>
       </div>
       <div class="col-md-3 col-sm-12 ms-6">
         <input type="text" value= {{dataRequest[0]?.fullPeventionData}} disabled class="form-control">
       </div>
       <div class="col-md-4 col-sm-12 ms-4">
-        <a href="">Certificado.pdf <i class="ms-4 h4 feather icon-eye"></i></a>
+        <a href={{dataRequest[0]?.doc_srv_path}} target="_blank">{{dataRequest[0]?.document_path}}<i class="ms-4 h4 feather icon-eye"></i></a>
       </div>
     </div>
     <div class="row mt-3">
@@ -79,11 +79,9 @@
         <label for="" class="form-label colorTextPrimari ">Comprobante de Domicilio</label>
       </div>
       <div class="col-md-6 col-sm-12">
+
         <div class="col-md-12">
-          <a href="">Comprobante1.pdf <i class="ms-4 h4 feather icon-eye"></i></a>
-        </div>
-        <div class="col-md-12">
-          <a href="">Comprobante2.pdf <i class="ms-4 h4 feather icon-eye"></i></a>
+          <a href={{dataRequest[1]?.doc_srv_path}} target="_blank">{{dataRequest[1]?.document_path}} <i class="ms-4 h4 feather icon-eye"></i></a>
         </div>
       </div>
     </div>

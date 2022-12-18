@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ModalComponent } from 'src/app/public/auth/shared/modals/modal/modal.component';
 import { ModalsService } from 'src/app/shared/services/modals.service';
@@ -40,7 +40,8 @@ export class AssignDayDatesComponent implements OnInit {
     private datesService: DatesService,
     private fb: FormBuilder,
     private routerQuery: ActivatedRoute,
-    private modalService: ModalsService
+    private modalService: ModalsService,
+    private router: Router
   ) {
     this.idRequestSubscription = this.routerQuery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
 
@@ -87,6 +88,7 @@ export class AssignDayDatesComponent implements OnInit {
         let title= "";
         let message = "Por favor póngase en contacto con el vecino para coordinar una fecha y hora de visita de mutuo acuerdo, puesto que una vez reagendada la cita, la misma queda automáticamente confirmada sin interacción del vecino";
         this.modalService.OpenModalError2(ModalComponent, error, title, message);
+        
       }
       
     })
@@ -126,6 +128,8 @@ export class AssignDayDatesComponent implements OnInit {
         let title= "Cita Asignada Exitosamente";
         let message = "La cita fue asignada de forma exitosa";
         this.modalService.OpenModalError2(ModalComponent, error, title, message);
+        this.router.navigate(['/solicitud/asignar-cita']);
+
 
       })
 

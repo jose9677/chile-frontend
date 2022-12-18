@@ -35,10 +35,6 @@ export class StatusDatesComponent implements OnInit {
 
     this.unassignedRequest = [];
 
-
-
-
-
   }
 
   ngOnInit(): void {
@@ -64,7 +60,6 @@ export class StatusDatesComponent implements OnInit {
       this.errors = true;
 
 
-
     },
     () => {
 
@@ -83,7 +78,7 @@ export class StatusDatesComponent implements OnInit {
   }
 
   visitador(){
-    this.modalService.openModal(VisitorDataComponent)
+    this.modalService.openModalData(VisitorDataComponent, this.unassignedRequest[0]?.rut_assistant)
   }
 
 }

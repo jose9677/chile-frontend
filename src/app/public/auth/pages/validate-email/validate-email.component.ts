@@ -94,6 +94,8 @@ export class ValidateEmailComponent implements OnInit {
     let rutUser = {
       "rut": this.rutUser
     }
+    console.log(rutUser)
+
     this.authService.refreshOtp( rutUser ).subscribe((result) => {
       console.log(result);
     },
@@ -106,10 +108,40 @@ export class ValidateEmailComponent implements OnInit {
       this.isFormSubmitted = false;
 
       let errors = false;
-      let title: any = "Reenvio de clave de un solo uso"
-      let message:any = "Clave de un solo Uso Reenviada a su correo electronico";
+      let title: any = "Reenvió de clave de un solo uso"
+      let message:any = "Clave de un solo Uso Reenviada a su correo electrónico";
       this.modalService2.OpenModalError2(ModalComponent, errors, title, message);
 
     })
   }
+
+  restartUser(e: Event) {
+
+    e.preventDefault();
+
+    this.isFormSubmitted = true;
+
+    let rutUser = this.rutUser;
+
+    console.log(rutUser)
+
+    this.authService.restartUser( rutUser ).subscribe((result) => {
+      console.log(result);
+    },
+    error => {
+
+      this.isFormSubmitted = false;
+
+      console.log(error);
+      
+      this.modalService.dismiss();
+
+    },
+    () => {
+
+      this.modalService.dismiss();
+
+    } )
+  }
+
 }

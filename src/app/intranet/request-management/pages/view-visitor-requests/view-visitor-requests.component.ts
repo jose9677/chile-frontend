@@ -49,6 +49,12 @@ export class ViewVisitorRequestsComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.getforSocialAssistant();
+
+  }
+
+  getforSocialAssistant() {
+
     this.dateServices.getforSocialAssistant(this.rutUserLogged.replace(/["']/g, "")).subscribe( result => {
 
       console.log(result)
@@ -75,10 +81,9 @@ export class ViewVisitorRequestsComponent implements OnInit {
 
     },
     () => {
-      
+
 
     })
-
 
   }
 

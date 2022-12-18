@@ -193,9 +193,9 @@ export class RegisterComponent implements OnInit {
 
       address: this.fb.group({
         locations: ['', Validators.required],
-        numberStreet: ['', [Validators.required]],
+        numberStreet: ['', [ Validators.required ]],
         property_types: ['', Validators.required],
-        nameHome: ['', Validators.required],
+        nameHome: ['', [ Validators.required ]],
       }),
 
       healthInformation: this.fb.group({
@@ -262,7 +262,6 @@ export class RegisterComponent implements OnInit {
   onRegister(e: Event) {
     e.preventDefault();
 
-    this.isFormSubmitted = true;
 
     const dataUser = {
       rut : this.rut,
@@ -293,8 +292,10 @@ export class RegisterComponent implements OnInit {
 
     }
 
+    this.isFormSubmitted = true;
 
-    if ((this.isFormSubmitted && this.userRegister.status == "VALID" && this.userRegister.controls.authCheck.value == true)) {
+    if ((this.userRegister.status == "VALID" && this.userRegister.controls.authCheck.value == true)) {
+
 
       this.authServices.register(dataUser).subscribe(result => {
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssignVisitorDatesComponent } from 'src/app/intranet/dates-management/pages/assign-visitor-dates/assign-visitor-dates.component';
 import { DatesService } from 'src/app/intranet/dates-management/shared/services/dates.service';
@@ -42,12 +42,22 @@ export class ViewSupervisorRequestsComponent implements OnInit {
 
   }
 
+
+
   ngOnInit(): void {
 
     const rutSupervisor= window.sessionStorage.getItem('auth-user');
 
+    this.getAllRequest();
+  }
+
+
+  getAllRequest() {
+
     this.date.getAllRequest().subscribe( result => {
       console.log(result)
+      this.unassignedRequest2 = [];
+      this.unassignedRequest = [];
 
       result.data_complete.map((res: any)=>{
 
@@ -59,15 +69,15 @@ export class ViewSupervisorRequestsComponent implements OnInit {
       })
 
     })
-  }
 
-  getAllRequest() {
   }
 
   assingSocialAssistant (nroRequest: any, visitorRut: any) {
 
-
     this.modalService.openModalData2(AssignVisitorDatesComponent, nroRequest, visitorRut);
+
+    this.getAllRequest();
+
 
   }
 
