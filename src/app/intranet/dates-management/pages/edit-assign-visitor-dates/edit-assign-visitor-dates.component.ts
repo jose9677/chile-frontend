@@ -40,7 +40,7 @@ export class EditAssignVisitorDatesComponent implements OnInit {
 
   public fullNames:any;
 
-  public dataRequest: [];
+  public dataRequest: any[];
 
   public listRutSocialAssistant: any[];
 

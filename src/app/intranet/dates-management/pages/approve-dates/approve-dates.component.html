@@ -64,7 +64,7 @@
           <input type="text" value={{dataRequest[0]?.fullPeventionData}} disabled class="form-control">
         </div>
         <div class="col-md-4 col-sm-12 ms-4">
-          <a href="">Certificado.pdf <i class="ms-4 h4 feather icon-eye"></i></a>
+          <a href={{dataRequest[0]?.doc_srv_path}} target="_blank">{{dataRequest[0]?.document_path}}<i class="ms-4 h4 feather icon-eye"></i></a>
         </div>
       </div>
       <div class="row mt-3">
@@ -73,10 +73,7 @@
         </div>
         <div class="col-md-6 col-sm-12">
           <div class="col-md-12">
-            <a href="">Comprobante1.pdf <i class="ms-4 h4 feather icon-eye"></i></a>
-          </div>
-          <div class="col-md-12 mt-3">
-            <a href="">Comprobante2.pdf <i class="ms-4 h4 feather icon-eye"></i></a>
+            <a href={{dataRequest[1]?.doc_srv_path}} target="_blank">{{dataRequest[1]?.document_path}}<i class="ms-4 h4 feather icon-eye"></i></a>
           </div>
         </div>
       </div>
@@ -92,7 +89,7 @@
               class="form-select form-control"
               formControlName="applicantAtResidence"
               [ngClass]="{'is-invalid': (formApprove.controls.applicantAtResidence.touched && formApprove.controls.applicantAtResidence.errors?.required) || (isFormSubmitted && formApprove.controls.applicantAtResidence.errors)}">
-                    
+
                 <option value=""></option>
                 <option value="true">Si</option>
                 <option value="false">No</option>
@@ -109,7 +106,7 @@
               class="form-select form-control"
               formControlName="validPreventionCertificate"
               [ngClass]="{'is-invalid': (formApprove.controls.validPreventionCertificate.touched && formApprove.controls.validPreventionCertificate.errors?.required) || (isFormSubmitted && formApprove.controls.validPreventionCertificate.errors)}">
-                    
+
                 <option value=""></option>
                 <option value="true">Si</option>
                 <option value="false">No</option>
@@ -126,7 +123,7 @@
               class="form-select form-control"
               formControlName="validProofOfAddress"
               [ngClass]="{'is-invalid': (formApprove.controls.validProofOfAddress.touched && formApprove.controls.validProofOfAddress.errors?.required) || (isFormSubmitted && formApprove.controls.validProofOfAddress.errors)}">
-                    
+
                 <option value=""></option>
                 <option value="true">Si</option>
                 <option value="false">No</option>
@@ -144,7 +141,7 @@
               formControlName="DoesRUTMatch"
               value="true"
               [ngClass]="{'is-invalid': (formApprove.controls.DoesRUTMatch.touched && formApprove.controls.DoesRUTMatch.errors?.required) || (isFormSubmitted && formApprove.controls.DoesRUTMatch.errors)}">
-                    
+
                 <option value=""></option>
                 <option value="true">Si</option>
                 <option value="false">No</option>
@@ -178,7 +175,7 @@
 
       <div class="col-md-2 col-sm-12" *ngIf="formApprove.valid && ((formApprove.valid && formApprove.value.applicantAtResidence == 'true') &&  ( formApprove.valid && formApprove.value.validPreventionCertificate == 'true') && (formApprove.valid && formApprove.value.validProofOfAddress == 'true') && (formApprove.valid && formApprove.value.DoesRUTMatch == 'true' )); else decline">
 
-        <button type="submit" class="btn btn-primary style w-100 h-100" (click)="approve( idRequest, $event)" >Aprobar</button> 
+        <button type="submit" class="btn btn-primary style w-100 h-100" (click)="approve( idRequest, $event)" >Aprobar</button>
 
       </div>
 
@@ -187,9 +184,9 @@
         <div class="col-md-2 col-sm-12">
            <button type="button" class="btn btn-outline-primary style-outline w-100 h-100" (click)="deny(idRequest, $event)">Rechazar</button>
         </div>
-        
+
       </ng-template>
-      
+
       <div class="col-md-2 col-sm-12">
         <button class="btn btn-primary style w-100 h-100" type="button" (click)="return()">Cancelar</button>
       </div>

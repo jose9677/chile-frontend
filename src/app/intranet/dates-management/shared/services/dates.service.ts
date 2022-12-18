@@ -161,6 +161,20 @@ export class DatesService {
     );
   }
 
+  detailsVisitor( rutVisitor: any ): Observable<any | void> {
+
+    return this.http.get<any>( AUTH_API_NP + 'detailsVisitor/' + rutVisitor ).pipe(map((result: any) => {
+
+      return result;
+
+    }),
+      catchError((err) => this.handlerError(err))
+    );
+  }
+
+
+
+
 
 
 

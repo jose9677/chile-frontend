@@ -107,16 +107,21 @@ export class AssignVisitorDatesComponent implements OnInit {
     },
     () => {
 
+      this.errors = false;
+      let title= "Asistente Social Asignado";
+      let message = "El Asistente Social a sido asignado de forma exitosa";
+      this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
+
 
       this.isFormSubmitted = true;
-      e.preventDefault();
 
-
+      setTimeout(this.reloadPage, 3000);
     });
 
-
-
-    console.log(rutSocialAssistant);
-
   }
+
+  reloadPage() {
+    window.location.reload();
+  }
+
 }

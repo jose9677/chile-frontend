@@ -186,7 +186,7 @@ export class AuthService {
 
 
   logOut(): void {
-    console.log('sesion cerrada');
+    console.log('sesión cerrada');
     window.sessionStorage.clear();
     window.sessionStorage.removeItem('rol-user');
     window.sessionStorage.removeItem('access_token');
@@ -209,7 +209,7 @@ export class AuthService {
 
   restartUser(rutUser: any): Observable<any | void> {
 
-    return this.http.delete<any>(AUTH_API_NP + 'restartUser', rutUser ).pipe(map((result: any) => {
+    return this.http.delete<any>(AUTH_API_NP + 'restartUser/' + rutUser).pipe(map((result: any) => {
 
       return result['message'];
 

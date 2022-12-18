@@ -94,6 +94,7 @@ export class ValidateEmailComponent implements OnInit {
     let rutUser = {
       "rut": this.rutUser
     }
+    console.log(rutUser)
 
     this.authService.refreshOtp( rutUser ).subscribe((result) => {
       console.log(result);
@@ -118,18 +119,22 @@ export class ValidateEmailComponent implements OnInit {
 
     e.preventDefault();
 
-    let rutUser2= {
-      'rut': this.rutUser
-    }
+    this.isFormSubmitted = true;
 
-    console.log(rutUser2)
+    let rutUser = this.rutUser;
 
-    this.authService.restartUser( rutUser2 ).subscribe((result) => {
+    console.log(rutUser)
+
+    this.authService.restartUser( rutUser ).subscribe((result) => {
       console.log(result);
     },
     error => {
 
+      this.isFormSubmitted = false;
+
       console.log(error);
+      
+      this.modalService.dismiss();
 
     },
     () => {

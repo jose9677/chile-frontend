@@ -69,7 +69,7 @@
           </div>
       </div>
       <div class="col-md-4 col-sm-12 text-center d-flex align-items-center">
-        <a href="">Certificado.pdf <i class="ms-4 h4 feather icon-eye"></i></a>
+        <a href={{unassignedRequest[0]?.doc_srv_path}} target="_blank">{{unassignedRequest[0]?.document_path}}<i class="ms-4 h4 feather icon-eye"></i></a>
       </div>
     </div>
     <div class="row mt-3 justify-content-center">
@@ -78,13 +78,10 @@
             <div class="col-md-6 col-sm-12">
               <label for="" class="form-label colorTextPrimari ">Comprobante de Domicilio</label>
             </div>
-            <div class="col-md-6">
-              <input type="text" name="" id="" class="form-control" value={{unassignedRequest[0]?.document_path}} disabled>
-            </div>
           </div>
       </div>
       <div class="col-md-4 col-sm-12 text-center d-flex align-items-center">
-        <a href="">Recibo.jpeg<i class="ms-5 h4 feather icon-eye"></i></a>
+        <a href={{unassignedRequest[1]?.doc_srv_path}} target="_blank">{{unassignedRequest[1]?.document_path}}<i class="ms-5 h4 feather icon-eye"></i></a>
       </div>
     </div>
     <br>

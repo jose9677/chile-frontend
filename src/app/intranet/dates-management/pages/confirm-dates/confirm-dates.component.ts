@@ -115,6 +115,8 @@ export class ConfirmDatesComponent implements OnInit {
   }
 
   visitador(){
-    this.modalService.openModal(VisitorDataComponent)
+
+    console.log(this.unassignedRequest[0]?.rut_assistant)
+    this.modalService.openModalData(VisitorDataComponent, this.unassignedRequest[0]?.rut_assistant)
   }
 }

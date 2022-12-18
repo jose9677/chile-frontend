@@ -52,6 +52,11 @@ export class ViewAdminRequestsComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.getAllRequest();
+
+  }
+
+  getAllRequest() {
     this.date.getAllRequest().subscribe( result => {
       console.log(result)
 
@@ -62,13 +67,6 @@ export class ViewAdminRequestsComponent implements OnInit {
       this.rejectRequest = result.reject_Request.length;
 
       this.approveRequest = result.approve_Request.length;
-
-
-
-
-      // result.map((res: any)=>{
-      //   this.unassignedRequest.push(res);
-      // })
 
     })
   }
