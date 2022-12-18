@@ -76,7 +76,7 @@ export class ConfirmDatesComponent implements OnInit {
 
       this.errors = false
       let title= "Reprogramar Cita";
-      let message = "El visitador se pondra en contacto con usted a través de una llamada telefónica para acordar una nueva fecha y hora de la visita.";
+      let message = "El Asistente Social se pondra en contacto con usted a través de una llamada telefónica para acordar una nueva fecha y hora de la visita.";
       this.modalService.OpenModalError2(ModalComponent, this.errors, title, message);
       this.router.navigate(['/solicitud/solicitudes-de-inscripcion']);
 
