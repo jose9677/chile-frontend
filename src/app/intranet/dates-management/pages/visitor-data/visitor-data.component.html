@@ -1,17 +1,19 @@
 
-<div class="p-2">
+<div class="p-4">
   <div class="row d-flex justify-content-center">
     <div class="row px-4 d-flex justify-content-center">
       <div class="col-md-4 col-sm-6 text-center ">
-        <img class="card-img-top" [src]="image" alt="">
+        <img class="card-img-top" src="{{dataVisitor[0]?.profile_pic ?? 'http://localhost:4200/assets/images/others/userIcon.png'}}" alt="">
       </div>
     </div>
   </div>
   <div class="modal-body">
-    <div class="row.">
-      <h2 class="text-muted fw-normal text-center titles "><strong>Asistente social</strong></h2>
+    <div class="row">
+      <h6 class="text-muted fw-normal text-center">{{dataVisitor[0]?.rut}}</h6>
+      <h3 class="text-muted fw-normal text-center titles ">{{dataVisitor[0]?.names}} {{dataVisitor[0]?.lastname}}</h3>
+      
     </div>
-    <div class="row d-flex justify-content-evenly" >
+    <!-- <div class="row d-flex justify-content-evenly" >
       <div class="col-md-4 col-sm-12 text-center">
         <label for="Rut" class="form-label colorTextPrimari">Rut</label>
         <input
@@ -21,9 +23,9 @@
         value={{dataVisitor[0]?.rut}}
         disabled>
       </div>
-    </div>
-    <div class="row d-flex justify-content-evenly" >
-      <div class="col-md-4 col-sm-12 text-center">
+    </div> -->
+    <!-- <div class="row d-flex justify-content-evenly" >
+      <div class="col-md-6 col-sm-12 text-center">
         <label for="name" class="form-label colorTextPrimari">Nombres</label>
         <input
         type="text"
@@ -32,7 +34,7 @@
         value={{dataVisitor[0]?.names}}
         disabled>
       </div>
-      <div class="col-md-4 col-sm-12 text-center">
+      <div class="col-md-6 col-sm-12 text-center">
         <label for="lastName" class="form-label colorTextPrimari">Apellidos</label>
         <input
         type="text"
@@ -41,7 +43,7 @@
         value={{dataVisitor[0]?.lastname}}
         disabled>
       </div>
-    </div>
+    </div> -->
   </div>
   <div class="position-relative text-center">
     <button (click)="modal.close()" class="mt-1 me-2 mb-2 mb-md-0 btn btn-outline-primary style-outline">Cerrar</button>
