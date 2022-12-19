@@ -49,7 +49,7 @@ export class RejectRequestComponent implements OnInit {
 
       let errors = true;
       let title= "Solicitud Rechazada";
-      let message = "La Solicitud fue fue Rechazada";
+      let message = "La Solicitud fue Rechazada";
       this.modalsService.OpenModalError2(ModalComponent, errors, title, message);
 
       this.router.navigate(['/solicitud/asignar-cita']);

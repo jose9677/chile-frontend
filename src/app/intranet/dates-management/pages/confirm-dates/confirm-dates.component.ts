@@ -112,7 +112,7 @@ export class ConfirmDatesComponent implements OnInit {
 
       this.errors = false
       let title= "Cita Confirmada";
-      let message = "Su cita a sido confirmada con exito";
+      let message = "Su cita fue confirmada exitosamente";
       this.modalService.OpenModalError2(ModalComponent, this.errors, title, message);
       this.router.navigate(['/solicitud/solicitudes-de-inscripcion']);
 

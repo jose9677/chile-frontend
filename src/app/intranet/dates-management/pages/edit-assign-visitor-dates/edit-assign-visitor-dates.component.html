@@ -79,11 +79,9 @@
       <div class="col-md-7 col-sm-12">
         <label for="" class="form-label colorTextPrimari ">Comprobante de Domicilio</label>
       </div>
-      <div class="col-sm-12 text-center d-flex align-items-center justify-content-start">
-        <div class="col-md-12" *ngFor=" let document of documentsDom">
+        <div class="col-sm-12 text-center d-flex align-items-center justify-content-start" *ngFor=" let document of documentsDom">
           <a href={{document?.doc_srv_path}} target="_blank">{{document?.document_path}}<i class="ms-4 h4 feather icon-eye"></i></a>
         </div>
-      </div>
     </div>
   </div>
   <br>
