@@ -70,7 +70,7 @@
       <div class="col-md-3 col-sm-12 ms-6">
         <input type="text" value= {{dataRequest[0]?.fullPeventionData}} disabled class="form-control">
       </div>
-      <div class="col-md-4 col-sm-12 ms-4" *ngFor=" let document of documentsPre">
+      <div class="col-sm-12 text-center d-flex align-items-center justify-content-start" *ngFor=" let document of documentsPre">
         <a href={{document?.doc_srv_path}} target="_blank">{{document?.document_path}}<i class="ms-4 h4 feather icon-eye"></i></a>
       </div>
     </div>
@@ -78,11 +78,9 @@
       <div class="col-md-6 col-sm-12">
         <label for="" class="form-label colorTextPrimari ">Comprobante de Domicilio</label>
       </div>
-      <div class="col-md-6 col-sm-12">
-        <div class="col-md-12" *ngFor=" let document of documentsDom">
+        <div class="col-sm-12 text-center d-flex align-items-center justify-content-start" *ngFor=" let document of documentsDom">
           <a href={{document?.doc_srv_path}} target="_blank">{{document?.document_path}} <i class="ms-4 h4 feather icon-eye"></i></a>
         </div>
-      </div>
     </div>
   </div>
   <br>
