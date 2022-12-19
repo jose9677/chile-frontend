@@ -69,10 +69,10 @@
         <label for="" class="form-label colorTextPrimari ">Tipo de Previsión</label>
       </div>
       <div class="col-md-3 col-sm-12 ms-6">
-        <input type="text" value="{{typePrevention}}" disabled class="form-control">
+        <input type="text" value={{typePrevention}} disabled class="form-control">
       </div>
-      <div class="col-md-4 col-sm-12 ms-4">
-        <a href={{dataRequest[0]?.doc_srv_path}} target="_blank">{{dataRequest[0]?.document_path}} <i class="ms-4 h4 feather icon-eye"></i></a>
+      <div class="col-md-4 col-sm-12 ms-4" *ngFor=" let document of documentsPre">
+        <a href={{document?.doc_srv_path}} target="_blank">{{document?.document_path}} <i class="ms-4 h4 feather icon-eye"></i></a>
       </div>
     </div>
     <div class="row mt-3">
@@ -80,10 +80,9 @@
         <label for="" class="form-label colorTextPrimari ">Comprobante de Domicilio</label>
       </div>
       <div class="col-md-4 col-sm-12">
-        <div class="col-md-12">
-          <a href={{dataRequest[1]?.doc_srv_path}} target="_blank">{{dataRequest[1]?.document_path}}<i class="ms-4 h4 feather icon-eye"></i></a>
+        <div class="col-md-12" *ngFor=" let document of documentsDom">
+          <a href={{document?.doc_srv_path}} target="_blank">{{document?.document_path}}<i class="ms-4 h4 feather icon-eye"></i></a>
         </div>
-
       </div>
     </div>
   </div>

@@ -27,6 +27,10 @@ export class AssignDayDatesComponent implements OnInit {
 
   private idStatus: any;
 
+  public documentsPre: any[];
+
+  public documentsDom: any[];
+
 
 
 
@@ -43,7 +47,10 @@ export class AssignDayDatesComponent implements OnInit {
     private modalService: ModalsService,
     private router: Router
   ) {
-    this.idRequestSubscription = this.routerQuery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
+
+    this.documentsDom = [];
+
+    this.documentsPre = [];
 
     this.dataRequest = [];
 
@@ -51,52 +58,55 @@ export class AssignDayDatesComponent implements OnInit {
 
     this.today = new Date()
     this.today = `${this.today.getFullYear()}-${(this.today.getMonth())+1}-${this.today.getDate()}`
-    console.log(this.today)
 
 
-    
 
-   }
+
+  }
 
   ngOnInit(): void {
-    this.isFormSubmitted = false   
+    this.isFormSubmitted = false
 
-    
+    this.idRequestSubscription = this.routerQuery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
+
+
     this.datesService.getForIdRequest(this.idRequest).subscribe((result) => {
-      console.log(result)
-      
+
       result.map((res: any) => {
         res.fullName = res.names_assistant +' '+ res.lastname_assistant;
         res.fullNameUser = res.names +' '+ res.lastname;
         res.fullPeventionData = res.prevention_type +' - '+ res.prevention_detail;
-        res.fullDirection = res.street + ' ' + res.way_number + ', ' + res.description + ' ' + res.property_number;        
-        
+        res.fullDirection = res.street + ' ' + res.way_number + ', ' + res.description + ' ' + res.property_number;
+
         this.dataRequest.push(res);
 
         this.idStatus = res.id_status
 
-      });      
-                  
+        if ( res.id_document_type === 1 ) {
+          this.documentsDom.push({'doc_srv_path': res.doc_srv_path, 'document_type': res.document_type, 'document_path': res.document_path, 'document_ext': res.document_ext});
+
+        }
+        else if ( res.id_document_type === 2 ) {
+          this.documentsPre.push({'doc_srv_path': res.doc_srv_path, 'document_type': res.document_type, 'document_path': res.document_path, 'document_ext': res.document_ext})
+        }
+
+      });
+
     },
     error => {
-      
+
     },
     () => {
-      
+
       if ( this.idStatus == 5 ) {
         let error = false;
         let title= "";
         let message = "Por favor póngase en contacto con el vecino para coordinar una fecha y hora de visita de mutuo acuerdo, puesto que una vez reagendada la cita, la misma queda automáticamente confirmada sin interacción del vecino";
         this.modalService.OpenModalError2(ModalComponent, error, title, message);
-        
+
       }
-      
+
     })
-
-
-   
-
-   
 
   }
 
@@ -112,11 +122,9 @@ export class AssignDayDatesComponent implements OnInit {
 
     if ( this.isFormSubmitted && !this.formProgramVisitDate.controls.dateVisit.errors ) {
 
-      console.log(dateVisit)
 
       this.datesService.programVisitDate(this.idRequest, dateVisit).subscribe((result) => {
 
-        console.log(result);
 
       },
       error => {

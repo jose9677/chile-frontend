@@ -46,6 +46,10 @@ export class EditAssignVisitorDatesComponent implements OnInit {
 
   public selecterutSocialAssistant: any = null;
 
+  public documentsPre: any[];
+
+  public documentsDom: any[];
+
   formAssignSocialAssistant: any = this.fb.group({
     rutSocialAssistant: ['', [Validators.required]]
   })
@@ -59,11 +63,14 @@ export class EditAssignVisitorDatesComponent implements OnInit {
 
   ) {
 
+    this.documentsDom = [];
+
+    this.documentsPre = [];
+
     this.dataRequest= [];
 
     this.listRutSocialAssistant= [];
     this.supUser = window.sessionStorage.getItem("auth-user");
-    console.log(this.supUser)
   }
 
   ngOnInit(): void {
@@ -97,7 +104,6 @@ export class EditAssignVisitorDatesComponent implements OnInit {
 
     this.dateService.getForIdRequest(this.idRequest).subscribe(dataRequest => {
 
-      console.log(dataRequest)
 
 
 
@@ -116,11 +122,19 @@ export class EditAssignVisitorDatesComponent implements OnInit {
 
       this.selecterutSocialAssistant = dataRequest[0]?.rut_assistant;
 
+      dataRequest.map((res:any) => {
+
+        if ( res.id_document_type === 1 ) {
+          this.documentsDom.push({'doc_srv_path': res.doc_srv_path, 'document_type': res.document_type, 'document_path': res.document_path, 'document_ext': res.document_ext});
+
+        }
+        else if ( res.id_document_type === 2 ) {
+          this.documentsPre.push({'doc_srv_path': res.doc_srv_path, 'document_type': res.document_type, 'document_path': res.document_path, 'document_ext': res.document_ext})
+        }
+      })
 
     })
 
-    console.log(this.listRutSocialAssistant);
-    console.log(this.selecterutSocialAssistant);
 
 
   }
@@ -158,8 +172,7 @@ export class EditAssignVisitorDatesComponent implements OnInit {
 
       this.isFormSubmitted = false;
       e.preventDefault();
-      console.log(this.listRutSocialAssistant);
-      console.log(this.selecterutSocialAssistant);
+
 
 
     });

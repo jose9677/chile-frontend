@@ -17,9 +17,11 @@ export class StatusDatesComponent implements OnInit {
 
   public idRequest: any;
 
-  private dataRequest: any;
-
   public unassignedRequest: any[];
+
+  public documentsPre: any[];
+
+  public documentsDom: any[];
 
 
 
@@ -31,7 +33,10 @@ export class StatusDatesComponent implements OnInit {
 
   ) {
 
-    this.idRequestSubscription = this.routerQuery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
+    this.documentsDom = [];
+
+    this.documentsPre = [];
+
 
     this.unassignedRequest = [];
 
@@ -39,8 +44,9 @@ export class StatusDatesComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.idRequestSubscription = this.routerQuery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
+
     this.dateService.getForIdRequest(this.idRequest).subscribe((result) => {
-      console.log(result)
 
 
       result.map((res: any)=>{
@@ -50,8 +56,15 @@ export class StatusDatesComponent implements OnInit {
         res.fullDirection = res.street + ' ' + res.way_number + ', ' + res.description + ' ' + res.property_number;
 
         this.unassignedRequest.push(res);
+
+        if ( res.id_document_type === 1 ) {
+          this.documentsDom.push({'doc_srv_path': res.doc_srv_path, 'document_type': res.document_type, 'document_path': res.document_path, 'document_ext': res.document_ext});
+
+        }
+        else if ( res.id_document_type === 2 ) {
+          this.documentsPre.push({'doc_srv_path': res.doc_srv_path, 'document_type': res.document_type, 'document_path': res.document_path, 'document_ext': res.document_ext})
+        }
       })
-      console.log(this.unassignedRequest)
 
 
     },

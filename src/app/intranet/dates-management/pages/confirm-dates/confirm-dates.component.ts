@@ -22,6 +22,10 @@ export class ConfirmDatesComponent implements OnInit {
   public unassignedRequest: any[];
   private dataRequest: any;
 
+  public documentsPre: any[];
+
+  public documentsDom: any[];
+
 
 
   constructor(
@@ -32,20 +36,24 @@ export class ConfirmDatesComponent implements OnInit {
 
   ) {
 
+    this.documentsDom = [];
+
+    this.documentsPre = [];
+
     this.unassignedRequest = [];
 
-    this.idRequestSubscription = this.routerquery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
 
   }
 
   ngOnInit(): void {
+
+    this.idRequestSubscription = this.routerquery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
 
     this.datesService.getForIdRequest(this.idRequest).subscribe((result) => {
       console.log(result)
 
       if (result.length === 0 || this.errors === true) {
         result = this.dataRequest
-        console.log(result);
       }else {
         result = result
       }
@@ -57,8 +65,16 @@ export class ConfirmDatesComponent implements OnInit {
         res.fullDirection = res.street + ' ' + res.way_number +', '+ res.description +' '+ res.property_number;
 
         this.unassignedRequest.push(res);
+
+        if ( res.id_document_type === 1 ) {
+          this.documentsDom.push({'doc_srv_path': res.doc_srv_path, 'document_type': res.document_type, 'document_path': res.document_path, 'document_ext': res.document_ext});
+
+        }
+        else if ( res.id_document_type === 2 ) {
+          this.documentsPre.push({'doc_srv_path': res.doc_srv_path, 'document_type': res.document_type, 'document_path': res.document_path, 'document_ext': res.document_ext})
+        }
+
       })
-      console.log(this.unassignedRequest)
 
     })
   }
@@ -66,7 +82,6 @@ export class ConfirmDatesComponent implements OnInit {
   reasignDate(idRequest: any) {
 
     this.datesService.reasignRequest(idRequest).subscribe((result) => {
-      console.log(result)
     },
     error => {
 
@@ -88,7 +103,6 @@ export class ConfirmDatesComponent implements OnInit {
   confirmDate(idRequest: any){
 
     this.datesService.confirmRequest(idRequest).subscribe((result) => {
-      console.log(result)
     },
     error => {
 
@@ -116,7 +130,6 @@ export class ConfirmDatesComponent implements OnInit {
 
   visitador(){
 
-    console.log(this.unassignedRequest[0]?.rut_assistant)
     this.modalService.openModalData(VisitorDataComponent, this.unassignedRequest[0]?.rut_assistant)
   }
 }

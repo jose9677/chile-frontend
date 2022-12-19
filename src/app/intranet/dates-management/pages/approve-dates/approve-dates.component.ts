@@ -24,12 +24,16 @@ export class ApproveDatesComponent implements OnInit {
 
   public dataRequest: any[];
 
+  public documentsPre: any[];
+
+  public documentsDom: any[];
+
   public formApprove = this.fb.group ({
     applicantAtResidence: ['', [ Validators.required ]],
     validPreventionCertificate: ['', [ Validators.required ]],
     validProofOfAddress: ['', [ Validators.required ]],
     DoesRUTMatch: ['', [ Validators.required ]],
-    Observations: ['', [ Validators.required ]]
+    Observations: ['', [ ]]
 
   })
 
@@ -45,29 +49,33 @@ export class ApproveDatesComponent implements OnInit {
 
     this.isFormSubmitted = false;
 
-    this.idRequestSubscription = this.routerquery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
-
     this.dataRequest = [];
+
+    this.documentsDom = [];
+
+    this.documentsPre = [];
 
   }
 
   ngOnInit(): void {
 
-    this.datesService.getForIdRequest(this.idRequest).subscribe((result) => {
-      console.log(result)
+    this.idRequestSubscription = this.routerquery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
 
-      if (result.length === 0 || this.errors === true) {
-        result = this.dataRequest
-        console.log(result);
-      }else {
-        result = result
-      }
+    this.datesService.getForIdRequest(this.idRequest).subscribe((result) => {
 
       result.map((res: any)=>{
         res.fullName = res.names_assistant +' '+ res.lastname_assistant;
         res.fullNameUser = res.names +' '+ res.lastname;
         res.fullPeventionData = res.prevention_type +' - '+ res.prevention_detail;
         res.fullDirection = res.street + ' ' + res.way_number + ', ' + res.description + ' ' + res.property_number;
+
+        if ( res.id_document_type === 1 ) {
+          this.documentsDom.push({'doc_srv_path': res.doc_srv_path, 'document_type': res.document_type, 'document_path': res.document_path, 'document_ext': res.document_ext});
+
+        }
+        else if ( res.id_document_type === 2 ) {
+          this.documentsPre.push({'doc_srv_path': res.doc_srv_path, 'document_type': res.document_type, 'document_path': res.document_path, 'document_ext': res.document_ext})
+        }
 
 
         this.dataRequest.push(res);
@@ -95,7 +103,6 @@ export class ApproveDatesComponent implements OnInit {
 
       this.datesService.approbe(idRequest, dataRequest).subscribe((result) => {
 
-        console.log(result)
 
       },
       error => {

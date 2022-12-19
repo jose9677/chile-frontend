@@ -37,7 +37,6 @@ export class DatesService {
   getForRut(rutNeighbor: any): Observable<any | void> {
     return this.http.get<any>( AUTH_API_NP + 'detail-neightbor/'+ rutNeighbor, httpOptions).pipe(map((result:any) => {
 
-      console.log(result);
 
       return result['data_User_Request'];
 
@@ -50,7 +49,6 @@ export class DatesService {
 
   getForIdRequest(idRequest: any): Observable<any | void> {
     return this.http.get<any>( AUTH_API_NP + 'joinRequestUsers/'+ idRequest, httpOptions).pipe(map((result:any) => {
-
       return result;
 
     }),
@@ -97,7 +95,6 @@ export class DatesService {
 
     return this.http.post<any>(AUTH_API_NP + 'add-visitor/'+ idRequest, assignData).pipe(map((result: any) => {
 
-      console.log('assignsocialassistant');
 
       return result;
 
@@ -176,10 +173,6 @@ export class DatesService {
 
 
 
-
-
-
-
   private handlerError(err:any): Observable<never> { //pasa error al login component
     let errorMessage= 'An error ocurred';
     if (err) {
@@ -187,7 +180,6 @@ export class DatesService {
       this.errorMessage= err;
 
     }
-    console.log(this.errorMessage);
 
     return throwError(this.errorMessage)
   }
