@@ -69,12 +69,9 @@
             <div class="col-md-6 col-sm-12">
               <label for="" class="form-label colorTextPrimari ">Comprobante de domicilio</label>
             </div>
-            <div class="col-md-6">
-              <input type="text" name="" id="" class="form-control" value={{unassignedRequest[0]?.document_path}} disabled>
-            </div>
           </div>
       </div>
-      <div class="col-md-4 col-sm-12 text-center d-flex align-items-center" *ngFor=" let document of documentsPre">
+      <div class="col-md-4 col-sm-12 text-center d-flex align-items-center" *ngFor=" let document of documentsDom">
         <a href={{document?.doc_srv_path}} target="_blank">{{document?.document_path}}<i class="ms-5 h4 feather icon-eye"></i></a>
       </div>
     </div>
