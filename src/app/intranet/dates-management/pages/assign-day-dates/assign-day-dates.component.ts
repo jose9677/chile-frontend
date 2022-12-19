@@ -76,7 +76,7 @@ export class AssignDayDatesComponent implements OnInit {
         res.fullName = res.names_assistant +' '+ res.lastname_assistant;
         res.fullNameUser = res.names +' '+ res.lastname;
         res.fullPeventionData = res.prevention_type +' - '+ res.prevention_detail;
-        res.fullDirection = res.street + ' ' + res.way_number + ', ' + res.description + ' ' + res.property_number;
+        res.fullDirection = res.street + ' ' + res.way_number + ', ' + res.description + ' ' + (res.property_number ?? 's/n');
 
         this.dataRequest.push(res);
 

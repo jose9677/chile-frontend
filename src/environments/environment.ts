@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
 
-  urlApi:'http://54.189.74.47/api/',
-  urlApiNp: "http://54.189.74.47/",
+  urlApi:'http://54.218.3.146:3000/api/',
+  urlApiNp: "http://54.218.3.146:3000/",
 };
 
 /*

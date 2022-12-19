@@ -67,7 +67,7 @@ export class ApproveDatesComponent implements OnInit {
         res.fullName = res.names_assistant +' '+ res.lastname_assistant;
         res.fullNameUser = res.names +' '+ res.lastname;
         res.fullPeventionData = res.prevention_type +' - '+ res.prevention_detail;
-        res.fullDirection = res.street + ' ' + res.way_number + ', ' + res.description + ' ' + res.property_number;
+        res.fullDirection = res.street + ' ' + res.way_number + ', ' + res.description + ' ' + (res.property_number ?? 's/n');
 
         if ( res.id_document_type === 1 ) {
           this.documentsDom.push({'doc_srv_path': res.doc_srv_path, 'document_type': res.document_type, 'document_path': res.document_path, 'document_ext': res.document_ext});
