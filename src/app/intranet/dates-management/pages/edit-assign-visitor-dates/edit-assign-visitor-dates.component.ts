@@ -2,8 +2,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ModalComponent } from 'src/app/public/auth/shared/modals/modal/modal.component';
 import { ModalsService } from 'src/app/shared/services/modals.service';
-import { ModalComponent } from 'src/app/views/pages/ui-components/modal/modal.component';
 import { DatesService } from '../../shared/services/dates.service';
 
 @Component({
@@ -150,6 +150,7 @@ export class EditAssignVisitorDatesComponent implements OnInit {
 
   assignSocialAssistant(rutSocialAssistant: any, e: Event) {
 
+    e.preventDefault();
     this.isFormSubmitted = true
 
     const assignData: any = {
@@ -169,9 +170,14 @@ export class EditAssignVisitorDatesComponent implements OnInit {
     },
     () => {
 
+      this.errors = false;
+      let title= "Asistente Social Asignado";
+      let message = "El Asistente Social a sido asignado de forma exitosa";
+      this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
 
       this.isFormSubmitted = false;
-      e.preventDefault();
+
+      this.return();
 
 
 

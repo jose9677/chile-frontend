@@ -68,40 +68,41 @@ export class LoginComponent implements OnInit {
       password: this.userLogin.value.password
     }
     // window.sessionStorage.setItem('auth-user', JSON.stringify(dataLogin.rut));
-    this.authService.login(dataLogin).subscribe(result => {
-      console.log(result)
+    if (this.isFormSubmitted && this.userLogin.status == "VALID" ) {
 
-    },
-    error => {  //recibe error del user services
-      sessionStorage.clear();
-      this.errors = error;
-      console.log('errors_login->',this.errors.message);
-      // modal
-      if (this.isFormSubmitted && this.userLogin.status == "VALID" ) {
+      this.authService.login(dataLogin).subscribe(result => {
+        console.log(result)
 
-        this.userLogin.reset();
+      },
+      error => {  //recibe error del user services
+        sessionStorage.clear();
+        this.errors = error;
+        console.log('errors_login->',this.errors.message);
+        // modal
 
-        this.errors = true;
-        let title: string = ''
-        let message: string = "Usuario o contraseña incorrectos , por favor verifique e intente nuevamente";
-        this.modalService.OpenModalError2(ModalComponent, this.errors, title, message);
-      }
+          this.userLogin.reset();
 
-
-    },
-    () => {
-      this.isFormSubmitted = false;
+          this.errors = true;
+          let title: string = ''
+          let message: string = "Usuario o contraseña incorrectos , por favor verifique e intente nuevamente";
+          this.modalService.OpenModalError2(ModalComponent, this.errors, title, message);
 
 
-      console.log(this.userLogin)
-      this.router.navigate([this.returnUrl]);
-
-      this.loggedService.changeLoggedStatus =true;
-      // window.sessionStorage.setItem("isLogged", JSON.stringify(true));
+        },
+        () => {
+          this.isFormSubmitted = false;
 
 
+          console.log(this.userLogin)
+          this.router.navigate([this.returnUrl]);
 
-    });
+          this.loggedService.changeLoggedStatus =true;
+          // window.sessionStorage.setItem("isLogged", JSON.stringify(true));
+
+
+
+        });
+    }
 
   }
 
