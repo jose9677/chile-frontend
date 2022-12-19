@@ -2,25 +2,31 @@
     <div class="col-md-12">
         <div class="card header p-3">
             <h2>Solicitudes</h2>
-            <button tyoe="button" (click)="getAllRequest()" >Recargar</button>
         </div>
     </div>
 </div>
 <br>
-<div class="row d-flex justify-content-center">
-    <div class="col-md-4">
-        <div class="card resumebox p-3 mb-2 text-center">
-            <h3>Solicitudes Generadas:<br>{{countSolicitudes}}</h3>
+<div class="card p-3">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-4">
+            <div class="card resumebox p-3 mb-2 text-center">
+                <h3>Solicitudes Generadas:<br>{{countSolicitudes}}</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card resumebox p-3 mb-2 text-center">
+                <h3>Solicitudes Aprobadas:<br>{{approveRequest}}</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card resumebox p-3 mb-2 text-center">
+                <h3>Solicitudes Rechazadas:<br>{{rejectRequest}}</h3>
+            </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card resumebox p-3 mb-2 text-center">
-            <h3>Solicitudes Aprobadas:<br>{{approveRequest}}</h3>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card resumebox p-3 mb-2 text-center">
-            <h3>Solicitudes Rechazadas:<br>{{rejectRequest}}</h3>
+    <div class="row d-flex justify-content-end">
+        <div class="col-md-3">
+        <button  class="btn btn-primary me-2 mb-2 mb-md-0 style" type="button" (click)="getAllRequest()" >Recargar Estadísticas</button>
         </div>
     </div>
 </div>
@@ -62,7 +68,7 @@
                             <td>{{request.request_date}}</td>
                             <td>{{request.rut_user}}</td>
                             <td>{{request.user_name + ' ' + request.user_lastname}}</td>
-                            <td>{{request.street +' '+ request.way_number  +', '+ request.description +' '+ request.property_number}}</td>
+                            <td>{{request.street +' '+ request.way_number  +', '+ request.description +' '+ (request.property_number ?? 's/n')}}</td>
                             <td>{{(request.supervisor_names ?? ' ') + " " + (request.supervisor_lastname ?? ' ') }}</td>
                             <td>{{(request.assistant_name ?? ' ') + " " + (request.assistant_lastname ?? ' ') }}</td>
                             <td>{{request.status}}</td>

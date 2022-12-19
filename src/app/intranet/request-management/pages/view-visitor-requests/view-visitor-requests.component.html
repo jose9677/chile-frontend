@@ -44,7 +44,7 @@
                   <td>{{(request.created_at ?? ' ')}}</td>
                   <td>{{(request.rut_user ?? ' ')}}</td>
                   <td>{{(request.names ?? ' ') + ' ' + (request.lastname ?? ' ')}}</td>
-                  <td>{{(request.street ?? ' ') +' '+ (request.way_number ?? ' ')  +', '+ (request.description ?? ' ') +' '+ (request.property_number ?? ' ')}}</td>
+                  <td>{{(request.street ?? ' ') +' '+ (request.way_number ?? ' ')  +', '+ (request.description ?? ' ') +' '+ (request.property_number ?? 's/n')}}</td>
                   <td>{{(request.visit_date ?? ' ')}}</td>
                   <td>{{(request.assistant_name ?? ' ') + " " + (request.assistant_lastname ?? ' ') }}</td>
                   <td>{{(request.status ?? ' ')}}</td>
@@ -75,7 +75,7 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-body">
-        <h3 class="colorTextPrimari pb-3">Tus Citas del Día</h3>
+        <h3 class="colorTextPrimari pb-3">Tus Citas</h3>
         <div class="table-responsive">
           <!-- <div class="dataTable-search">
             <input type="text" placeholder="Buscar..." #txtSearch2 (keyup)="sortByService.onSearch2(txtSearch2.value)">
@@ -108,7 +108,7 @@
                   <td>{{(request.created_at ?? ' ')}}</td>
                   <td>{{(request.rut_user ?? ' ')}}</td>
                   <td>{{(request.names ?? ' ') + ' ' + (request.lastname ?? ' ')}}</td>
-                  <td>{{(request.street ?? ' ') +' '+ (request.way_number ?? ' ')  +', '+ (request.description ?? ' ') +' '+ (request.property_number ?? ' ')}}</td>
+                  <td>{{(request.street ?? ' ') +' '+ (request.way_number ?? ' ')  +', '+ (request.description ?? ' ') +' '+ (request.property_number ?? 's/n')}}</td>
                   <td>{{(request.visit_date ?? ' ')}}</td>
                   <td>{{(request.assistant_name ?? ' ') + " " + (request.assistant_lastname ?? ' ') }}</td>
                   <td>{{(request.status ?? ' ')}}</td>
