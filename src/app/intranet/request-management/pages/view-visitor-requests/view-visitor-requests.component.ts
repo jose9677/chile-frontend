@@ -70,7 +70,7 @@ export class ViewVisitorRequestsComponent implements OnInit {
 
         if (res.id_status == 2 || res.id_status == 5   ) {
           this.unassignedRequest.push(res);
-        }else if (res.id_status == 4){
+        }else if (res.id_status == 3 || res.id_status == 4){
           this.unassignedRequest2.push(res);
         }
       })

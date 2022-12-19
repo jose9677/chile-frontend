@@ -115,6 +115,8 @@
                   <td>
                     <button (click)="approveDates(request.id)" *ngIf="request.id_status == 4"><i class="mdi mdi-check-circle"></i></button>
 
+                    <button (click)="assignDayDate(request.id)" *ngIf="request.id_status == 3"><i class="mdi mdi-eye"></i></button>
+
                   </td>
                 </tr>
             </tbody>
