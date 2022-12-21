@@ -13,23 +13,23 @@ const routes: Routes = [
     component: LayoutCopagoComponent,
     children: [
       {
-        path: 'Cobertura-de-salud',
+        path: 'cobertura-de-salud',
         component: HealthCoverageComponent
       },
       {
-        path: 'Datos-de-simulación',
+        path: 'datos-de-simulación',
         component: SimulationDataComponent
       },
       {
-        path: 'Simulador-de-copago',
+        path: 'simulador-de-copago',
         component: CopaymentSimulatorComponent
       },
       {
-        path: 'Cancelar-Simulación',
+        path: 'cancelar-Simulación',
         component: CancelSimulationComponent
       },
       {
-        path: 'Sus-Certificados',
+        path: 'sus-certificados',
         component: YourCertificatesComponent
       }
     ]

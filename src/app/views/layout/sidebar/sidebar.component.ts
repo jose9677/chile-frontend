@@ -247,7 +247,18 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     }
   };
 
-  hidden(role: any): boolean {
+
+  hiddenItem(role: any): boolean {
+    let roleUser = window.sessionStorage.getItem("rol-user")
+
+    if (roleUser == role || role == 0){
+      return false
+    }else{
+      return true
+    }
+  }
+
+  hiddenSubitem(role: any): boolean {
     let roleUser = window.sessionStorage.getItem("rol-user")
 
     if (roleUser == role){
@@ -256,6 +267,5 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       return true
     }
   }
-
 
 }

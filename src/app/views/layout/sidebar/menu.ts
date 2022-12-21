@@ -17,6 +17,7 @@ export const MENU: MenuItem[] = [
   {
     label: 'Solicitudes',
     icon: 'file-text',
+    role: 0,
     subItems: [
       {
         role: 1,
@@ -37,6 +38,23 @@ export const MENU: MenuItem[] = [
         role: 4,
         label: 'Resumen de Solicitudes',
         link: '/solicitud/escritorio'
+      },
+    ]
+  },
+  {
+    label: 'Copago',
+    icon: 'file-text',
+    role: 1,
+    subItems: [
+      {
+        role: 1,
+        label: 'Simulador de Copago',
+        link: '/copago/simulador-de-copago',
+      },
+      {
+        role: 1,
+        label: ' Ver Certificados',
+        link: '/copago/sus-certificados'
       },
     ]
   },
