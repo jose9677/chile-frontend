@@ -1,1 +1,162 @@
-<p>copayment-simulator works!</p>
+<div class="card">
+  <form class="forms-sample container pb-5 px-5" [formGroup]="formCopago" (ngSubmit)="
+  generateCertificate($event)">
+    <div class="row mt-5 justify-content-center">
+      <h3 class="colorTextPrimari">Datos de Simulación</h3><br>
+      <div class="row mt-3">
+        <div class="col-md-4 col-sm-12">
+          <label for="idSimulation" class="form-label colorTextPrimari">Código de simulación</label>
+          <input type="text" id="idSimulation" value={{idSimulation}} disabled class="form-control">
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <label for="dateOfIssue" class="form-label colorTextPrimari">Fecha de Emisión</label>
+          <input type="text" id="dateOfIssue" value={{dateOfIssue}} disabled class="form-control">
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <label for="expirationDate" class="form-label colorTextPrimari">Fecha de Vencimiento</label>
+          <input type="text" id="expirationDate" value={{expirationDate}} disabled class="form-control">
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <label for="rutNeighbor" class="form-label colorTextPrimari">RUT Beneficiario</label>
+          <input type="text" id="rutNeighbor" value={{rutNeighbor}} disabled class="form-control">
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <label for="nameNeighbor" class="form-label colorTextPrimari">Nombre Beneficiario</label>
+          <input type="text" id="nameNeighbor" value= {{nameNeighbor}} disabled class="form-control">
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <label for="status" class="form-label colorTextPrimari">Estatus</label>
+          <input type="text" id="status" value={{status}} disabled class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="row mt-5 justify-content-center">
+      <h3 class="colorTextPrimari">Coberturas de Salud</h3><br>
+
+      <div class="row mt-3">
+        <div class="col-md-2 col-sm-12">
+          <label for="coveragePercentageIsapre" class="form-label colorTextPrimari">Isapre</label>
+        </div>
+        <div class="col-md-3 col-sm-12">
+          <input
+          class="form-control"
+          type="number"
+          id="coveragePercentageIsapre"
+          value={{coveragePercentageIsapre}}
+          formControlName="coveragePercentageIsapre"
+          min="0" max="100"
+          readonly
+          >
+        </div>
+
+        <div class="col-md-2 col-sm-12">
+          <label for="coveragePercentageSupplementary" class="form-label colorTextPrimari" >Seguro Complementario</label>
+        </div>
+        <div class="col-md-3 col-sm-12">
+          <input
+          type="number"
+          id="coveragePercentageSupplementary"
+          value={{coveragePercentageSupplementary}}
+          class="form-control"
+          formControlName="coveragePercentageSupplementary"
+          min="0" max="100"
+          readonly
+          >
+        </div>
+      </div>
+    </div>
+    <div class="row mt-5 justify-content-center">
+      <h3 class="colorTextPrimari">Proveedor</h3><br>
+
+      <div class="row mt-3">
+        <div class="col-md-6 col-sm-12">
+          <label for="serviceProvider" class="form-label colorTextPrimari">Proveedor de Servicios</label>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <ng-select [items]="listServiceProvider"
+                        id="serviceProvider"
+                        class="form-control p-0"
+                        bindLabel="serviceProvider"
+                        bindValue="id"
+                        placeholder="Seleccione"
+                        [(ngModel)]="selectedServiceProvider"
+                        formControlName="serviceProvider"
+                        [readonly]="true"
+                        [ngClass]="{'is-invalid': ((formCopago.controls.serviceProvider.touched && formCopago.controls.serviceProvider.errors) || (isFormSubmitted && formCopago.controls.serviceProvider.errors))}"
+                        >
+                    </ng-select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-5">
+      <h3 class="colorTextPrimari col-9" >Servicios</h3>
+
+      <div class="mt-4 col-12" >
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Tipo de Servicio</th>
+              <th>Servicio</th>
+              <th>Cantidad</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let service of listServicesCopago">
+              <td>1</td>
+              <td>{{service.typeService}}</td>
+              <td>{{service.nameService}}</td>
+              <td>{{service.amountServices}}</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="colorTextPrimari col-4">
+        <p>SubTotal</p>
+        <p>Cobertura Isapre</p>
+        <p>Cobertura Seg. Complementario</p>
+        <p>Copago</p>
+      </div>
+      <div class="colorTextPrimari col-12">
+        <p>
+          IMPORTANTE:
+        </p>
+        <ol>
+          <li>
+            Los costos presentados en esta página son con fines informativos y no representan un documento válido para la presentación de los servicios simulado
+          </li>
+          <li>
+            El costo del Copago es referencial y esta sujeto a la veracidad y precisión de los porcentajes de cobertura suministrados por usted.
+          </li>
+          <li>
+            Si esta de acuerdo con los costos de los servicios simulados asi como del Copago asociado, debe presionar el botón "Generar Certificado" para obtener el Certificado de Prestación de Servicios que debería presentar al proveedor.
+          </li>
+        </ol>
+      </div>
+
+      <div class="form-check form-switch mb-2 colorTextPrimari col-12">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          formControlName="authCheck"
+          [ngClass]="{'is-invalid': ((formCopago.controls.authCheck.touched && formCopago.controls.authCheck.errors || isFormSubmitted && formCopago.controls.authCheck.errors) || (formCopago.controls.authCheck.touched && formCopago.controls.authCheck.value == false || isFormSubmitted && formCopago.controls.authCheck.value == false))}">
+
+          <label class="form-check-label" >He leído y acepto realizar el copago correspondiente al proveedor de servicios</label>
+          <div *ngIf="(isFormSubmitted && formCopago.controls.authCheck.errors?.required) || (formCopago.controls.authCheck.touched && formCopago.controls.authCheck.value == false || isFormSubmitted && formCopago.controls.authCheck.value == false)" class="invalid-feedback">Debe aceptar los términos y condiciones</div>
+        </div>
+
+    </div>
+
+    <div class="d-flex flex-row justify-content-evenly mt-4">
+      <div>
+        <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" >Generar Certificado</button>
+      </div>
+      <div>
+        <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="cancel($event)" >Cancelar</button>
+      </div>
+    </div>
+  </form>
+</div>

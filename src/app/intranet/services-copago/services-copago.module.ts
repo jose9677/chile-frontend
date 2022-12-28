@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { ServicesCopagoRoutingModule } from './services-copago-routing.module';
 import { LayoutCopagoComponent } from './layouts/layout-copago/layout-copago.component';
@@ -8,6 +10,7 @@ import { SimulationDataComponent } from './pages/simulation-data/simulation-data
 import { CopaymentSimulatorComponent } from './pages/copayment-simulator/copayment-simulator.component';
 import { CancelSimulationComponent } from './pages/cancel-simulation/cancel-simulation.component';
 import { YourCertificatesComponent } from './pages/your-certificates/your-certificates.component';
+import { AddServicesComponent } from './pages/add-services/add-services.component';
 
 
 @NgModule({
@@ -18,10 +21,14 @@ import { YourCertificatesComponent } from './pages/your-certificates/your-certif
     CopaymentSimulatorComponent,
     CancelSimulationComponent,
     YourCertificatesComponent,
+    AddServicesComponent,
   ],
   imports: [
     CommonModule,
-    ServicesCopagoRoutingModule
+    ServicesCopagoRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgSelectModule
   ]
 })
 export class ServicesCopagoModule { }

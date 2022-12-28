@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-your-certificates',
@@ -7,9 +8,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class YourCertificatesComponent implements OnInit {
 
-  constructor() { }
+
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  viewCertificate(e: Event) {
+
+    e.preventDefault();
+
+    this.router.navigate(['copago', 'cobertura-de-salud'], {queryParams: {codeCertificate: 111111}});
+
+  }
+
+  downloadCertificate(e: Event) {
+
+    e.preventDefault();
+
+    alert('descargar certificado');
   }
 
 }

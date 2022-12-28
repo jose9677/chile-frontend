@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-cancel-simulation',
@@ -7,9 +10,48 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CancelSimulationComponent implements OnInit {
 
-  constructor() { }
+  @Input () data: any;
+
+  public idSimulation: any;
+
+  public isFormSubmitted: boolean;
+
+  public listReasonForCancellation: any[];
+
+  public selectedReasonForCancellation: any;
+
+  public formCancelCopago = this.fb.group ({
+    reasonForCancellation: ['', []]
+  })
+
+  constructor(
+    private fb: FormBuilder,
+    public modalService: NgbActiveModal,
+    public router: Router
+  ) {
+
+    this.isFormSubmitted = false;
+
+    this.listReasonForCancellation = [
+      {"idReason": 1, "reasonForCancellation": "no se"}
+    ];
+
+    this.selectedReasonForCancellation = null;
+
+  }
 
   ngOnInit(): void {
+
+    this.idSimulation = this.data;
+  }
+
+  acceptCancellationCopago(e: Event) {
+
+    e.preventDefault();
+
+    // endpoint para cancelar simulación
+    this.modalService.close();
+    this.router.navigate(['copago','datos-de-simulacion']);
   }
 
 }

@@ -1,1 +1,27 @@
-<p>cancel-simulation works!</p>
+<div class="p-3">
+  <h5 class="colorTextPrimari text-center mt-3"><strong>Cancelar Simulación</strong></h5>
+  <p class="p-4" style=" text-align: justify;">Tu opinion es importante para mejorar el servicio que ofrecemos, por favor selecciona el motivo por el cual no deseas generar el certificado  </p>
+  <form class="forms-sample" [formGroup]="formCancelCopago" (ngSubmit)="acceptCancellationCopago($event);">
+    <div class="row">
+      <div class="col-md-12 mb-3 ">
+        <label for="nameOfstreet" class="form-label">Motivo</label>
+        <ng-select [items]="listReasonForCancellation"
+            class="form-control p-0"
+            bindLabel="reasonForCancellation"
+            bindValue="idReason"
+            placeholder="Seleccione"
+            [(ngModel)]="selectedReasonForCancellation"
+            formControlName="reasonForCancellation"
+            [ngClass]="{'is-invalid': ((formCancelCopago.controls.reasonForCancellation.touched && formCancelCopago.value.reasonForCancellation === null) || (isFormSubmitted && formCancelCopago.value.reasonForCancellation === null))}"
+            >
+        </ng-select>
+        <div *ngIf="(formCancelCopago.controls.reasonForCancellation.touched && formCancelCopago.value.reasonForCancellation === null) || (isFormSubmitted && formCancelCopago.value.reasonForCancellation === null)" class="invalid-feedback">Campo Requerido</div>
+      </div>
+    </div>
+    <div class="position-relative text-center">
+      <button type="submit" class="mt-4 btn btn-primary me-2 mb-2 mb-md-0 style">Aceptar</button>
+      <button type="button" (click)=" modalService.dismiss()" class="mt-4 btn btn-primary me-2 mb-2 mb-md-0 style">Cancelar</button>
+    </div>
+
+  </form>
+</div>

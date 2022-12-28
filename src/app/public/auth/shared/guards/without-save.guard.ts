@@ -30,7 +30,6 @@ export class WithoutSaveGuard implements CanDeactivate<unknown> {
     currentState: RouterStateSnapshot,
     nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-      console.log(this.isRegisterUser);
 
       if (this.isRegisterUser != true) {
         return confirm('¿Quieres Salir sin Guardar los Cambios?')

@@ -21,7 +21,6 @@ export class RouteAccessGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
       this.rolUser = sessionStorage.getItem('rol-user');
-      console.log(this.rolUser)
 
       if ( this.rolUser == 1) {
         return this.router.navigate(['/solicitud/solicitudes-de-inscripcion'])

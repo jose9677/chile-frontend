@@ -49,7 +49,7 @@ export const MENU: MenuItem[] = [
       {
         role: 1,
         label: 'Simulador de Copago',
-        link: '/copago/simulador-de-copago',
+        link: '/copago/datos-de-simulacion',
       },
       {
         role: 1,

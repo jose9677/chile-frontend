@@ -1,1 +1,51 @@
-<p>your-certificates works!</p>
+<div class="row">
+  <div class="col-md-12">
+      <div class="card header p-3">
+          <h2>Solicitudes</h2>
+      </div>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card stretch-card">
+      <div class="card-body">
+        <h3 class="colorTextPrimari pb-3">Tus Solicitudes</h3>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Cod. Certificado</th>
+                <th>Fecha Emisión</th>
+                <th>Fecha Vencimiento</th>
+                <th>Proveedor</th>
+                <th>Monto de Copago</th>
+                <th>Estatus</th>
+                <th>Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+                  <!-- <tr *ngFor="let request of unassignedRequest; index as i " > -->
+                <tr>
+                  <td ></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <button (click)="viewCertificate($event)"><i class="mdi mdi-eye" style="font-size: 1.5em;"></i></button>
+                    <button (click)="downloadCertificate($event)"><i class="mdi mdi-file-pdf-box" style="font-size: 1.5em;"></i></button>
+                  </td>
+                </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

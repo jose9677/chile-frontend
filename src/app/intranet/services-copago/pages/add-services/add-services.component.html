@@ -1,0 +1,53 @@
+<div class="p-3">
+  <h5 class="colorTextPrimari text-center mt-3"><strong>Agregar Servicio</strong></h5>
+  <p class="p-4" style=" text-align: justify;">Por favor seleccione el servicio que desea agregar a la simulación</p>
+  <form class="forms-sample" [formGroup]="formAddService" (ngSubmit)="addServices($event)">
+    <div class="row">
+
+      <div class="col-md-12 mb-3 ">
+        <label for="typeService" class="form-label">Tipo de Servicio</label>
+        <ng-select [items]="listTypesService"
+            class="form-control p-0"
+            bindLabel="typeService"
+            bindValue="id"
+            placeholder="Tipo de servicio"
+            [(ngModel)]="selectedTypeService"
+            formControlName="typeService"
+            >
+        </ng-select>
+      </div>
+      <div class="col-md-12 mb-3 ">
+        <label for="typeServices" class="form-label">Servicio</label>
+        <ng-select [items]="listServices"
+            class="form-control p-0"
+            bindLabel="nameService"
+            bindValue="id"
+            placeholder="Nombre de servicio"
+            [(ngModel)]="selectedServices"
+            formControlName="nameService"
+            >
+        </ng-select>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-2 col-sm-12">
+          <label for="amount" class="form-label colorTextPrimari">Cantidad a simular</label>
+        </div>
+        <div class="col-md-3 col-sm-12">
+          <input
+          id="amount"
+          class="form-control"
+          type="number"
+          value= "0"
+          min= "0" max= "100"
+          formControlName="amountServices"
+          >
+
+        </div>
+      </div>
+    </div>
+    <div class="position-relative text-center">
+      <button (click)=" modalService.dismiss()" class="mt-4 btn btn-primary me-2 mb-2 mb-md-0 style">Agregar</button>
+    </div>
+
+  </form>
+</div>

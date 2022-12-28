@@ -299,12 +299,10 @@ export class RegisterComponent implements OnInit {
 
       this.authServices.register(dataUser).subscribe(result => {
 
-        console.log(result);
       },
       error => {
         this.errors=error;
 
-        console.log('errors_login->',this.errors);
         if( this.errors == '{"email":["The email has already been taken."]}'){
           let title= "";
           let message = "El correo electrónico que introdujo ya se encuentra asociado a otro usuario. Por favor verifique e intente nuevamente";
@@ -325,10 +323,8 @@ export class RegisterComponent implements OnInit {
 
   selectdataFile(event: any, index: any, id_document_type: any): void {
     this.file = <File>event.target.files[0];
-    // console.log(this.file);
     this.documentIsValid = true;
 
-    console.log(this.file)
 
     if ( this.file != undefined ) {
 

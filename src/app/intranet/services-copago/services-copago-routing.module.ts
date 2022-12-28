@@ -17,7 +17,7 @@ const routes: Routes = [
         component: HealthCoverageComponent
       },
       {
-        path: 'datos-de-simulación',
+        path: 'datos-de-simulacion',
         component: SimulationDataComponent
       },
       {
