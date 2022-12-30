@@ -52,7 +52,13 @@ export class CreateUsersComponent implements OnInit {
     private modalService2: ModalsService,
   ) {
     this.privateService.roles().subscribe(dataRequest => {
-      this.RolOfstreet=dataRequest
+      console.log(dataRequest)
+      let array: any[]= []
+      for (let i=1; i<dataRequest.length; i++){
+        array.push(dataRequest[i])
+      }
+      this.RolOfstreet=array
+      console.log(this.RolOfstreet)
     })
     this.privateService.supervisor().subscribe(dataRequest => {
       console.log(dataRequest)
@@ -128,12 +134,13 @@ export class CreateUsersComponent implements OnInit {
       email:this.userRegister.value.email,
       landline:this.userRegister.value.landLine,
       mobile_phone:this.userRegister.value.mobilePhone,
-      profile_pic:'',
+      supervisor_rut:this.userRegister.value.supervisorOfstreet,
+      profile_pic:'xxx',
       // supervisorofstreet:this.userRegister.value.supervisorOfstreet,
       id_rol:this.userRegister.value.RolOfstreet
     }
     console.log(dataUser);
-    this.authServices.register(dataUser).subscribe(result => {
+    this.privateService.register(dataUser).subscribe(result => {
       console.log(result);
     },
     error => {
@@ -227,7 +234,7 @@ export class CreateUsersComponent implements OnInit {
 
   }
   confirmRut(e: Event){
-    if(this.userRegister.controls.names.errors || this.userRegister.controls.rutUser.errors  || this.userRegister.controls.lastNames.errors  || this.userRegister.controls.datesBirth.errors  || this.userRegister.controls.email.errors  || this.userRegister.controls.landLine.errors  || this.userRegister.controls.mobilePhone.errors  || this.userRegister.controls.RolOfstreet.errors  || this.userRegister.controls.supervisorOfstreet.errors  || this.userRegister.controls.documents.errors ){
+    if(this.userRegister.controls.names.errors || this.userRegister.controls.rutUser.errors  || this.userRegister.controls.lastNames.errors  || this.userRegister.controls.datesBirth.errors  || this.userRegister.controls.email.errors  || this.userRegister.controls.landLine.errors  || this.userRegister.controls.mobilePhone.errors  || this.userRegister.controls.RolOfstreet.errors  || (this.userRegister.controls.supervisorOfstreet.errors && this.userRegister.controls.RolOfstreet.value ==2)  || this.userRegister.controls.documents.errors ){
       this.isFormSubmitted = true;
     }else{
       const dataRutUser= {

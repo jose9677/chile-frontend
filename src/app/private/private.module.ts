@@ -9,6 +9,8 @@ import { LayoutAdminUsersComponent } from './pages/layouts/layout-admin-users/la
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { FilterPipe } from '../intranet/request-management/shared/pipes/filter.pipe';
+import { SortByPipe } from '../intranet/request-management/shared/pipes/sort-by.pipe';
 
 
 @NgModule({

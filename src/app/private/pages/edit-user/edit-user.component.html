@@ -1,75 +1,223 @@
+<div class="row">
+  <div class="col-md-12">
+      <div class="card header p-3">
+          <h2>Editar Usuario</h2>
+      </div>
+  </div>
+</div>
+<br>
 <div class="card">
-  <form class="forms-sample container pb-5 px-5">
-    <div class="row mt-5 justify-content-center">
-      <h3 class="colorTextPrimari">Datos Personales</h3><br>
-      <div class="row mt-3">
-        <div class="col-md-4 col-sm-12 form-floating">
-          <input id="Rut" type="text" class="form-control" placeholder="Rut">
-          <label for="Rut" class="form-label colorTextPrimari">RUT</label>
-        </div>
-      </div>
-      <div class="row mt-3 ">
-        <div class="col-md-5 col-sm-12 form-floating">
-          <input id="Nombres" type="text" class="form-control" placeholder="Nombres">
-          <label for="Nombres" class="form-label colorTextPrimari">Nombres</label>
-        </div>
-        <div class="col-md-5 col-sm-12 form-floating">
-          <input id="Apellidos" type="text" class="form-control" placeholder="Apellidos">
-          <label for="Apellidos" class="form-label colorTextPrimari">Apellidos</label>
-        </div>
-      </div>
-      <div class="row mt-3 ">
+   <form *ngFor="let usuarios of usuario" class="forms-sample container mb-5" [formGroup]="userRegister" (ngSubmit)="confirmRut($event)">
+    <div class="row mt-5">
+      <div class="row justify-content-evenly">
         <div class="col-md-5 col-sm-12">
-          <label for="" class="form-label colorTextPrimari ">Fecha de Visita</label>
-          <input type="date" class="form-control form-date">
+          <h3 class="colorTextPrimari ">Datos Personales</h3>
         </div>
-        <div class="col-md-5 col-sm-12 mt-2 form-floating">
-          <input id="Correo Electrónico" type="email" class="form-control" placeholder="Correo Electrónico">
-          <label for="Correo Electrónico" class="form-label colorTextPrimari">Correo Electrónico</label>
+        <div class="col-md-5 col-sm-12">
+        </div>
+
+      </div>
+      <div class="row mt-4 justify-content-evenly">
+        <div class="col-md-5 col-sm-12">
+          <label for="Rut" class="form-label colorTextPrimari">RUT</label>
+          <input id="Rut"
+          type="text"
+          class="form-control"
+          id="Rut"
+          ngModel="{{usuarios.rut}}"
+          formControlName = rutUser
+          placeholder="0000000-0"
+          [ngClass]="{'is-invalid': (userRegister.controls.rutUser.touched && userRegister.controls.rutUser.errors?.required) || (isFormSubmitted && userRegister.controls.rutUser.errors)}">
+          <div *ngIf="(userRegister.controls.rutUser.touched && userRegister.controls.rutUser.errors?.required) || (isFormSubmitted && userRegister.controls.rutUser.errors)" class="invalid-feedback">Campo Requerido</div>
+        </div>
+        <div class="col-md-5 col-sm-12"></div>
+      </div>
+      <div class="row mt-3 justify-content-evenly">
+        <div class="col-md-5 col-sm-12">
+          <label for="Nombres" class="form-label colorTextPrimari">Nombres</label>
+          <input
+          id="Nombres"
+          type="text"
+          class="form-control"
+          placeholder="Nombres"
+          type="text"
+          ngModel="{{usuarios.names}}"
+          formControlName="names"
+          [ngClass]="{'is-invalid': (userRegister.controls.names.touched && userRegister.controls.names.errors?.required) || (isFormSubmitted && userRegister.controls.names.errors)}"
+          >
+          <div *ngIf="(userRegister.controls.names.touched && userRegister.controls.names.errors?.required) || (isFormSubmitted && userRegister.controls.names.errors)" class="invalid-feedback">Campo Requerido</div>
+          <div class="text-danger mt-1" *ngIf="userRegister.controls.names.errors?.pattern">Este campo solo admite letas</div>
+        </div>
+        <div class="col-md-5 col-sm-12 ">
+          <label for="Apellidos" class="form-label colorTextPrimari">Apellidos</label>
+          <input
+          id="Apellidos"
+          type="text"
+          class="form-control"
+          placeholder="Apellidos"
+          ngModel="{{usuarios.lastname}}"
+          type="text"
+          formControlName="lastNames"
+          [ngClass]="{'is-invalid': (userRegister.controls.lastNames.touched && userRegister.controls.lastNames.errors?.required) || (isFormSubmitted && userRegister.controls.lastNames.errors)}" placeholder="Introduzca sus apellidos"
+          >
+          <div *ngIf="(userRegister.controls.lastNames.touched && userRegister.controls.lastNames.errors?.required) || (isFormSubmitted && userRegister.controls.lastNames.errors)" class="invalid-feedback">Campo Requerido</div>
+          <div class="text-danger mt-1" *ngIf="userRegister.controls.lastNames.errors?.pattern">Este campo solo admite letas</div>
         </div>
       </div>
-      <div class="row mt-3 ">
-        <div class="col-md-5 col-sm-12 mt-2 form-floating">
-          <input id="Teléfono Fijo" type="text" class="form-control" placeholder="Teléfono Fijo">
-          <label for="Teléfono Fijo" class="form-label colorTextPrimari">Teléfono Fijo</label>
+      <div class="row mt-3 justify-content-evenly ">
+        <div class="col-md-5 col-sm-12">
+          <label for="" class="form-label colorTextPrimari ">Fecha de Nacimiento</label>
+          <input
+          type="date"
+          class="form-control form-date"
+          type="date"
+          id="FechaDeNacimiento"
+          ngModel="{{usuarios.f_nac}}"
+          formControlName="datesBirth"
+          [ngClass]="{'is-invalid': (userRegister.controls.datesBirth.touched && userRegister.controls.datesBirth.errors?.required) || (isFormSubmitted && userRegister.controls.datesBirth.errors)}"
+          >
+          <div *ngIf="(userRegister.controls.datesBirth.touched && userRegister.controls.datesBirth.errors?.required) || (isFormSubmitted && userRegister.controls.datesBirth.errors)" class="invalid-feedback">Campo Requerido</div>
+          <div class="text-danger mt-1" *ngIf="userRegister.controls.datesBirth.errors?.date">Error al ingresar la frecha de nacimiento</div>
         </div>
-        <div class="col-md-5 col-sm-12 mt-2 form-floating">
-          <input id="Teléfono Movil" type="text" class="form-control" placeholder="Teléfono Movil">
-          <label for="Teléfono Movil" class="form-label colorTextPrimari">Teléfono Movil</label>
+        <div class="col-md-5 col-sm-12 mt-2 ">
+          <label for="email" class="form-label colorTextPrimari">Correo Electrónico</label>
+          <input
+          type="email"
+          class="form-control"
+          placeholder="Correo Electrónico"
+          type="email"
+          ngModel="{{usuarios.email}}"
+          id="email"
+          formControlName="email"
+          [ngClass]="{'is-invalid': (userRegister.controls.email.touched && userRegister.controls.email.errors?.required) || (isFormSubmitted && userRegister.controls.email.errors) ||(userRegister.controls.email.errors?.email)}"
+          >
+          <div *ngIf="(userRegister.controls.email.touched && userRegister.controls.email.errors?.required) || (isFormSubmitted && userRegister.controls.email.errors)" class="invalid-feedback">Campo Requerido</div>
+          <div class="text-danger mt-1" *ngIf="userRegister.controls.email.errors?.email">Verifique el formato de email</div>
         </div>
       </div>
-      <div class="row mt-4">
-       <h4 class="colorTextPrimari">Fotografía de Perfil</h4>
-       <a href="" class="mt-2">+  Haga click aqui para agregar</a>
-       <p class="col-md-4 col-sm-12 colorTextPrimari mt-1">Solo admite archivos .jpg, .jpeg y .png
-        Tamaño máximo 8 Mb</p>
+      <div class="row mt-3 justify-content-evenly">
+        <div class="col-md-5 col-sm-12 mt-2 ">
+          <label for="TeléfonoFijo" class="form-label colorTextPrimari">Teléfono Fijo</label>
+          <input
+          id="TeléfonoFijo"
+          class="form-control"
+          placeholder="Teléfono Fijo"
+          type="tel"
+          ngModel="{{usuarios.landline}}"
+          formControlName="landLine"
+          prefix="+56" mask="  0  0000 - 0000"
+          [showMaskTyped] = "false"
+          [ngClass]="{'is-invalid': (userRegister.controls.landLine.touched && userRegister.controls.landLine.errors?.required) || (isFormSubmitted && userRegister.controls.landLine.errors)}"
+          >
+          <div *ngIf="(userRegister.controls.landLine.touched && userRegister.controls.landLine.errors?.required) || (isFormSubmitted && userRegister.controls.email.errors)" class="invalid-feedback">Campo Requerido</div>
+        </div>
+        <div class="col-md-5 col-sm-12 mt-2">
+          <label for="TeléfonoMovil" class="form-label colorTextPrimari">Teléfono Movil</label>
+          <input
+          id="TeléfonoMovil"
+          type="text"
+          class="form-control"
+          type="text"
+          ngModel="{{usuarios.mobile_phone}}"
+          formControlName="mobilePhone"
+          prefix="+56" mask="  0  0000 - 0000" [showMaskTyped] = "false"
+          [ngClass]="{'is-invalid': (userRegister.controls.mobilePhone.touched && userRegister.controls.mobilePhone.errors?.required) || (isFormSubmitted && userRegister.controls.mobilePhone.errors)}"
+          >
+          <div *ngIf="(userRegister.controls.mobilePhone.touched && userRegister.controls.mobilePhone.errors?.required) || (isFormSubmitted && userRegister.controls.mobilePhone.errors)" class="invalid-feedback">Campo Requerido</div>
+        </div>
+      </div>
+      <div class="row mt-4 justify-content-evenly">
+        <div class="col-md-5 col-sm-12">
+          <ng-container formArrayName="documents">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="row">
+                  <h5 class="colorTextPrimari pb-3">Fotografía de Perfil</h5>
+                </div>
+                <p class="col-md-12 col-sm-12 colorTextPrimari mt-1">Solo admite archivos .jpg, .jpeg y .png
+                  Tamaño máximo 8 Mb</p>
+              </div>
+            </div>
+            <ng-container *ngFor="let documentForm of documents.controls; let i = index">
+              <div [formGroupName]="i">
+                  <div class="row" >
+                    <div class="col-md-8 mb-4">
+                      <input
+                      class="form-control"
+                      type="file"
+                      id="document_path"
+                      [readOnly] ="(userRegister.controls.documents.value[i].document_path != '') ? true : false "
+                      formControlName="document_path"
+                      (change)="selectdataFile($event, i, 1)"
+                      [ngClass]="{'is-invalid': ((userRegister.controls.documents.touched && userRegister.controls.documents.value[i].document_path == '') || (isFormSubmitted && userRegister.controls.documents.value[i].document_path === ''))}"
+                      >
+                      <div *ngIf="(userRegister.controls.documents.touched && userRegister.controls.documents.value[i].document_path === '') || (isFormSubmitted && userRegister.controls.documents.value[i].document_path === '')" class="invalid-feedback">Campo Requerido</div>
+
+                      <div *ngIf="(userRegister.controls.documents.touched && documentIsValid != true) || (isFormSubmitted && documentIsValid != true )" class="invalid-feedback">Este campo solo admite formatos de archivos jpeg, png</div>
+
+                    </div>
+                  </div>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+        <div class="col-md-5 col-ms-12">
+        </div>
       </div>
     </div>
-    <div class="row mt-5 justify-content-center">
-      <h3 class="colorTextPrimari">Datos de Acceso</h3><br>
-      <div class="row mt-3">
-        <div class="col-md-5 col-sm-12 mt-2 form-floating">
-          <select id="Rol de Usuario" class="form-control form-select" placeholder="Rol de Usuario">
-            <option value="">Rol Admin</option>
-          </select>
-          <label for="Rol de Usuario" class="form-label colorTextPrimari">Rol de Usuario</label>
+    <div class="row mt-5">
+      <h3 class="colorTextPrimari text-center">Datos de Acceso</h3><br>
+      <div class="row mt-3 justify-content-evenly">
+        <div class="col-md-5 col-sm-12 mt-2">
+          <label for="RolOfstreet" class="form-label colorTextPrimari">Rol de Usuario</label>
+          <ng-select
+          [items]="RolOfstreet"
+          class="form-control p-0"
+          bindLabel="name"
+
+          bindValue="id"
+          placeholder="Seleccione"
+          [(ngModel)]="selectedStreet ||usuarios.id_rol"
+          formControlName="RolOfstreet"
+          [ngClass]="{'is-invalid': ((userRegister.controls.RolOfstreet.touched && userRegister.controls.RolOfstreet.errors?.required) || (isFormSubmitted && userRegister.controls.RolOfstreet.value == null))}"
+          >
+        </ng-select>
+        <div *ngIf="(userRegister.controls.RolOfstreet.touched && userRegister.controls.RolOfstreet.value == null)||(isFormSubmitted && userRegister.controls.RolOfstreet.value == null)" class="invalid-feedback">Campo Requerido</div>
+        </div>
+        <div class="col-md-5 col-sm-12">
+          <label for="supervisorOfstreet" class="form-label colorTextPrimari" *ngIf="userRegister.controls.RolOfstreet.value ==2">supervisor</label>
+          <ng-select
+          *ngIf="userRegister.controls.RolOfstreet.value ==2"
+          [items]="supervisorOfstreet"
+          class="form-control p-0"
+          bindLabel="names"
+          bindValue="rut"
+          placeholder="Seleccione"
+          [(ngModel)]="selectedSupervisorStreet || usuarios.supervisor_rut"
+          formControlName="supervisorOfstreet"
+          [ngClass]="{'is-invalid': ((userRegister.controls.supervisorOfstreet.touched && userRegister.controls.supervisorOfstreet.errors?.required) || (isFormSubmitted && userRegister.controls.supervisorOfstreet.value == null))}"
+          >
+        </ng-select>
+        <div *ngIf="(userRegister.controls.supervisorOfstreet.touched && userRegister.controls.supervisorOfstreet.value == null) || (isFormSubmitted && userRegister.controls.supervisorOfstreet.value == null)" class="invalid-feedback">Campo Requerido</div>
         </div>
       </div>
     </div>
-    <div class="row mt-5 justify-content-center">
-      <p class="colorTextPrimari fs-4">Contraseña</p>
-      <p class="colorTextPrimari fs-5">El usuario recibirá un correo electrónico con instrucciones para crear su contraseña de acceso.</p>
+    <div class="row mt-5 justify-content-evenly">
+      <div class="col-md-11 col-sm-12 p-5" >
+        <p class="colorTextPrimari fs-4">Contraseña</p>
+        <p class="colorTextPrimari fs-5">El usuario recibirá un correo electrónico con instrucciones para crear su contraseña de acceso.</p>
+      </div>
     </div>
     <br>
     <div class="row justify-content-center">
-      <div class="col-md-2 col-sm-12">
-       <button class="btn btn-primary style w-100 h-100" >Agregar</button> <!--ojo el event.preventDefault() evita que el formulario recargue la pagina -->
+      <div class="col-md-2 col-sm-12 mt-2">
+       <button class="btn btn-primary style w-100 h-100" >Agregar</button>
       </div>
-      <div class="col-md-2 col-sm-12">
+      <div class="col-md-2 col-sm-12 mt-2">
         <button class="btn btn-primary style w-100 h-100">Cancelar</button>
       </div>
     </div>
   </form>
- </div>
+</div>
 
 
