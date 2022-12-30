@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomValidators } from 'ngx-custom-validators';
 import { Subscription } from 'rxjs';
@@ -7,6 +7,7 @@ import { ModalsService } from 'src/app/shared/services/modals.service';
 import { ModalComponent } from 'src/app/public/auth/shared/modals/modal/modal.component';
 import { AuthService } from 'src/app/public/auth/shared/services/auth.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { PrivateService } from '../../share/services/private.service';
 
 
 
@@ -33,36 +34,46 @@ export class CreateUsersComponent implements OnInit {
 
   public supervisorOfstreet: any[]= [];
 
+  public file: File;
+
+  public documentIsValid: boolean;
+
+  public selectFiles: any[];
+
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private modalService: ModalsService,
     private authServices: AuthService,
+    private privateService:PrivateService,
     private routerQuery: ActivatedRoute,
     // public modalService3: NgbActiveModal, da ERROR y la pantalla se vuelve loca
     private modalService2: ModalsService,
   ) {
-    this.RolOfstreet = [
-      {
-        'id': 1 ,
-        'name': 'rol 1'
-      },
-      {
-        'id': 2,
-        'name': 'rol 2'
+    this.privateService.roles().subscribe(dataRequest => {
+      console.log(dataRequest)
+      let array: any[]= []
+      for (let i=1; i<dataRequest.length; i++){
+        array.push(dataRequest[i])
       }
-    ];
-    this.supervisorOfstreet =[
-      {
-        'id':1,
-        'name':'pedro'
-      },
-      {
-        'id':2,
-        'name':'juan'
-      }
-    ]
+      this.RolOfstreet=array
+      console.log(this.RolOfstreet)
+    })
+    this.privateService.supervisor().subscribe(dataRequest => {
+      console.log(dataRequest)
+      this.supervisorOfstreet=dataRequest
+    })
+    // this.supervisorOfstreet =[
+    //   {
+    //     'id':1,
+    //     'name':'pedro'
+    //   },
+    //   {
+    //     'id':2,
+    //     'name':'juan'
+    //   }
+    // ]
   }
 
   ngOnInit(): void {
@@ -78,26 +89,58 @@ export class CreateUsersComponent implements OnInit {
       landLine: ['', [Validators.required, Validators.minLength(9), CustomValidators.number]],
       mobilePhone: ['', [Validators.required, Validators.minLength(9), CustomValidators.number]],
       RolOfstreet: ['', Validators.required],
-      supervisorOfstreet:['', Validators.required]
+      supervisorOfstreet:['', Validators.required],
+      documents: this.fb.array([]),
 
     })
 
+    // this.privateService.roles().subscribe(dataRequest => {
+
+    //   console.log(dataRequest)
+    //   for (let i=0;i<dataRequest.length; i++){
+    //     this.RolOfstreet.push(dataRequest[i]);
+    //   }
+    //   console.log(this.RolOfstreet[0])
+
+
+
+    // })
+
+    this.addDocument();
+
+
+
+  }
+  get documents() {
+    return this.userRegister.controls["documents"] as FormArray;
+  }
+  addDocument() {
+    const documentForm = this.fb.group({
+        document_path: ['', Validators.required],
+    });
+
+    this.documents.push(documentForm);
+  }
+  deleteDocument(DocumentIndex: number) {
+    this.documents.removeAt(DocumentIndex);
   }
   onRegister(e: Event){
     console.log(this.userRegister);
     const dataUser ={
       rut:this.userRegister.value.rutUser,
       names:this.userRegister.value.names,
-      lastnames:this.userRegister.value.lastNames,
-      datesbirth:this.userRegister.value.datesBirth,
-      emails:this.userRegister.value.email,
+      lastname:this.userRegister.value.lastNames,
+      f_nac:this.userRegister.value.datesBirth,
+      email:this.userRegister.value.email,
       landline:this.userRegister.value.landLine,
-      mobilephone:this.userRegister.value.mobilePhone,
-      rolOfstreet:this.userRegister.value.RolOfstreet,
-      supervisorofstreet:this.userRegister.value.supervisorOfstreet
+      mobile_phone:this.userRegister.value.mobilePhone,
+      supervisor_rut:this.userRegister.value.supervisorOfstreet,
+      profile_pic:'xxx',
+      // supervisorofstreet:this.userRegister.value.supervisorOfstreet,
+      id_rol:this.userRegister.value.RolOfstreet
     }
     console.log(dataUser);
-    this.authServices.register(dataUser).subscribe(result => {
+    this.privateService.register(dataUser).subscribe(result => {
       console.log(result);
     },
     error => {
@@ -112,33 +155,110 @@ export class CreateUsersComponent implements OnInit {
 
     },
     () => {
+      this.uploadFiles();
       e.preventDefault();
       this.router.navigate(['privado/Crear-usuario']);
+      this.isFormSubmitted = false;
 
     });
   }
-  confirmRut(e: Event){
-    const dataRutUser= {
-      rut: this.userRegister.value.rutUser
+
+
+  uploadFiles() {
+
+    this.selectFiles.map((file) => {
+
+      let fileData = file.fileData;
+      let id_document_type = file.id_document_type
+
+      this.authServices.uploadFiles(fileData, id_document_type).subscribe((res) =>
+         {
+            console.log(res);
+          },
+          error => {
+
+          },
+          () => {
+
+          })
+        })
+        this.isFormSubmitted = false;
+  }
+
+
+  selectdataFile(event: any, index: any, id_document_type: any): void {
+    this.file = <File>event.target.files[0];
+    // console.log(this.file);
+    this.documentIsValid = true;
+
+    console.log(this.file)
+
+    if ( this.file != undefined ) {
+
+      if ( this.file.type == "image/jpeg" || this.file.type == "application/pdf" || this.file.type == "image/png") {
+
+
+        this.selectFiles.push({'fileData': this.file, 'id_document_type': id_document_type});
+        console.log(this.selectFiles);
+
+        this.documentIsValid = false;
+
+      } else {
+
+        this.documentIsValid = false;
+
+        if (id_document_type == 1) {
+
+          this.deleteDocument(index);
+          this.addDocument();
+          this.documentIsValid = false;
+
+
+        }
+
+      }
+
+    } else {
+
+      console.log(this.selectFiles);
+      this.deleteDocument(index);
+      this.addDocument();
+
+      this.selectFiles =[]
+      console.log(this.selectFiles);
+      this.documentIsValid = false;
+
     }
 
-    this.authServices.validateRut(dataRutUser).subscribe( result => {
-      console.log(result)
-    },
-    error => {  //recibe error del user services
-      this.errors= true;
-      let title: string = "Rut Incorrecto"
-      let message = "El Rut ingresado no es correcto, por favor verifique y vuelva a intentarlo";
-      this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
 
 
-    },
-    () => {
-      this.onRegister(e)
-      // this.modalService3.close()
-      // this.router.navigate(['/privado/Crear-usuario'], { queryParams: { rut: this.userRegister.value.rutUser } });
+  }
+  confirmRut(e: Event){
+    if(this.userRegister.controls.names.errors || this.userRegister.controls.rutUser.errors  || this.userRegister.controls.lastNames.errors  || this.userRegister.controls.datesBirth.errors  || this.userRegister.controls.email.errors  || this.userRegister.controls.landLine.errors  || this.userRegister.controls.mobilePhone.errors  || this.userRegister.controls.RolOfstreet.errors  || (this.userRegister.controls.supervisorOfstreet.errors && this.userRegister.controls.RolOfstreet.value ==2)  || this.userRegister.controls.documents.errors ){
+      this.isFormSubmitted = true;
+    }else{
+      const dataRutUser= {
+        rut: this.userRegister.value.rutUser
+      }
+
+      this.authServices.validateRut(dataRutUser).subscribe( result => {
+        console.log(result)
+      },
+      error => {  //recibe error del user services
+        this.errors= true;
+        let title: string = "Rut Incorrecto"
+        let message = "El Rut ingresado no es correcto, por favor verifique y vuelva a intentarlo";
+        this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
 
 
-    });
+      },
+      () => {
+        this.onRegister(e)
+        // this.modalService3.close()
+        // this.router.navigate(['/privado/Crear-usuario'], { queryParams: { rut: this.userRegister.value.rutUser } });
+
+
+      });
+    }
   }
 }
