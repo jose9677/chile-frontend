@@ -57,6 +57,18 @@ export class PrivateService {
     );
   }
 
+  actualizarUser(dataUser: any): Observable<any>{
+    let url = AUTH_API_NP + 'update-user/'+ dataUser;
+    return this.http.put(url, dataUser).pipe(map((result:any) => {
+
+      console.log('user Actualizado', result);
+
+    }),
+    catchError((err)=> this.handlerError(err))
+    );
+
+  }
+
   datosUser(rutUser:any): Observable<any>{
     let url = AUTH_API_NP + 'search-user/'+ rutUser;
     return this.http.get<any>(url, httpOptions).pipe(map((result:any) => {
@@ -103,6 +115,7 @@ export class PrivateService {
       })
     )
   }
+
 
   desactivarUser(rutUser: any): Observable<any>{
     let url = AUTH_API_NP + 'desactive-user/'+ rutUser;

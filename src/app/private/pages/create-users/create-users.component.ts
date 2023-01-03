@@ -157,7 +157,7 @@ export class CreateUsersComponent implements OnInit {
     () => {
       this.uploadFiles();
       e.preventDefault();
-      this.router.navigate(['privado/Crear-usuario']);
+      this.router.navigate(['privado/ver-usuarios']);
       this.isFormSubmitted = false;
 
     });

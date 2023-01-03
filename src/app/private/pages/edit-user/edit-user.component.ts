@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/public/auth/shared/services/auth.service';
 import { ModalsService } from 'src/app/shared/services/modals.service';
 import { ModalComponent } from 'src/app/public/auth/shared/modals/modal/modal.component';
 import { PrivateService } from '../../share/services/private.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,Router } from '@angular/router';
 import { auto } from '@popperjs/core';
 @Component({
   selector: 'app-edit-user',
@@ -30,6 +30,7 @@ export class EditUserComponent implements OnInit {
    private fb: FormBuilder,
    private authServices: AuthService,
    private modalService2: ModalsService,
+   private router: Router,
    private activatedroute: ActivatedRoute
   ) {
     this.activatedroute.params.subscribe(params=>{
@@ -172,6 +173,46 @@ export class EditUserComponent implements OnInit {
 
 
 
+  }
+
+  onRegister(e: Event){
+    console.log(this.userRegister);
+    const dataUser ={
+      rut:this.userRegister.value.rutUser,
+      names:this.userRegister.value.names,
+      lastname:this.userRegister.value.lastNames,
+      f_nac:this.userRegister.value.datesBirth,
+      email:this.userRegister.value.email,
+      landline:this.userRegister.value.landLine,
+      mobile_phone:this.userRegister.value.mobilePhone,
+      // employee
+      supervisor_rut:this.userRegister.value.supervisorOfstreet,
+      profile_pic:'xxx',
+      // supervisorofstreet:this.userRegister.value.supervisorOfstreet,
+      id_rol:this.userRegister.value.RolOfstreet
+    }
+    console.log(dataUser);
+    this.privateService.register(dataUser).subscribe(result => {
+      console.log(result);
+    },
+    error => {
+      this.errors=error;
+      console.log('errors_login->',this.errors);
+      if( this.errors == '{"email":["The email has already been taken."]}'){
+        let title= "";
+        let message = "El correo electrónico que introdujo ya se encuentra asociado a otro usuario. Por favor verifique e intente nuevamente";
+        this.modalService2.OpenModalError2(ModalComponent, true, title, message);
+      }
+      this.isFormSubmitted = true;
+
+    },
+    () => {
+      this.uploadFiles();
+      e.preventDefault();
+      this.router.navigate(['privado/ver-usuarios']);
+      this.isFormSubmitted = false;
+
+    });
   }
 
   confirmRut(e: Event){
