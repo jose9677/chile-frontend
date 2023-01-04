@@ -13,16 +13,15 @@
             <img class="card-img-top px-7" src="../assets/images/login/SaludAtuAlcanceLogo.png" alt=""><br><br>
             <h2 class="text-muted fw-normal text-center titles "><strong>Registro</strong></h2><br>
             <form class="forms-sample" [formGroup]="userRegister" (ngSubmit)="onRegister($event)">
-
               <div>
                 <h3 class="colorTextPrimari pb-3">Datos Personales</h3>
                 <div class="row">
                   <div class="col-md-6 mb-3">
-                    <label for="exampleInputUsername1" class="form-label">Nombres</label>
+                    <label for="name" class="form-label">Nombres</label>
                     <input
                     type="text"
                     class="form-control"
-                    id="exampleInputUsername1"
+                    id="name"
                     formControlName="names"
                     [ngClass]="{'is-invalid': (userRegister.controls.names.touched && userRegister.controls.names.errors) || (isFormSubmitted && userRegister.controls.names.errors)}" placeholder="Introduzca sus nombres"
                     >
@@ -95,6 +94,72 @@
                     >
                     <div *ngIf="(userRegister.controls.mobilePhone.touched && userRegister.controls.mobilePhone.errors?.required) || (isFormSubmitted && userRegister.controls.mobilePhone.errors?.required)" class="invalid-feedback">Campo Requerido</div>
                   </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3 ">
+                    <label for="isCaretaker" class="form-label">¿Cumple con labores de cuidador?</label>
+                    <ng-select [items]="isCaretakerOptions"
+                        id="isCaretaker"
+                        class="form-control p-0"
+                        bindLabel="description"
+                        bindValue="value"
+                        placeholder="Seleccione"
+                        [(ngModel)]="selectedCaretakerOption"
+                        formControlName="isCaretaker"
+                        [ngClass]="{'is-invalid': ((userRegister.controls.isCaretaker.touched && userRegister.controls.isCaretaker.errors) || (isFormSubmitted && userRegister.controls.isCaretaker.errors))}"
+                        >
+                    </ng-select>
+                    <div *ngIf="(userRegister.controls.isCaretaker.touched && userRegister.controls.isCaretaker.errors?.required) || (userRegister.controls.isCaretaker.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+                  </div>
+
+                  <div class="col-md-6 mb-3 " *ngIf="userRegister.controls.isCaretaker.value == true" >
+                    <label for="reason" class="form-label">Motivo</label>
+                    <ng-select [items]="reasonOptions"
+                        id="reason"
+                        class="form-control p-0"
+                        bindLabel="description"
+                        bindValue="id_motive"
+                        placeholder="Seleccione"
+                        [(ngModel)]="selectedReasonOptions"
+                        formControlName="reason"
+                        [ngClass]="{'is-invalid': ((userRegister.controls.reason.touched && userRegister.controls.reason.errors) || (isFormSubmitted && userRegister.controls.reason.errors))}"
+                        >
+                    </ng-select>
+                    <div *ngIf="(userRegister.controls.reason.touched && userRegister.controls.reason.errors?.required) || (userRegister.controls.reason.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+                  </div>
+
+                  <div class="col-md-6 mb-3 " *ngIf="userRegister.controls.isCaretaker.value == true" >
+                    <label for="dedication" class="form-label">Dedicación</label>
+                    <ng-select [items]="dedicationOptions"
+                        id="dedication"
+                        class="form-control p-0"
+                        bindLabel="description"
+                        bindValue="id_dedication"
+                        placeholder="Seleccione"
+                        [(ngModel)]="selectedDedicationOption"
+                        formControlName="dedication"
+                        [ngClass]="{'is-invalid': ((userRegister.controls.dedication.touched && userRegister.controls.dedication.errors) || (isFormSubmitted && userRegister.controls.dedication.errors))}"
+                        >
+                    </ng-select>
+                    <div *ngIf="(userRegister.controls.dedication.touched && userRegister.controls.dedication.errors?.required) || (userRegister.controls.dedication.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+                  </div>
+
+                  <div class="col-md-6 mb-3 " *ngIf="userRegister.controls.isCaretaker.value == true">
+                    <label for="remuneration" class="form-label">Remuneración</label>
+                    <ng-select [items]="remunerationOptions"
+                        id="remuneration"
+                        class="form-control p-0"
+                        bindLabel="description"
+                        bindValue="id_remuneration"
+                        placeholder="Seleccione"
+                        [(ngModel)]="selectedRemunerationOption"
+                        formControlName="remuneration"
+                        [ngClass]="{'is-invalid': ((userRegister.controls.remuneration.touched && userRegister.controls.remuneration.errors) || (isFormSubmitted && userRegister.controls.remuneration.errors))}"
+                        >
+                    </ng-select>
+                    <div *ngIf="(userRegister.controls.remuneration.touched && userRegister.controls.remuneration.errors?.required) || (userRegister.controls.remuneration.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+                  </div>
+
                 </div>
               </div>
 
@@ -336,7 +401,6 @@
                             <input
                           class="form-control"
                           type="file"
-                          id="document_path"
                           formControlName="document_path"
                           [readOnly]="(userRegister.controls.documents2.value[i].document_path != '') ? true : false "
                           (change)="selectdataFile($event, i, 2)"

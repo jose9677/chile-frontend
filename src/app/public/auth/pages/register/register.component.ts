@@ -63,8 +63,20 @@ export class RegisterComponent implements OnInit {
 
 
   public haveInsurance: any[];
-
   public selectedhaveInsurance: any = null;
+
+
+  public isCaretakerOptions: any[];
+  public selectedCaretakerOption = null;
+
+  public reasonOptions: any[];
+  public selectedReasonOptions = null;
+
+  public dedicationOptions: any[];
+  public selectedDedicationOption= null;
+
+  public remunerationOptions: any[];
+  public selectedRemunerationOption= null;
 
 
   public emailUser: any = '';
@@ -92,6 +104,17 @@ export class RegisterComponent implements OnInit {
       this.today = new Date()
       this.today = `${this.today.getFullYear()}-${(this.today.getMonth())+1}-${this.today.getDate()}`
       console.log(this.today)
+
+      this.isCaretakerOptions = [
+        {
+          'description': "si",
+          'value': true
+        },
+        {
+          'description': 'no',
+          'value': false
+        }
+      ]
 
       this.selectFiles = [];
 
@@ -154,7 +177,11 @@ export class RegisterComponent implements OnInit {
 
       this.locations = result.locations;
       this.preventions_types = result.preventions_types;
-      this.property_types = result.property_types
+      this.property_types = result.property_types;
+      this.reasonOptions = result.motives;
+      this.dedicationOptions = result.dedications;
+      this.remunerationOptions = result.remunerations;
+
 
       result.preventions_types_details.map((res: any) => {
         if (res.id_prevention_type === 1) {
@@ -190,6 +217,11 @@ export class RegisterComponent implements OnInit {
       email: ['', [Validators.required, CustomValidators.email]],
       landLine: ['', [Validators.required, Validators.minLength(9)]],
       mobilePhone: ['', [Validators.required, Validators.minLength(9)]],
+      isCaretaker: ['', [ Validators.required]],
+      reason: ['', []],
+      dedication: ['', []],
+      remuneration: ['', []],
+
 
       address: this.fb.group({
         locations: ['', Validators.required],
@@ -270,6 +302,12 @@ export class RegisterComponent implements OnInit {
       f_nac: this.userRegister.value.datesBirth,
       email: this.userRegister.value.email,
       landline: this.userRegister.value.landLine,
+
+      carer: this.userRegister.value.isCaretaker,
+      id_motive: this.userRegister.value.reason,
+      id_dedication: this.userRegister.value.dedication,
+      id_remuneration: this.userRegister.value.remuneration,
+
       mobile_phone: this.userRegister.value.mobilePhone,
       password: this.userRegister.controls.accesData.value.password,
 
@@ -291,6 +329,8 @@ export class RegisterComponent implements OnInit {
       rut_match: false,
 
     }
+
+    console.log(dataUser)
 
     this.isFormSubmitted = true;
 
