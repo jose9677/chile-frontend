@@ -55,8 +55,6 @@ export class DatesService {
     catchError((err)=> this.handlerError(err))
     );
 
-
-
   }
 
   confirmRequest(idRequest: any): Observable<any | void> {
@@ -168,10 +166,6 @@ export class DatesService {
       catchError((err) => this.handlerError(err))
     );
   }
-
-
-
-
 
   private handlerError(err:any): Observable<never> { //pasa error al login component
     let errorMessage= 'An error ocurred';

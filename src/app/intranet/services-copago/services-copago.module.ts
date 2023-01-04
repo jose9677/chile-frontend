@@ -11,6 +11,7 @@ import { CopaymentSimulatorComponent } from './pages/copayment-simulator/copayme
 import { CancelSimulationComponent } from './pages/cancel-simulation/cancel-simulation.component';
 import { YourCertificatesComponent } from './pages/your-certificates/your-certificates.component';
 import { AddServicesComponent } from './pages/add-services/add-services.component';
+import { NgxMaskModule } from 'ngx-mask';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { AddServicesComponent } from './pages/add-services/add-services.componen
     ServicesCopagoRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxMaskModule.forRoot(),
     NgSelectModule
   ]
 })

@@ -35,8 +35,7 @@ export class ViewAdminRequestsComponent implements OnInit {
 
   ) {
 
-    this.userloggedRut = sessionStorage.getItem('auth-user')
-    console.log(this.userloggedRut)
+    this.userloggedRut = sessionStorage.getItem('auth-user');
 
     this.countSolicitudes = 0;
 
