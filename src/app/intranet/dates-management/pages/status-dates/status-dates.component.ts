@@ -47,7 +47,7 @@ export class StatusDatesComponent implements OnInit {
     this.idRequestSubscription = this.routerQuery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
 
     this.dateService.getForIdRequest(this.idRequest).subscribe((result) => {
-      
+
 
 
       result.map((res: any)=>{
