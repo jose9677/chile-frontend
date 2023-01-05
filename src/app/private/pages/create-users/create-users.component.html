@@ -140,7 +140,7 @@
                       id="document_path"
                       [readOnly] ="(userRegister.controls.documents.value[i].document_path != '') ? true : false "
                       formControlName="document_path"
-                      (change)="selectdataFile($event, i, 1)"
+                      (change)="selectdataFile($event, i, 3)"
                       [ngClass]="{'is-invalid': ((userRegister.controls.documents.touched && userRegister.controls.documents.value[i].document_path == '') || (isFormSubmitted && userRegister.controls.documents.value[i].document_path === ''))}"
                       >
                       <div *ngIf="(userRegister.controls.documents.touched && userRegister.controls.documents.value[i].document_path === '') || (isFormSubmitted && userRegister.controls.documents.value[i].document_path === '')" class="invalid-feedback">Campo Requerido</div>

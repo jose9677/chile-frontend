@@ -51,6 +51,10 @@ export class CreateUsersComponent implements OnInit {
     // public modalService3: NgbActiveModal, da ERROR y la pantalla se vuelve loca
     private modalService2: ModalsService,
   ) {
+
+    this.selectFiles =[];
+
+
     this.privateService.roles().subscribe(dataRequest => {
       console.log(dataRequest)
       let array: any[]= []
@@ -188,7 +192,7 @@ export class CreateUsersComponent implements OnInit {
 
   selectdataFile(event: any, index: any, id_document_type: any): void {
     this.file = <File>event.target.files[0];
-    // console.log(this.file);
+    console.log(this.file);
     this.documentIsValid = true;
 
     console.log(this.file)

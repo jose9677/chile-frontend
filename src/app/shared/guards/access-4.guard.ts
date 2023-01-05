@@ -15,7 +15,7 @@ export class Access4Guard implements CanActivate {
 
       this.rolUser = sessionStorage.getItem('rol-user');
 
-      if ( this.rolUser == 4 ) {
+      if ( (this.rolUser == 4) || (this.rolUser == 5) ) {
 
         return true;
       }else {
