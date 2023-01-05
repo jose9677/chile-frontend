@@ -58,6 +58,38 @@ export const MENU: MenuItem[] = [
       },
     ]
   },
+  {
+    label: 'Seguridad',
+    icon: 'file-text',
+    role: 3&4&5,
+    subItems: [
+      {
+        role: 3,
+        label: 'Ver Usuarios',
+        link: '/privado/ver-usuarios',
+      },
+      {
+        role: 4,
+        label: 'Ver Usuarios',
+        link: '/privado/ver-usuarios',
+      },
+      {
+        role: 5,
+        label: 'Ver Usuarios',
+        link: '/privado/ver-usuarios',
+      },
+      {
+        role: 4,
+        label: 'roles',
+        link: '/privado/roles'
+      },
+      {
+        role: 5,
+        label: 'roles',
+        link: '/privado/roles'
+      },
+    ]
+  },
   // {
   //   label: 'Web Apps',
   //   isTitle: true

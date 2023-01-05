@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-md-12">
+      <div class="card header p-3">
+          <h2>Agregar Rol</h2>
+      </div>
+  </div>
+</div>
+<br>
+<div class="card">
+  <form class="forms-sample container mb-5" [formGroup]="roles" (ngSubmit)="agregarRol($event)">
+    <div class="row mt-5">
+      <div class="row justify-content-evenly">
+        <div class="col-md-5 col-sm-12">
+          <h3 class="colorTextPrimari ">Datos Del Rol</h3>
+        </div>
+        <div class="col-md-5 col-sm-12">
+        </div>
+      </div>
+      <div class="row mt-4 justify-content-evenly">
+        <div class="col-md-5 col-sm-12">
+          <label for="Rut" class="form-label colorTextPrimari">Nombre del Rol</label>
+          <input id="Rol"
+          type="text"
+          class="form-control"
+          formControlName = rol
+          placeholder="Nombre Del Rol"
+          [ngClass]="{'is-invalid': (roles.controls.rol.touched && roles.controls.rol.errors?.required) || (isFormSubmitted && roles.controls.rol.errors)}">
+          <div *ngIf="(roles.controls.rol.touched && roles.controls.rol.errors?.required) || (isFormSubmitted && roles.controls.rol.errors)" class="invalid-feedback">Campo Requerido</div>
+        </div>
+        <div class="col-md-5 col-sm-12">
+        </div>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="row justify-content-evenly">
+        <div class="col-md-5 col-sm-12">
+          <h3 class="colorTextPrimari ">Permisos</h3>
+        </div>
+        <div class="col-md-5 col-sm-12">
+        </div>
+      </div>
+      <div class="row mt-4 justify-content-evenly">
+        <div class="col-md-8 col-sm-12">
+          <input type="button" class="styleRol w-100 h-100" value="APLICACIONES" disabled >
+        </div>
+        <div class="col-md-2 col-sm-12"></div>
+      </div>
+    </div>
+    <br>
+    <div class="row justify-content-center">
+      <div class="col-md-2 col-sm-12 mt-2">
+       <button class="btn btn-primary style w-100 h-100" >Agregar</button>
+      </div>
+      <div class="col-md-2 col-sm-12 mt-2">
+        <button class="btn btn-primary style w-100 h-100">Cancelar</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+
