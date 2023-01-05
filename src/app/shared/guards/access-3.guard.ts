@@ -12,7 +12,7 @@ export class Access3Guard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    
+
       this.rolUser = sessionStorage.getItem('rol-user');
 
 
@@ -20,8 +20,8 @@ export class Access3Guard implements CanActivate {
 
         return true;
       }else {
-        return false
+        return false;
       }
   }
-  
+
 }

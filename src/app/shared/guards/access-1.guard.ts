@@ -20,7 +20,7 @@ export class Access1Guard implements CanActivate {
 
         return true;
       }else {
-        return false
+        return false;
       }
 
   }

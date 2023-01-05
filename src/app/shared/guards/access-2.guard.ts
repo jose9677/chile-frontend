@@ -21,7 +21,7 @@ export class Access2Guard implements CanActivate {
 
         return true;
       }else {
-        return false
+        return false;
       }
   }
 
