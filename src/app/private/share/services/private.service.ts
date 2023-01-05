@@ -47,6 +47,38 @@ export class PrivateService {
       catchError((err)=> this.handlerError(err))
       );
     }
+    ActivarRol(id: any): Observable<any>{
+      let url = AUTH_API_NP + 'active-rol/'+ id;
+      return this.http.put(url, null).pipe(map((result:any) => {
+
+        console.log('Rol Activado', result);
+
+      }),
+      catchError((err)=> this.handlerError(err))
+      )
+      .pipe(
+        tap(()=>{
+          this._refresh$.next();
+        })
+      )
+    }
+
+    desactivarRol(rol: any): Observable<any>{
+      let url = AUTH_API_NP + 'desactive-rol/'+ rol;
+      return this.http.put(url, null).pipe(map((result:any) => {
+
+        console.log('Rol desactivado', result);
+
+      }),
+      catchError((err)=> this.handlerError(err))
+      )
+      .pipe(
+        tap(()=>{
+          this._refresh$.next();
+        })
+      )
+    }
+
   register(dataUser: any): Observable<any>{
     return this.http.post( AUTH_API + 'registerEmployee', dataUser, httpOptions).pipe(map((result:any) => {
 
