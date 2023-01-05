@@ -11,6 +11,9 @@ import { NgxMaskModule } from 'ngx-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FilterPipe } from '../intranet/request-management/shared/pipes/filter.pipe';
 import { SortByPipe } from '../intranet/request-management/shared/pipes/sort-by.pipe';
+import { RolesComponent } from './pages/roles/roles.component';
+import { AddRoleComponent } from './pages/add-role/add-role.component';
+import { EditRoleComponent } from './pages/edit-role/edit-role.component';
 
 
 @NgModule({
@@ -18,7 +21,10 @@ import { SortByPipe } from '../intranet/request-management/shared/pipes/sort-by.
     ViewUsersComponent,
     CreateUsersComponent,
     EditUserComponent,
-    LayoutAdminUsersComponent
+    LayoutAdminUsersComponent,
+    RolesComponent,
+    AddRoleComponent,
+    EditRoleComponent
   ],
   imports: [
     CommonModule,

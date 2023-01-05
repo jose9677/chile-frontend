@@ -23,7 +23,6 @@
           <input id="Rut"
           type="text"
           class="form-control"
-          id="Rud"
           formControlName = rutUser
           placeholder="0000000-0"
           [ngClass]="{'is-invalid': (userRegister.controls.rutUser.touched && userRegister.controls.rutUser.errors?.required) || (isFormSubmitted && userRegister.controls.rutUser.errors)}">
