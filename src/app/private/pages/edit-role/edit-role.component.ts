@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-role',
@@ -7,9 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditRoleComponent implements OnInit {
 
-  constructor() { }
+  public roles: any;
+  public isFormSubmitted: boolean;
+
+  constructor(
+    private fb: FormBuilder,
+  ) { }
 
   ngOnInit(): void {
+    this.isFormSubmitted = false;
+
+    this.roles= this.fb.group({
+      rol: ['',[Validators.required]],
+    })
+  }
+
+  agregarRol(e: Event){
+
   }
 
 }
