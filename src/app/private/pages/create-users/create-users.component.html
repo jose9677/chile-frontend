@@ -140,12 +140,11 @@
                       id="document_path"
                       [readOnly] ="(userRegister.controls.documents.value[i].document_path != '') ? true : false "
                       formControlName="document_path"
-                      (change)="selectdataFile($event, i, 3)"
-                      [ngClass]="{'is-invalid': ((userRegister.controls.documents.touched && userRegister.controls.documents.value[i].document_path == '') || (isFormSubmitted && userRegister.controls.documents.value[i].document_path === ''))}"
+                      (change)="selectdataFile($event, i, 1)"
                       >
-                      <div *ngIf="(userRegister.controls.documents.touched && userRegister.controls.documents.value[i].document_path === '') || (isFormSubmitted && userRegister.controls.documents.value[i].document_path === '')" class="invalid-feedback">Campo Requerido</div>
+                      <!-- <div *ngIf="(userRegister.controls.documents.touched && userRegister.controls.documents.value[i].document_path === '') || (isFormSubmitted && userRegister.controls.documents.value[i].document_path === '')" class="invalid-feedback">Campo Requerido</div> -->
 
-                      <div *ngIf="(userRegister.controls.documents.touched && documentIsValid != true) || (isFormSubmitted && documentIsValid != true )" class="invalid-feedback">Este campo solo admite formatos de archivos jpeg, png</div>
+                      <!-- <div *ngIf="(userRegister.controls.documents.touched && documentIsValid != true) || (isFormSubmitted && documentIsValid != true )" class="invalid-feedback">Este campo solo admite formatos de archivos jpeg, png</div> -->
 
                     </div>
                   </div>
@@ -175,7 +174,7 @@
         </ng-select>
         <div *ngIf="(userRegister.controls.RolOfstreet.touched && userRegister.controls.RolOfstreet.value == null)||(isFormSubmitted && userRegister.controls.RolOfstreet.value == null)" class="invalid-feedback">Campo Requerido</div>
         </div>
-        <div class="col-md-5 col-sm-12">
+        <div class="col-md-5 col-sm-12 mt-2">
           <label for="supervisorOfstreet" class="form-label colorTextPrimari" *ngIf="userRegister.controls.RolOfstreet.value ==2">supervisor</label>
           <ng-select
           *ngIf="userRegister.controls.RolOfstreet.value ==2"
@@ -184,7 +183,7 @@
           bindLabel="names"
           bindValue="rut"
           placeholder="Seleccione"
-          [(ngModel)]="selectedSupervisorStreet"
+          [(ngModel)]="selectedSupervisorStreet|| rut"
           formControlName="supervisorOfstreet"
           [ngClass]="{'is-invalid': ((userRegister.controls.supervisorOfstreet.touched && userRegister.controls.supervisorOfstreet.errors?.required) || (isFormSubmitted && userRegister.controls.supervisorOfstreet.value == null))}"
           >
@@ -202,10 +201,10 @@
     <br>
     <div class="row justify-content-center">
       <div class="col-md-2 col-sm-12 mt-2">
-       <button class="btn btn-primary style w-100 h-100" >Agregar</button>
+       <button class="btn btn-primary style w-100 h-100" [disabled]="buttonBlock" >Agregar</button>
       </div>
       <div class="col-md-2 col-sm-12 mt-2">
-        <button class="btn btn-primary style w-100 h-100">Cancelar</button>
+        <button class="btn btn-primary style w-100 h-100" routerLink="/privado/ver-usuarios">Cancelar</button>
       </div>
     </div>
   </form>

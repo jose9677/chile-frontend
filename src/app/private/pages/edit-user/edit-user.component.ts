@@ -14,7 +14,10 @@ import { auto } from '@popperjs/core';
 })
 export class EditUserComponent implements OnInit {
   public errors: any = null;
-  private ruts:any
+  public buttonBlock:boolean;
+  private id:any = sessionStorage.getItem("rol-user") ;
+  private ruts:any;
+  public editable:boolean=false;
   public isFormSubmitted: boolean;
   public userRegister: any;
   public usuario: any[]= [];
@@ -52,6 +55,10 @@ export class EditUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.id);
+    if (this.id == 3){
+      this.editable=true
+    }
     // this.privateService.rutEdit.subscribe(data => {
     //   this.ruts=data;
     //   console.log(this.ruts.data);
@@ -176,71 +183,82 @@ export class EditUserComponent implements OnInit {
   }
 
   onRegister(e: Event){
-    console.log(this.userRegister);
-    const dataUser ={
-      rut:this.userRegister.value.rutUser,
-      names:this.userRegister.value.names,
-      lastname:this.userRegister.value.lastNames,
-      f_nac:this.userRegister.value.datesBirth,
-      email:this.userRegister.value.email,
-      landline:this.userRegister.value.landLine,
-      mobile_phone:this.userRegister.value.mobilePhone,
-      // employee
-      supervisor_rut:this.userRegister.value.supervisorOfstreet,
-      profile_pic:'xxx',
-      // supervisorofstreet:this.userRegister.value.supervisorOfstreet,
-      id_rol:this.userRegister.value.RolOfstreet
-    }
-    console.log(dataUser);
-    this.privateService.register(dataUser).subscribe(result => {
-      console.log(result);
-    },
-    error => {
-      this.errors=error;
-      console.log('errors_login->',this.errors);
-      if( this.errors == '{"email":["The email has already been taken."]}'){
-        let title= "";
-        let message = "El correo electrónico que introdujo ya se encuentra asociado a otro usuario. Por favor verifique e intente nuevamente";
-        this.modalService2.OpenModalError2(ModalComponent, true, title, message);
-      }
-      this.isFormSubmitted = true;
-
-    },
-    () => {
-      this.uploadFiles();
-      e.preventDefault();
-      this.router.navigate(['privado/ver-usuarios']);
-      this.isFormSubmitted = false;
-
-    });
-  }
-
-  confirmRut(e: Event){
-    if(this.userRegister.controls.names.errors || this.userRegister.controls.rutUser.errors  || this.userRegister.controls.lastNames.errors  || this.userRegister.controls.datesBirth.errors  || this.userRegister.controls.email.errors  || this.userRegister.controls.landLine.errors  || this.userRegister.controls.mobilePhone.errors  || this.userRegister.controls.RolOfstreet.errors  || (this.userRegister.controls.supervisorOfstreet.errors && this.userRegister.controls.RolOfstreet.value ==2)  || this.userRegister.controls.documents.errors ){
+    if(this.userRegister.controls.names.errors || this.userRegister.controls.rutUser.errors  || this.userRegister.controls.lastNames.errors  || this.userRegister.controls.datesBirth.errors  || this.userRegister.controls.email.errors  || this.userRegister.controls.landLine.errors  || this.userRegister.controls.mobilePhone.errors  || this.userRegister.controls.RolOfstreet.errors  || (this.userRegister.controls.supervisorOfstreet.errors && this.userRegister.controls.RolOfstreet.value ==2) ){
       this.isFormSubmitted = true;
     }else{
-      const dataRutUser= {
-        rut: this.userRegister.value.rutUser
+      this.buttonBlock=true
+      console.log(this.userRegister);
+      const dataUser ={
+        rut:this.userRegister.value.rutUser,
+        names:this.userRegister.value.names,
+        lastname:this.userRegister.value.lastNames,
+        f_nac:this.userRegister.value.datesBirth,
+        // email:this.userRegister.value.email,
+        landline:this.userRegister.value.landLine,
+        mobile_phone:this.userRegister.value.mobilePhone,
+        // employee
+        supervisor_rut:this.userRegister.value.supervisorOfstreet,
+        profile_pic:'xxx',
+        // supervisorofstreet:this.userRegister.value.supervisorOfstreet,
+        id_rol:this.userRegister.value.RolOfstreet
       }
-
-      this.authServices.validateRut(dataRutUser).subscribe( result => {
-        console.log(result)
+      console.log(dataUser);
+      this.privateService.register(dataUser).subscribe(result => {
+        console.log(result);
       },
-      error => {  //recibe error del user services
-        this.errors= true;
-        let title: string = "Rut Incorrecto"
-        let message = "El Rut ingresado no es correcto, por favor verifique y vuelva a intentarlo";
-        this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
-
+      error => {
+        this.errors=error;
+        console.log('errors_login->',this.errors);
+        if( this.errors == '{"email":["The email has already been taken."]}'){
+          let title= "";
+          let message = "El correo electrónico que introdujo ya se encuentra asociado a otro usuario. Por favor verifique e intente nuevamente";
+          this.modalService2.OpenModalError2(ModalComponent, true, title, message);
+        }else{
+          let title= "";
+          let message = "sucedió un Error verifique en el formulario que ingreso todos los campos correctamente";
+          this.modalService2.OpenModalError2(ModalComponent, true, title, message);
+        }
+        this.buttonBlock=false
+        this.isFormSubmitted = true;
 
       },
       () => {
-
-        // this.modalService3.close()
-        // this.router.navigate(['/privado/Crear-usuario'], { queryParams: { rut: this.userRegister.value.rutUser } });
-
+        this.uploadFiles();
+        e.preventDefault();
+        this.router.navigate(['privado/ver-usuarios']);
+        this.isFormSubmitted = false;
 
       });
     }
   }
+
+  // confirmRut(e: Event){
+  //   if(this.userRegister.controls.names.errors || this.userRegister.controls.rutUser.errors  || this.userRegister.controls.lastNames.errors  || this.userRegister.controls.datesBirth.errors  || this.userRegister.controls.email.errors  || this.userRegister.controls.landLine.errors  || this.userRegister.controls.mobilePhone.errors  || this.userRegister.controls.RolOfstreet.errors  || (this.userRegister.controls.supervisorOfstreet.errors && this.userRegister.controls.RolOfstreet.value ==2) ){
+  //     this.isFormSubmitted = true;
+  //   }else{
+  //     this.buttonBlock=true
+  //     const dataRutUser= {
+  //       rut: this.userRegister.value.rutUser
+  //     }
+
+  //     this.authServices.validateRut(dataRutUser).subscribe( result => {
+  //       console.log(result)
+  //     },
+  //     error => {  //recibe error del user services
+  //       this.errors= true;
+  //       let title: string = "Rut Incorrecto"
+  //       let message = "El Rut ingresado no es correcto, por favor verifique y vuelva a intentarlo";
+  //       this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
+
+
+  //     },
+  //     () => {
+
+  //       // this.modalService3.close()
+  //       // this.router.navigate(['/privado/Crear-usuario'], { queryParams: { rut: this.userRegister.value.rutUser } });
+
+
+  //     });
+  //   }
+  // }
 }

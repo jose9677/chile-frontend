@@ -14,6 +14,10 @@ import { SortByPipe } from '../intranet/request-management/shared/pipes/sort-by.
 import { RolesComponent } from './pages/roles/roles.component';
 import { AddRoleComponent } from './pages/add-role/add-role.component';
 import { EditRoleComponent } from './pages/edit-role/edit-role.component';
+import { UserUpdateComponent } from './pages/modales/user-update/user-update.component';
+import { UserCreatedComponent } from './pages/modales/user-created/user-created.component';
+import { UserActiveComponent } from './pages/modales/user-active/user-active.component';
+import { UserDesactiveComponent } from './pages/modales/user-desactive/user-desactive.component';
 
 
 @NgModule({
@@ -24,7 +28,11 @@ import { EditRoleComponent } from './pages/edit-role/edit-role.component';
     LayoutAdminUsersComponent,
     RolesComponent,
     AddRoleComponent,
-    EditRoleComponent
+    EditRoleComponent,
+    UserUpdateComponent,
+    UserCreatedComponent,
+    UserActiveComponent,
+    UserDesactiveComponent
   ],
   imports: [
     CommonModule,
