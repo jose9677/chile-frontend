@@ -61,31 +61,45 @@ export const MENU: MenuItem[] = [
   {
     label: 'Seguridad',
     icon: 'file-text',
-    role: 3&4&5,
+    role: 3,
     subItems: [
       {
         role: 3,
-        label: 'Ver Usuarios',
+        label: 'Usuarios',
+        link: '/privado/ver-usuarios',
+      },
+    ]
+  },
+  {
+    label: 'Seguridad',
+    icon: 'file-text',
+    role:4,
+    subItems: [
+      {
+        role: 4,
+        label: 'Usuarios',
         link: '/privado/ver-usuarios',
       },
       {
         role: 4,
-        label: 'Ver Usuarios',
-        link: '/privado/ver-usuarios',
-      },
-      {
-        role: 5,
-        label: 'Ver Usuarios',
-        link: '/privado/ver-usuarios',
-      },
-      {
-        role: 4,
-        label: 'roles',
+        label: 'Roles',
         link: '/privado/roles'
       },
+    ]
+  },
+  {
+    label: 'Seguridad',
+    icon: 'file-text',
+    role: 5,
+    subItems: [
       {
         role: 5,
-        label: 'roles',
+        label: 'Usuarios',
+        link: '/privado/ver-usuarios',
+      },
+      {
+        role: 5,
+        label: 'Roles',
         link: '/privado/roles'
       },
     ]

@@ -22,6 +22,7 @@
           <label for="Rut" class="form-label colorTextPrimari">RUT</label>
           <input id="Rut"
           type="text"
+          [readonly]="true"
           class="form-control"
           id="Rut"
           ngModel="{{usuarios.rut}}"
@@ -174,7 +175,7 @@
           [items]="RolOfstreet"
           class="form-control p-0"
           bindLabel="name"
-
+          [readonly]="true"
           bindValue="id"
           placeholder="Seleccione"
           [(ngModel)]="selectedStreet ||usuarios.id_rol"
@@ -190,6 +191,7 @@
           *ngIf="userRegister.controls.RolOfstreet.value ==2"
           [items]="supervisorOfstreet"
           class="form-control p-0"
+          [readonly]="true"
           bindLabel="names"
           bindValue="rut"
           placeholder="Seleccione"

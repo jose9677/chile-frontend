@@ -42,9 +42,9 @@
                    <td>{{rol.name}}</td>
                   <td><input *ngIf="rol.active == true" type="button" disabled class="activo" value="Activo">
                   <input *ngIf="rol.active == false || rol.active == null" type="button" disabled class="desactivado" value="Desactivado"></td>
-                  <td><a><i class="feather icon-eye h4" title="Ver"></i></a><a><i *ngIf="rol.active == true" class="feather icon-x-circle h4 ms-1" title="Desactivar" (click)="desactivarRol(rol.id)"style="color: #BA153F;"></i>
+                  <td><a><i class="feather icon-eye h4" title="Ver" style="color:var(--colorSecundary)"></i></a><a><i *ngIf="rol.active == true" class="feather icon-x-circle h4 ms-1" title="Desactivar" (click)="desactivarRol(rol.id)"style="color: #BA153F;"></i>
                   <i *ngIf="rol.active == false || rol.active == null" class="feather icon-check h4 ms-1" title="Activar" (click)="activarRol(rol.id)"style="color: #0EADB0;"></i>
-                  </a> <a (click)="editar(rol.id) "><i class="mdi mdi-pencil h4 ms-1" title="Editar" style="color: #0EADB0;"></i></a></td>
+                  </a> <a (click)="editar(rol.id) "><i class="mdi mdi-pencil h4 ms-1" title="Editar" style="color:var(--colorSecundary)"></i></a></td>
                  </tr>
                 <!-- <tr >
 
