@@ -8,6 +8,7 @@ import { ModalComponent } from 'src/app/public/auth/shared/modals/modal/modal.co
 import { AuthService } from 'src/app/public/auth/shared/services/auth.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { PrivateService } from '../../share/services/private.service';
+import { UserCreatedComponent } from '../modales/user-created/user-created.component';
 
 
 
@@ -21,6 +22,14 @@ import { PrivateService } from '../../share/services/private.service';
 export class CreateUsersComponent implements OnInit {
 
   public errors: any = null;
+
+  public buttonBlock:boolean
+
+  public id:any = sessionStorage.getItem("rol-user") ;
+
+  public rut:any = sessionStorage.getItem("auth-user")
+
+  public nuevoRut:any
 
   public isFormSubmitted: boolean;
 
@@ -55,14 +64,39 @@ export class CreateUsersComponent implements OnInit {
       console.log(dataRequest)
       let array: any[]= []
       for (let i=1; i<dataRequest.length; i++){
-        array.push(dataRequest[i])
+        if (this.id==3){
+          if (dataRequest[i].id==2){
+            array.push(dataRequest[i])
+          }
+        }else if(this.id==4){
+          if(dataRequest[i].id==2 || dataRequest[i].id==3){
+            array.push(dataRequest[i])
+          }
+        }else if (this.id=5){
+          if(dataRequest[i].id==2 || dataRequest[i].id==3 || dataRequest[i].id==4 ){
+            array.push(dataRequest[i])
+          }
+        }
       }
       this.RolOfstreet=array
       console.log(this.RolOfstreet)
     })
     this.privateService.supervisor().subscribe(dataRequest => {
-      console.log(dataRequest)
-      this.supervisorOfstreet=dataRequest
+      this.nuevoRut=""
+      for(let i=0; i<this.rut.length;i++){
+        if (this.rut[i]!='"'){
+          this.nuevoRut+=this.rut[i]
+        }
+      }
+      if(this.id==3){
+        for(let i=0;i<dataRequest.length;i++){
+          if(dataRequest[i].rut== this.nuevoRut){
+            this.supervisorOfstreet.push(dataRequest[i])
+          }
+        }
+      }else if(this.id==4 || this.id==5){
+        this.supervisorOfstreet=dataRequest
+      }
     })
     // this.supervisorOfstreet =[
     //   {
@@ -142,6 +176,10 @@ export class CreateUsersComponent implements OnInit {
     console.log(dataUser);
     this.privateService.register(dataUser).subscribe(result => {
       console.log(result);
+      // this.uploadFiles();
+      // e.preventDefault();
+     this.modalService.openModal(UserCreatedComponent)
+      this.isFormSubmitted = false;
     },
     error => {
       this.errors=error;
@@ -150,15 +188,16 @@ export class CreateUsersComponent implements OnInit {
         let title= "";
         let message = "El correo electrónico que introdujo ya se encuentra asociado a otro usuario. Por favor verifique e intente nuevamente";
         this.modalService.OpenModalError2(ModalComponent, true, title, message);
+      }else{
+        let title= "";
+        let message = "sucedió un Error verifique en el formulario que ingreso todos los campos correctamente";
+        this.modalService2.OpenModalError2(ModalComponent, true, title, message);
       }
+      this.buttonBlock=false
       this.isFormSubmitted = true;
 
     },
     () => {
-      this.uploadFiles();
-      e.preventDefault();
-      this.router.navigate(['privado/ver-usuarios']);
-      this.isFormSubmitted = false;
 
     });
   }
@@ -234,9 +273,10 @@ export class CreateUsersComponent implements OnInit {
 
   }
   confirmRut(e: Event){
-    if(this.userRegister.controls.names.errors || this.userRegister.controls.rutUser.errors  || this.userRegister.controls.lastNames.errors  || this.userRegister.controls.datesBirth.errors  || this.userRegister.controls.email.errors  || this.userRegister.controls.landLine.errors  || this.userRegister.controls.mobilePhone.errors  || this.userRegister.controls.RolOfstreet.errors  || (this.userRegister.controls.supervisorOfstreet.errors && this.userRegister.controls.RolOfstreet.value ==2)  || this.userRegister.controls.documents.errors ){
+    if(this.userRegister.controls.names.errors || this.userRegister.controls.rutUser.errors  || this.userRegister.controls.lastNames.errors  || this.userRegister.controls.datesBirth.errors  || this.userRegister.controls.email.errors  || this.userRegister.controls.landLine.errors  || this.userRegister.controls.mobilePhone.errors  || this.userRegister.controls.RolOfstreet.errors  || (this.userRegister.controls.supervisorOfstreet.errors && this.userRegister.controls.RolOfstreet.value ==2) ){
       this.isFormSubmitted = true;
     }else{
+      this.buttonBlock=true
       const dataRutUser= {
         rut: this.userRegister.value.rutUser
       }

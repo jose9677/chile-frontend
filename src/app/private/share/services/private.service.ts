@@ -112,6 +112,18 @@ export class PrivateService {
     );
   }
 
+  verAsistentes(rut:any): Observable<any>{
+    let url=AUTH_API_NP + 'assistant-list/'+ rut
+    return this.http.get<any>(url, httpOptions).pipe(map((result:any) => {
+
+      return result
+
+    }),
+    catchError((err)=> this.handlerError(err))
+    );
+  }
+
+
   verUsuarios(): Observable<any>{
     return this.http.get<any>( AUTH_API_NP + 'details-assistants-and-supervisors', httpOptions).pipe(map((result:any) => {
 

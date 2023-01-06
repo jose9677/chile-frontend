@@ -7,7 +7,7 @@
 </div>
 <br>
 <div class="card">
-   <form *ngFor="let usuarios of usuario" class="forms-sample container mb-5" [formGroup]="userRegister" (ngSubmit)="confirmRut($event)">
+   <form *ngFor="let usuarios of usuario" class="forms-sample container mb-5" [formGroup]="userRegister" (ngSubmit)="onRegister($event)">
     <div class="row mt-5">
       <div class="row justify-content-evenly">
         <div class="col-md-5 col-sm-12">
@@ -152,9 +152,9 @@
                       (change)="selectdataFile($event, i, 1)"
                       [ngClass]="{'is-invalid': ((userRegister.controls.documents.touched && userRegister.controls.documents.value[i].document_path == '') || (isFormSubmitted && userRegister.controls.documents.value[i].document_path === ''))}"
                       >
-                      <div *ngIf="(userRegister.controls.documents.touched && userRegister.controls.documents.value[i].document_path === '') || (isFormSubmitted && userRegister.controls.documents.value[i].document_path === '')" class="invalid-feedback">Campo Requerido</div>
+                      <!-- <div *ngIf="(userRegister.controls.documents.touched && userRegister.controls.documents.value[i].document_path === '') || (isFormSubmitted && userRegister.controls.documents.value[i].document_path === '')" class="invalid-feedback">Campo Requerido</div> -->
 
-                      <div *ngIf="(userRegister.controls.documents.touched && documentIsValid != true) || (isFormSubmitted && documentIsValid != true )" class="invalid-feedback">Este campo solo admite formatos de archivos jpeg, png</div>
+                      <!-- <div *ngIf="(userRegister.controls.documents.touched && documentIsValid != true) || (isFormSubmitted && documentIsValid != true )" class="invalid-feedback">Este campo solo admite formatos de archivos jpeg, png</div> -->
 
                     </div>
                   </div>
@@ -175,7 +175,7 @@
           [items]="RolOfstreet"
           class="form-control p-0"
           bindLabel="name"
-          [readonly]="true"
+          [readonly]="editable"
           bindValue="id"
           placeholder="Seleccione"
           [(ngModel)]="selectedStreet ||usuarios.id_rol"
@@ -191,7 +191,7 @@
           *ngIf="userRegister.controls.RolOfstreet.value ==2"
           [items]="supervisorOfstreet"
           class="form-control p-0"
-          [readonly]="true"
+          [readonly]="editable"
           bindLabel="names"
           bindValue="rut"
           placeholder="Seleccione"
@@ -213,10 +213,10 @@
     <br>
     <div class="row justify-content-center">
       <div class="col-md-2 col-sm-12 mt-2">
-       <button class="btn btn-primary style w-100 h-100" >Actualizar</button>
+       <button class="btn btn-primary style w-100 h-100" [disabled]="buttonBlock" >Actualizar</button>
       </div>
       <div class="col-md-2 col-sm-12 mt-2">
-        <button class="btn btn-primary style w-100 h-100">Cancelar</button>
+        <button class="btn btn-primary style w-100 h-100"  routerLink="/privado/ver-usuarios">Cancelar</button>
       </div>
     </div>
   </form>
