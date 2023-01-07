@@ -194,6 +194,9 @@ export class EditUserComponent implements OnInit {
   onRegister(e: Event){
     if(this.userRegister.controls.names.errors || this.userRegister.controls.rutUser.errors  || this.userRegister.controls.lastNames.errors  || this.userRegister.controls.datesBirth.errors  || this.userRegister.controls.email.errors  || this.userRegister.controls.landLine.errors  || this.userRegister.controls.mobilePhone.errors  || this.userRegister.controls.RolOfstreet.errors  || (this.userRegister.controls.supervisorOfstreet.errors && this.userRegister.controls.RolOfstreet.value ==2) ){
       this.isFormSubmitted = true;
+      let title= "";
+      let message = "sucedió un Error verifique en el formulario que ingreso todos los campos correctamente";
+      this.modalService2.OpenModalError2(ModalComponent, true, title, message);
     }else{
       this.buttonBlock=true
       console.log(this.userRegister);

@@ -134,6 +134,16 @@ export class PrivateService {
     );
   }
 
+  verTodosLosUsuarios(): Observable<any>{
+    return this.http.get<any>( AUTH_API_NP + 'details-user', httpOptions).pipe(map((result:any) => {
+
+      return result
+
+    }),
+    catchError((err)=> this.handlerError(err))
+    );
+  }
+
   supervisor(): Observable<any>{
     return this.http.get<any>( AUTH_API_NP + 'detailsSupervisor', httpOptions).pipe(map((result:any) => {
 

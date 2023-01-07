@@ -150,8 +150,8 @@
                       [readOnly] ="(userRegister.controls.documents.value[i].document_path != '') ? true : false "
                       formControlName="document_path"
                       (change)="selectdataFile($event, i, 1)"
-                      [ngClass]="{'is-invalid': ((userRegister.controls.documents.touched && userRegister.controls.documents.value[i].document_path == '') || (isFormSubmitted && userRegister.controls.documents.value[i].document_path === ''))}"
                       >
+                      <!-- [ngClass]="{'is-invalid': ((userRegister.controls.documents.touched && userRegister.controls.documents.value[i].document_path == '') || (isFormSubmitted && userRegister.controls.documents.value[i].document_path === ''))}" -->
                       <!-- <div *ngIf="(userRegister.controls.documents.touched && userRegister.controls.documents.value[i].document_path === '') || (isFormSubmitted && userRegister.controls.documents.value[i].document_path === '')" class="invalid-feedback">Campo Requerido</div> -->
 
                       <!-- <div *ngIf="(userRegister.controls.documents.touched && documentIsValid != true) || (isFormSubmitted && documentIsValid != true )" class="invalid-feedback">Este campo solo admite formatos de archivos jpeg, png</div> -->

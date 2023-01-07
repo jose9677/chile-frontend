@@ -73,11 +73,11 @@ export class CreateUsersComponent implements OnInit {
             array.push(dataRequest[i])
           }
         }else if(this.id==4){
-          if(dataRequest[i].id==2 || dataRequest[i].id==3){
+          if(dataRequest[i].id==2 || dataRequest[i].id==3 ||dataRequest[i].id==4){
             array.push(dataRequest[i])
           }
         }else if (this.id=5){
-          if(dataRequest[i].id==2 || dataRequest[i].id==3 || dataRequest[i].id==4 ){
+          if(dataRequest[i].id==2 || dataRequest[i].id==3 || dataRequest[i].id==4){
             array.push(dataRequest[i])
           }
         }
@@ -279,6 +279,9 @@ export class CreateUsersComponent implements OnInit {
   confirmRut(e: Event){
     if(this.userRegister.controls.names.errors || this.userRegister.controls.rutUser.errors  || this.userRegister.controls.lastNames.errors  || this.userRegister.controls.datesBirth.errors  || this.userRegister.controls.email.errors  || this.userRegister.controls.landLine.errors  || this.userRegister.controls.mobilePhone.errors  || this.userRegister.controls.RolOfstreet.errors  || (this.userRegister.controls.supervisorOfstreet.errors && this.userRegister.controls.RolOfstreet.value ==2) ){
       this.isFormSubmitted = true;
+      let title= "";
+      let message = "sucedió un Error verifique en el formulario que ingreso todos los campos correctamente";
+      this.modalService2.OpenModalError2(ModalComponent, true, title, message);
     }else{
       this.buttonBlock=true
       const dataRutUser= {
