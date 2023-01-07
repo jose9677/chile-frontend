@@ -7,6 +7,7 @@ import { ModalComponent } from 'src/app/public/auth/shared/modals/modal/modal.co
 import { PrivateService } from '../../share/services/private.service';
 import { ActivatedRoute,Router } from '@angular/router';
 import { auto } from '@popperjs/core';
+import { UserUpdateComponent } from '../modales/user-update/user-update.component';
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
@@ -16,6 +17,8 @@ export class EditUserComponent implements OnInit {
   public errors: any = null;
   public buttonBlock:boolean;
   private id:any = sessionStorage.getItem("rol-user") ;
+  private rut:any = sessionStorage.getItem("auth-user") ;
+  public nuevoRut:any
   private ruts:any;
   public editable:boolean=false;
   public isFormSubmitted: boolean;
@@ -55,6 +58,12 @@ export class EditUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.nuevoRut=""
+      for(let i=0; i<this.rut.length;i++){
+        if (this.rut[i]!='"'){
+          this.nuevoRut+=this.rut[i]
+        }
+      }
     console.log(this.id);
     if (this.id == 3){
       this.editable=true
@@ -203,8 +212,9 @@ export class EditUserComponent implements OnInit {
         id_rol:this.userRegister.value.RolOfstreet
       }
       console.log(dataUser);
-      this.privateService.register(dataUser).subscribe(result => {
+      this.privateService.actualizarUser(dataUser,this.nuevoRut).subscribe(result => {
         console.log(result);
+        this.modalService2.openModal(UserUpdateComponent)
       },
       error => {
         this.errors=error;

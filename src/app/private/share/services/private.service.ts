@@ -89,8 +89,8 @@ export class PrivateService {
     );
   }
 
-  actualizarUser(dataUser: any): Observable<any>{
-    let url = AUTH_API_NP + 'update-employee/'+ dataUser;
+  actualizarUser(dataUser: any, rut:any): Observable<any>{
+    let url = AUTH_API_NP + 'update-employee/'+rut;
     return this.http.put(url, dataUser).pipe(map((result:any) => {
 
       console.log('user Actualizado', result);
