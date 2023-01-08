@@ -82,9 +82,9 @@ export class EditUserComponent implements OnInit {
     this.isFormSubmitted = false;
 
     this.userRegister= this.fb.group({
-      names: ['',[Validators.required, ]],
+      names: ['',[Validators.required,Validators.pattern(/^[a-zA-Z ]+$/) ]],
       rutUser: ['',[Validators.required]],
-      lastNames: ['', [Validators.required, ]],
+      lastNames: ['', [Validators.required,Validators.pattern(/^[a-zA-Z ]+$/) ]],
       datesBirth: ['', [Validators.required, CustomValidators.date]],
       email: ['', [Validators.required, CustomValidators.email]],
       landLine: ['', [Validators.required, Validators.minLength(9), CustomValidators.number]],

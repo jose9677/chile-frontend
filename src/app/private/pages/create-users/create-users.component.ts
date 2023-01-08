@@ -31,6 +31,8 @@ export class CreateUsersComponent implements OnInit {
 
   public nuevoRut:any
 
+  public editable:boolean
+
   public isFormSubmitted: boolean;
 
   public userRegister: any;
@@ -86,21 +88,7 @@ export class CreateUsersComponent implements OnInit {
       console.log(this.RolOfstreet)
     })
     this.privateService.supervisor().subscribe(dataRequest => {
-      this.nuevoRut=""
-      for(let i=0; i<this.rut.length;i++){
-        if (this.rut[i]!='"'){
-          this.nuevoRut+=this.rut[i]
-        }
-      }
-      if(this.id==3){
-        for(let i=0;i<dataRequest.length;i++){
-          if(dataRequest[i].rut== this.nuevoRut){
-            this.supervisorOfstreet.push(dataRequest[i])
-          }
-        }
-      }else if(this.id==4 || this.id==5){
         this.supervisorOfstreet=dataRequest
-      }
     })
     // this.supervisorOfstreet =[
     //   {
@@ -116,12 +104,22 @@ export class CreateUsersComponent implements OnInit {
 
   ngOnInit(): void {
 
+    if(this.id==3){
+      this.editable=true
+      this.nuevoRut=""
+      for(let i=0; i<this.rut.length;i++){
+        if (this.rut[i]!='"'){
+          this.nuevoRut+=this.rut[i]
+        }
+      }
+    }
+
     this.isFormSubmitted = false;
 
     this.userRegister= this.fb.group({
-      names: ['',[Validators.required, ]],
+      names: ['',[Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)]],
       rutUser: ['',[Validators.required]],
-      lastNames: ['', [Validators.required, ]],
+      lastNames: ['', [Validators.required,Validators.pattern(/^[a-zA-Z ]+$/) ]],
       datesBirth: ['', [Validators.required, CustomValidators.date]],
       email: ['', [Validators.required, CustomValidators.email]],
       landLine: ['', [Validators.required, Validators.minLength(9), CustomValidators.number]],

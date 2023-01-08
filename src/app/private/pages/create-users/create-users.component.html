@@ -183,7 +183,8 @@
           bindLabel="names"
           bindValue="rut"
           placeholder="Seleccione"
-          [(ngModel)]="selectedSupervisorStreet|| rut"
+          [readonly]="editable"
+          [(ngModel)]="selectedSupervisorStreet|| nuevoRut"
           formControlName="supervisorOfstreet"
           [ngClass]="{'is-invalid': ((userRegister.controls.supervisorOfstreet.touched && userRegister.controls.supervisorOfstreet.errors?.required) || (isFormSubmitted && userRegister.controls.supervisorOfstreet.value == null))}"
           >

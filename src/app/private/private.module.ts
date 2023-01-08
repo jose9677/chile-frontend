@@ -18,6 +18,7 @@ import { UserUpdateComponent } from './pages/modales/user-update/user-update.com
 import { UserCreatedComponent } from './pages/modales/user-created/user-created.component';
 import { UserActiveComponent } from './pages/modales/user-active/user-active.component';
 import { UserDesactiveComponent } from './pages/modales/user-desactive/user-desactive.component';
+import { ViewUserComponent } from './pages/view-user/view-user.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { UserDesactiveComponent } from './pages/modales/user-desactive/user-desa
     UserUpdateComponent,
     UserCreatedComponent,
     UserActiveComponent,
-    UserDesactiveComponent
+    UserDesactiveComponent,
+    ViewUserComponent
   ],
   imports: [
     CommonModule,
