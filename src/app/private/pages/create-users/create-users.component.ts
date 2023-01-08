@@ -88,7 +88,11 @@ export class CreateUsersComponent implements OnInit {
       console.log(this.RolOfstreet)
     })
     this.privateService.supervisor().subscribe(dataRequest => {
-        this.supervisorOfstreet=dataRequest
+      this.supervisorOfstreet=dataRequest
+      let array: any= {name}
+      for (let i=0; i<dataRequest.length; i++){
+        this.supervisorOfstreet[i].names +=" "+dataRequest[i].lastname
+      }
     })
     // this.supervisorOfstreet =[
     //   {

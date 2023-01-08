@@ -52,8 +52,11 @@ export class EditUserComponent implements OnInit {
       console.log(this.RolOfstreet)
     })
     this.privateService.supervisor().subscribe(dataRequest => {
-      console.log(dataRequest)
       this.supervisorOfstreet=dataRequest
+      let array: any= {name}
+      for (let i=0; i<dataRequest.length; i++){
+        this.supervisorOfstreet[i].names +=" "+dataRequest[i].lastname
+      }
     })
   }
 

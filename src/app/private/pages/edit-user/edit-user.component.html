@@ -185,7 +185,7 @@
         </ng-select>
         <div *ngIf="(userRegister.controls.RolOfstreet.touched && userRegister.controls.RolOfstreet.value == null)||(isFormSubmitted && userRegister.controls.RolOfstreet.value == null)" class="invalid-feedback">Campo Requerido</div>
         </div>
-        <div class="col-md-5 col-sm-12">
+        <div class="col-md-5 col-sm-12 mt-2">
           <label for="supervisorOfstreet" class="form-label colorTextPrimari" *ngIf="userRegister.controls.RolOfstreet.value ==2">supervisor</label>
           <ng-select
           *ngIf="userRegister.controls.RolOfstreet.value ==2"
