@@ -147,6 +147,7 @@
                       class="form-control"
                       type="file"
                       id="document_path"
+                      ngModel="{{usuarios.profile_pic}}"
                       [readOnly] ="(userRegister.controls.documents.value[i].document_path != '') ? true : false "
                       formControlName="document_path"
                       (change)="selectdataFile($event, i, 1)"

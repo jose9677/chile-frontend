@@ -69,7 +69,7 @@ export class CreateUsersComponent implements OnInit {
     this.privateService.roles().subscribe(dataRequest => {
       console.log(dataRequest)
       let array: any[]= []
-      for (let i=1; i<dataRequest.length; i++){
+      for (let i=0; i<dataRequest.length; i++){
         if (this.id==3){
           if (dataRequest[i].id==2){
             array.push(dataRequest[i])
@@ -79,7 +79,7 @@ export class CreateUsersComponent implements OnInit {
             array.push(dataRequest[i])
           }
         }else if (this.id=5){
-          if(dataRequest[i].id==2 || dataRequest[i].id==3 || dataRequest[i].id==4){
+          if(dataRequest[i].id==1 ||dataRequest[i].id==2 || dataRequest[i].id==3 || dataRequest[i].id==4){
             array.push(dataRequest[i])
           }
         }
@@ -89,7 +89,6 @@ export class CreateUsersComponent implements OnInit {
     })
     this.privateService.supervisor().subscribe(dataRequest => {
       this.supervisorOfstreet=dataRequest
-      let array: any= {name}
       for (let i=0; i<dataRequest.length; i++){
         this.supervisorOfstreet[i].names +=" "+dataRequest[i].lastname
       }
@@ -121,9 +120,9 @@ export class CreateUsersComponent implements OnInit {
     this.isFormSubmitted = false;
 
     this.userRegister= this.fb.group({
-      names: ['',[Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)]],
+      names: ['',[Validators.required, Validators.pattern(/^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ ]+$/)]],
       rutUser: ['',[Validators.required]],
-      lastNames: ['', [Validators.required,Validators.pattern(/^[a-zA-Z ]+$/) ]],
+      lastNames: ['', [Validators.required,Validators.pattern(/^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ ]+$/) ]],
       datesBirth: ['', [Validators.required, CustomValidators.date]],
       email: ['', [Validators.required, CustomValidators.email]],
       landLine: ['', [Validators.required, Validators.minLength(9), CustomValidators.number]],
@@ -175,7 +174,8 @@ export class CreateUsersComponent implements OnInit {
       landline:this.userRegister.value.landLine,
       mobile_phone:this.userRegister.value.mobilePhone,
       supervisor_rut:this.userRegister.value.supervisorOfstreet,
-      profile_pic:'xxx',
+      profile_pic:this.userRegister.value.documents[0].document_path,
+      // profile_pic:this.userRegister.value.documents,
       // supervisorofstreet:this.userRegister.value.supervisorOfstreet,
       id_rol:this.userRegister.value.RolOfstreet
     }
@@ -204,7 +204,7 @@ export class CreateUsersComponent implements OnInit {
 
     },
     () => {
-
+      this.uploadFiles();
     });
   }
 
@@ -298,6 +298,7 @@ export class CreateUsersComponent implements OnInit {
         let title: string = "Rut Incorrecto"
         let message = "El Rut ingresado no es correcto, por favor verifique y vuelva a intentarlo";
         this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
+        this.buttonBlock=false
 
 
       },
