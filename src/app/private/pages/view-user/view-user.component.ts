@@ -47,8 +47,10 @@ export class ViewUserComponent implements OnInit {
     console.log(this.RolOfstreet)
   })
   this.privateService.supervisor().subscribe(dataRequest => {
-    console.log(dataRequest)
     this.supervisorOfstreet=dataRequest
+    for (let i=0; i<dataRequest.length; i++){
+      this.supervisorOfstreet[i].names +=" "+dataRequest[i].lastname
+    }
   })
    }
 

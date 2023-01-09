@@ -66,7 +66,7 @@ const routes: Routes = [
         loadChildren: () => import('./intranet/services-copago/services-copago.module').then(m => m.ServicesCopagoModule)
       },
       {
-        path: 'privado',
+        path: 'seguridad',
         loadChildren: () => import('./private/private.module').then(m => m.PrivateModule)
       },
       { path: '', redirectTo: 'solicitud', pathMatch: 'full' },

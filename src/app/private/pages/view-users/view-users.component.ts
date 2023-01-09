@@ -94,13 +94,13 @@ export class ViewUsersComponent implements OnInit, OnDestroy {
     //  this.privateService.rutEdit.emit({
     //    data:Rut
     //   })
-    this.router.navigate(['/privado/editar-usuario/' + Rut])
+    this.router.navigate(['/seguridad/editar-usuario/' + Rut])
    }
 
    VerUsuario(Rut:any){
     //  this.privateService.rutEdit.emit({
     //    data:Rut
     //   })
-    this.router.navigate(['/privado/ver-usuario/' + Rut])
+    this.router.navigate(['/seguridad/ver-usuario/' + Rut])
    }
 }

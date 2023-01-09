@@ -246,7 +246,7 @@ export class EditUserComponent implements OnInit {
           () => {
             this.uploadFiles();
             // e.preventDefault();
-            // this.router.navigate(['privado/ver-usuarios']);
+            // this.router.navigate(['seguridad/usuarios']);
             this.isFormSubmitted = false;
 
           });
@@ -289,7 +289,7 @@ export class EditUserComponent implements OnInit {
           () => {
             this.uploadFiles();
             // e.preventDefault();
-            // this.router.navigate(['privado/ver-usuarios']);
+            // this.router.navigate(['seguridad/usuarios']);
             this.isFormSubmitted = false;
 
           });
@@ -334,7 +334,7 @@ export class EditUserComponent implements OnInit {
           () => {
             this.uploadFiles();
             // e.preventDefault();
-            // this.router.navigate(['privado/ver-usuarios']);
+            // this.router.navigate(['seguridad/usuarios']);
             this.isFormSubmitted = false;
 
           });
@@ -377,7 +377,7 @@ export class EditUserComponent implements OnInit {
           () => {
             this.uploadFiles();
             // e.preventDefault();
-            // this.router.navigate(['privado/ver-usuarios']);
+            // this.router.navigate(['seguridad/usuarios']);
             this.isFormSubmitted = false;
 
           });
@@ -409,7 +409,7 @@ export class EditUserComponent implements OnInit {
   //     () => {
 
   //       // this.modalService3.close()
-  //       // this.router.navigate(['/privado/Crear-usuario'], { queryParams: { rut: this.userRegister.value.rutUser } });
+  //       // this.router.navigate(['/seguridad/Crear-usuario'], { queryParams: { rut: this.userRegister.value.rutUser } });
 
 
   //     });

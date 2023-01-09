@@ -66,7 +66,7 @@ export const MENU: MenuItem[] = [
       {
         role: 3,
         label: 'Usuarios',
-        link: '/privado/ver-usuarios',
+        link: '/seguridad/usuarios',
       },
     ]
   },
@@ -78,12 +78,12 @@ export const MENU: MenuItem[] = [
       {
         role: 4,
         label: 'Usuarios',
-        link: '/privado/ver-usuarios',
+        link: '/seguridad/usuarios',
       },
       {
         role: 4,
         label: 'Roles',
-        link: '/privado/roles'
+        link: '/seguridad/roles'
       },
     ]
   },
@@ -95,12 +95,12 @@ export const MENU: MenuItem[] = [
       {
         role: 5,
         label: 'Usuarios',
-        link: '/privado/ver-usuarios',
+        link: '/seguridad/usuarios',
       },
       {
         role: 5,
         label: 'Roles',
-        link: '/privado/roles'
+        link: '/seguridad/roles'
       },
     ]
   },
