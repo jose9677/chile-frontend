@@ -32,6 +32,14 @@ export class ModalsService {
 
   }
 
+  openModalData3(content: any, data:any, data2:any, data3: any) {
+    const modalRef= this.modal.open(content,{centered: true, backdrop:'static', backdropClass:'background-modal', keyboard: false} );
+    modalRef.componentInstance.data = data;
+    modalRef.componentInstance.data2 = data2;
+    modalRef.componentInstance.data3 = data3;
+
+  }
+
   openModalAlert(content: any) {
     const modalRef= this.modal.open(content,{centered: true} );
   }

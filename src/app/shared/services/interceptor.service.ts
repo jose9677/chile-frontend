@@ -24,8 +24,7 @@ export class InterceptorService {
     const accesToken = this.token.getToken();
     if (accesToken != null) {
       authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, `Bearer ${accesToken}`) });
-      console.log('http interceptor');
-      console.log(authReq);
+
     }
     // manejar error
     return next.handle(authReq).pipe(
@@ -37,8 +36,7 @@ export class InterceptorService {
 
   error(error: HttpErrorResponse){ //envia error al user service
     // window.sessionStorage.clear();
-    console.log("Sucedio el Error");
-    console.log("Registrado el log file");
+
     console.warn(error);
 
     // alert(error.error.error); // captura error
