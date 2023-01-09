@@ -19,7 +19,7 @@ export class UserCreatedComponent implements OnInit {
 
   Cerrar(){
     this.modal.close()
-    this.router.navigate(['/privado/ver-usuarios']);
+    this.router.navigate(['/seguridad/usuarios']);
   }
 
 }

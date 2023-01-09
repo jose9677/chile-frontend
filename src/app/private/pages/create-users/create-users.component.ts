@@ -305,7 +305,7 @@ export class CreateUsersComponent implements OnInit {
       () => {
         this.onRegister(e)
         // this.modalService3.close()
-        // this.router.navigate(['/privado/Crear-usuario'], { queryParams: { rut: this.userRegister.value.rutUser } });
+        // this.router.navigate(['/seguridad/Crear-usuario'], { queryParams: { rut: this.userRegister.value.rutUser } });
 
 
       });

@@ -52,7 +52,7 @@ export class RolesComponent implements OnInit, OnDestroy {
     //  this.privateService.rutEdit.emit({
     //    data:Rut
     //   })
-    this.router.navigate(['/privado/editar-rol/' + Rol])
+    this.router.navigate(['/seguridad/editar-rol/' + Rol])
    }
 
    activarRol(id:any){

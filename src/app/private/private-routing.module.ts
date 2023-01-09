@@ -26,7 +26,7 @@ const routes: Routes = [
         canActivate: [Access345Guard]
       },
       {
-        path: 'ver-usuarios',
+        path: 'usuarios',
         component: ViewUsersComponent,
         canActivate: [Access345Guard]
       },
