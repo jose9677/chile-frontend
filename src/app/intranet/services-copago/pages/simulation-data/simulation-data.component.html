@@ -43,33 +43,36 @@
       </div>
 
       <div class="row mt-3">
-        <div class="col-md-2 col-sm-12">
-          <label for="coveragePercentageIsapre" class="form-label colorTextPrimari">Isapre</label>
+        <div class="row col-6" *ngIf="preventionType == 2">
+          <div class="col-md-4 col-sm-12">
+            <label for="coveragePercentageIsapre" class="form-label colorTextPrimari">Isapre</label>
+          </div>
+          <div class="col-md-3 col-sm-12">
+            <input
+            class="form-control"
+            type="text"
+            id="coveragePercentageIsapre"
+            value={{coveragePercentageIsapre}}
+            formControlName="coveragePercentageIsapre"
+            mask="percent" suffix="%"
+            >
+          </div>
         </div>
-        <div class="col-md-3 col-sm-12">
-          <input
-          class="form-control"
-          type="text"
-          id="coveragePercentageIsapre"
-          value={{coveragePercentageIsapre}}
-          formControlName="coveragePercentageIsapre"
-          mask="percent" suffix="%"
-          >
 
-        </div>
-
-        <div class="col-md-2 col-sm-12">
-          <label for="coveragePercentageSupplementary" class="form-label colorTextPrimari" >Seguro Complementario</label>
-        </div>
-        <div class="col-md-3 col-sm-12">
-          <input
-          type="text"
-          id="coveragePercentageSupplementary"
-          value={{coveragePercentageSupplementary}}
-          class="form-control"
-          formControlName="coveragePercentageSupplementary"
-          mask="percent" suffix="%"
-          >
+        <div class="row col-6" *ngIf="supplementary == true">
+          <div class="col-md-4 col-sm-12">
+            <label for="coveragePercentageSupplementary" class="form-label colorTextPrimari" >Seguro Complementario</label>
+          </div>
+          <div class="col-md-3 col-sm-12">
+            <input
+            type="text"
+            id="coveragePercentageSupplementary"
+            value={{coveragePercentageSupplementary}}
+            class="form-control"
+            formControlName="coveragePercentageSupplementary"
+            mask="percent" suffix="%"
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -90,9 +93,11 @@
             placeholder="Seleccione"
             [(ngModel)]="selectedServiceProvider"
             formControlName="serviceProvider"
-            [ngClass]="{'is-invalid': ((formCopago.controls.serviceProvider.touched && formCopago.controls.serviceProvider.errors) || (isFormSubmitted && formCopago.controls.serviceProvider.errors))}"
+            [ngClass]="{'is-invalid': ((formCopago.controls.serviceProvider.touched && formCopago.controls.serviceProvider.errors) || (addServices && formCopago.controls.serviceProvider.errors))}"
             >
         </ng-select>
+        <div *ngIf="(formCopago.controls.serviceProvider.touched && formCopago.controls.serviceProvider.errors?.required) || (addServices && formCopago.controls.serviceProvider.errors?.required)" class="invalid-feedback">Seleccione un Proveedor de Servicios</div>
+
         </div>
       </div>
     </div>
@@ -100,7 +105,8 @@
     <div class="row mt-5">
       <h3 class="colorTextPrimari col-9" >Servicios</h3>
 
-      <div class="col-3"><button type="button" class=" btn btn-primary mb-2  style " (click)="addService()">Agregar Servicio</button></div>
+      <div class="col-3"><button type="button" class=" btn btn-primary mb-2  style " (click)="addService($event)"
+        [disabled]=" addServices && formCopago.controls.serviceProvider.errors" >Agregar Servicio</button></div>
 
       <div class="mt-4" >
         <table class="table">
@@ -114,14 +120,14 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let service of listServicesCopago">
-              <td>1</td>
-              <td>{{service.typeService}}</td>
+            <tr *ngFor="let service of listServicesCopago; let i = index">
+              <td>{{service.codeService}}</td>
+              <td>{{service.nameTypeService}}</td>
               <td>{{service.nameService}}</td>
               <td>{{service.amountServices}}</td>
               <td>
-                <button (click)="deleteService($event)" ><i class="mdi mdi-window-close text-danger" style="font-size: 1.5em;"></i></button>
-                    <button (click)="editService($event)" ><i class="mdi mdi-pencil" style="font-size: 1.5em;"></i></button>
+                <button (click)="deleteService($event, i)" ><i class="mdi mdi-window-close text-danger" style="font-size: 1.5em;"></i></button>
+                <button (click)="editService($event, service, i)" ><i class="mdi mdi-pencil" style="font-size: 1.5em;"></i></button>
               </td>
             </tr>
           </tbody>

@@ -29,10 +29,9 @@ export class ServiceCopagoService {
    }
 
 
-   addServices( typeService: any, nameService: any, amountServices: any) {
-    this.listServicesCopago.push({"typeService": typeService, "nameService": nameService, "amountServices": amountServices})
+   addServices( codeService: any, idTypeService: any, nameTypeService: any, idService: any, nameService: any, amountServices: any) {
+    this.listServicesCopago.push({"codeService": codeService ,"nameTypeService": nameTypeService, "idTypeService": idTypeService, "nameService": nameService, "idService": idService, "amountServices": amountServices})
 
-    console.log(this.listServicesCopago);
 
    }
 
@@ -41,11 +40,26 @@ export class ServiceCopagoService {
    }
 
    getDataUser( rutNeighbor: any): Observable<any | void> {
-    return this.http.get<any>( AUTH_API_NP + 'search-user/' + rutNeighbor, httpOptions).pipe(map((result: any) => {
+    return this.http.get<any>( AUTH_API_NP + 'provider-user/' + rutNeighbor, httpOptions).pipe(map((result: any) => {
       return result
     }),
     catchError((err) => this.handlerError(err))
     );
+   }
+
+   getServicesCategories() {
+    return this.http.get<any>( AUTH_API_NP + 'services-categories', httpOptions).pipe(map((result: any) => {
+      return result
+    }),
+    catchError((err) => this.handlerError(err))
+    );
+   }
+
+
+   updateServices(index: any) {
+
+    this.listServicesCopago.splice(index, 1);
+
    }
 
 

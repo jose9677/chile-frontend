@@ -7,26 +7,33 @@
       <div class="col-md-12 mb-3 ">
         <label for="typeService" class="form-label">Tipo de Servicio</label>
         <ng-select [items]="listTypesService"
+            id="typeService"
             class="form-control p-0"
             bindLabel="typeService"
             bindValue="id"
             placeholder="Tipo de servicio"
             [(ngModel)]="selectedTypeService"
             formControlName="typeService"
+            (close)="getListServices()"
+            [ngClass]="{'is-invalid': ((formAddService.controls.typeService.touched && formAddService.controls.typeService.errors) || (isAddServices && formAddService.controls.typeService.errors))}"
             >
         </ng-select>
+        <div *ngIf="(formAddService.controls.typeService.touched && formAddService.controls.typeService.errors?.required) || (isAddServices && formAddService.controls.typeService.errors?.required)" class="invalid-feedback">Seleccione un tipo de Servicio</div>
       </div>
       <div class="col-md-12 mb-3 ">
-        <label for="typeServices" class="form-label">Servicio</label>
+        <label for="services" class="form-label">Servicio</label>
         <ng-select [items]="listServices"
+            id="services"
             class="form-control p-0"
             bindLabel="nameService"
             bindValue="id"
             placeholder="Nombre de servicio"
             [(ngModel)]="selectedServices"
             formControlName="nameService"
+            [ngClass]="{'is-invalid': ((formAddService.controls.nameService.touched && formAddService.controls.nameService.errors) || (isAddServices && formAddService.controls.nameService.errors))}"
             >
         </ng-select>
+        <div *ngIf="(formAddService.controls.nameService.touched && formAddService.controls.nameService.errors?.required) || (isAddServices && formAddService.controls.nameService.errors?.required)" class="invalid-feedback">Seleccione un Servicio</div>
       </div>
       <div class="row mt-3">
         <div class="col-md-2 col-sm-12">
@@ -37,17 +44,16 @@
           id="amount"
           class="form-control"
           type="number"
-          value= "0"
-          min= "0" max= "100"
+          min="1"
           formControlName="amountServices"
           >
-
         </div>
       </div>
     </div>
     <div class="position-relative text-center">
-      <button (click)=" modalService.dismiss()" class="mt-4 btn btn-primary me-2 mb-2 mb-md-0 style">Agregar</button>
+      <button type="submit" class="mt-4 btn btn-primary me-2 mb-2 mb-md-0 style" *ngIf="data2 == undefined" [disabled]=" isUploadedData != true " >Agregar</button>
+      <button type="submit" (click)="addServices($event); updateServices($event)" class="mt-4 btn btn-primary me-2 mb-2 mb-md-0 style" *ngIf="data2 != undefined" [disabled]=" isUploadedData != true " >Actualizar</button>
+      <button type="button" (click)=" modalService.dismiss()" class="mt-4 btn btn-primary me-2 mb-2 mb-md-0 style">Cancelar</button>
     </div>
-
   </form>
 </div>

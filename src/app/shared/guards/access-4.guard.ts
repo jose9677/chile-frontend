@@ -19,7 +19,7 @@ export class Access4Guard implements CanActivate {
 
         return true;
       }else {
-        return false
+        return false;
       }
   }
 

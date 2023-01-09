@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DatesService } from 'src/app/intranet/dates-management/shared/services/dates.service';
 import { LoggedService } from 'src/app/shared/services/logged.service';
 import { ModalsService } from 'src/app/shared/services/modals.service';
 import { ServiceCopagoService } from '../../shared/services/service-copago.service';
@@ -15,6 +14,8 @@ import { AddServicesComponent } from '../add-services/add-services.component';
 export class SimulationDataComponent implements OnInit {
 
   public isFormSubmitted: boolean;
+
+  public addServices: boolean;
 
   // public idSimulation: any;
 
@@ -38,6 +39,10 @@ export class SimulationDataComponent implements OnInit {
 
   public listServicesCopago: any[];
 
+  public preventionType: any;
+
+  public supplementary : boolean;
+
   public formCopago = this.fb.group({
     coveragePercentageIsapre: ["0", []],
     coveragePercentageSupplementary: ["0", []],
@@ -57,6 +62,8 @@ export class SimulationDataComponent implements OnInit {
 
     this.isFormSubmitted = false;
 
+    this.addServices = false;
+
     // this.idSimulation = 11111111;
 
     // this.dateOfIssue = "00/00/0000";
@@ -73,9 +80,7 @@ export class SimulationDataComponent implements OnInit {
 
     this.coveragePercentageSupplementary= "Porcentaje de Cobertura";
 
-    this.listServiceProvider = [
-      {"id": 1, "serviceProvider": "Fonasa" }
-    ];
+    this.listServiceProvider = [];
 
     this.selectedServiceProvider = null;
    }
@@ -85,13 +90,26 @@ export class SimulationDataComponent implements OnInit {
     this.rutNeighbor = sessionStorage.getItem('auth-user');
     this.rutNeighbor = this.rutNeighbor.replace(/["']/g, "")
 
-    console.log(this.rutNeighbor)
-
     this.copagoServices.getDataUser(this.rutNeighbor).subscribe(result => {
-      console.log(result);
-      result.map((res: any) => {
-        this.nameNeighbor = res.names + ' ' + res.lastname
+      result.data_user.map((res: any) => {
+
+        this.nameNeighbor = res.names + ' ' + res.lastname;
+
+        this.preventionType = res.id_prevention_type;
+
+        this.supplementary = res.assurance;
+
       })
+
+      result.providers.map((res:any) => {
+        let listServiceProvider: any[] = []
+
+        listServiceProvider.push({"id": res.id_provider, "serviceProvider": res.description});
+
+        this.listServiceProvider = listServiceProvider;
+      })
+
+
     },
     error => {
 
@@ -99,6 +117,9 @@ export class SimulationDataComponent implements OnInit {
     () => {
 
     })
+
+    this.listServicesCopago= this.copagoServices.getSetvices();
+
 
 
 
@@ -108,10 +129,21 @@ export class SimulationDataComponent implements OnInit {
     return this.formCopago.controls["services"] as FormArray
   }
 
-  addService() {
-    this.modalService.openModal(AddServicesComponent)
+  addService(e: Event) {
 
-    this.listServicesCopago= this.copagoServices.getSetvices();
+    e.preventDefault();
+
+    this.addServices = true;
+
+    if ( this.formCopago.value.serviceProvider != null) {
+
+      this.modalService.openModalData(AddServicesComponent, this.formCopago.controls.serviceProvider.value)
+
+      this.listServicesCopago= this.copagoServices.getSetvices();
+
+    } else {
+
+    }
 
   }
 
@@ -133,16 +165,18 @@ export class SimulationDataComponent implements OnInit {
 
   }
 
-  deleteService( e: Event ) {
+  deleteService( e: Event, i: any ) {
     e.preventDefault();
 
-    alert('eliminar servicio');
+    this.listServicesCopago.splice(i, 1);
 
   }
 
-  editService( e: Event ) {
+  editService( e: Event , dataServiceUser: any, i: any) {
 
-    alert('editar servicio');
+    e.preventDefault();
+
+    this.modalService.openModalData3(AddServicesComponent, this.formCopago.controls.serviceProvider.value, dataServiceUser, i);
 
   }
 
