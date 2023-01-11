@@ -6,6 +6,7 @@ import MetisMenu from 'metismenujs';
 import { MENU } from './menu';
 import { MenuItem } from './menu.model';
 import { Router, NavigationEnd } from '@angular/router';
+import { RolesDirective } from 'src/app/shared/directives/roles.directive';
 
 @Component({
   selector: 'app-sidebar',
@@ -248,21 +249,34 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   };
 
 
-  hiddenItem(role: any): boolean {
-    let roleUser = window.sessionStorage.getItem("rol-user")
+  hiddenItem(roles: number[], statusRequest: any = 0): boolean {
+    let roleUser: any = window.sessionStorage.getItem("rol-user");
 
-    if (roleUser == role || role == 0){
-      return false
+    let statusRequestUser: any = window.sessionStorage.getItem("status-request");
+
+    if (roles.includes(parseInt(roleUser)) || roles.includes(0) ){
+      if ( roles.includes(5) || statusRequest == statusRequestUser || statusRequest == 0) {
+        return false;
+      } else {
+        return true;
+      }
     }else{
       return true
     }
   }
 
-  hiddenSubitem(role: any): boolean {
-    let roleUser = window.sessionStorage.getItem("rol-user")
+  hiddenSubitem(roles: number[], statusRequest: number = 0): boolean {
+    let roleUser: any = window.sessionStorage.getItem("rol-user");
 
-    if (roleUser == role){
-      return false
+    let statusRequestUser: any = window.sessionStorage.getItem("status-request");
+
+
+    if ( roles.includes( parseInt(roleUser) ) || roles.includes( 0 ) ){
+      if ( roles.includes(5) || statusRequest == statusRequestUser || statusRequest == 0) {
+        return false;
+      } else {
+        return true;
+      }
     }else{
       return true
     }

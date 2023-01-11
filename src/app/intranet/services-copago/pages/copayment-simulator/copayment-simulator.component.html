@@ -43,7 +43,6 @@
           type="number"
           id="coveragePercentageIsapre"
           value={{coveragePercentageIsapre}}
-          formControlName="coveragePercentageIsapre"
           min="0" max="100"
           readonly
           >
@@ -58,14 +57,29 @@
           id="coveragePercentageSupplementary"
           value={{coveragePercentageSupplementary}}
           class="form-control"
-          formControlName="coveragePercentageSupplementary"
           min="0" max="100"
           readonly
           >
         </div>
+
       </div>
     </div>
-    <div class="row mt-5 justify-content-center">
+
+    <div class="col-md-2 col-sm-12">
+      <label for="coveragePercentageSupplementary" class="form-label colorTextPrimari" >Proveedor</label>
+    </div>
+    <div class="col-md-3 col-sm-12">
+      <input
+      type="text"
+      id="coveragePercentageSupplementary"
+      value={{selectedServiceProvider}}
+      class="form-control"
+      min="0" max="100"
+      readonly
+      >
+    </div>
+
+    <!-- <div class="row mt-5 justify-content-center">
       <h3 class="colorTextPrimari">Proveedor</h3><br>
 
       <div class="row mt-3">
@@ -87,7 +101,7 @@
                     </ng-select>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="row mt-5">
       <h3 class="colorTextPrimari col-9" >Servicios</h3>
@@ -105,20 +119,20 @@
           </thead>
           <tbody>
             <tr *ngFor="let service of listServicesCopago">
-              <td>1</td>
+              <td>{{service.code}}</td>
               <td>{{service.typeService}}</td>
               <td>{{service.nameService}}</td>
               <td>{{service.amountServices}}</td>
-              <td></td>
+              <td>{{service.total}}</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <div class="colorTextPrimari col-4">
-        <p>SubTotal</p>
-        <p>Cobertura Isapre</p>
-        <p>Cobertura Seg. Complementario</p>
-        <p>Copago</p>
+      <div class="colorTextPrimari">
+        <p class="text-end" >SubTotal {{subTotal}}</p>
+        <p class="text-end" >Cobertura Isapre {{coveragePrevision}}</p>
+        <p class="text-end" >Cobertura Seg. Complementario {{coverageSupplementaryInsurance}}</p>
+        <p class="text-end" >Copago {{totalCopago}}</p>
       </div>
       <div class="colorTextPrimari col-12">
         <p>

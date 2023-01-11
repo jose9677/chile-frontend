@@ -95,20 +95,20 @@
           </thead>
           <tbody>
             <tr *ngFor="let service of listServicesCopago">
-              <td>1</td>
+              <td>{{service.code}}</td>
               <td>{{service.typeService}}</td>
               <td>{{service.nameService}}</td>
               <td>{{service.amountServices}}</td>
-              <td></td>
+              <td>{{service.total}}</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <div class="colorTextPrimari col-4">
-        <p>SubTotal</p>
-        <p>Cobertura Isapre</p>
-        <p>Cobertura Seg. Complementario</p>
-        <p>Copago</p>
+      <div class="colorTextPrimari">
+        <p class="text-end" >SubTotal {{subTotal}}</p>
+        <p class="text-end" >Cobertura Isapre {{coveragePrevision}}</p>
+        <p class="text-end" >Cobertura Seg. Complementario {{coverageSupplementaryInsurance}}</p>
+        <p class="text-end" >Copago {{totalCopago}}</p>
       </div>
       <div class="colorTextPrimari col-12">
         <p>

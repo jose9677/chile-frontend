@@ -16,7 +16,7 @@ export class Access3Guard implements CanActivate {
       this.rolUser = sessionStorage.getItem('rol-user');
 
 
-      if ( this.rolUser == 3 ) {
+      if ( this.rolUser == 3 || this.rolUser == 5 ) {
 
         return true;
       }else {

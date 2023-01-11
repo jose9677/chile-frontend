@@ -58,6 +58,10 @@ export class ViewNeighborRequestsComponent implements OnInit {
       result.map((res: any)=>{
         res.fullName = (res.assistant_names ?? ' ') +' '+ (res.assistant_lastname ?? ' ')
         res.fullPeventionData = res.prevention_type +' - '+ res.prevention_detail
+
+        window.sessionStorage.setItem("status-request", JSON.stringify(res.id_status));
+
+
         this.unassignedRequest.push(res);
       })
       console.log(this.unassignedRequest)

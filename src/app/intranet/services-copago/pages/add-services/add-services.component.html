@@ -46,7 +46,10 @@
           type="number"
           min="1"
           formControlName="amountServices"
+          [ngClass]="{'is-invalid': ((formAddService.controls.amountServices.touched && formAddService.controls.amountServices.errors) || (isAddServices && formAddService.controls.amountServices.errors))}"
           >
+          <div *ngIf="(formAddService.controls.amountServices.touched && formAddService.controls.amountServices.errors?.required) || (isAddServices && formAddService.controls.amountServices.errors?.required)" class="invalid-feedback">Ingrese la Cantidad</div>
+
         </div>
       </div>
     </div>

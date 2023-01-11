@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ModalComponent } from 'src/app/public/auth/shared/modals/modal/modal.component';
 import { ModalsService } from 'src/app/shared/services/modals.service';
 import { ServiceCopagoService } from '../../shared/services/service-copago.service';
+import { SimulationsCopagoService } from '../../shared/services/simulations-copago.service';
 import { CancelSimulationComponent } from '../cancel-simulation/cancel-simulation.component';
 
 @Component({
@@ -12,6 +14,8 @@ import { CancelSimulationComponent } from '../cancel-simulation/cancel-simulatio
   styleUrls: ['./copayment-simulator.component.scss']
 })
 export class CopaymentSimulatorComponent implements OnInit {
+
+  private idSimulationSubscription: Subscription;
 
   public isFormSubmitted: boolean;
 
@@ -37,12 +41,20 @@ export class CopaymentSimulatorComponent implements OnInit {
 
   public listServicesCopago: any[];
 
+  public subTotal: any;
+
+  public coveragePrevision: any;
+
+  public coverageSupplementaryInsurance: any;
+
+  public totalCopago: any;
+
   public formCopago = this.fb.group({
     coveragePercentageIsapre: ["", []],
     coveragePercentageSupplementary: ["", []],
     serviceProvider: ["", []],
     services: this.fb.array([]),
-    authCheck: ['', []]
+    authCheck: ['', [ Validators.required]]
 
   })
 
@@ -50,37 +62,64 @@ export class CopaymentSimulatorComponent implements OnInit {
     private fb: FormBuilder,
     private modalService: ModalsService,
     private copagoService: ServiceCopagoService,
-    private router: Router
+    private router: Router,
+    private routerquery: ActivatedRoute,
+    private simulationServices: SimulationsCopagoService
+
   ) {
 
-    this.listServiceProvider= [];
+    this.listServicesCopago = [];
+
+    this.listServiceProvider = [];
 
     this.isFormSubmitted = false;
 
-    this.idSimulation = 11111111;
 
-    this.dateOfIssue = "00/00/0000";
-
-    this.expirationDate = "00/00/0000";
-
-    this.rutNeighbor = "00000000-0";
-
-    this.nameNeighbor = "Eduy Edgardo Omaña Hernnadez";
-
-    this.status = "Pendiente";
-
-    this.coveragePercentageIsapre ="Porcentaje de Cobertura";
-
-    this.coveragePercentageSupplementary= "Porcentaje de Cobertura";
-
-    this.listServiceProvider = [
-      {"id": 1, "serviceProvider": "Fonasa" }
-    ];
-
-    this.selectedServiceProvider = null;
    }
 
   ngOnInit(): void {
+
+
+    this.idSimulationSubscription = this.routerquery.queryParams.subscribe(id => this.idSimulation = id.id_simulation);
+
+    this.simulationServices.getDataSimulation(this.idSimulation).subscribe(result => {
+      result.map((res:any) => {
+
+        this.dateOfIssue = res.emition_date;
+
+        this.expirationDate = res.expiration_date;
+
+        this.rutNeighbor = res.rut_user;
+
+        this.nameNeighbor = res.names + ' ' + res.lastname;
+
+        this.status = res.status;
+
+        this.coveragePercentageIsapre = res.percent_prevition;
+
+        this.coveragePercentageSupplementary= res.percent_sec_comp;
+
+        this.selectedServiceProvider = res.provider_description;
+
+
+        this.listServicesCopago.push({"code": res.services_cod, "typeService": res.category_description, "nameService": res.service_description, "amountServices": res.quantity,"total": (res.total_value*res.quantity)});
+
+      })
+    })
+
+    let rut_user: any= window.sessionStorage.getItem("auth-user");
+
+    this.simulationServices.calcCopago(rut_user.replace(/["']/g, "")).subscribe(result => {
+
+      this.subTotal = result.SubTotal;
+
+      this.coveragePrevision = result.Cobert_Prevition;
+
+      this.coverageSupplementaryInsurance = result.Secure_Comp;
+
+      this.totalCopago = result.Copago;
+
+    })
 
 
   }
@@ -96,13 +135,18 @@ export class CopaymentSimulatorComponent implements OnInit {
 
     this.isFormSubmitted = true;
 
-    let error= false;
-    let title= "Certificado Generado";
-    let message = 'Se ha generado su certificado de Prestación de servicios de forma exitosa. el mismo sera descargado de forma automática en su computadora y podra visualizarlo en la opción "ver certificados" del menú lateral';
-    this.modalService.OpenModalError2(ModalComponent, error, title, message);
-    this.isFormSubmitted = true;
+    if (this.formCopago.status == "VALID") {
 
-    this.router.navigate(['copago', 'sus-certificados'])
+      let error= false;
+      let title= "Certificado Generado";
+      let message = 'Se ha generado su certificado de Prestación de servicios de forma exitosa. el mismo sera descargado de forma automática en su computadora y podra visualizarlo en la opción "ver certificados" del menú lateral';
+      this.modalService.OpenModalError2(ModalComponent, error, title, message);
+      this.isFormSubmitted = true;
+
+      this.router.navigate(['copago', 'sus-certificados'])
+
+    }
+
 
   }
 
@@ -113,6 +157,10 @@ export class CopaymentSimulatorComponent implements OnInit {
     this.modalService.openModalData(CancelSimulationComponent, this.idSimulation);
     this.isFormSubmitted = true;
 
+  }
+
+  ngOnDestroy() {
+    this.idSimulationSubscription.unsubscribe();
   }
 
 }

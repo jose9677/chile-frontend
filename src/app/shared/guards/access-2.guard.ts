@@ -17,7 +17,7 @@ export class Access2Guard implements CanActivate {
       this.rolUser = sessionStorage.getItem('rol-user');
 
 
-      if ( this.rolUser == 2 ) {
+      if ( this.rolUser == 2 || this.rolUser == 5 ) {
 
         return true;
       }else {

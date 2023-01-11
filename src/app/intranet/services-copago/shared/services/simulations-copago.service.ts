@@ -1,0 +1,74 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { RouteReuseStrategy } from '@angular/router';
+import { catchError, map, Observable, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
+
+const AUTH_API = environment.urlApi;
+const AUTH_API_NP = environment.urlApiNp;
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
+@Injectable({
+  providedIn: 'root'
+})
+export class SimulationsCopagoService {
+
+  private errorMessage = '';
+
+  constructor(
+    private http: HttpClient,
+  ) { }
+
+  addSimulation( rutUser: any, dataSimulation: any) {
+    return this.http.post<any>( AUTH_API_NP + "add-simulation/" + rutUser, dataSimulation, httpOptions).pipe((map((result: any) => {
+      return result
+    })),
+    catchError((err) => this.handlerError(err)))
+  }
+
+  addServicesSimulation(dataService: any) {
+    return this.http.post<any>( AUTH_API_NP + "add-simulations-services", dataService, httpOptions ).pipe((map((result:any) => {
+      return result;
+    })),
+    catchError((err) => this.handlerError(err))
+    );
+  }
+
+  getRutSimulation(rutUser: any) {
+    return this.http.get<any>( AUTH_API_NP + "details-certificate/" + rutUser, httpOptions ).pipe((map((result:any) => {
+      return result;
+    })),
+    catchError((err) => this.handlerError(err))
+    );
+  }
+
+  getDataSimulation(idSimulation: any) {
+    return this.http.get<any>( AUTH_API_NP + "details-copago/" + idSimulation, httpOptions ).pipe((map((result:any) => {
+      return result;
+    })),
+    catchError((err) => this.handlerError(err))
+    );
+  }
+
+  calcCopago(rutUser: any) {
+    return this.http.put<any>( AUTH_API_NP + "calc-copago/" + rutUser, httpOptions ).pipe((map((result:any) => {
+      return result;
+    })),
+    catchError((err) => this.handlerError(err))
+    );
+  }
+
+  private handlerError(err:any): Observable<never> { //pasa error al login component
+    let errorMessage= 'An error ocurred';
+    if (err) {
+      // this.errorMessage= `error code: ${err}`;
+      this.errorMessage= err;
+
+    }
+
+    return throwError(this.errorMessage)
+  }
+}

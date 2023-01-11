@@ -23,12 +23,6 @@ export class TokenService {
 
    }
 
-
-  // public signOut(): void {
-  //   window.sessionStorage.clear();
-  //   this.router.navigate(['login']);
-  // }
-
   public saveToken(token: string): void {
     window.sessionStorage.removeItem(TOKEN_KEY);
     window.sessionStorage.setItem(TOKEN_KEY, token);
@@ -36,7 +30,6 @@ export class TokenService {
   }
 
   public decodeToken(token:any) {
-    console.log(this.helper.decodeToken(token))
      return this.helper.decodeToken(token);
   }
 
@@ -54,9 +47,6 @@ export class TokenService {
     window.sessionStorage.setItem(USER_ROL, JSON.stringify(dataUser.id_rol));
     window.sessionStorage.setItem(USER_NAME, JSON.stringify(dataUser.names+' '+dataUser.lastname ));
 
-
-    // window.sessionStorage.setItem(USER_ROL, JSON.stringify(dataUser.id_rol));
-
   }
 
   public getUser(): any {
@@ -71,15 +61,11 @@ export class TokenService {
     const userToken: any = window.sessionStorage.getItem(TOKEN_KEY);
     const isExpired = this.helper.isTokenExpired(userToken);
 
-    console.log('CheckToken');
 
-    if (isExpired == true) {
-      console.log('is Expired', isExpired);
+    if ((isExpired == true)) {
       // this.logOut();
       window.sessionStorage.clear();
       // this.router.navigate(['auth/login']);
-    }else{
-      console.log('is Expired', isExpired);
     }
   }
 }

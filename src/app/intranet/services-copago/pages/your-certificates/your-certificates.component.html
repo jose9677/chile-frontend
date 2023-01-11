@@ -25,17 +25,19 @@
               </tr>
             </thead>
             <tbody>
-                  <!-- <tr *ngFor="let request of unassignedRequest; index as i " > -->
-                <tr>
-                  <td ></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                <tr *ngFor="let simulation of listSimulations; index as i " >
+                  <td>{{simulation.idSimulation}}</td>
+                  <td>{{simulation.dateOfIssue}}</td>
+                  <td>{{simulation.dateOfDue}}</td>
+                  <td>{{simulation.provider}}</td>
+                  <td>{{simulation.copago}}</td>
+                  <td>{{simulation.status}}</td>
                   <td>
-                    <button (click)="viewCertificate($event)"><i class="mdi mdi-eye" style="font-size: 1.5em;"></i></button>
-                    <button (click)="downloadCertificate($event)"><i class="mdi mdi-file-pdf-box" style="font-size: 1.5em;"></i></button>
+
+                    <button (click)="viewCertificate($event, simulation.idSimulation)"><i class="mdi mdi-eye" style="font-size: 1.5em;"></i></button>
+
+                    <button (click)="downloadCertificate($event)" disabled ><i class="mdi mdi-file-pdf-box" style="font-size: 1.5em;"></i></button>
+
                   </td>
                 </tr>
             </tbody>

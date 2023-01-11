@@ -66,7 +66,7 @@ export class AddServicesComponent implements OnInit {
 
     this.selectedServices= null;
 
-    this.amountServicesUser = 1;
+    this.amountServicesUser = null;
   }
 
   ngOnInit(): void {
@@ -123,7 +123,7 @@ export class AddServicesComponent implements OnInit {
     this.formAddService = this.fb.group({
       typeService: [this.selectedTypeService, [ Validators.required ]],
       nameService: [ this.selectedServices, [ Validators.required ]],
-      amountServices: [ this.amountServicesUser, []]
+      amountServices: [ this.amountServicesUser, [ Validators.required ]]
 
     })
 

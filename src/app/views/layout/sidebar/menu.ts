@@ -17,25 +17,25 @@ export const MENU: MenuItem[] = [
   {
     label: 'Solicitudes',
     icon: 'file-text',
-    role: 0,
+    roles: [0],
     subItems: [
       {
-        role: 1,
+        roles: [1, 5],
         label: 'Estado de Inscripcíon',
         link: '/solicitud/solicitudes-de-inscripcion',
       },
       {
-        role: 3,
+        roles: [3, 5],
         label: 'Asignar Asistente Social',
         link: '/solicitud/asignar-asistente-social'
       },
       {
-        role:2,
+        roles: [2, 5],
         label: 'Asignar Cita',
         link: '/solicitud/asignar-cita'
       },
       {
-        role: 4,
+        roles: [4, 5],
         label: 'Resumen de Solicitudes',
         link: '/solicitud/escritorio'
       },
@@ -44,66 +44,69 @@ export const MENU: MenuItem[] = [
   {
     label: 'Copago',
     icon: 'file-text',
-    role: 1,
+    roles: [1, 5],
+    statusRequest: 6,
     subItems: [
       {
-        role: 1,
+        roles: [1, 5],
+        statusRequest: 6,
         label: 'Simulador de Copago',
         link: '/copago/datos-de-simulacion',
       },
       {
-        role: 1,
+        roles: [1, 5],
+        statusRequest: 6,
         label: ' Ver Certificados',
         link: '/copago/sus-certificados'
       },
     ]
   },
+  // {
+  //   label: 'Seguridad',
+  //   icon: 'file-text',
+  //   roles: [3],
+  //   subItems: [
+  //     {
+  //       roles: [3],
+  //       label: 'Usuarios',
+  //       link: '/seguridad/usuarios',
+  //     },
+  //   ]
+  // },
   {
     label: 'Seguridad',
     icon: 'file-text',
-    role: 3,
+    roles: [3, 4, 5],
     subItems: [
       {
-        role: 3,
-        label: 'Usuarios',
-        link: '/seguridad/usuarios',
-      },
-    ]
-  },
-  {
-    label: 'Seguridad',
-    icon: 'file-text',
-    role:4,
-    subItems: [
-      {
-        role: 4,
+        roles: [3, 4, 5],
         label: 'Usuarios',
         link: '/seguridad/usuarios',
       },
       {
-        role: 4,
+        roles: [4, 5],
         label: 'Roles',
         link: '/seguridad/roles'
       },
     ]
   },
-  {
-    label: 'Seguridad',
-    icon: 'file-text',
-    role: 5,
-    subItems: [
-      {
-        role: 5,
-        label: 'Usuarios',
-        link: '/seguridad/usuarios',
-      },
-      {
-        role: 5,
-        label: 'Roles',
-        link: '/seguridad/roles'
-      },
-    ]
-  },
+  // {
+  //   label: 'Seguridad',
+  //   icon: 'file-text',
+  //   roles: [5],
+  //   subItems: [
+  //     {
+  //       roles: [5],
+  //       label: 'Usuarios',
+  //       link: '/seguridad/usuarios',
+  //     },
+  //     {
+  //       roles: [5],
+  //       label: 'Roles',
+  //       link: '/seguridad/roles'
+  //     },
+  //   ]
+  // },
   // {
   //   label: 'Web Apps',
   //   isTitle: true

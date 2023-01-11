@@ -19,8 +19,6 @@ export class ServiceCopagoService {
 
   private listServicesCopago: any[];
 
-
-
   constructor(
     private http: HttpClient
   ) {
@@ -28,10 +26,8 @@ export class ServiceCopagoService {
     this.listServicesCopago = [];
    }
 
-
    addServices( codeService: any, idTypeService: any, nameTypeService: any, idService: any, nameService: any, amountServices: any) {
     this.listServicesCopago.push({"codeService": codeService ,"nameTypeService": nameTypeService, "idTypeService": idTypeService, "nameService": nameService, "idService": idService, "amountServices": amountServices})
-
 
    }
 
@@ -60,6 +56,10 @@ export class ServiceCopagoService {
 
     this.listServicesCopago.splice(index, 1);
 
+   }
+
+   resetDataServices() {
+    this.listServicesCopago = [];
    }
 
 
