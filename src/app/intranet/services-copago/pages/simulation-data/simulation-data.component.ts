@@ -97,6 +97,7 @@ export class SimulationDataComponent implements OnInit {
   ngOnInit(): void {
 
 
+    this.copagoServices.resetDataServices();
 
     this.rutNeighbor = sessionStorage.getItem('auth-user');
     this.rutNeighbor = this.rutNeighbor.replace(/["']/g, "")
@@ -201,7 +202,6 @@ export class SimulationDataComponent implements OnInit {
 
       this.router.navigate(['copago/simulador-de-copago'], {queryParams: {id_simulation: idSimulation}});
 
-      this.copagoServices.resetDataServices();
     })
 
   }

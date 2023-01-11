@@ -441,6 +441,10 @@ export class RegisterComponent implements OnInit {
         this.emailUser = this.userRegister.value.email;
         this.modalValidateEmail(this.emailUser, this.rut);
 
+        let title= "";
+          let message = "Su correo electrónico y número celular, nos permitirán mantener contacto con usted e informar nuevos beneficios, oportunidades y descuentos. Recuerde que la información que está enviando será verificada por el Municipio. En caso de verificar que la información entregada es falsa, su solicitud de ingreso al programa quedará cancelada de forma permanente";
+          this.modalService.OpenModalError2(ModalComponent, "alert", title, message);
+
   }
 
 

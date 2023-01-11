@@ -192,7 +192,12 @@ export class AddServicesComponent implements OnInit {
 
     e.preventDefault();
 
-    this.serviceCopago.updateServices(index);
+    if (this.formAddService.status == "VALID") {
+
+      this.serviceCopago.updateServices(index);
+
+    }
+
 
   }
 

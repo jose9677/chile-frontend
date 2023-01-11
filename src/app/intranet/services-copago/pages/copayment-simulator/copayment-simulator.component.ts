@@ -68,12 +68,11 @@ export class CopaymentSimulatorComponent implements OnInit {
 
   ) {
 
+    this.isFormSubmitted = false;
+
     this.listServicesCopago = [];
 
     this.listServiceProvider = [];
-
-    this.isFormSubmitted = false;
-
 
    }
 
@@ -82,8 +81,16 @@ export class CopaymentSimulatorComponent implements OnInit {
 
     this.idSimulationSubscription = this.routerquery.queryParams.subscribe(id => this.idSimulation = id.id_simulation);
 
+    let listServicesCopago: any[] = [];
+
     this.simulationServices.getDataSimulation(this.idSimulation).subscribe(result => {
+
+
       result.map((res:any) => {
+
+
+
+        console.log(res)
 
         this.dateOfIssue = res.emition_date;
 
@@ -102,10 +109,17 @@ export class CopaymentSimulatorComponent implements OnInit {
         this.selectedServiceProvider = res.provider_description;
 
 
-        this.listServicesCopago.push({"code": res.services_cod, "typeService": res.category_description, "nameService": res.service_description, "amountServices": res.quantity,"total": (res.total_value*res.quantity)});
+        listServicesCopago.push({"code": res.services_cod, "typeService": res.category_description, "nameService": res.service_description, "amountServices": res.quantity,"total": (res.total_value*res.quantity)});
 
       })
-    })
+    },
+    error => {
+
+
+    },
+    () => {
+      this.listServicesCopago = listServicesCopago;
+    } )
 
     let rut_user: any= window.sessionStorage.getItem("auth-user");
 

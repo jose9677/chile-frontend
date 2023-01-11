@@ -32,7 +32,11 @@ export class ServiceCopagoService {
    }
 
    getSetvices() {
+
+    console.log(this.listServicesCopago)
+
     return this.listServicesCopago
+
    }
 
    getDataUser( rutNeighbor: any): Observable<any | void> {
