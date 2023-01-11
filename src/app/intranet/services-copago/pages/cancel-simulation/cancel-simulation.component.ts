@@ -33,7 +33,7 @@ export class CancelSimulationComponent implements OnInit {
     this.isFormSubmitted = false;
 
     this.listReasonForCancellation = [
-      {"idReason": 1, "reasonForCancellation": "no se"}
+      {"idReason": 1, "reasonForCancellation": "Motivo de rechazo de solicitud"}
     ];
 
     this.selectedReasonForCancellation = null;
