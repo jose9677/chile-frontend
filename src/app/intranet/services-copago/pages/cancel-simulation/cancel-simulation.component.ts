@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -21,7 +21,7 @@ export class CancelSimulationComponent implements OnInit {
   public selectedReasonForCancellation: any;
 
   public formCancelCopago = this.fb.group ({
-    reasonForCancellation: ['', []]
+    reasonForCancellation: ['', [Validators.required]]
   })
 
   constructor(
@@ -49,9 +49,16 @@ export class CancelSimulationComponent implements OnInit {
 
     e.preventDefault();
 
-    // endpoint para cancelar simulación
-    this.modalService.close();
-    this.router.navigate(['copago','datos-de-simulacion']);
+    this.isFormSubmitted = true;
+
+    if (( this.formCancelCopago.status == 'VALID' )) {
+
+      // endpoint para cancelar simulación
+      this.modalService.close();
+      this.router.navigate(['copago','datos-de-simulacion']);
+
+    }
+
   }
 
 }

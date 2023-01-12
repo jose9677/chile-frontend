@@ -103,7 +103,7 @@
       </div>
     </div> -->
 
-    <div class="row mt-5">
+    <div class="row mt-5 justify-content-end">
       <h3 class="colorTextPrimari col-9" >Servicios</h3>
 
       <div class="mt-4 col-12" >
@@ -128,13 +128,28 @@
           </tbody>
         </table>
       </div>
-      <div class="colorTextPrimari">
-        <p class="text-end" >SubTotal {{subTotal}}</p>
-        <p class="text-end" >Cobertura Isapre {{coveragePrevision}}</p>
-        <p class="text-end" >Cobertura Seg. Complementario {{coverageSupplementaryInsurance}}</p>
-        <p class="text-end" >Copago {{totalCopago}}</p>
+      <div class="mt-4  col-4 ">
+        <table class="table">
+          <tr>
+            <td>SubTotal</td>
+            <td>{{subTotal}}</td>
+          </tr>
+          <tr>
+            <td>Cobertura Isapre</td>
+            <td>{{coveragePrevision}}</td>
+          </tr>
+          <tr>
+            <td>Cobertura Seg. Complementario </td>
+            <td>{{coverageSupplementaryInsurance}}</td>
+          </tr>
+          <tr>
+            <td>Copago</td>
+            <td>{{totalCopago}}</td>
+          </tr>
+        </table>
       </div>
-      <div class="colorTextPrimari col-12">
+
+      <div class="colorTextPrimari mt-4 col-12">
         <p>
           IMPORTANTE:
         </p>
@@ -166,7 +181,7 @@
 
     <div class="d-flex flex-row justify-content-evenly mt-4">
       <div>
-        <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" >Generar Certificado</button>
+        <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" [disabled]="isFormSubmitted || formCopago.status != 'VALID'" >Generar Certificado</button>
       </div>
       <div>
         <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="cancel($event)" >Cancelar</button>

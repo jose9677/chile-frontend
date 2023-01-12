@@ -33,8 +33,6 @@ export class ServiceCopagoService {
 
    getSetvices() {
 
-    console.log(this.listServicesCopago)
-
     return this.listServicesCopago
 
    }

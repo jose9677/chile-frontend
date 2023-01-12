@@ -17,6 +17,7 @@ export class CopaymentSimulatorComponent implements OnInit {
 
   private idSimulationSubscription: Subscription;
 
+
   public isFormSubmitted: boolean;
 
   public idSimulation: any;
@@ -68,6 +69,7 @@ export class CopaymentSimulatorComponent implements OnInit {
 
   ) {
 
+
     this.isFormSubmitted = false;
 
     this.listServicesCopago = [];
@@ -77,7 +79,6 @@ export class CopaymentSimulatorComponent implements OnInit {
    }
 
   ngOnInit(): void {
-
 
     this.idSimulationSubscription = this.routerquery.queryParams.subscribe(id => this.idSimulation = id.id_simulation);
 
@@ -121,6 +122,11 @@ export class CopaymentSimulatorComponent implements OnInit {
       this.listServicesCopago = listServicesCopago;
     } )
 
+
+  }
+
+  ngAfterViewInit() {
+
     let rut_user: any= window.sessionStorage.getItem("auth-user");
 
     this.simulationServices.calcCopago(rut_user.replace(/["']/g, "")).subscribe(result => {
@@ -137,7 +143,6 @@ export class CopaymentSimulatorComponent implements OnInit {
 
 
   }
-
   get services() {
     return this.formCopago.controls["services"] as FormArray
   }
@@ -155,7 +160,6 @@ export class CopaymentSimulatorComponent implements OnInit {
       let title= "Certificado Generado";
       let message = 'Se ha generado su certificado de Prestación de servicios de forma exitosa. el mismo sera descargado de forma automática en su computadora y podra visualizarlo en la opción "ver certificados" del menú lateral';
       this.modalService.OpenModalError2(ModalComponent, error, title, message);
-      this.isFormSubmitted = true;
 
       this.router.navigate(['copago', 'sus-certificados'])
 

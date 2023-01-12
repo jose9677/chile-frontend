@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 import { LoggedService } from 'src/app/shared/services/logged.service';
 import { ModalsService } from 'src/app/shared/services/modals.service';
 import { ServiceCopagoService } from '../../shared/services/service-copago.service';
@@ -15,22 +14,15 @@ import { AddServicesComponent } from '../add-services/add-services.component';
 })
 export class SimulationDataComponent implements OnInit {
 
+  private isLoadServices: boolean;
 
   public isFormSubmitted: boolean;
 
   public addServices: boolean;
 
-  // public idSimulation: any;
-
-  // public dateOfIssue: any;
-
-  // public expirationDate: any;
-
   public rutNeighbor: any;
 
   public nameNeighbor: any;
-
-  // public status: any;
 
   public coveragePercentage: any;
 
@@ -40,13 +32,14 @@ export class SimulationDataComponent implements OnInit {
 
   public selectedServiceProvider: any;
 
-  public listServicesCopago: any[];
 
   public preventionType: any;
 
   public supplementary : boolean;
 
   public idSimulation: any;
+
+  public listServicesCopago: any[];
 
   public formCopago = this.fb.group({
     coveragePercentage: ["0", []],
@@ -68,6 +61,8 @@ export class SimulationDataComponent implements OnInit {
 
     this.listServiceProvider= [];
 
+    this.isLoadServices = false;
+
     this.isFormSubmitted = false;
 
     this.addServices = false;
@@ -76,20 +71,7 @@ export class SimulationDataComponent implements OnInit {
 
     this.supplementary = false;
 
-    // this.idSimulation = 11111111;
-
-    // this.dateOfIssue = "00/00/0000";
-
-    // this.expirationDate = "00/00/0000";
-
-    // this.rutNeighbor = "00000000-0";
-
-    // this.nameNeighbor = "Eduy Edgardo Omaña Hernadez";
-
-    // this.status = "Pendiente";
-
-
-    this.listServiceProvider = [];
+    this.listServicesCopago = [];
 
     this.selectedServiceProvider = null;
    }
@@ -103,6 +85,7 @@ export class SimulationDataComponent implements OnInit {
     this.rutNeighbor = this.rutNeighbor.replace(/["']/g, "")
 
     this.copagoServices.getDataUser(this.rutNeighbor).subscribe(result => {
+
       result.data_user.map((res: any) => {
 
         this.nameNeighbor = res.names + ' ' + res.lastname;
@@ -129,6 +112,11 @@ export class SimulationDataComponent implements OnInit {
     () => {
 
     })
+
+
+  }
+
+  ngAfterViewInit() {
 
     this.listServicesCopago= this.copagoServices.getSetvices();
 
@@ -169,13 +157,9 @@ export class SimulationDataComponent implements OnInit {
       let dataServices = {
       "percent_prevition": this.formCopago.value.coveragePercentage,
       "percent_sec_comp": this.formCopago.value.coveragePercentageSupplementary,
-    }
+      }
 
-    this.addSimulation( rutUser, dataServices);
-
-      console.log(this.formCopago)
-      console.log(this.listServicesCopago)
-
+      this.addSimulation( rutUser, dataServices);
 
     }
 
@@ -193,14 +177,18 @@ export class SimulationDataComponent implements OnInit {
 
     },
     error => {
+
+    this.isFormSubmitted = false;
+
       console.log(error);
+
     },
     () => {
 
       console.log(idSimulation);
       this.addServicesSimulation(idSimulation);
 
-      this.router.navigate(['copago/simulador-de-copago'], {queryParams: {id_simulation: idSimulation}});
+      // this.router.navigate(['copago/simulador-de-copago'], {queryParams: {id_simulation: idSimulation}});
 
     })
 
@@ -208,29 +196,42 @@ export class SimulationDataComponent implements OnInit {
 
   addServicesSimulation(idSimulation:any) {
 
+    let countArray: any = []
+
     this.listServicesCopago.map((res: any) => {
 
       const dataServices: any = {
         "id_simulation": idSimulation,
         "cod": res.codeService,
         "quantity": res.amountServices
-    }
+      }
 
-        this.simulationServices.addServicesSimulation( dataServices ).subscribe((res) => {
+      this.simulationServices.addServicesSimulation( dataServices ).subscribe((res) => {
 
-          console.log(res);
+        console.log(res);
 
-        },
-        error => {
-          console.log(error);
+      },
+      error => {
+        this.isFormSubmitted = false;
 
-        },
-        () => {
-          let num = 0;
-          console.log( "cargado serv" +(num += 1));
-        })
+        console.log(error);
 
+      },
+      () => {
+
+        countArray.push({"num": 1});
+
+        if(this.listServicesCopago.length == countArray.length) {
+
+          this.router.navigate(['copago/simulador-de-copago'], {queryParams: {id_simulation: idSimulation}});
+
+        }
       })
+
+    })
+
+
+
 
   }
 
