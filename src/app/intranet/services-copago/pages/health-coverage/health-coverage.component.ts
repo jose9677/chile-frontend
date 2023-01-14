@@ -10,8 +10,8 @@ import { SimulationsCopagoService } from '../../shared/services/simulations-copa
 })
 export class HealthCoverageComponent implements OnInit {
 
-  private idSimulationSubscription: Subscription;
 
+  private idSimulationSubscription: Subscription;
 
   public idSimulation: any;
 
@@ -48,16 +48,20 @@ export class HealthCoverageComponent implements OnInit {
     private simulationServices: SimulationsCopagoService,
     private routerquery: ActivatedRoute,
 
-  ) { }
+  ) {
+
+    this.listServicesCopago = [];
+
+  }
 
   ngOnInit(): void {
 
     this.idSimulationSubscription = this.routerquery.queryParams.subscribe(id => this.idSimulation = id.codeCertificate);
 
     this.simulationServices.getDataSimulation(this.idSimulation).subscribe(result => {
+
       result.map((res:any) => {
 
-        this.listServicesCopago = [];
 
         this.dateOfIssue = res.emition_date;
 
@@ -83,7 +87,9 @@ export class HealthCoverageComponent implements OnInit {
 
     let rut_user: any= window.sessionStorage.getItem("auth-user");
 
-    this.simulationServices.calcCopago(rut_user.replace(/["']/g, "")).subscribe(result => {
+    this.simulationServices.calcCopago(this.idSimulation).subscribe(result => {
+
+      console.log(result)
 
       this.subTotal = result.SubTotal;
 

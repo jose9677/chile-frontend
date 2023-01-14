@@ -53,8 +53,8 @@ export class SimulationsCopagoService {
     );
   }
 
-  calcCopago(rutUser: any) {
-    return this.http.put<any>( AUTH_API_NP + "calc-copago/" + rutUser, httpOptions ).pipe((map((result:any) => {
+  calcCopago(idSimulation: any) {
+    return this.http.put<any>( AUTH_API_NP + "calc-copago/" + idSimulation, httpOptions ).pipe((map((result:any) => {
       return result;
     })),
     catchError((err) => this.handlerError(err))

@@ -27,7 +27,7 @@
           <label for="status" class="form-label colorTextPrimari">Estatus</label>
           <input type="text" id="status" value={{status}} disabled class="form-control">
         </div>
-      </div>
+    </div>
     </div>
     <div class="row mt-5 justify-content-center">
       <h3 class="colorTextPrimari">Coberturas de Salud</h3><br>
@@ -79,7 +79,7 @@
       </div>
     </div>
 
-    <div class="row mt-5">
+    <div class="row mt-5 justify-content-end">
       <h3 class="colorTextPrimari col-9" >Servicios</h3>
 
       <div class="mt-4 col-12" >
@@ -104,12 +104,27 @@
           </tbody>
         </table>
       </div>
-      <div class="colorTextPrimari">
-        <p class="text-end" >SubTotal {{subTotal}}</p>
-        <p class="text-end" >Cobertura Isapre {{coveragePrevision}}</p>
-        <p class="text-end" >Cobertura Seg. Complementario {{coverageSupplementaryInsurance}}</p>
-        <p class="text-end" >Copago {{totalCopago}}</p>
+      <div class="mt-4  col-4 ">
+        <table class="table">
+          <tr>
+            <td>SubTotal</td>
+            <td>{{subTotal}}</td>
+          </tr>
+          <tr>
+            <td>Cobertura Isapre</td>
+            <td>{{coveragePrevision}}</td>
+          </tr>
+          <tr>
+            <td>Cobertura Seg. Complementario </td>
+            <td>{{coverageSupplementaryInsurance}}</td>
+          </tr>
+          <tr>
+            <td>Copago</td>
+            <td>{{totalCopago}}</td>
+          </tr>
+        </table>
       </div>
+
       <div class="colorTextPrimari col-12">
         <p>
           IMPORTANTE:

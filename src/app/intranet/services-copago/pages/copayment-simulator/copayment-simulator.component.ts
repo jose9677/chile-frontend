@@ -89,10 +89,6 @@ export class CopaymentSimulatorComponent implements OnInit {
 
       result.map((res:any) => {
 
-
-
-        console.log(res)
-
         this.dateOfIssue = res.emition_date;
 
         this.expirationDate = res.expiration_date;
@@ -129,7 +125,7 @@ export class CopaymentSimulatorComponent implements OnInit {
 
     let rut_user: any= window.sessionStorage.getItem("auth-user");
 
-    this.simulationServices.calcCopago(rut_user.replace(/["']/g, "")).subscribe(result => {
+    this.simulationServices.calcCopago(this.idSimulation).subscribe(result => {
 
       this.subTotal = result.SubTotal;
 
