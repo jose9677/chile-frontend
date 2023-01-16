@@ -85,3 +85,11 @@ button.file_add{
     color: white;
     font-weight: bold;
 }
+
+.ng-select div, .ng-select input, .ng-select span{
+    white-space: break-spaces !important;
+}
+
+.table th, .table td {
+    white-space: break-spaces !important;
+}
