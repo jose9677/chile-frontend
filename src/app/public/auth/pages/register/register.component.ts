@@ -59,7 +59,7 @@ export class RegisterComponent implements OnInit {
 
   public preventions_types_details4: any[];
 
-  public selectedpreventions_types_details: any;
+  public selectedpreventions_types_details: any = "";
 
 
   public haveInsurance: any[];
@@ -100,8 +100,6 @@ export class RegisterComponent implements OnInit {
     private routerQuery: ActivatedRoute,
     private loggedServices: LoggedService
     ) {
-
-      this.selectedpreventions_types_details = "";
 
       this.today = new Date()
       this.today = `${this.today.getFullYear()}-${(this.today.getMonth())+1}-${this.today.getDate()}`
