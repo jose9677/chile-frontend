@@ -24,7 +24,8 @@ export class ForgetPasswordComponent implements OnInit {
 
 
   public formForgetPassword = this.fb.group ({
-    rutUser: ['',[Validators.required]]
+    rutNumber: ['',[Validators.required]],
+    rutCode: ['',[Validators.required]],
   })
 
   constructor(
@@ -45,7 +46,7 @@ export class ForgetPasswordComponent implements OnInit {
 
 
     const dataForgetPassword = {
-      rut: this.formForgetPassword.value.rutUser,
+      rut: this.formForgetPassword.value.rutNumber + "-" + this.formForgetPassword.value.rutCode,
     }
 
     if (this.formForgetPassword.status == "VALID") {

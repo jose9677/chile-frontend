@@ -15,7 +15,7 @@
 
                     <input
                     type="text"
-                    class="form-control col-md-8"
+                    class="form-control col-sm-8"
                     id="Rut"
                     formControlName = rutNumber
                     placeholder="0000000"
@@ -24,7 +24,7 @@
                         <div *ngIf="(formRutUser.controls.rutNumber.touched && formRutUser.controls.rutNumber.errors?.required) || (isFormSubmitted && formRutUser.controls.rutNumber.errors?.required)" class="invalid-feedback">Campo Requerido</div>
                     <input
                     type="text"
-                    class="form-control col-md-3"
+                    class="form-control col-sm-3"
                     formControlName = rutCode
                     placeholder="0000000-0"
                     [ngClass]="{'is-invalid': (formRutUser.controls.rutCode.touched && formRutUser.controls.rutCode.errors) || (isFormSubmitted && formRutUser.controls.rutCode.errors)}"

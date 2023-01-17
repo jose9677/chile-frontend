@@ -25,7 +25,8 @@ export class LoginComponent implements OnInit {
   public isFormSubmitted: boolean;
 
   public userLogin = this.fb.group({
-    rut: ['', Validators.required],
+    rutNumber: ['', Validators.required],
+    rutCode: ['', Validators.required],
     password: ['', Validators.required]
     })
 
@@ -64,7 +65,7 @@ export class LoginComponent implements OnInit {
     this.isFormSubmitted = true;
 
     const dataLogin = {
-      rut: this.userLogin.value.rut,
+      rut: this.userLogin.value.rutNumber + "-" + this.userLogin.value.rutCode,
       password: this.userLogin.value.password
     }
     // window.sessionStorage.setItem('auth-user', JSON.stringify(dataLogin.rut));
@@ -72,7 +73,7 @@ export class LoginComponent implements OnInit {
 
       this.authService.login(dataLogin).subscribe(result => {
         console.log(result)
-
+        
       },
       error => {  //recibe error del user services
         sessionStorage.clear();

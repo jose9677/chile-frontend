@@ -9,16 +9,41 @@
             <form class="forms-sample" [formGroup]="userLogin" (ngSubmit)="onLoggedin($event)">
               <div class="mb-3 mt-3">
                 <label for="Rut" class="form-label colorTextPrimari">RUT</label>
-                <input
-                type="text"
-                class="form-control"
-                id="Rut"
-                formControlName="rut"
-                placeholder="00000000-0"
-                [ngClass]="{'is-invalid': (userLogin.controls.rut.touched && userLogin.controls.rut.errors?.required) || (isFormSubmitted && userLogin.controls.rut.errors?.required)}"
-                    >
-                    <div *ngIf="(userLogin.controls.rut.touched && userLogin.controls.rut.errors?.required) || ( isFormSubmitted && userLogin.controls.rut.errors?.required)" class="invalid-feedback">Campo Requerido</div>
-              </div>
+
+                <div class="row justify-content-center">
+                  <div class="col-sm-8">
+                    <input
+                    type="text"
+                    class="form-control"
+                    id="Rut"
+                    formControlName="rutNumber"
+                    placeholder="00000000"
+                    [ngClass]="{'is-invalid': (userLogin.controls.rutNumber.touched && userLogin.controls.rutNumber.errors?.required) || (isFormSubmitted && userLogin.controls.rutNumber.errors?.required)}"
+                        >
+                        <div *ngIf="(userLogin.controls.rutNumber.touched && userLogin.controls.rutNumber.errors?.required) || ( isFormSubmitted && userLogin.controls.rutNumber.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+                    
+                  </div>
+
+                  <div class="col-sm-1" style="margin-left: 0px; margin-right: 0px; font-size: 20px;">
+                    <p>-</p>
+                  </div>
+
+                  
+                  <div class="col-sm-3">
+                    <input
+                    type="text"
+                    class="form-control"
+                    formControlName="rutCode"
+                    placeholder="0"
+                    [ngClass]="{'is-invalid': (userLogin.controls.rutCode.touched && userLogin.controls.rutCode.errors?.required) || (isFormSubmitted && userLogin.controls.rutCode.errors?.required)}"
+                        >
+                        <div *ngIf="(userLogin.controls.rutCode.touched && userLogin.controls.rutCode.errors?.required) || ( isFormSubmitted && userLogin.controls.rutCode.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+
+                  </div>
+
+                </div>
+
+                  </div>
               <div class="mb-3">
                 <label for="password" class="form-label colorTextPrimari">Contraseña</label>
                 <input
