@@ -59,7 +59,7 @@ export class RegisterComponent implements OnInit {
 
   public preventions_types_details4: any[];
 
-  public selectedpreventions_types_details: any = "";
+  public selectedpreventions_types_details: any;
 
 
   public haveInsurance: any[];
@@ -101,9 +101,11 @@ export class RegisterComponent implements OnInit {
     private loggedServices: LoggedService
     ) {
 
+      this.selectedpreventions_types_details = "";
+
       this.today = new Date()
       this.today = `${this.today.getFullYear()}-${(this.today.getMonth())+1}-${this.today.getDate()}`
-      console.log(this.today)
+      // console.log(this.today)
 
       this.isCaretakerOptions = [
         {
@@ -156,7 +158,7 @@ export class RegisterComponent implements OnInit {
 
       this.rutSubscription = this.routerQuery.queryParams.subscribe(rut => this.rut= rut.rut)
 
-      console.log(this.rut)
+      // console.log(this.rut)
 
 
 
@@ -173,7 +175,7 @@ export class RegisterComponent implements OnInit {
 
     this.authServices.dropdownInfo().subscribe((result) => {
 
-      console.log(result)
+      // console.log(result)
 
       this.locations = result.locations;
       this.preventions_types = result.preventions_types;
@@ -250,7 +252,7 @@ export class RegisterComponent implements OnInit {
 
     this.addDocument2();
 
-    console.log(this.userRegister);
+    // console.log(this.userRegister);
 
 
 
@@ -300,9 +302,12 @@ export class RegisterComponent implements OnInit {
 
     let selectedpreventions_types_details: any = "";
 
-    if (this.userRegister.controls.healthInformation.value.preventions_types == 3 || this.userRegister.controls.healthInformation.value.preventions_types == 4) {
+    if (this.userRegister.controls.healthInformation.value.preventions_types == 3 ) {
+      selectedpreventions_types_details = 12;
+    } else if (this.userRegister.controls.healthInformation.value.preventions_types == 4) {
       selectedpreventions_types_details = 13;
-    } else {
+    }
+     else {
       selectedpreventions_types_details = this.userRegister.controls.healthInformation.value.preventions_types_details
     }
 
@@ -346,7 +351,7 @@ export class RegisterComponent implements OnInit {
 
     this.isFormSubmitted = true;
 
-    if ((this.userRegister.status == "VALID" && this.userRegister.controls.authCheck.value == true)) {
+    if ((this.userRegister.status == "VALID" && this.userRegister.controls.authCheck.value == true && selectedpreventions_types_details != "")) {
 
 
       this.authServices.register(dataUser).subscribe(result => {
@@ -411,7 +416,7 @@ export class RegisterComponent implements OnInit {
 
     } else {
 
-      console.log(this.selectFiles);
+      // console.log(this.selectFiles);
       this.deleteDocument(index);
       this.addDocument();
 
@@ -419,7 +424,7 @@ export class RegisterComponent implements OnInit {
       this.addDocument2();
 
       this.selectFiles =[]
-      console.log(this.selectFiles);
+      // console.log(this.selectFiles);
       this.documentIsValid = false;
 
     }

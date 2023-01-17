@@ -278,14 +278,13 @@
                         class="form-control p-0"
                         bindLabel="prevention_detail"
                         bindValue="id"
-                        value = 0
                         [(ngModel)]="selectedpreventions_types_details"
                         formControlName="preventions_types_details"
                         placeholder="Seleccione"
-                        [ngClass]="{'is-invalid': ((userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.preventions_types_details === '') || (isFormSubmitted && userRegister.controls.healthInformation.value.preventions_types_details === ''))}"
+                        [ngClass]="{'is-invalid': ((userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.preventions_types_details == null) || (isFormSubmitted && userRegister.controls.healthInformation.value.preventions_types_details == null))}"
                         >
                     </ng-select>
-                    <div *ngIf="(userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.preventions_types_details === '') || (isFormSubmitted && userRegister.controls.healthInformation.value.preventions_types_details === '')" class="invalid-feedback">Campo Requerido</div>
+                    <div *ngIf="(userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.preventions_types_details == null) || (isFormSubmitted && userRegister.controls.healthInformation.value.preventions_types_details == null)" class="invalid-feedback">Campo Requerido</div>
                   </div>
 
                   <div class="col-md-6 mb-3" *ngIf="userRegister.controls.healthInformation.controls.preventions_types.value === 2">
@@ -295,14 +294,13 @@
                         class="form-control p-0"
                         bindLabel="prevention_detail"
                         bindValue="id"
-                        value = 0
                         [(ngModel)]="selectedpreventions_types_details"
                         formControlName="preventions_types_details"
                         placeholder="Seleccione"
-                        [ngClass]="{'is-invalid': ((userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.preventions_types_details === '') || (isFormSubmitted && userRegister.controls.healthInformation.value.preventions_types_details === ''))}"
+                        [ngClass]="{'is-invalid': ((userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.preventions_types_details == null) || (isFormSubmitted && userRegister.controls.healthInformation.value.preventions_types_details == null))}"
                         >
                     </ng-select>
-                    <div *ngIf="(userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.preventions_types_details === '') || (isFormSubmitted && userRegister.controls.healthInformation.value.preventions_types_details === '')" class="invalid-feedback">Campo Requerido</div>
+                    <div *ngIf="(userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.preventions_types_details == null) || (isFormSubmitted && userRegister.controls.healthInformation.value.preventions_types_details == null)" class="invalid-feedback">Campo Requerido</div>
                   </div>
 
                   <div class="col-md-6 mb-3" *ngIf="userRegister.controls.healthInformation.controls.preventions_types.value === 9">
