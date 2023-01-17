@@ -88,6 +88,8 @@ export class RegisterComponent implements OnInit {
 
   public file: File;
   public selectFiles: any[];
+  public selectFilesId1: any[];
+  public selectFilesId2: any[];
 
 
 
@@ -117,6 +119,8 @@ export class RegisterComponent implements OnInit {
       ]
 
       this.selectFiles = [];
+      this.selectFilesId1 = [];
+      this.selectFilesId2 = [];
 
 
       this.typeOfRoad = [
@@ -283,12 +287,27 @@ export class RegisterComponent implements OnInit {
   }
 
   deleteDocument(DocumentIndex: number) {
+    console.log(DocumentIndex);
     this.documents.removeAt(DocumentIndex);
+    this.selectFilesId1.splice(DocumentIndex, 1);
+    this.selectFiles = this.selectFilesId1.concat(this.selectFilesId2);
+
+
+    console.log(this.selectFilesId1);
+    console.log(this.selectFiles);
 
   }
 
   deleteDocument2(DocumentIndex: number) {
+    console.log(DocumentIndex);
     this.documents2.removeAt(DocumentIndex);
+    this.selectFilesId2.splice(DocumentIndex, 1);
+    this.selectFiles = this.selectFilesId1.concat(this.selectFilesId2);
+
+
+    console.log(this.selectFilesId1);
+    console.log(this.selectFiles);    
+
   }
 
 
@@ -384,35 +403,76 @@ export class RegisterComponent implements OnInit {
 
     if ( this.file != undefined ) {
 
-      if ( this.file.type == "image/jpeg" || this.file.type == "application/pdf" || this.file.type == "image/png") {
+      if(id_document_type == 1) {
 
-
-        this.selectFiles.push({'fileData': this.file, 'id_document_type': id_document_type});
-
-        console.log(this.selectFiles);
-
-        this.documentIsValid = false;
-
-      } else {
-
-        this.documentIsValid = false;
-
-        if (id_document_type == 1) {
-
-          this.deleteDocument(index);
-          this.addDocument();
+        if ( this.file.type == "image/jpeg" || this.file.type == "application/pdf" || this.file.type == "image/png") {
+  
+  
+          this.selectFilesId1.push({'fileData': this.file, 'id_document_type': id_document_type});
+  
+          console.log(this.selectFilesId1);
+  
           this.documentIsValid = false;
-
-
+  
         } else {
-
-          this.deleteDocument2(index);
-          this.addDocument2();
+  
           this.documentIsValid = false;
+  
+          if (id_document_type == 1) {
+  
+            this.deleteDocument(index);
+            this.addDocument();
+            this.documentIsValid = false;
+  
+  
+          } else {
+  
+            this.deleteDocument2(index);
+            this.addDocument2();
+            this.documentIsValid = false;
+  
+          }
+  
+        }
 
+      }else {
+
+        if ( this.file.type == "image/jpeg" || this.file.type == "application/pdf" || this.file.type == "image/png") {
+  
+  
+          this.selectFilesId2.push({'fileData': this.file, 'id_document_type': id_document_type});
+  
+          console.log(this.selectFilesId2);
+  
+          this.documentIsValid = false;
+  
+        } else {
+  
+          this.documentIsValid = false;
+  
+          if (id_document_type == 1) {
+  
+            this.deleteDocument(index);
+            this.addDocument();
+            this.documentIsValid = false;
+  
+  
+          } else {
+  
+            this.deleteDocument2(index);
+            this.addDocument2();
+            this.documentIsValid = false;
+  
+          }
+  
         }
 
       }
+      
+      this.selectFiles = [];
+      this.selectFiles = this.selectFilesId1.concat(this.selectFilesId2);
+      console.log(this.selectFiles);
+
 
     } else {
 
@@ -423,7 +483,9 @@ export class RegisterComponent implements OnInit {
       this.deleteDocument2(index);
       this.addDocument2();
 
-      this.selectFiles =[]
+      this.selectFiles =[];
+      this.selectFilesId1 =[];
+      this.selectFilesId2 =[];
       console.log(this.selectFiles);
       this.documentIsValid = false;
 
