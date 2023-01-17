@@ -284,6 +284,7 @@ export class RegisterComponent implements OnInit {
 
   deleteDocument(DocumentIndex: number) {
     this.documents.removeAt(DocumentIndex);
+
   }
 
   deleteDocument2(DocumentIndex: number) {
@@ -387,6 +388,7 @@ export class RegisterComponent implements OnInit {
 
 
         this.selectFiles.push({'fileData': this.file, 'id_document_type': id_document_type});
+
         console.log(this.selectFiles);
 
         this.documentIsValid = false;
@@ -414,7 +416,7 @@ export class RegisterComponent implements OnInit {
 
     } else {
 
-      // console.log(this.selectFiles);
+      console.log(this.selectFiles);
       this.deleteDocument(index);
       this.addDocument();
 
@@ -422,17 +424,17 @@ export class RegisterComponent implements OnInit {
       this.addDocument2();
 
       this.selectFiles =[]
-      // console.log(this.selectFiles);
+      console.log(this.selectFiles);
       this.documentIsValid = false;
 
     }
-
-
 
   }
 
 
   uploadFiles() {
+
+    let countArray: any = []
 
     this.selectFiles.map((file) => {
 
@@ -448,17 +450,24 @@ export class RegisterComponent implements OnInit {
           },
           () => {
 
+            countArray.push({"num": 1});
+
+            if(this.selectFiles.length == countArray.length) {
+
+              this.loggedServices.changeisRegisterUserStatus = true;
+              this.isFormSubmitted = false;
+              this.emailUser = this.userRegister.value.email;
+              this.modalValidateEmail(this.emailUser, this.rut);
+
+              let title= "";
+                let message = "Su correo electrónico y número celular, nos permitirán mantener contacto con usted e informar nuevos beneficios, oportunidades y descuentos. Recuerde que la información que está enviando será verificada por el Municipio. En caso de verificar que la información entregada es falsa, su solicitud de ingreso al programa quedará cancelada de forma permanente";
+
+                this.modalService.OpenModalError2(ModalComponent, "alert", title, message);
+            }
+
           })
         })
 
-        this.loggedServices.changeisRegisterUserStatus = true;
-        this.isFormSubmitted = false;
-        this.emailUser = this.userRegister.value.email;
-        this.modalValidateEmail(this.emailUser, this.rut);
-
-        let title= "";
-          let message = "Su correo electrónico y número celular, nos permitirán mantener contacto con usted e informar nuevos beneficios, oportunidades y descuentos. Recuerde que la información que está enviando será verificada por el Municipio. En caso de verificar que la información entregada es falsa, su solicitud de ingreso al programa quedará cancelada de forma permanente";
-          this.modalService.OpenModalError2(ModalComponent, "alert", title, message);
 
   }
 
