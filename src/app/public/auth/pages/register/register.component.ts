@@ -215,7 +215,7 @@ export class RegisterComponent implements OnInit {
       lastNames: ['', [Validators.required, Validators.pattern(/^([a-zA-ZáéíóúüÁÉÍÓÚÜñÑ]{2,60}[\,\-\.]{0,1}[\s]{0,1}){1,3}$/)]],
       datesBirth: ['', [Validators.required]],
       email: ['', [Validators.required, CustomValidators.email]],
-      landLine: ['', [Validators.required, Validators.minLength(9)]],
+      landLine: ['', [Validators.minLength(9)]],
       mobilePhone: ['', [Validators.required, Validators.minLength(9)]],
       isCaretaker: ['', [ Validators.required]],
       reason: ['', []],
@@ -232,7 +232,7 @@ export class RegisterComponent implements OnInit {
 
       healthInformation: this.fb.group({
         preventions_types: ['', Validators.required],
-        preventions_types_details: ['', ],
+        preventions_types_details: [''],
         haveInsurance: ['', Validators.required]
       }),
 
@@ -250,7 +250,11 @@ export class RegisterComponent implements OnInit {
 
     this.addDocument2();
 
-    console.log(this.userRegister)
+    console.log(this.userRegister);
+
+
+
+
 
   }
 
@@ -264,7 +268,7 @@ export class RegisterComponent implements OnInit {
 
   addDocument() {
     const documentForm = this.fb.group({
-        document_path: ['', Validators.required],
+      document_path: ['', Validators.required],
     });
 
     this.documents.push(documentForm);
@@ -272,7 +276,7 @@ export class RegisterComponent implements OnInit {
 
   addDocument2() {
     const documentForm = this.fb.group({
-        document_path: ['', Validators.required],
+      document_path: ['', Validators.required],
     });
 
     this.documents2.push(documentForm);
@@ -294,6 +298,13 @@ export class RegisterComponent implements OnInit {
   onRegister(e: Event) {
     e.preventDefault();
 
+    let selectedpreventions_types_details: any = "";
+
+    if (this.userRegister.controls.healthInformation.value.preventions_types == 3 || this.userRegister.controls.healthInformation.value.preventions_types == 4) {
+      selectedpreventions_types_details = 13;
+    } else {
+      selectedpreventions_types_details = this.userRegister.controls.healthInformation.value.preventions_types_details
+    }
 
     const dataUser = {
       rut : this.rut,
@@ -315,7 +326,7 @@ export class RegisterComponent implements OnInit {
       way_number: this.userRegister.controls.address.value.numberStreet,
       id_property_type: this.userRegister.controls.address.value.property_types,
       property_number: this.userRegister.controls.address.value.nameHome,
-      id_prevention_type_detail : this.userRegister.controls.healthInformation.value.preventions_types_details,
+      id_prevention_type_detail : selectedpreventions_types_details,
       assurance: this.userRegister.controls.healthInformation.value.haveInsurance,
 
       terms_condition: this.userRegister.value.authCheck,
@@ -327,6 +338,7 @@ export class RegisterComponent implements OnInit {
       comments: null,
       is_active: false,
       rut_match: false,
+      aps: false
 
     }
 

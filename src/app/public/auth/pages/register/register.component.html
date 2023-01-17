@@ -160,6 +160,12 @@
                     <div *ngIf="(userRegister.controls.remuneration.touched && userRegister.controls.remuneration.errors?.required) || (userRegister.controls.remuneration.errors?.required)" class="invalid-feedback">Campo Requerido</div>
                   </div>
 
+                  <div class="col-12">
+                    <p class="colorTextPrimari mb-3">
+                      Esta información permitirá caracterizar a la población beneficiada con la <a href="https://oig.cepal.org/sites/default/files/2021_ley21380_chl.pdf" target="_blank">ley 21.380</a> y reglamento
+                    </p>
+                  </div>
+
                 </div>
               </div>
 
@@ -199,7 +205,7 @@
 
                 <div class="row">
                   <div class="col-md-6 mb-3 ">
-                    <label for="property_types" class="form-label">Casa/Departamento</label>
+                    <label for="property_types" class="form-label">Casa/Departamento/Oficina</label>
                     <ng-select [items]="property_types"
                         class="form-control p-0"
                         bindLabel="description"
@@ -216,12 +222,19 @@
                     <label
                     *ngIf="(userRegister.controls.address.value.property_types == null)"
                     for="nameHome" class="form-label">Número de Vivienda</label>
+
                     <label
                     *ngIf="(userRegister.controls.address.value.property_types == 1)"
                     for="nameHome" class="form-label">Número de {{(property_types[0].description).toLowerCase()}}</label>
+
                     <label
                     *ngIf="(userRegister.controls.address.value.property_types == 2)"
                     for="nameHome" class="form-label">Número de {{(property_types[1].description).toLowerCase()}}</label>
+
+                    <label
+                    *ngIf="(userRegister.controls.address.value.property_types == 3)"
+                    for="nameHome" class="form-label">Número de {{(property_types[2].description).toLowerCase()}}</label>
+
                     <input
                     type="text"
                     class="form-control"
@@ -230,7 +243,7 @@
                     placeholder="Especifique"
                     [ngClass]="{'is-invalid': ((userRegister.controls.address.touched && userRegister.controls.address.controls.nameHome.errors) || (isFormSubmitted && userRegister.controls.address.controls.nameHome.errors))}"
                     >
-                    <div *ngIf="(userRegister.controls.address.touched && userRegister.controls.address.controls.nameHome.errors?.required) || (isFormSubmitted && userRegister.controls.address.controls.nameHome.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+                    <div *ngIf="(userRegister.controls.address.touched && userRegister.controls.address.controls.nameHome.errors?.required) || (isFormSubmitted && userRegister.controls.address.controls.nameHome.errors?.required)" class="invalid-feedback">Campo Requerido, si no aplica coloque S/N</div>
 
                   </div>
                 </div>
@@ -292,7 +305,7 @@
                     <div *ngIf="(userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.preventions_types_details === '') || (isFormSubmitted && userRegister.controls.healthInformation.value.preventions_types_details === '')" class="invalid-feedback">Campo Requerido</div>
                   </div>
 
-                  <div class="col-md-6 mb-3" *ngIf="userRegister.controls.healthInformation.controls.preventions_types.value === 3">
+                  <div class="col-md-6 mb-3" *ngIf="userRegister.controls.healthInformation.controls.preventions_types.value === 9">
                     <label for="preventions_types_details" class="form-label">Tipo de {{(preventions_types[2].prevention_type).toLowerCase()}}</label>
                     <ng-select [items]="preventions_types_details3"
                         id="preventions_types_details"
@@ -309,7 +322,7 @@
                     <div *ngIf="(userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.value.preventions_types_details === '') || (isFormSubmitted && userRegister.controls.healthInformation.value.preventions_types_details === '')" class="invalid-feedback">Campo Requerido</div>
                   </div>
 
-                  <div class="col-md-6 mb-3" *ngIf="userRegister.controls.healthInformation.controls.preventions_types.value === 4">
+                  <div class="col-md-6 mb-3" *ngIf="userRegister.controls.healthInformation.controls.preventions_types.value === 9">
                     <label for="preventions_types_details" class="form-label">Tipo de {{(preventions_types[3].prevention_type).toLowerCase()}}</label>
                     <ng-select [items]="preventions_types_details4"
                         id="preventions_types_details"
