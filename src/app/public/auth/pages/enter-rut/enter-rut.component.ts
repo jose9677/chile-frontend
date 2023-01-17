@@ -21,7 +21,8 @@ export class EnterRutComponent implements OnInit {
   public isFormSubmitted: boolean;
 
   public formRutUser = this.fb.group({
-    rutUser: ['',[Validators.required]]
+    rutNumber: ['',[Validators.required]],
+    rutCode: ['',[Validators.required]]
   })
 
   constructor(
@@ -40,12 +41,14 @@ export class EnterRutComponent implements OnInit {
     e.preventDefault();
 
 
-    this.rut = this.formRutUser.value.rutUser;
-    this.rut = this.rut.replace(/\.|,/g, "")
+    this.rut = this.formRutUser.value.rutNumber + "-" + this.formRutUser.value.rutCode;
+    this.rut = this.rut.replace(/\.|,/g, "");
 
     const dataRutUser= {
       rut: this.rut
     }
+
+    console.log(this.rut)
 
 
     if ( this.formRutUser.status == "VALID") {
