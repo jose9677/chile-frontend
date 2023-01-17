@@ -107,11 +107,11 @@ export class RegisterComponent implements OnInit {
 
       this.isCaretakerOptions = [
         {
-          'description': "si",
+          'description': "Si",
           'value': true
         },
         {
-          'description': 'no',
+          'description': 'No',
           'value': false
         }
       ]
