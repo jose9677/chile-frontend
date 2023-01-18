@@ -43,6 +43,8 @@ export class ForgetPasswordComponent implements OnInit {
 
   validateUser(e: Event) {
 
+    this.correctRut();
+
 
     const dataForgetPassword = {
       rut: this.formForgetPassword.value.rutNumber,
