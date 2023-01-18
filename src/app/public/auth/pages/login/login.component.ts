@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
 
   public listDigit: any;
 
-  private rutNumber: any;
+  public rutNumber: any;
 
   public userLogin: any;
 
@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
     this.isFormSubmitted = true;
 
     const dataLogin = {
-      rut: this.userLogin.value.rutNumber + "-" + this.userLogin.value.rutCode,
+      rut: this.userLogin.value.rutNumber,
       password: this.userLogin.value.password
     }
     // window.sessionStorage.setItem('auth-user', JSON.stringify(dataLogin.rut));
@@ -117,7 +117,7 @@ export class LoginComponent implements OnInit {
   }
 
   correctRut(): any {
-    if ( !this.userLogin.value.rutNumber.includes("-")) {
+    if (( !this.userLogin.value.rutNumber.includes("-"))) {
 
       let rut = this.userLogin.value.rutNumber;
 
@@ -125,13 +125,8 @@ export class LoginComponent implements OnInit {
 
       let correctRut = rut.slice(0, -1) + "-" + code;
 
-
-      console.log(correctRut)
-
       this.rutNumber = correctRut;
 
-    }else {
-      
     }
   }
 

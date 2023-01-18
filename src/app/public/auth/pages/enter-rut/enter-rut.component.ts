@@ -18,11 +18,12 @@ export class EnterRutComponent implements OnInit {
 
   rut : any;
 
+  public rutNumber: any;
+
   public isFormSubmitted: boolean;
 
   public formRutUser = this.fb.group({
     rutNumber: ['',[Validators.required]],
-    rutCode: ['',[Validators.required]]
   })
 
   constructor(
@@ -31,7 +32,9 @@ export class EnterRutComponent implements OnInit {
     private modalService2: ModalsService,
     private router : Router,
     private authServices: AuthService
-  ) { }
+  ) {
+    this.rutNumber = "";
+  }
 
   ngOnInit(): void {
     this.isFormSubmitted = false;
@@ -40,8 +43,10 @@ export class EnterRutComponent implements OnInit {
   confirmRut(e: Event) {
     e.preventDefault();
 
+    // setTimeout(this.correctRut(), 10000);
 
-    this.rut = this.formRutUser.value.rutNumber + "-" + this.formRutUser.value.rutCode;
+
+    this.rut = this.formRutUser.value.rutNumber;
     this.rut = this.rut.replace(/\.|,/g, "");
 
     const dataRutUser= {
@@ -92,5 +97,6 @@ export class EnterRutComponent implements OnInit {
 
   }
 
+  
 
 }
