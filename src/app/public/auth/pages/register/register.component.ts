@@ -87,7 +87,7 @@ export class RegisterComponent implements OnInit {
 
 
   public file: File;
-  public selectFiles: any[];
+  // public selectFiles: any[];
   public selectFilesId1: any[];
   public selectFilesId2: any[];
 
@@ -118,7 +118,7 @@ export class RegisterComponent implements OnInit {
         }
       ]
 
-      this.selectFiles = [];
+      // this.selectFiles = [];
       this.selectFilesId1 = [];
       this.selectFilesId2 = [];
 
@@ -290,11 +290,11 @@ export class RegisterComponent implements OnInit {
     console.log(DocumentIndex);
     this.documents.removeAt(DocumentIndex);
     this.selectFilesId1.splice(DocumentIndex, 1);
-    this.selectFiles = this.selectFilesId1.concat(this.selectFilesId2);
+    // this.selectFiles = this.selectFilesId1.concat(this.selectFilesId2);
 
 
     console.log(this.selectFilesId1);
-    console.log(this.selectFiles);
+    // console.log(this.selectFiles);
 
   }
 
@@ -302,11 +302,11 @@ export class RegisterComponent implements OnInit {
     console.log(DocumentIndex);
     this.documents2.removeAt(DocumentIndex);
     this.selectFilesId2.splice(DocumentIndex, 1);
-    this.selectFiles = this.selectFilesId1.concat(this.selectFilesId2);
+    // this.selectFiles = this.selectFilesId1.concat(this.selectFilesId2);
 
 
-    console.log(this.selectFilesId1);
-    console.log(this.selectFiles);    
+    console.log(this.selectFilesId2);
+    // console.log(this.selectFiles);
 
   }
 
@@ -387,7 +387,7 @@ export class RegisterComponent implements OnInit {
       },
       () => {
 
-        this.uploadFiles();
+        this.uploadFilesId1();
 
       });
     }
@@ -406,99 +406,101 @@ export class RegisterComponent implements OnInit {
       if(id_document_type == 1) {
 
         if ( this.file.type == "image/jpeg" || this.file.type == "application/pdf" || this.file.type == "image/png") {
-  
-  
+
+
           this.selectFilesId1.push({'fileData': this.file, 'id_document_type': id_document_type});
-  
+
           console.log(this.selectFilesId1);
-  
+
           this.documentIsValid = false;
-  
+
         } else {
-  
+
           this.documentIsValid = false;
-  
+
           if (id_document_type == 1) {
-  
+
             this.deleteDocument(index);
             this.addDocument();
             this.documentIsValid = false;
-  
-  
+
+
           } else {
-  
+
             this.deleteDocument2(index);
             this.addDocument2();
             this.documentIsValid = false;
-  
+
           }
-  
+
         }
 
       }else {
 
         if ( this.file.type == "image/jpeg" || this.file.type == "application/pdf" || this.file.type == "image/png") {
-  
-  
+
+
           this.selectFilesId2.push({'fileData': this.file, 'id_document_type': id_document_type});
-  
+
           console.log(this.selectFilesId2);
-  
+
           this.documentIsValid = false;
-  
+
         } else {
-  
+
           this.documentIsValid = false;
-  
+
           if (id_document_type == 1) {
-  
+
             this.deleteDocument(index);
             this.addDocument();
             this.documentIsValid = false;
-  
-  
+
+
           } else {
-  
+
             this.deleteDocument2(index);
             this.addDocument2();
             this.documentIsValid = false;
-  
+
           }
-  
+
         }
 
       }
-      
-      this.selectFiles = [];
-      this.selectFiles = this.selectFilesId1.concat(this.selectFilesId2);
-      console.log(this.selectFiles);
+
+      // this.selectFiles = [];
+      // this.selectFiles = this.selectFilesId1.concat(this.selectFilesId2);
+      // console.log(this.selectFiles);
 
 
     } else {
 
-      console.log(this.selectFiles);
+      // console.log(this.selectFiles);
       this.deleteDocument(index);
       this.addDocument();
 
       this.deleteDocument2(index);
       this.addDocument2();
 
-      this.selectFiles =[];
+      // this.selectFiles =[];
       this.selectFilesId1 =[];
       this.selectFilesId2 =[];
-      console.log(this.selectFiles);
+      // console.log(this.selectFiles);
       this.documentIsValid = false;
 
     }
 
   }
 
-
-  uploadFiles() {
+  uploadFilesId1() {
 
     let countArray: any = []
 
-    this.selectFiles.map((file) => {
+    console.log(this.selectFilesId1);
+
+    this.selectFilesId1.map((file) => {
+
 
       let fileData = file.fileData;
       let id_document_type = file.id_document_type
@@ -514,7 +516,42 @@ export class RegisterComponent implements OnInit {
 
             countArray.push({"num": 1});
 
-            if(this.selectFiles.length == countArray.length) {
+            if(this.selectFilesId1.length == countArray.length) {
+
+              this.uploadFilesID2();
+
+            }
+
+          })
+        })
+
+
+  }
+
+  uploadFilesID2() {
+
+    let countArray: any = []
+
+    console.log(this.selectFilesId2);
+
+    this.selectFilesId2.map((file) => {
+
+
+      let fileData = file.fileData;
+      let id_document_type = file.id_document_type
+
+      this.authServices.uploadFiles(fileData, id_document_type).subscribe((res) =>
+         {
+            console.log(res);
+          },
+          error => {
+
+          },
+          () => {
+
+            countArray.push({"num": 1});
+
+            if(this.selectFilesId2.length == countArray.length) {
 
               this.loggedServices.changeisRegisterUserStatus = true;
               this.isFormSubmitted = false;

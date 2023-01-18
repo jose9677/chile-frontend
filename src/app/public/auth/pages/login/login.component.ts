@@ -119,6 +119,8 @@ export class LoginComponent implements OnInit {
       let correctRut = rut.slice(0, -1) + "-" + code
 
       console.log(correctRut)
+      // this.userLogin.get("").setValue(correctRut)
+
 
 
     }
