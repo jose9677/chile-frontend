@@ -250,9 +250,9 @@ export class RegisterComponent implements OnInit {
       authCheck: ['',[Validators.required]]
     })
 
+    this.addDocument2();
     this.addDocument();
 
-    this.addDocument2();
 
     // console.log(this.userRegister);
 
@@ -290,7 +290,6 @@ export class RegisterComponent implements OnInit {
     console.log(DocumentIndex);
     this.documents.removeAt(DocumentIndex);
     this.selectFilesId1.splice(DocumentIndex, 1);
-    // this.selectFiles = this.selectFilesId1.concat(this.selectFilesId2);
 
 
     console.log(this.selectFilesId1);
@@ -302,7 +301,6 @@ export class RegisterComponent implements OnInit {
     console.log(DocumentIndex);
     this.documents2.removeAt(DocumentIndex);
     this.selectFilesId2.splice(DocumentIndex, 1);
-    // this.selectFiles = this.selectFilesId1.concat(this.selectFilesId2);
 
 
     console.log(this.selectFilesId2);
@@ -410,7 +408,6 @@ export class RegisterComponent implements OnInit {
 
           this.selectFilesId1.push({'fileData': this.file, 'id_document_type': id_document_type});
 
-          console.log(this.selectFilesId1);
 
           this.documentIsValid = false;
 
@@ -442,7 +439,6 @@ export class RegisterComponent implements OnInit {
 
           this.selectFilesId2.push({'fileData': this.file, 'id_document_type': id_document_type});
 
-          console.log(this.selectFilesId2);
 
           this.documentIsValid = false;
 
@@ -469,24 +465,18 @@ export class RegisterComponent implements OnInit {
 
       }
 
-      // this.selectFiles = [];
-      // this.selectFiles = this.selectFilesId1.concat(this.selectFilesId2);
-      // console.log(this.selectFiles);
 
 
     } else {
 
-      // console.log(this.selectFiles);
       this.deleteDocument(index);
       this.addDocument();
 
       this.deleteDocument2(index);
       this.addDocument2();
 
-      // this.selectFiles =[];
       this.selectFilesId1 =[];
       this.selectFilesId2 =[];
-      // console.log(this.selectFiles);
       this.documentIsValid = false;
 
     }
@@ -497,7 +487,6 @@ export class RegisterComponent implements OnInit {
 
     let countArray: any = []
 
-    console.log(this.selectFilesId1);
 
     this.selectFilesId1.map((file) => {
 
@@ -507,7 +496,6 @@ export class RegisterComponent implements OnInit {
 
       this.authServices.uploadFiles(fileData, id_document_type).subscribe((res) =>
          {
-            console.log(res);
           },
           error => {
 
@@ -532,7 +520,6 @@ export class RegisterComponent implements OnInit {
 
     let countArray: any = []
 
-    console.log(this.selectFilesId2);
 
     this.selectFilesId2.map((file) => {
 
@@ -542,7 +529,6 @@ export class RegisterComponent implements OnInit {
 
       this.authServices.uploadFiles(fileData, id_document_type).subscribe((res) =>
          {
-            console.log(res);
           },
           error => {
 

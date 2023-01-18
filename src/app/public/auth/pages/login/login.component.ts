@@ -26,11 +26,10 @@ export class LoginComponent implements OnInit {
 
   public listDigit: any;
 
-  public userLogin = this.fb.group({
-    rutNumber: ['', Validators.required],
-    rutCode: ['', Validators.required],
-    password: ['', Validators.required]
-    })
+  private rutNumber: any;
+
+  public userLogin: any;
+
 
 
   constructor(
@@ -42,7 +41,15 @@ export class LoginComponent implements OnInit {
     private loggedService: LoggedService,
     private tokenService: TokenService
 
-    ) { }
+    ) {
+
+      this.rutNumber = "";
+
+      this.userLogin = this.fb.group({
+        rutNumber: [this.rutNumber, Validators.required],
+        password: ['', Validators.required]
+        })
+    }
 
   ngOnInit(): void {
     // get return url from route parameters or default to '/'
@@ -109,20 +116,22 @@ export class LoginComponent implements OnInit {
 
   }
 
-  correctRut() {
+  correctRut(): any {
     if ( !this.userLogin.value.rutNumber.includes("-")) {
 
       let rut = this.userLogin.value.rutNumber;
 
       let code = rut.slice(-1)
 
-      let correctRut = rut.slice(0, -1) + "-" + code
+      let correctRut = rut.slice(0, -1) + "-" + code;
+
 
       console.log(correctRut)
-      // this.userLogin.get("").setValue(correctRut)
 
+      this.rutNumber = correctRut;
 
-
+    }else {
+      
     }
   }
 
