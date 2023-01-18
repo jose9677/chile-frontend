@@ -388,7 +388,7 @@
                           id="document_path"
                           [readOnly] ="(userRegister.controls.documents.value[i].document_path != '') ? true : false "
                           formControlName="document_path"
-                          (change)="selectdataFile($event, i, 1)"
+                          (change)="selectdataFile($event, i, 2)"
                           [ngClass]="{'is-invalid': ((userRegister.controls.documents.touched && userRegister.controls.documents.value[i].document_path == '') || (isFormSubmitted && userRegister.controls.documents.value[i].document_path === ''))}"
                           >
                           <div *ngIf="(userRegister.controls.documents.touched && userRegister.controls.documents.value[i].document_path === '') || (isFormSubmitted && userRegister.controls.documents.value[i].document_path === '')" class="invalid-feedback">Campo Requerido</div>
@@ -396,7 +396,7 @@
                           <div *ngIf="(userRegister.controls.documents.touched && documentIsValid != true) || (isFormSubmitted && documentIsValid != true )" class="invalid-feedback">Este campo solo admite formatos de archivos pdf, jpeg, png</div>
 
                           </div>
-                          <i class=" col-md-1 mdi mdi-close-circle" (click)="deleteDocument(i)"></i>
+                          <i class=" col-md-1 mdi mdi-close-circle" (click)="deleteDocument2(i)"></i>
                         </div>
                     </div>
                   </ng-container>
@@ -422,7 +422,7 @@
                           type="file"
                           formControlName="document_path"
                           [readOnly]="(userRegister.controls.documents2.value[i].document_path != '') ? true : false "
-                          (change)="selectdataFile($event, i, 2)"
+                          (change)="selectdataFile($event, i, 1)"
                           [ngClass]="{'is-invalid': ((userRegister.controls.documents2.touched && userRegister.controls.documents2.value[i].document_path == '') || (isFormSubmitted && userRegister.controls.documents2.value[i].document_path === ''))}"
                           >
                           <div *ngIf="(userRegister.controls.documents2.touched && userRegister.controls.documents2.value[i].document_path === '') || (isFormSubmitted && userRegister.controls.documents2.value[i].document_path === '')" class="invalid-feedback">Campo Requerido</div>
@@ -430,7 +430,7 @@
                           <div *ngIf="(userRegister.controls.documents2.touched && documentIsValid != true) || (isFormSubmitted && documentIsValid != true )" class="invalid-feedback">Este campo solo admite formatos de archivos pdf, jpeg, png</div>
 
                           </div>
-                          <i class=" col-md-1 mdi mdi-close-circle" (click)="deleteDocument2(i)"></i>
+                          <i class=" col-md-1 mdi mdi-close-circle" (click)="deleteDocument(i)"></i>
                         </div>
                     </div>
                   </ng-container>

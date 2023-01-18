@@ -18,17 +18,18 @@
                     id="Rut"
                     formControlName="rutNumber"
                     placeholder="00000000"
+                    (blur)="correctRut()"
                     [ngClass]="{'is-invalid': (userLogin.controls.rutNumber.touched && userLogin.controls.rutNumber.errors?.required) || (isFormSubmitted && userLogin.controls.rutNumber.errors?.required)}"
                         >
                         <div *ngIf="(userLogin.controls.rutNumber.touched && userLogin.controls.rutNumber.errors?.required) || ( isFormSubmitted && userLogin.controls.rutNumber.errors?.required)" class="invalid-feedback">Campo Requerido</div>
-                    
+
                   </div>
 
                   <div class="col-sm-1" style="margin-left: 0px; margin-right: 0px; font-size: 20px;">
                     <p>-</p>
                   </div>
 
-                  
+
                   <div class="col-sm-3">
                     <input
                     type="text"

@@ -24,6 +24,8 @@ export class LoginComponent implements OnInit {
 
   public isFormSubmitted: boolean;
 
+  public listDigit: any;
+
   public userLogin = this.fb.group({
     rutNumber: ['', Validators.required],
     rutCode: ['', Validators.required],
@@ -73,7 +75,7 @@ export class LoginComponent implements OnInit {
 
       this.authService.login(dataLogin).subscribe(result => {
         console.log(result)
-        
+
       },
       error => {  //recibe error del user services
         sessionStorage.clear();
@@ -105,6 +107,21 @@ export class LoginComponent implements OnInit {
         });
     }
 
+  }
+
+  correctRut() {
+    if ( !this.userLogin.value.rutNumber.includes("-")) {
+
+      let rut = this.userLogin.value.rutNumber;
+
+      let code = rut.slice(-1)
+
+      let correctRut = rut.slice(0, -1) + "-" + code
+
+      console.log(correctRut)
+
+
+    }
   }
 
 }
