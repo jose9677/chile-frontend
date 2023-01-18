@@ -43,6 +43,8 @@ export class EnterRutComponent implements OnInit {
   confirmRut(e: Event) {
     e.preventDefault();
 
+    this.correctRut()
+
     // setTimeout(this.correctRut(), 10000);
 
 
@@ -93,6 +95,26 @@ export class EnterRutComponent implements OnInit {
 
 
       });
+    }
+
+  }
+
+  correctRut(): any {
+
+    if ((this.formRutUser.value.rutNumber != '')) {
+
+      let rut = this.formRutUser.value.rutNumber;
+
+      rut = rut.replace(/\-/g, "");
+      rut = rut.replace(/\.|,/g, "");
+
+      let code = rut.slice(-1);
+
+      let correctRut = rut.slice(0, -1) + "-" + code;
+
+      this.formRutUser.controls['rutNumber'].setValue(correctRut);    
+      
+
     }
 
   }

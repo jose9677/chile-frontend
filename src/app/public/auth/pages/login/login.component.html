@@ -17,12 +17,11 @@
                     class="form-control"
                     id="Rut"
                     formControlName="rutNumber"
-                    [value]="this.rutNumber"
                     placeholder="00000000-0"
                     (blur)="correctRut()"
                     [ngClass]="{'is-invalid': (userLogin.controls.rutNumber.touched && userLogin.controls.rutNumber.errors?.required) || (isFormSubmitted && userLogin.controls.rutNumber.errors?.required)}"
                         >
-                        <div *ngIf="(userLogin.controls.rutNumber.touched && userLogin.controls.rutNumber.errors?.required) || ( isFormSubmitted && userLogin.controls.rutNumber.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+                    <div *ngIf="(userLogin.controls.rutNumber.touched && userLogin.controls.rutNumber.errors?.required) || ( isFormSubmitted && userLogin.controls.rutNumber.errors?.required)" class="invalid-feedback">Campo Requerido</div>
 
                   </div>
                 </div>
@@ -38,7 +37,7 @@
                 placeholder="Ingrese su Contraseña"
                 [ngClass]="{'is-invalid': (userLogin.controls.password.touched && userLogin.controls.password.errors?.required) || (isFormSubmitted && userLogin.controls.password.errors)}"
                     >
-                    <div *ngIf="(userLogin.controls.password.touched && userLogin.controls.password.errors?.required) || (isFormSubmitted && userLogin.controls.password.errors)" class="invalid-feedback">Campo Requerido</div>
+                <div *ngIf="(userLogin.controls.password.touched && userLogin.controls.password.errors?.required) || (isFormSubmitted && userLogin.controls.password.errors)" class="invalid-feedback">Campo Requerido</div>
 
               </div>
               <div class="d-flex justify-content-center">

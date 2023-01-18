@@ -26,8 +26,6 @@ export class LoginComponent implements OnInit {
 
   public listDigit: any;
 
-  public rutNumber: any;
-
   public userLogin: any;
 
 
@@ -43,15 +41,14 @@ export class LoginComponent implements OnInit {
 
     ) {
 
-      this.rutNumber = "";
 
-      this.userLogin = this.fb.group({
-        rutNumber: [this.rutNumber, Validators.required],
-        password: ['', Validators.required]
-        })
     }
-
-  ngOnInit(): void {
+    
+    ngOnInit(): void {
+    this.userLogin = this.fb.group({
+      rutNumber: ['', Validators.required],
+      password: ['', Validators.required]
+      })
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     this.isFormSubmitted = false;
@@ -110,24 +107,29 @@ export class LoginComponent implements OnInit {
           // window.sessionStorage.setItem("isLogged", JSON.stringify(true));
 
 
-
         });
     }
 
   }
 
   correctRut(): any {
-    if (( !this.userLogin.value.rutNumber.includes("-"))) {
 
-      // let rut = this.userLogin.value.rutNumber;
+    if ((this.userLogin.value.rutNumber != '')) {
 
-      // let code = rut.slice(-1)
+      let rut = this.userLogin.value.rutNumber;
 
-      // let correctRut = rut.slice(0, -1) + "-" + code;
+      rut = rut.replace(/\-/g, "");
+      rut = rut.replace(/\.|,/g, "");
 
-      // this.rutNumber = correctRut;
+      let code = rut.slice(-1);
+
+      let correctRut = rut.slice(0, -1) + "-" + code;
+
+      this.userLogin.controls['rutNumber'].setValue(correctRut);     
+      
 
     }
+
   }
 
 }

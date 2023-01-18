@@ -96,4 +96,24 @@ export class ForgetPasswordComponent implements OnInit {
 
   }
 
+  correctRut(): any {
+
+    if ((this.formForgetPassword.value.rutNumber != '')) {
+
+      let rut = this.formForgetPassword.value.rutNumber;
+
+      rut = rut.replace(/\-/g, "");
+      rut = rut.replace(/\.|,/g, "");
+
+      let code = rut.slice(-1);
+
+      let correctRut = rut.slice(0, -1) + "-" + code;
+
+      this.formForgetPassword.controls['rutNumber'].setValue(correctRut);    
+      
+
+    }
+
+  }
+
 }
