@@ -18,7 +18,7 @@
                     id="Rut"
                     formControlName="rutNumber"
                     [value]="this.rutNumber"
-                    placeholder="00000000"
+                    placeholder="00000000-0"
                     (blur)="correctRut()"
                     [ngClass]="{'is-invalid': (userLogin.controls.rutNumber.touched && userLogin.controls.rutNumber.errors?.required) || (isFormSubmitted && userLogin.controls.rutNumber.errors?.required)}"
                         >

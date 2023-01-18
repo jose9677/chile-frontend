@@ -8,7 +8,7 @@
             <h2 class="text-muted fw-normal text-center titles "><strong> Registro</strong></h2><br>
             <form class="forms-sample" [formGroup]="formRutUser" (ngSubmit)="confirmRut($event)">
               <div class="mb-3 mt-3">
-                <label for="Rut" class="form-label colorTextPrimari">Ingrese su RUT</label>
+                <label for="Rut" class="form-label colorTextPrimari">Ingrese su RUT colocando un guion antes del dígito verificador</label>
 
 
                     <input
@@ -16,7 +16,7 @@
                     class="form-control col-sm-8"
                     id="Rut"
                     formControlName = rutNumber
-                    placeholder="0000000"
+                    placeholder="0000000-0"
                     [ngClass]="{'is-invalid': (formRutUser.controls.rutNumber.touched && formRutUser.controls.rutNumber.errors) || (isFormSubmitted && formRutUser.controls.rutNumber.errors)}"
                         >
                         <div *ngIf="(formRutUser.controls.rutNumber.touched && formRutUser.controls.rutNumber.errors?.required) || (isFormSubmitted && formRutUser.controls.rutNumber.errors?.required)" class="invalid-feedback">Campo Requerido</div>

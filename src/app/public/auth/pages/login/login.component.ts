@@ -119,13 +119,13 @@ export class LoginComponent implements OnInit {
   correctRut(): any {
     if (( !this.userLogin.value.rutNumber.includes("-"))) {
 
-      let rut = this.userLogin.value.rutNumber;
+      // let rut = this.userLogin.value.rutNumber;
 
-      let code = rut.slice(-1)
+      // let code = rut.slice(-1)
 
-      let correctRut = rut.slice(0, -1) + "-" + code;
+      // let correctRut = rut.slice(0, -1) + "-" + code;
 
-      this.rutNumber = correctRut;
+      // this.rutNumber = correctRut;
 
     }
   }
