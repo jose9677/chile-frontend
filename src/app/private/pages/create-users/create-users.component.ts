@@ -97,52 +97,7 @@ export class CreateUsersComponent implements OnInit {
         this.supervisorOfstreet[i].names +=" "+dataRequest[i].lastname
       }
     })
-    this.digitoVerificador =[
-      {
-        'id':0,
-        'name':'0'
-      },
-      {
-        'id':1,
-        'name':'1'
-      },
-      {
-        'id':2,
-        'name':'2'
-      },
-      {
-        'id':3,
-        'name':'3'
-      },
-      {
-        'id':4,
-        'name':'4'
-      },
-      {
-        'id':5,
-        'name':'5'
-      },
-      {
-        'id':6,
-        'name':'6'
-      },
-      {
-        'id':7,
-        'name':'7'
-      },
-      {
-        'id':8,
-        'name':'8'
-      },
-      {
-        'id':9,
-        'name':'9'
-      },
-      {
-        'id':'K',
-        'name':'K'
-      }
-    ]
+
   }
 
   ngOnInit(): void {
@@ -161,7 +116,8 @@ export class CreateUsersComponent implements OnInit {
 
     this.userRegister= this.fb.group({
       names: ['',[Validators.required, Validators.pattern(/^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ ]+$/)]],
-      rutUser: ['',[Validators.required,Validators.pattern(/^[0-9]{6,8}$/)]],
+      // rutUser: ['',[Validators.required,Validators.pattern(/^[0-9]{6,8}$/)]],
+      rutUser: ['',[Validators.required]],
       lastNames: ['', [Validators.required,Validators.pattern(/^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ ]+$/) ]],
       datesBirth: ['', [Validators.required, CustomValidators.date]],
       email: ['', [Validators.required, CustomValidators.email]],
@@ -169,7 +125,6 @@ export class CreateUsersComponent implements OnInit {
       mobilePhone: ['', [Validators.required, Validators.minLength(9), CustomValidators.number]],
       RolOfstreet: ['', Validators.required],
       supervisorOfstreet:['', Validators.required],
-      digitoVerificador:['', Validators.required],
       documents: this.fb.array([]),
 
     })
@@ -207,7 +162,7 @@ export class CreateUsersComponent implements OnInit {
   onRegister(e: Event){
     console.log(this.userRegister);
     const dataUser ={
-      rut:this.userRegister.value.rutUser+"-"+this.userRegister.value.digitoVerificador,
+      rut:this.userRegister.value.rutUser,
       names:this.userRegister.value.names,
       lastname:this.userRegister.value.lastNames,
       f_nac:this.userRegister.value.datesBirth,
@@ -293,7 +248,7 @@ export class CreateUsersComponent implements OnInit {
 
         this.documentIsValid = false;
 
-        if (id_document_type == 1) {
+        if (id_document_type == 3) {
 
           this.deleteDocument(index);
           this.addDocument();
@@ -315,12 +270,10 @@ export class CreateUsersComponent implements OnInit {
       this.documentIsValid = false;
 
     }
-
-
-
   }
+
   confirmRut(e: Event){
-    if(this.userRegister.controls.names.errors || this.userRegister.controls.digitoVerificador.errors || this.userRegister.controls.rutUser.errors  || this.userRegister.controls.lastNames.errors  || this.userRegister.controls.datesBirth.errors  || this.userRegister.controls.email.errors  || this.userRegister.controls.landLine.errors  || this.userRegister.controls.mobilePhone.errors  || this.userRegister.controls.RolOfstreet.errors  || (this.userRegister.controls.supervisorOfstreet.errors && this.userRegister.controls.RolOfstreet.value ==2) ){
+    if(this.userRegister.controls.names.errors || this.userRegister.controls.rutUser.errors  || this.userRegister.controls.lastNames.errors  || this.userRegister.controls.datesBirth.errors  || this.userRegister.controls.email.errors  || this.userRegister.controls.landLine.errors  || this.userRegister.controls.mobilePhone.errors  || this.userRegister.controls.RolOfstreet.errors  || (this.userRegister.controls.supervisorOfstreet.errors && this.userRegister.controls.RolOfstreet.value ==2) ){
       this.isFormSubmitted = true;
       let title= "";
       let message = "sucedió un Error verifique en el formulario que ingreso todos los campos correctamente";
@@ -328,7 +281,7 @@ export class CreateUsersComponent implements OnInit {
     }else{
       this.buttonBlock=true
       const dataRutUser= {
-        rut: this.userRegister.value.rutUser+"-"+this.userRegister.value.digitoVerificador
+        rut: this.userRegister.value.rutUser
       }
 
       this.authServices.validateRut(dataRutUser).subscribe( result => {
@@ -351,5 +304,25 @@ export class CreateUsersComponent implements OnInit {
 
       });
     }
+  }
+
+  correctRut(): any {
+
+    if ((this.userRegister.value.rutUser != '')) {
+
+      let rut = this.userRegister.value.rutUser;
+
+      rut = rut.replace(/\-/g, "");
+      rut = rut.replace(/\.|,/g, "");
+
+      let code = rut.slice(-1);
+
+      let correctRut = rut.slice(0, -1) + "-" + code;
+
+      this.userRegister.controls['rutUser'].setValue(correctRut);
+
+
+    }
+
   }
 }

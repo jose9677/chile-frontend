@@ -39,6 +39,8 @@ export class EditUserComponent implements OnInit {
    private router: Router,
    private activatedroute: ActivatedRoute
   ) {
+
+    this.selectFiles = [];
     this.activatedroute.params.subscribe(params=>{
         this.ruts=params['id']
     })
@@ -84,6 +86,7 @@ export class EditUserComponent implements OnInit {
     // })
     this.privateService.datosUser(this.ruts).subscribe(dataRequest => {
       this.usuario.push(dataRequest[0])
+      console.log(dataRequest)
     })
     this.isFormSubmitted = false;
 
@@ -192,9 +195,6 @@ export class EditUserComponent implements OnInit {
       this.documentIsValid = false;
 
     }
-
-
-
   }
 
   onRegister(e: Event){

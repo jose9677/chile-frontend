@@ -25,27 +25,14 @@
               <input id="Rut"
               type="text"
               class="form-control"
+              (blur)="correctRut()"
               formControlName = rutUser
-              placeholder="0000000"
+              placeholder="0000000-0"
               [ngClass]="{'is-invalid': (userRegister.controls.rutUser.touched && userRegister.controls.rutUser.errors?.required)||(userRegister.controls.rutUser.touched && userRegister.controls.rutUser.errors?.pattern) || (isFormSubmitted && userRegister.controls.rutUser.errors)}">
               <div *ngIf="(userRegister.controls.rutUser.touched && userRegister.controls.rutUser.errors?.required) || (isFormSubmitted && userRegister.controls.rutUser.required)" class="invalid-feedback">Campo Requerido</div>
               <div *ngIf="(userRegister.controls.rutUser.touched && userRegister.controls.rutUser.errors?.pattern) || (isFormSubmitted && userRegister.controls.rutUser.pattern)" class="invalid-feedback"><p>Verifique que puso el rut correctamente<P></div>
             </div>
-            <div class="col-md-5 col-sm-12">
-              <label for="digitoVerificador" class="form-label colorTextPrimari">Dígito Verificador</label>
-            <ng-select
-            [items]="digitoVerificador"
-            class="form-control p-0"
-            bindLabel="name"
-            bindValue="id"
-            placeholder="Seleccione"
-            [(ngModel)]="selectedStreet1"
-            formControlName="digitoVerificador"
-            [ngClass]="{'is-invalid': ((userRegister.controls.digitoVerificador.touched && userRegister.controls.digitoVerificador.errors?.required) || (isFormSubmitted && userRegister.controls.digitoVerificador.value == null))}"
-            >
-            </ng-select>
-            <div *ngIf="(userRegister.controls.digitoVerificador.touched && userRegister.controls.digitoVerificador.value == null)||(isFormSubmitted && userRegister.controls.digitoVerificador.value == null)" class="invalid-feedback">Campo Requerido</div>
-            </div>
+
           </div>
         </div>
         <div class="col-md-5 col-sm-12"></div>
@@ -160,7 +147,7 @@
                       id="document_path"
                       [readOnly] ="(userRegister.controls.documents.value[i].document_path != '') ? true : false "
                       formControlName="document_path"
-                      (change)="selectdataFile($event, i, 1)"
+                      (change)="selectdataFile($event, i, 3)"
                       >
                       <!-- <div *ngIf="(userRegister.controls.documents.touched && userRegister.controls.documents.value[i].document_path === '') || (isFormSubmitted && userRegister.controls.documents.value[i].document_path === '')" class="invalid-feedback">Campo Requerido</div> -->
 
