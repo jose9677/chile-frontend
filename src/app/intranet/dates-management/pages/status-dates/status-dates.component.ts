@@ -48,6 +48,8 @@ export class StatusDatesComponent implements OnInit {
 
     this.dateService.getForIdRequest(this.idRequest).subscribe((result) => {
 
+      console.log(result)
+
 
 
       result.map((res: any)=>{

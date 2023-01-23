@@ -105,6 +105,8 @@ export class PrivateService {
     let url = AUTH_API_NP + 'search-user/'+ rutUser;
     return this.http.get<any>(url, httpOptions).pipe(map((result:any) => {
 
+      console.log(result)
+
       return result
 
     }),
@@ -186,6 +188,27 @@ export class PrivateService {
       })
     )
   }
+
+  uploadFiles(fileData: File, rutUser: any): Observable<any>{
+    console.log(fileData);
+
+    const formfileData = new FormData();
+
+
+    formfileData.append('profile_pic', fileData);
+
+    console.log(FormData);
+
+    return this.http.post( AUTH_API_NP + 'profile-pic/' + rutUser , formfileData).pipe(map((result:any) => {
+
+      return result
+
+    }),
+    catchError((err)=> this.handlerError(err))
+    );
+  }
+
+
 
   private handlerError(err:any): Observable<never> { //pasa error al login component
     let errorMessage= 'An error ocurred';

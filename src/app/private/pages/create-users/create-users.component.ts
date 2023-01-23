@@ -170,12 +170,13 @@ export class CreateUsersComponent implements OnInit {
       landline:this.userRegister.value.landLine,
       mobile_phone:this.userRegister.value.mobilePhone,
       supervisor_rut:this.userRegister.value.supervisorOfstreet,
-      profile_pic:this.userRegister.value.documents[0].document_path,
+      // profile_pic:this.userRegister.value.documents[0].document_path,
       // profile_pic:this.userRegister.value.documents,
       // supervisorofstreet:this.userRegister.value.supervisorOfstreet,
       id_rol:this.userRegister.value.RolOfstreet
     }
     console.log(dataUser);
+
     this.privateService.register(dataUser).subscribe(result => {
       console.log(result);
       // this.uploadFiles();
@@ -200,19 +201,24 @@ export class CreateUsersComponent implements OnInit {
 
     },
     () => {
-      this.uploadFiles();
+      this.uploadFiles( dataUser.rut );
     });
+
   }
 
 
-  uploadFiles() {
+  uploadFiles(dataRutUser: any) {
+
+    let rutUser = dataRutUser
 
     this.selectFiles.map((file) => {
 
-      let fileData = file.fileData;
-      let id_document_type = file.id_document_type
+      let fileData = file.profile_pic;
 
-      this.authServices.uploadFiles(fileData, id_document_type).subscribe((res) =>
+      console.log(dataRutUser)
+      console.log(fileData)
+
+      this.privateService.uploadFiles(fileData, rutUser).subscribe((res) =>
          {
             console.log(res);
           },
@@ -239,7 +245,7 @@ export class CreateUsersComponent implements OnInit {
       if ( this.file.type == "image/jpeg" || this.file.type == "application/pdf" || this.file.type == "image/png") {
 
 
-        this.selectFiles.push({'fileData': this.file, 'id_document_type': id_document_type});
+        this.selectFiles.push({'profile_pic': this.file, 'id_document_type': id_document_type});
         console.log(this.selectFiles);
 
         this.documentIsValid = false;

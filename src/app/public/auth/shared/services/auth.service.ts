@@ -84,7 +84,6 @@ export class AuthService {
     );
   }
 
-
   uploadFiles(fileData: File, id_document_type: any): Observable<any>{
     console.log(fileData)
 
