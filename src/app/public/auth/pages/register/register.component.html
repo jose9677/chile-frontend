@@ -265,6 +265,7 @@
                         [(ngModel)]="selectedPrevention"
                         formControlName="preventions_types"
                         placeholder="Seleccione"
+                        (close)="documentPrevention( userRegister.controls.healthInformation.controls.preventions_types.value )"
                         [ngClass]="{'is-invalid': ((userRegister.controls.healthInformation.touched && userRegister.controls.healthInformation.controls.preventions_types.errors) || (isFormSubmitted && userRegister.controls.healthInformation.controls.preventions_types.errors))}"
                         >
                     </ng-select>
@@ -366,41 +367,41 @@
               </div>
               <div>
                 <h3 class="colorTextPrimari pb-3">Documentos</h3>
-                <ng-container formArrayName="documents2">
-                  <div class="row">
-                    <div
-                    class="col-md-6">
-                      <h5 class="colorTextPrimari pb-3">Certificado de Previsión</h5>
+                <div *ngIf="(userRegister.controls.healthInformation.controls.preventions_types.value === 1 || userRegister.controls.healthInformation.controls.preventions_types.value === 2)">
+                  <ng-container formArrayName="documents2">
+                    <div class="row">
+                      <div
+                      class="col-md-6">
+                        <h5 class="colorTextPrimari pb-3">Certificado de Previsión</h5>
+                      </div>
+                      <div class="col-md-6">
+                        <button type="button" mat-mini-fab (click)="addDocument2() " class="file_add">
+                          + Haga click aqui para Adjuntar
+                        </button>
+                      </div>
                     </div>
-                    <div class="col-md-6">
-                      <button type="button" mat-mini-fab (click)="addDocument2() " class="file_add">
-                        + Haga click aqui para Adjuntar
-                      </button>
-                    </div>
-                  </div>
-                  <ng-container *ngFor="let documentForm of documents2.controls; let i = index">
-                    <div [formGroupName]="i">
-                        <div class="row">
-                          <div class="col-md-8 mb-4">
-                            <input
-                          class="form-control"
-                          type="file"
-                          id="document_path"
-                          [readOnly]="(userRegister.controls.documents2.value[i].document_path != '') ? true : false "
-                          formControlName="document_path"
-                          (change)="selectdataFile($event, i, 2)"
-                          [ngClass]="{'is-invalid': ((userRegister.controls.documents2.touched && userRegister.controls.documents2.value[i].document_path == '') || (isFormSubmitted && userRegister.controls.documents2.value[i].document_path === ''))}"
-                          >
-                          <div *ngIf="(userRegister.controls.documents2.touched && userRegister.controls.documents2.value[i].document_path === '') || (isFormSubmitted && userRegister.controls.documents2.value[i].document_path === '')" class="invalid-feedback">Campo Requerido</div>
-
-                          <div *ngIf="(userRegister.controls.documents2.touched && documentIsValid != true) || (isFormSubmitted && documentIsValid != true )" class="invalid-feedback">Este campo solo admite formatos de archivos pdf, jpeg, png</div>
-
+                    <ng-container *ngFor="let documentForm of documents2.controls; let i = index">
+                      <div [formGroupName]="i">
+                          <div class="row">
+                            <div class="col-md-8 mb-4">
+                              <input
+                            class="form-control"
+                            type="file"
+                            id="document_path"
+                            [readOnly]="(userRegister.controls.documents2.value[i].document_path != '') ? true : false "
+                            formControlName="document_path"
+                            (change)="selectdataFile($event, i, 2)"
+                            [ngClass]="{'is-invalid': ((userRegister.controls.documents2.touched && userRegister.controls.documents2.value[i].document_path == '') || (isFormSubmitted && userRegister.controls.documents2.value[i].document_path === ''))}"
+                            >
+                            <div *ngIf="(userRegister.controls.documents2.touched && userRegister.controls.documents2.value[i].document_path === '') || (isFormSubmitted && userRegister.controls.documents2.value[i].document_path === '')" class="invalid-feedback">Campo Requerido</div>
+                            <div *ngIf="(userRegister.controls.documents2.touched && documentIsValid != true) || (isFormSubmitted && documentIsValid != true )" class="invalid-feedback">Este campo solo admite formatos de archivos pdf, jpeg, png</div>
+                            </div>
+                            <i class=" col-md-1 mdi mdi-close-circle" (click)="deleteDocument2(i)"></i>
                           </div>
-                          <i class=" col-md-1 mdi mdi-close-circle" (click)="deleteDocument2(i)"></i>
-                        </div>
-                    </div>
+                      </div>
+                    </ng-container>
                   </ng-container>
-                </ng-container>
+                </div>
                 <ng-container formArrayName="documents">
                   <div class="row">
                     <div class="col-md-6">

@@ -287,7 +287,7 @@ export class RegisterComponent implements OnInit {
   }
 
   deleteDocument(DocumentIndex: number) {
-    console.log(DocumentIndex);
+    // console.log(DocumentIndex);
     this.documents.removeAt(DocumentIndex);
     this.selectFilesId1.splice(DocumentIndex, 1);
 
@@ -298,12 +298,12 @@ export class RegisterComponent implements OnInit {
   }
 
   deleteDocument2(DocumentIndex: number) {
-    console.log(DocumentIndex);
+    // console.log(DocumentIndex);
     this.documents2.removeAt(DocumentIndex);
     this.selectFilesId2.splice(DocumentIndex, 1);
 
 
-    console.log(this.selectFilesId2);
+    // console.log(this.selectFilesId2);
     // console.log(this.selectFiles);
 
   }
@@ -521,14 +521,16 @@ export class RegisterComponent implements OnInit {
     let countArray: any = []
 
 
-    this.selectFilesId2.map((file) => {
+    if (this.selectFilesId2.length != 0 ) {
+
+      this.selectFilesId2.map((file) => {
 
 
-      let fileData = file.fileData;
-      let id_document_type = file.id_document_type
+        let fileData = file.fileData;
+        let id_document_type = file.id_document_type
 
-      this.authServices.uploadFiles(fileData, id_document_type).subscribe((res) =>
-         {
+        this.authServices.uploadFiles(fileData, id_document_type).subscribe((res) => {
+
           },
           error => {
 
@@ -550,8 +552,20 @@ export class RegisterComponent implements OnInit {
                 this.modalService.OpenModalError2(ModalComponent, "alert", title, message);
             }
 
-          })
-        })
+          }
+        )
+      })
+    }else {
+      this.loggedServices.changeisRegisterUserStatus = true;
+      this.isFormSubmitted = false;
+      this.emailUser = this.userRegister.value.email;
+      this.modalValidateEmail(this.emailUser, this.rut);
+
+      let title= "";
+        let message = "Su correo electrónico y número celular, nos permitirán mantener contacto con usted e informar nuevos beneficios, oportunidades y descuentos. Recuerde que la información que está enviando será verificada por el Municipio. En caso de verificar que la información entregada es falsa, su solicitud de ingreso al programa quedará cancelada de forma permanente";
+
+        this.modalService.OpenModalError2(ModalComponent, "alert", title, message);
+    }
 
 
   }
@@ -570,5 +584,26 @@ export class RegisterComponent implements OnInit {
     this.modalService.openModal(PrivacyPolicyComponent)
   }
 
+  documentPrevention(preventionType: any) {
+
+
+    console.log(this.documents2.value)
+
+    if ( preventionType == 4 ) {
+
+      this.deleteDocument2(0);
+      this.deleteDocument2(1);
+      this.deleteDocument2(2);
+      this.deleteDocument2(3);
+      this.deleteDocument2(4);
+      this.selectFilesId2 =[];
+
+
+    } else if ( this.documents2.value.length === 0) {
+
+      this.addDocument2;
+
+    }
+  }
 
 }
