@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
 
 
     }
-    
+
     ngOnInit(): void {
     this.userLogin = this.fb.group({
       rutNumber: ['', Validators.required],
@@ -84,15 +84,26 @@ export class LoginComponent implements OnInit {
       error => {  //recibe error del user services
         sessionStorage.clear();
         this.errors = error;
-        console.log('errors_login->',this.errors.message);
+        console.log('errors_login->',this.errors.error);
         // modal
 
           this.userLogin.reset();
 
-          this.errors = true;
-          let title: string = ''
-          let message: string = "Usuario o contraseña incorrectos , por favor verifique e intente nuevamente";
-          this.modalService.OpenModalError2(ModalComponent, this.errors, title, message);
+          if ( this.errors.error == 'Inactive Email') {
+
+            this.errors = true;
+            let title: string = ''
+            let message: string = "Email Inactivo, Por favor verifique e ingrese la clave de un solo uso que le hemos enviado a si correo electrónico";
+            this.modalService.OpenModalError2(ModalComponent, this.errors, title, message);
+
+          } else {
+
+            this.errors = true;
+            let title: string = ''
+            let message: string = "Usuario o contraseña incorrectos , por favor verifique e intente nuevamente";
+            this.modalService.OpenModalError2(ModalComponent, this.errors, title, message);
+          }
+
 
 
         },
@@ -125,8 +136,8 @@ export class LoginComponent implements OnInit {
 
       let correctRut = rut.slice(0, -1) + "-" + code;
 
-      this.userLogin.controls['rutNumber'].setValue(correctRut);     
-      
+      this.userLogin.controls['rutNumber'].setValue(correctRut);
+
 
     }
 
