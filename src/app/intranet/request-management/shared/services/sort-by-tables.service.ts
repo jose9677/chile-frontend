@@ -18,15 +18,10 @@ export class SortByTablesService {
 
   constructor() {
 
-
-
    }
 
   nextPage() {
-    if((this.page <= 5)) {
-      this.page += 5;
-      console.log(this.page)
-    }
+    this.page += 5;
 
   }
 
@@ -63,24 +58,22 @@ export class SortByTablesService {
 
 
   nextPage2() {
-    if((this.page2 <= 5)) {
-      this.page2 += 5;
-      console.log(this.page2)
-    }
+
+    this.page2 += 5;
 
   }
 
   prevPage2() {
     if ((this.page2 > 0)) {
-
       this.page2 -= 5;
+
       console.log(this.page2)
     }
   }
 
   onSearch2(search2: any) {
-    this.search2 = search2.toLowerCase();
     console.log(this.search2)
+    this.search2 = search2.toLowerCase();
 
 
   }

@@ -81,7 +81,7 @@
             <i class="mdi mdi-magnify"></i>
           </div> -->
           <div class="input-group col-md-4 mb-3">
-            <input type="text" class="form-control" placeholder="Buscar..." #txtSearch (keyup)="sortByService.onSearch(txtSearch.value)">
+            <input type="text" class="form-control" placeholder="Buscar..." #txtSearch2 (keyup)="sortByService.onSearch2(txtSearch2.value)">
             <div class="input-group-append">
               <span class="input-group-text" id="basic-addon2"><i class="mdi mdi-magnify"></i></span>
             </div>
@@ -89,13 +89,13 @@
           <table class="table">
             <thead>
               <tr>
-                <th (click)="sortByService.dataSortBy('id_request')">Nro. Solicitud</th>
-                <th (click)="sortByService.dataSortBy('request_date')">Fecha Solicitud</th>
-                <th (click)="sortByService.dataSortBy('rut')">RUT</th>
-                <th (click)="sortByService.dataSortBy('user_name')">Nombres y Apellidos</th>
-                <th (click)="sortByService.dataSortBy('way_number')">Direccion</th>
-                <th (click)="sortByService.dataSortBy('employee_rut')">Asistente Social</th>
-                <th (click)="sortByService.dataSortBy('status')">Estatus</th>
+                <th (click)="sortByService.dataSortBy2('id_request')">Nro. Solicitud</th>
+                <th (click)="sortByService.dataSortBy2('request_date')">Fecha Solicitud</th>
+                <th (click)="sortByService.dataSortBy2('rut')">RUT</th>
+                <th (click)="sortByService.dataSortBy2('user_name')">Nombres y Apellidos</th>
+                <th (click)="sortByService.dataSortBy2('way_number')">Direccion</th>
+                <th (click)="sortByService.dataSortBy2('employee_rut')">Asistente Social</th>
+                <th (click)="sortByService.dataSortBy2('status')">Estatus</th>
                 <th >Opciones</th>
               </tr>
             </thead>

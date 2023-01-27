@@ -55,9 +55,8 @@ export class ViewSupervisorRequestsComponent implements OnInit {
   getAllRequest() {
 
     this.date.getAllRequest().subscribe( result => {
-      console.log(result)
-      this.unassignedRequest2 = [];
-      this.unassignedRequest = [];
+
+      console.log(result);
 
       result.data_complete.map((res: any)=>{
 
@@ -91,3 +90,5 @@ export class ViewSupervisorRequestsComponent implements OnInit {
 
 
 }
+
+
