@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import * as _ from 'underscore'
 
 @Pipe({
-  name: 'sortBy'
+  name: 'sortBy',
+  pure: false
 })
 export class SortByPipe implements PipeTransform {
 

@@ -14,6 +14,9 @@ import { Filter2Pipe } from './shared/pipes/filter2.pipe';
 import { HttpClientModule } from '@angular/common/http';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ViewAdminRequestsComponent } from './pages/view-admin-requests/view-admin-requests.component';
+import { FilterTableNeighborPipe } from './shared/pipes/filter-table-neighbor.pipe';
+import { FilterTable1AssistantPipe } from './shared/pipes/filter-table1-assistant.pipe';
+import { FilterTable2AssistantPipe } from './shared/pipes/filter-table2-assistant.pipe';
 
 
 @NgModule({
@@ -27,6 +30,9 @@ import { ViewAdminRequestsComponent } from './pages/view-admin-requests/view-adm
     SortByPipe,
     SortBy2Pipe,
     Filter2Pipe,
+    FilterTableNeighborPipe,
+    FilterTable1AssistantPipe,
+    FilterTable2AssistantPipe,
   ],
 
 

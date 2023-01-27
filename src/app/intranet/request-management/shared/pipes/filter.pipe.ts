@@ -30,7 +30,7 @@ export class FilterPipe implements PipeTransform {
 
 
     if (search.length ===0 ) {
-      return value.slice(page,page + 5);
+      return value.slice(page, page + 5);
     } else {
 
       if (resultSearch.length != 0 ) {
@@ -114,28 +114,5 @@ export class FilterPipe implements PipeTransform {
         }
       }
     }
-
-
-
-
-
-
-
-
-
-    // if( resultSearch.length === 0 && resultSearch2.length != 0) {
-
-    //   return resultSearch2.slice(page,page + 5);
-
-    // }
-    // else if(resultSearch.length === 0 && resultSearch3.length != 0) {
-
-    //   return resultSearch3.slice(page,page + 5);
-
-    // }else {
-    //   return resultSearch.slice(page,page + 5);
-    // }
-
   }
-
 }

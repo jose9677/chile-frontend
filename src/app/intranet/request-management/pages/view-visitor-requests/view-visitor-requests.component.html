@@ -39,7 +39,7 @@
             </thead>
             <tbody>
                   <!-- <tr *ngFor="let request of unassignedRequest; index as i " > -->
-                <tr *ngFor="let request of unassignedRequest | filter2:sortByService.search:sortByService.page | sortBy:sortByService.dataSort:sortByService.order" >
+                <tr *ngFor="let request of unassignedRequest | filterTable1Assistant:sortByService.search :sortByService.page | sortBy:sortByService.dataSort:sortByService.order" >
                   <td >{{(request.id ?? ' ')}}</td>
                   <td>{{(request.created_at ?? ' ')}}</td>
                   <td>{{(request.rut_user ?? ' ')}}</td>
@@ -59,7 +59,7 @@
                 </th>
                 <th>
                   <button class="color-secondary" (click)="sortByService.prevPage()" [disabled]="sortByService.page === 0"><i class="mdi mdi-arrow-left-bold"></i>  Anterior  </button>
-                  <button class="color-secondary" (click)="sortByService.nextPage()"  [disabled]="(unassignedRequest | filter:sortByService.search:sortByService.page).length === 0" >  Siguiente  <i class="mdi mdi-arrow-right-bold"></i></button>
+                  <button class="color-secondary" (click)="sortByService.nextPage()"  [disabled]="(unassignedRequest | filterTable1Assistant:sortByService.search:sortByService.page).length === 0" >  Siguiente  <i class="mdi mdi-arrow-right-bold"></i></button>
 
                 </th>
               </tr>
@@ -82,7 +82,7 @@
             <i class="mdi mdi-magnify"></i>
           </div> -->
           <div class="input-group col-md-4 mb-3">
-            <input type="text" class="form-control" placeholder="Buscar..." #txtSearch (keyup)="sortByService.onSearch(txtSearch.value)">
+            <input type="text" class="form-control" placeholder="Buscar..." #txtSearch2 (keyup)="sortByService.onSearch2(txtSearch2.value)">
             <div class="input-group-append">
               <span class="input-group-text" id="basic-addon2"><i class="mdi mdi-magnify"></i></span>
             </div>
@@ -90,20 +90,20 @@
           <table class="table">
             <thead>
               <tr>
-                <th (click)="sortByService.dataSortBy('id_request')">Nro. Solicitud</th>
-                <th (click)="sortByService.dataSortBy('request_date')">Fecha Solicitud</th>
-                <th (click)="sortByService.dataSortBy('rut')">RUT</th>
-                <th (click)="sortByService.dataSortBy('user_name')">Nombres y Apellidos</th>
-                <th (click)="sortByService.dataSortBy('way_number')">Direccion</th>
-                <th (click)="sortByService.dataSortBy('request_date')">Fecha Visita</th>
-                <th (click)="sortByService.dataSortBy('employee_rut')">Asistente Social</th>
-                <th (click)="sortByService.dataSortBy('status')">Estatus</th>
+                <th (click)="sortByService.dataSortBy2('id_request')">Nro. Solicitud</th>
+                <th (click)="sortByService.dataSortBy2('request_date')">Fecha Solicitud</th>
+                <th (click)="sortByService.dataSortBy2('rut')">RUT</th>
+                <th (click)="sortByService.dataSortBy2('user_name')">Nombres y Apellidos</th>
+                <th (click)="sortByService.dataSortBy2('way_number')">Direccion</th>
+                <th (click)="sortByService.dataSortBy2('request_date')">Fecha Visita</th>
+                <th (click)="sortByService.dataSortBy2('employee_rut')">Asistente Social</th>
+                <th (click)="sortByService.dataSortBy2('status')">Estatus</th>
                 <th >Opciones</th>
               </tr>
             </thead>
             <tbody>
                   <!-- <tr *ngFor="let request of unassignedRequest; index as i " > -->
-                <tr *ngFor="let request of unassignedRequest2 | filter2:sortByService.search2:sortByService.page2 | sortBy2:sortByService.dataSort2:sortByService.order2" >
+                <tr *ngFor="let request of unassignedRequest2 | filterTable2Assistant:sortByService.search2 :sortByService.page2 |sortBy2:sortByService.dataSort2:sortByService.order2" >
                   <td >{{(request.id ?? ' ')}}</td>
                   <td>{{(request.created_at ?? ' ')}}</td>
                   <td>{{(request.rut_user ?? ' ')}}</td>
@@ -126,7 +126,7 @@
                 </th>
                 <th>
                   <button class="color-secondary" (click)="sortByService.prevPage2()" [disabled]="sortByService.page2 === 0"><i class="mdi mdi-arrow-left-bold"></i>  Anterior  </button>
-                  <button class="color-secondary" (click)="sortByService.nextPage2()"  [disabled]="(unassignedRequest2 | filter:sortByService.search2:sortByService.page2).length === 0" >  Siguiente  <i class="mdi mdi-arrow-right-bold"></i></button>
+                  <button class="color-secondary" (click)="sortByService.nextPage2()"  [disabled]="(unassignedRequest2 | filterTable2Assistant:sortByService.search2:sortByService.page2).length === 0" >  Siguiente  <i class="mdi mdi-arrow-right-bold"></i></button>
 
                 </th>
               </tr>

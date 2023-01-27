@@ -36,7 +36,7 @@
             </thead>
             <tbody>
                   <!-- <tr *ngFor="let request of unassignedRequest; index as i " > -->
-                <tr *ngFor="let request of unassignedRequest | filter:sortByService.search:sortByService.page | sortBy:sortByService.dataSort:sortByService.order" >
+                <tr *ngFor="let request of unassignedRequest | filterTableNeighbor:sortByService.search:sortByService.page | sortBy:sortByService.dataSort:sortByService.order" >
                   <td >{{request.id_request }}</td>
                   <td>{{request.request_date}}</td>
                   <td>{{request.fullPeventionData}} </td>
@@ -57,7 +57,7 @@
                 </th>
                 <th>
                   <button class="color-secondary" (click)="sortByService.prevPage()" [disabled]="sortByService.page === 0"><i class="mdi mdi-arrow-left-bold"></i>  Anterior  </button>
-                  <button class="color-secondary" (click)="sortByService.nextPage()"  [disabled]="(unassignedRequest | filter:sortByService.search:sortByService.page).length === 0" >  Siguiente  <i class="mdi mdi-arrow-right-bold"></i></button>
+                  <button class="color-secondary" (click)="sortByService.nextPage()"  [disabled]="(unassignedRequest | filterTableNeighbor:sortByService.search:sortByService.page).length === 0" >  Siguiente  <i class="mdi mdi-arrow-right-bold"></i></button>
 
                 </th>
               </tr>
