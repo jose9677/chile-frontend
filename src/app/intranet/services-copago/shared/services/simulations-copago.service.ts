@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RouteReuseStrategy } from '@angular/router';
 import { catchError, map, Observable, throwError } from 'rxjs';
+import { ModalComponent } from 'src/app/public/auth/shared/modals/modal/modal.component';
+import { ModalsService } from 'src/app/shared/services/modals.service';
 import { environment } from 'src/environments/environment';
 
 const AUTH_API = environment.urlApi;
@@ -20,6 +22,7 @@ export class SimulationsCopagoService {
 
   constructor(
     private http: HttpClient,
+    private modalService: ModalsService
   ) { }
 
   addSimulation( rutUser: any, dataSimulation: any) {
@@ -65,7 +68,17 @@ export class SimulationsCopagoService {
     let errorMessage= 'An error ocurred';
     if (err) {
       // this.errorMessage= `error code: ${err}`;
-      this.errorMessage= err;
+
+      if (err.status === 500) {
+
+        let title: string = ''
+        let message: string = "su solicitud no pudo ser procesada intente nuevamente";
+        this.modalService.OpenModalError2(ModalComponent, true, title, message);
+
+      }
+
+      this.errorMessage= err.error;
+
 
     }
 

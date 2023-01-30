@@ -78,6 +78,11 @@ export class RegisterComponent implements OnInit {
   public remunerationOptions: any[];
   public selectedRemunerationOption= null;
 
+  public genderOptions: any[];
+  public selectedGenderOption = null;
+
+
+
 
   public emailUser: any = '';
 
@@ -158,103 +163,114 @@ export class RegisterComponent implements OnInit {
         }
       ];
 
-      this.rutSubscription = this.routerQuery.queryParams.subscribe(rut => this.rut= rut.rut)
 
-      // console.log(this.rut)
-
+      this.genderOptions= [
+        {
+          'value': 'M' ,
+          'description': 'masculino'
+        },
+        {
+          'value': 'F',
+          'description': 'femenino'
+        }
+      ];
 
 
 
     }
 
-  ngOnInit(): void {
+    ngOnInit(): void {
 
-    this.isFormSubmitted = false;
-    this.isUserRegiter = this.loggedServices.isRegisterUserObservable;
-    this.documentIsValid = false;
+      this.rutSubscription = this.routerQuery.queryParams.subscribe(rut => this.rut= rut.rut)
 
-
-
-    this.authServices.dropdownInfo().subscribe((result) => {
-
-      // console.log(result)
-
-      this.locations = result.locations;
-      this.preventions_types = result.preventions_types;
-      this.property_types = result.property_types;
-      this.reasonOptions = result.motives;
-      this.dedicationOptions = result.dedications;
-      this.remunerationOptions = result.remunerations;
-
-
-      result.preventions_types_details.map((res: any) => {
-        if (res.id_prevention_type === 1) {
-          this.preventions_types_details.push(res);
-        } else if (res.id_prevention_type === 2) {
-          this.preventions_types_details2.push(res);
-
-        } else if (res.id_prevention_type === 3) {
-          this.preventions_types_details3.push(res);
-
-        }
-        else {
-          this.preventions_types_details4.push(res);
-        }
-      });
-
-
-    }, error => {
-
-    },
-    () =>{
-
-    })
+      this.isFormSubmitted = false;
+      this.isUserRegiter = this.loggedServices.isRegisterUserObservable;
+      this.documentIsValid = false;
 
 
 
-    let password = new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}')]);
+      this.authServices.dropdownInfo().subscribe((result) => {
 
-    this.userRegister= this.fb.group({
-      names: ['',[Validators.required, Validators.pattern(/^([a-zA-ZáéíóúüÁÉÍÓÚÜñÑ]{2,60}[\,\-\.]{0,1}[\s]{0,1}){1,3}$/)]],
-      lastNames: ['', [Validators.required, Validators.pattern(/^([a-zA-ZáéíóúüÁÉÍÓÚÜñÑ]{2,60}[\,\-\.]{0,1}[\s]{0,1}){1,3}$/)]],
-      datesBirth: ['', [Validators.required]],
-      email: ['', [Validators.required, CustomValidators.email]],
-      landLine: ['', [Validators.minLength(9)]],
-      mobilePhone: ['', [Validators.required, Validators.minLength(9)]],
-      isCaretaker: ['', [ Validators.required]],
-      reason: ['', []],
-      dedication: ['', []],
-      remuneration: ['', []],
+        // console.log(result)
+
+        this.locations = result.locations;
+        this.preventions_types = result.preventions_types;
+        this.property_types = result.property_types;
+        this.reasonOptions = result.motives;
+        this.dedicationOptions = result.dedications;
+        this.remunerationOptions = result.remunerations;
 
 
-      address: this.fb.group({
-        locations: ['', Validators.required],
-        numberStreet: ['', [ Validators.required ]],
-        property_types: ['', Validators.required],
-        nameHome: ['', [ Validators.required ]],
-      }),
+        result.preventions_types_details.map((res: any) => {
+          if (res.id_prevention_type === 1) {
+            this.preventions_types_details.push(res);
+          } else if (res.id_prevention_type === 2) {
+            this.preventions_types_details2.push(res);
 
-      healthInformation: this.fb.group({
-        preventions_types: ['', Validators.required],
-        preventions_types_details: [''],
-        haveInsurance: ['', Validators.required]
-      }),
+          } else if (res.id_prevention_type === 3) {
+            this.preventions_types_details3.push(res);
 
-      documents: this.fb.array([]),
-      documents2: this.fb.array([]),
-
-      accesData: this.fb.group({
-        password: password,
-        rePassword: ['', [Validators.required, CustomValidators.equalTo(password)]],
-      }),
-      authCheck: ['',[Validators.required]]
-    })
-
-    this.addDocument2();
-    this.addDocument();
+          }
+          else {
+            this.preventions_types_details4.push(res);
+          }
+        });
 
 
-    // console.log(this.userRegister);
+      }, error => {
+
+      },
+      () =>{
+
+      })
+
+
+
+      let password = new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}')]);
+
+      this.userRegister= this.fb.group({
+        names: ['',[Validators.required, Validators.pattern(/^([a-zA-ZáéíóúüÁÉÍÓÚÜñÑ]{2,60}[\,\-\.]{0,1}[\s]{0,1}){1,3}$/)]],
+        lastNames: ['', [Validators.required, Validators.pattern(/^([a-zA-ZáéíóúüÁÉÍÓÚÜñÑ]{2,60}[\,\-\.]{0,1}[\s]{0,1}){1,3}$/)]],
+        datesBirth: ['', [Validators.required]],
+        email: ['', [Validators.required, CustomValidators.email]],
+        landLine: ['', [Validators.minLength(9)]],
+        mobilePhone: ['', [Validators.required, Validators.minLength(9)]],
+        gender: ['', [ Validators.required]],
+
+        isCaretaker: ['', [ Validators.required]],
+        reason: ['', [ Validators.required]],
+        dedication: ['', [ Validators.required]],
+        remuneration: ['', [ Validators.required]],
+
+
+        address: this.fb.group({
+          locations: ['', Validators.required],
+          numberStreet: ['', [ Validators.required, CustomValidators.number ]],
+          property_types: ['', Validators.required],
+          nameHome: ['', [ Validators.required ]],
+        }),
+
+        healthInformation: this.fb.group({
+          preventions_types: ['', Validators.required],
+          preventions_types_details: [''],
+          haveInsurance: ['', Validators.required]
+        }),
+
+        documents: this.fb.array([]),
+        documents2: this.fb.array([]),
+
+        accesData: this.fb.group({
+          password: password,
+          rePassword: ['', [Validators.required, CustomValidators.equalTo(password)]],
+        }),
+        authCheck: ['',[Validators.required]]
+      })
+
+      this.addDocument2();
+      this.addDocument();
+
+
+      // console.log(this.userRegister);
 
 
 
@@ -332,6 +348,7 @@ export class RegisterComponent implements OnInit {
       names: this.userRegister.value.names,
       lastname: this.userRegister.value.lastNames,
       f_nac: this.userRegister.value.datesBirth,
+      sex: this.userRegister.value.gender,
       email: this.userRegister.value.email,
       landline: this.userRegister.value.landLine,
 
@@ -605,5 +622,8 @@ export class RegisterComponent implements OnInit {
 
     }
   }
+
+  public mask: any = "00000000";
+
 
 }

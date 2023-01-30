@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
+import { ModalsService } from 'src/app/shared/services/modals.service';
+import { ModalComponent } from 'src/app/views/pages/ui-components/modal/modal.component';
 import { environment } from 'src/environments/environment';
 
 
@@ -27,7 +29,8 @@ export class DatesService {
   private errorMessage = '';
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private modalService: ModalsService
   ) {
 
 
@@ -171,7 +174,17 @@ export class DatesService {
     let errorMessage= 'An error ocurred';
     if (err) {
       // this.errorMessage= `error code: ${err}`;
-      this.errorMessage= err;
+
+
+      if (err.status === 500) {
+
+        let title: string = ''
+        let message: string = "su solicitud no pudo ser procesada intente nuevamente";
+        this.modalService.OpenModalError2(ModalComponent, true, title, message);
+
+      }
+
+      this.errorMessage= err.error;
 
     }
 

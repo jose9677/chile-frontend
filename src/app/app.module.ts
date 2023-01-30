@@ -27,7 +27,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     BrowserAnimationsModule,
     LayoutModule,
     HttpClientModule,
-    NgSelectModule
+    NgSelectModule,
+    
 
   ],
   providers: [

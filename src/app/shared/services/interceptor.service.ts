@@ -41,6 +41,9 @@ export class InterceptorService {
 
     // alert(error.error.error); // captura error
 
-    return throwError(error.error)
+    return throwError(error)
   }
+  
+
+
 }

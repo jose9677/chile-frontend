@@ -7,6 +7,8 @@ import {environment} from '../../../../../environments/environment';
 import { Router } from '@angular/router';
 import { LoggedService } from 'src/app/shared/services/logged.service';
 import { TokenService } from 'src/app/shared/services/token.service';
+import { ModalsService } from 'src/app/shared/services/modals.service';
+import { ModalComponent } from '../modals/modal/modal.component';
 
 
 
@@ -35,7 +37,8 @@ export class AuthService {
     private http: HttpClient,
     private router: Router,
     private tokenService: TokenService,
-    public loggedService: LoggedService
+    public loggedService: LoggedService,
+    private modalService: ModalsService
 
   ) {
 
@@ -208,8 +211,16 @@ export class AuthService {
     let errorMessage= 'An error ocurred';
     if (err) {
       // this.errorMessage= `error code: ${err}`;
-      this.errorMessage= err;
 
+      if (err.status === 500) {
+
+        let title: string = ''
+        let message: string = "su solicitud no pudo ser procesada intente nuevamente";
+        this.modalService.OpenModalError2(ModalComponent, true, title, message);
+
+      }
+
+      this.errorMessage= err.error;
     }
     console.log(this.errorMessage);
 

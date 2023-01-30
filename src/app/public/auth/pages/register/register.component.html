@@ -55,6 +55,23 @@
                     >
                     <div *ngIf="(userRegister.controls.datesBirth.touched && userRegister.controls.datesBirth.errors?.required) || (isFormSubmitted && userRegister.controls.datesBirth.errors?.required)" class="invalid-feedback">Campo Requerido</div>
                   </div>
+                  <div class="col-md-6 mb-3 ">
+                    <label for="gender" class="form-label">Genero</label>
+                    <ng-select [items]="genderOptions"
+                        id="gender"
+                        class="form-control p-0"
+                        bindLabel="description"
+                        bindValue="value"
+                        placeholder="Seleccione"
+                        [(ngModel)]="selectedGenderOption"
+                        formControlName="gender"
+                        [ngClass]="{'is-invalid': ((userRegister.controls.gender.touched && userRegister.controls.isCaretaker.errors) || (isFormSubmitted && userRegister.controls.gender.errors))}"
+                        >
+                    </ng-select>
+                    <div *ngIf="(userRegister.controls.gender.touched && userRegister.controls.gender.errors?.required) || (userRegister.controls.gender.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+                  </div>
+                </div>
+                <div class="row">
                   <div class="col-md-6 mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input
@@ -68,8 +85,6 @@
 
                     <div class="text-danger mt-1" *ngIf="userRegister.controls.email.errors?.email">Verifique el formato de email</div>
                   </div>
-                </div>
-                <div class="row">
                   <div class="col-md-6 mb-3">
                     <label for="landLine" class="form-label">Teléfono Fijo</label>
                     <input
@@ -196,6 +211,7 @@
                     id="numberStreet"
                     formControlName="numberStreet"
                     placeholder="Especifique"
+                    maxlength="10"
                     [ngClass]="{'is-invalid': ((userRegister.controls.address.touched && userRegister.controls.address.controls.numberStreet.errors) || (isFormSubmitted && userRegister.controls.address.controls.numberStreet.errors))}"
                     >
                     <div *ngIf="(userRegister.controls.address.touched && userRegister.controls.address.controls.numberStreet.errors?.required) || (isFormSubmitted && userRegister.controls.address.controls.numberStreet.errors?.required)" class="invalid-feedback">Campo Requerido</div>
@@ -241,6 +257,7 @@
                     id="nameHome"
                     formControlName="nameHome"
                     placeholder="Especifique"
+                    maxlength="10"
                     [ngClass]="{'is-invalid': ((userRegister.controls.address.touched && userRegister.controls.address.controls.nameHome.errors) || (isFormSubmitted && userRegister.controls.address.controls.nameHome.errors))}"
                     >
                     <div *ngIf="(userRegister.controls.address.touched && userRegister.controls.address.controls.nameHome.errors?.required) || (isFormSubmitted && userRegister.controls.address.controls.nameHome.errors?.required)" class="invalid-feedback">Campo Requerido, si no aplica coloque S/N</div>
