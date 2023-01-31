@@ -238,9 +238,9 @@ export class RegisterComponent implements OnInit {
         gender: ['', [ Validators.required]],
 
         isCaretaker: ['', [ Validators.required]],
-        reason: ['', [ Validators.required]],
-        dedication: ['', [ Validators.required]],
-        remuneration: ['', [ Validators.required]],
+
+        dataCaretaker: this.fb.array ([]),
+
 
 
         address: this.fb.group({
@@ -278,13 +278,53 @@ export class RegisterComponent implements OnInit {
 
   }
 
+  get dataCaretakerArray() {
+    return this.userRegister.controls["dataCaretaker"] as FormArray;
+  }
+
+  addDataCaretaker() {
+    const dataForm = this.fb.group({
+      reason: ['', [ Validators.required]],
+      dedication: ['', [ Validators.required]],
+      remuneration: ['', [ Validators.required]],
+    });
+
+    this.dataCaretakerArray.push(dataForm);
+
+    console.log(this.dataCaretakerArray);
+  }
+
+  deleteDataCaretaker() {
+    // console.log(DocumentIndex);
+    this.dataCaretakerArray.clear();
+    console.log(this.dataCaretakerArray);
+
+    // this.selectFilesId1.splice(DocumentIndex, 1);
+
+    // console.log(this.selectFilesId1);
+    // console.log(this.selectFiles);
+  }
+
+  statusCaretaker(value: any) {
+
+    console.log(value)
+
+    if (value === true ) {
+      this.addDataCaretaker();
+    } else {
+      this.deleteDataCaretaker();
+    }
+
+    console.log(this.userRegister)
+
+
+  }
+
+
+
   get documents() {
     return this.userRegister.controls["documents"] as FormArray;
   }
-  get documents2() {
-    return this.userRegister.controls["documents2"] as FormArray;
-  }
-
 
   addDocument() {
     const documentForm = this.fb.group({
@@ -292,14 +332,6 @@ export class RegisterComponent implements OnInit {
     });
 
     this.documents.push(documentForm);
-  }
-
-  addDocument2() {
-    const documentForm = this.fb.group({
-      document_path: ['', Validators.required],
-    });
-
-    this.documents2.push(documentForm);
   }
 
   deleteDocument(DocumentIndex: number) {
@@ -311,6 +343,19 @@ export class RegisterComponent implements OnInit {
     console.log(this.selectFilesId1);
     // console.log(this.selectFiles);
 
+  }
+
+
+  get documents2() {
+    return this.userRegister.controls["documents2"] as FormArray;
+  }
+
+  addDocument2() {
+    const documentForm = this.fb.group({
+      document_path: ['', Validators.required],
+    });
+
+    this.documents2.push(documentForm);
   }
 
   deleteDocument2(DocumentIndex: number) {
@@ -353,9 +398,9 @@ export class RegisterComponent implements OnInit {
       landline: this.userRegister.value.landLine,
 
       carer: this.userRegister.value.isCaretaker,
-      id_motive: this.userRegister.value.reason,
-      id_dedication: this.userRegister.value.dedication,
-      id_remuneration: this.userRegister.value.remuneration,
+      id_motive: this.userRegister.value.dataCaretaker[0]?.reason,
+      id_dedication: this.userRegister.value.dataCaretaker[0]?.dedication,
+      id_remuneration: this.userRegister.value.dataCaretaker[0]?.remuneration,
 
       mobile_phone: this.userRegister.value.mobilePhone,
       password: this.userRegister.controls.accesData.value.password,

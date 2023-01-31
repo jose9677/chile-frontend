@@ -15,6 +15,7 @@ import { FormBuilder } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from './shared/services/interceptor.service';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { SpinnerModule } from './shared/component/spinner/spinner.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     LayoutModule,
     HttpClientModule,
     NgSelectModule,
-    
+    SpinnerModule
+
 
   ],
   providers: [

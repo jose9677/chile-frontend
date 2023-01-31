@@ -121,66 +121,78 @@
                         placeholder="Seleccione"
                         [(ngModel)]="selectedCaretakerOption"
                         formControlName="isCaretaker"
+                        (change)=" statusCaretaker(userRegister.controls.isCaretaker.value) "
                         [ngClass]="{'is-invalid': ((userRegister.controls.isCaretaker.touched && userRegister.controls.isCaretaker.errors) || (isFormSubmitted && userRegister.controls.isCaretaker.errors))}"
                         >
                     </ng-select>
                     <div *ngIf="(userRegister.controls.isCaretaker.touched && userRegister.controls.isCaretaker.errors?.required) || (userRegister.controls.isCaretaker.errors?.required)" class="invalid-feedback">Campo Requerido</div>
                   </div>
 
-                  <div class="col-md-6 mb-3 " *ngIf="userRegister.controls.isCaretaker.value == true" >
-                    <label for="reason" class="form-label">Motivo</label>
-                    <ng-select [items]="reasonOptions"
-                        id="reason"
-                        class="form-control p-0"
-                        bindLabel="description"
-                        bindValue="id_motive"
-                        placeholder="Seleccione"
-                        [(ngModel)]="selectedReasonOptions"
-                        formControlName="reason"
-                        [ngClass]="{'is-invalid': ((userRegister.controls.reason.touched && userRegister.controls.reason.errors) || (isFormSubmitted && userRegister.controls.reason.errors))}"
-                        >
-                    </ng-select>
-                    <div *ngIf="(userRegister.controls.reason.touched && userRegister.controls.reason.errors?.required) || (userRegister.controls.reason.errors?.required)" class="invalid-feedback">Campo Requerido</div>
-                  </div>
+                  <ng-container formArrayName = "dataCaretaker">
 
-                  <div class="col-md-6 mb-3 " *ngIf="userRegister.controls.isCaretaker.value == true" >
-                    <label for="dedication" class="form-label">Dedicación</label>
-                    <ng-select [items]="dedicationOptions"
-                        id="dedication"
-                        class="form-control p-0"
-                        bindLabel="description"
-                        bindValue="id_dedication"
-                        placeholder="Seleccione"
-                        [(ngModel)]="selectedDedicationOption"
-                        formControlName="dedication"
-                        [ngClass]="{'is-invalid': ((userRegister.controls.dedication.touched && userRegister.controls.dedication.errors) || (isFormSubmitted && userRegister.controls.dedication.errors))}"
-                        >
-                    </ng-select>
-                    <div *ngIf="(userRegister.controls.dedication.touched && userRegister.controls.dedication.errors?.required) || (userRegister.controls.dedication.errors?.required)" class="invalid-feedback">Campo Requerido</div>
-                  </div>
+                    <ng-container *ngFor=" let data of dataCaretakerArray.controls; let i= index ">
 
-                  <div class="col-md-6 mb-3 " *ngIf="userRegister.controls.isCaretaker.value == true">
-                    <label for="remuneration" class="form-label">Remuneración</label>
-                    <ng-select [items]="remunerationOptions"
-                        id="remuneration"
-                        class="form-control p-0"
-                        bindLabel="description"
-                        bindValue="id_remuneration"
-                        placeholder="Seleccione"
-                        [(ngModel)]="selectedRemunerationOption"
-                        formControlName="remuneration"
-                        [ngClass]="{'is-invalid': ((userRegister.controls.remuneration.touched && userRegister.controls.remuneration.errors) || (isFormSubmitted && userRegister.controls.remuneration.errors))}"
-                        >
-                    </ng-select>
-                    <div *ngIf="(userRegister.controls.remuneration.touched && userRegister.controls.remuneration.errors?.required) || (userRegister.controls.remuneration.errors?.required)" class="invalid-feedback">Campo Requerido</div>
-                  </div>
+                      <div [formGroupName]="i">
 
-                  <div class="col-12">
-                    <p class="colorTextPrimari mb-3">
-                      Esta información permitirá caracterizar a la población beneficiada con la <a href="https://oig.cepal.org/sites/default/files/2021_ley21380_chl.pdf" target="_blank">ley 21.380</a> y su reglamento
-                    </p>
-                  </div>
+                        <div class="row">
 
+                          <div class="col-md-6 mb-3 ">
+                            <label for="reason" class="form-label">Motivo</label>
+                            <ng-select [items]="reasonOptions"
+                                id="reason"
+                                class="form-control p-0"
+                                bindLabel="description"
+                                bindValue="id_motive"
+                                placeholder="Seleccione"
+                                [(ngModel)]="selectedReasonOptions"
+                                formControlName="reason"
+                                [ngClass]="{'is-invalid': ((data.touched && userRegister.controls.dataCaretaker.controls[i].controls.reason.errors) || (isFormSubmitted && userRegister.controls.dataCaretaker.controls[i].controls.reason.errors))}"
+                                >
+                            </ng-select>
+                            <div *ngIf="((data.touched && userRegister.controls.dataCaretaker.controls[i].controls.reason.errors?.required) || (isFormSubmitted && userRegister.controls.dataCaretaker.controls[i].controls.reason.errors?.required))" class="invalid-feedback">Campo Requerido</div>
+
+                          </div>
+
+                          <div class="col-md-6 mb-3 " *ngIf="userRegister.controls.isCaretaker.value == true" >
+                            <label for="dedication" class="form-label">Dedicación</label>
+                            <ng-select [items]="dedicationOptions"
+                                id="dedication"
+                                class="form-control p-0"
+                                bindLabel="description"
+                                bindValue="id_dedication"
+                                placeholder="Seleccione"
+                                [(ngModel)]="selectedDedicationOption"
+                                formControlName="dedication"
+                                [ngClass]="{'is-invalid': ((data.touched && userRegister.controls.dataCaretaker.controls[i].controls.dedication.errors) || (isFormSubmitted && userRegister.controls.dataCaretaker.controls[i].controls.dedication.errors))}"
+                                >
+                            </ng-select>
+                            <div *ngIf="((data.touched && userRegister.controls.dataCaretaker.controls[i].controls.dedication.errors?.required) || (isFormSubmitted && userRegister.controls.dataCaretaker.controls[i].controls.dedication.errors?.required))" class="invalid-feedback">Campo Requerido</div>
+                          </div>
+                          <div class="col-md-6 mb-3 " *ngIf="userRegister.controls.isCaretaker.value == true">
+                            <label for="remuneration" class="form-label">Remuneración</label>
+                            <ng-select [items]="remunerationOptions"
+                                id="remuneration"
+                                class="form-control p-0"
+                                bindLabel="description"
+                                bindValue="id_remuneration"
+                                placeholder="Seleccione"
+                                [(ngModel)]="selectedRemunerationOption"
+                                formControlName="remuneration"
+                                [ngClass]="{'is-invalid': ((data.touched && userRegister.controls.dataCaretaker.controls[i].controls.remuneration.errors) || (isFormSubmitted && userRegister.controls.dataCaretaker.controls[i].controls.remuneration.errors))}"
+                                >
+                            </ng-select>
+                            <div *ngIf="((data.touched && userRegister.controls.dataCaretaker.controls[i].controls.remuneration.errors?.required) || (isFormSubmitted && userRegister.controls.dataCaretaker.controls[i].controls.remuneration.errors?.required))" class="invalid-feedback">Campo Requerido</div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </ng-container>
+                    <div class="col-12">
+                      <p class="colorTextPrimari mb-3">
+                        Esta información permitirá caracterizar a la población beneficiada con la <a href="https://oig.cepal.org/sites/default/files/2021_ley21380_chl.pdf" target="_blank">ley 21.380</a> y su reglamento
+                      </p>
+                    </div>
+                  </ng-container>
                 </div>
               </div>
 

@@ -1,7 +1,8 @@
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, finalize, Observable, throwError } from 'rxjs';
+import { SpinnerService } from './spinner.service';
 
 import { TokenService } from './token.service';
 
@@ -11,13 +12,16 @@ const TOKEN_HEADER_KEY = 'Authorization';
 @Injectable({
   providedIn: 'root'
 })
-export class InterceptorService {
+export class InterceptorService implements HttpInterceptor {
 
   constructor(
     private token: TokenService,
+    private spinnerService: SpinnerService,
     public router: Router,
     ) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+    this.spinnerService.show();
 
     let authReq = req;
 
@@ -28,6 +32,8 @@ export class InterceptorService {
     }
     // manejar error
     return next.handle(authReq).pipe(
+
+      finalize(() => this.spinnerService.hide()),
       // retry(3),
       // delay(3000),
       catchError( this.error )
@@ -43,7 +49,7 @@ export class InterceptorService {
 
     return throwError(error)
   }
-  
+
 
 
 }
