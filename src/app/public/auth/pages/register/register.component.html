@@ -61,7 +61,7 @@
                         id="gender"
                         class="form-control p-0"
                         bindLabel="description"
-                        bindValue="value"
+                        bindValue="id_sex"
                         placeholder="Seleccione"
                         [(ngModel)]="selectedGenderOption"
                         formControlName="gender"
@@ -404,8 +404,8 @@
                         <h5 class="colorTextPrimari pb-3">Certificado de Previsión</h5>
                       </div>
                       <div class="col-md-6">
-                        <button type="button" mat-mini-fab (click)="addDocument2() " class="file_add">
-                          + Haga click aqui para Adjuntar
+                        <button type="button" mat-mini-fab (click)="addDocument2() " class="file_add" *ngIf="documents2.value.length <= 14">
+                          + Haga click aquí para Adjuntar
                         </button>
                       </div>
                     </div>
@@ -425,7 +425,7 @@
                             <div *ngIf="(userRegister.controls.documents2.touched && userRegister.controls.documents2.value[i].document_path === '') || (isFormSubmitted && userRegister.controls.documents2.value[i].document_path === '')" class="invalid-feedback">Campo Requerido</div>
                             <div *ngIf="(userRegister.controls.documents2.touched && documentIsValid != true) || (isFormSubmitted && documentIsValid != true )" class="invalid-feedback">Este campo solo admite formatos de archivos pdf, jpeg, png</div>
                             </div>
-                            <i class=" col-md-1 mdi mdi-close-circle" (click)="deleteDocument2(i)"></i>
+                            <i class=" col-md-1 mdi mdi-close-circle" (click)="deleteDocument2(i)" *ngIf="documents2.value.length >= 2"></i>
                           </div>
                       </div>
                     </ng-container>
@@ -437,8 +437,8 @@
                       <h5 class="colorTextPrimari pb-3">Comprobante de Domicilio</h5>
                     </div>
                     <div class="col-md-6">
-                      <button type="button" mat-mini-fab (click)="addDocument()" class="file_add">
-                       + Haga click aqui para Adjuntar
+                      <button type="button" mat-mini-fab (click)="addDocument()" class="file_add" *ngIf="documents.value.length <= 14">
+                       + Haga click aquí para Adjuntar
                       </button>
                     </div>
                   </div>
@@ -460,7 +460,7 @@
                           <div *ngIf="(userRegister.controls.documents.touched && documentIsValid != true) || (isFormSubmitted && documentIsValid != true )" class="invalid-feedback">Este campo solo admite formatos de archivos pdf, jpeg, png</div>
 
                           </div>
-                          <i class=" col-md-1 mdi mdi-close-circle" (click)="deleteDocument(i)"></i>
+                          <i class=" col-md-1 mdi mdi-close-circle" (click)="deleteDocument(i)" *ngIf="documents.value.length >= 2"></i>
                         </div>
                     </div>
                   </ng-container>
