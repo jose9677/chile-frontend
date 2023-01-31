@@ -262,11 +262,6 @@ export class RegisterComponent implements OnInit {
       this.addDocument();
 
 
-      // console.log(this.userRegister);
-
-
-
-
 
   }
 
@@ -283,18 +278,12 @@ export class RegisterComponent implements OnInit {
 
     this.dataCaretakerArray.push(dataForm);
 
-    console.log(this.dataCaretakerArray);
   }
 
   deleteDataCaretaker() {
     // console.log(DocumentIndex);
     this.dataCaretakerArray.clear();
-    console.log(this.dataCaretakerArray);
 
-    // this.selectFilesId1.splice(DocumentIndex, 1);
-
-    // console.log(this.selectFilesId1);
-    // console.log(this.selectFiles);
   }
 
   statusCaretaker(value: any) {
@@ -325,7 +314,6 @@ export class RegisterComponent implements OnInit {
 
     this.documents.push(documentForm);
 
-    console.log(this.documents)
   }
 
   deleteDocument(DocumentIndex: number) {
@@ -333,11 +321,7 @@ export class RegisterComponent implements OnInit {
     this.documents.removeAt(DocumentIndex);
     this.selectFilesId1.splice(DocumentIndex, 1);
 
-    console.log(this.documents)
 
-
-    // console.log(this.selectFilesId1);
-    // console.log(this.selectFiles);
 
   }
 
@@ -353,8 +337,6 @@ export class RegisterComponent implements OnInit {
 
     this.documents2.push(documentForm);
 
-    console.log(this.documents2)
-
   }
 
   deleteDocument2(DocumentIndex: number) {
@@ -362,11 +344,6 @@ export class RegisterComponent implements OnInit {
     this.documents2.removeAt(DocumentIndex);
     this.selectFilesId2.splice(DocumentIndex, 1);
 
-    console.log(this.documents2)
-
-
-    // console.log(this.selectFilesId2);
-    // console.log(this.selectFiles);
 
   }
 
@@ -374,11 +351,6 @@ export class RegisterComponent implements OnInit {
     // console.log(DocumentIndex);
     this.documents2.clear();
     this.selectFilesId2= [];
-
-    console.log(this.documents2)
-
-
-    console.log(this.selectFilesId2);
 
   }
 
@@ -663,26 +635,8 @@ export class RegisterComponent implements OnInit {
 
     if ( preventionType == 4 ) {
 
-      // this.deleteDocument2(0);
-      // this.deleteDocument2(1);
-      // this.deleteDocument2(2);
-      // this.deleteDocument2(3);
-      // this.deleteDocument2(4);
-      // this.deleteDocument2(6);
-      // this.deleteDocument2(7);
-      // this.deleteDocument2(8);
-      // this.deleteDocument2(9);
-      // this.deleteDocument2(10);
-      // this.deleteDocument2(11);
-      // this.deleteDocument2(12);
-      // this.deleteDocument2(13);
-      // this.deleteDocument2(14);
       this.deleteAllDocument2()
       this.selectFilesId2 = [];
-
-      console.log(this.documents2.value)
-
-
 
     } else if ( this.documents2.value.length === 0) {
 
