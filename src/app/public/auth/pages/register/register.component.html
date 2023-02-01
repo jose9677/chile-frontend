@@ -396,7 +396,8 @@
               </div>
               <div>
                 <h3 class="colorTextPrimari pb-3">Documentos</h3>
-                <div *ngIf="(userRegister.controls.healthInformation.controls.preventions_types.value === 1 || userRegister.controls.healthInformation.controls.preventions_types.value === 2)">
+                <div *ngIf="(userRegister.controls.healthInformation.controls.preventions_types.value === 1 || userRegister.controls.healthInformation.controls.preventions_types.value === 2 || userRegister.controls.healthInformation.controls.preventions_types.value === 3)">
+
                   <ng-container formArrayName="documents2">
                     <div class="row">
                       <div

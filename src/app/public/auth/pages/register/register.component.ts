@@ -182,7 +182,6 @@ export class RegisterComponent implements OnInit {
 
       this.authServices.dropdownInfo().subscribe((result) => {
 
-        // console.log(result);
 
         this.locations = result.locations;
         this.preventions_types = result.preventions_types;
@@ -288,7 +287,6 @@ export class RegisterComponent implements OnInit {
 
   statusCaretaker(value: any) {
 
-    console.log(value)
 
     if (value === true ) {
       this.addDataCaretaker();
@@ -631,7 +629,6 @@ export class RegisterComponent implements OnInit {
   documentPrevention(preventionType: any) {
 
 
-    console.log(this.documents2.value)
 
     if ( preventionType == 4 ) {
 
