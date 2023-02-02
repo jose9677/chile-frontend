@@ -57,7 +57,6 @@ export class ViewAdminRequestsComponent implements OnInit {
 
   getAllRequest() {
     this.date.getAllRequest().subscribe( result => {
-      console.log(result)
 
       this.unassignedRequest = result.data_complete;
 

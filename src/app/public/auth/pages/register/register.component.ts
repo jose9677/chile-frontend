@@ -110,7 +110,6 @@ export class RegisterComponent implements OnInit {
 
       this.today = new Date()
       this.today = `${this.today.getFullYear()}-${(this.today.getMonth())+1}-${this.today.getDate()}`
-      // console.log(this.today)
 
       this.isCaretakerOptions = [
         {
@@ -280,7 +279,6 @@ export class RegisterComponent implements OnInit {
   }
 
   deleteDataCaretaker() {
-    // console.log(DocumentIndex);
     this.dataCaretakerArray.clear();
 
   }
@@ -294,7 +292,6 @@ export class RegisterComponent implements OnInit {
       this.deleteDataCaretaker();
     }
 
-    // console.log(this.userRegister)
 
 
   }
@@ -315,7 +312,6 @@ export class RegisterComponent implements OnInit {
   }
 
   deleteDocument(DocumentIndex: number) {
-    // console.log(DocumentIndex);
     this.documents.removeAt(DocumentIndex);
     this.selectFilesId1.splice(DocumentIndex, 1);
 
@@ -338,7 +334,6 @@ export class RegisterComponent implements OnInit {
   }
 
   deleteDocument2(DocumentIndex: number) {
-    // console.log(DocumentIndex);
     this.documents2.removeAt(DocumentIndex);
     this.selectFilesId2.splice(DocumentIndex, 1);
 
@@ -346,7 +341,6 @@ export class RegisterComponent implements OnInit {
   }
 
   deleteAllDocument2() {
-    // console.log(DocumentIndex);
     this.documents2.clear();
     this.selectFilesId2= [];
 
@@ -408,7 +402,6 @@ export class RegisterComponent implements OnInit {
 
     }
 
-    // console.log(dataUser);
 
     this.isFormSubmitted = true;
 

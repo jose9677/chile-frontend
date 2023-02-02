@@ -51,7 +51,6 @@ export class ViewNeighborRequestsComponent implements OnInit {
   getForRut() {
 
     this.date.getForRut(this.rutNeighbor.replace(/["']/g, "")).subscribe( result => {
-      console.log(result);
 
 
 
@@ -64,7 +63,6 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
         this.unassignedRequest.push(res);
       })
-      console.log(this.unassignedRequest)
 
     },
     error => {

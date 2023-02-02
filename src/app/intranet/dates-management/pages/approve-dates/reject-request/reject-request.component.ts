@@ -41,7 +41,6 @@ export class RejectRequestComponent implements OnInit {
 
     this.datesService.approbe(idRequest, dataRequest).subscribe((result) => {
 
-      console.log(result);
 
     },
 

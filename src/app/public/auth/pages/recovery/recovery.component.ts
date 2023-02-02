@@ -62,12 +62,10 @@ export class RecoveryComponent implements OnInit {
     if ( this.formRecoveryPassword.status == 'VALID') {
 
       this.authService.recoveryPassword(dataRecoveryPassword).subscribe(result => {
-        console.log(result)
 
       },
       error => {  //recibe error del user services
         this.errors = error;
-        console.log('errors_login->',this.errors);
         // modal
         this.formRecoveryPassword.reset();
         this.errors = true;
@@ -81,7 +79,6 @@ export class RecoveryComponent implements OnInit {
       () => {
         this.isFormSubmitted = true;
         // modal
-        console.log(this.formRecoveryPassword)
 
 
         // this.router.navigate([this.returnUrl]);

@@ -159,7 +159,6 @@ export class EditAssignVisitorDatesComponent implements OnInit {
 
     }
     this.dateService.assignSocialAssistant(this.idRequest, assignData).subscribe(result => {
-      return console.log(result);
     },
     error => {
       this.errors = false;

@@ -57,14 +57,11 @@ export class ViewVisitorRequestsComponent implements OnInit {
 
     this.dateServices.getforSocialAssistant(this.rutUserLogged.replace(/["']/g, "")).subscribe( result => {
 
-      console.log(result)
 
       let dataUser= result.data_employe;
       this.dataUser = dataUser
-      console.log(dataUser);
 
       let datarequests= result.data_Neightbor;
-      console.log(datarequests);
 
       datarequests.map((res: any)=>{
 
@@ -74,7 +71,6 @@ export class ViewVisitorRequestsComponent implements OnInit {
           this.unassignedRequest2.push(res);
         }
       })
-      console.log(this.unassignedRequest)
 
     },
     error => {

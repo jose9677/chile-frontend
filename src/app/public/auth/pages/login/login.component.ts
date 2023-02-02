@@ -78,13 +78,11 @@ export class LoginComponent implements OnInit {
     if (this.isFormSubmitted && this.userLogin.status == "VALID" ) {
 
       this.authService.login(dataLogin).subscribe(result => {
-        console.log(result)
 
       },
       error => {  //recibe error del user services
         sessionStorage.clear();
         this.errors = error;
-        console.log('errors_login->',this.errors.error);
         // modal
 
           this.userLogin.reset();
@@ -111,7 +109,6 @@ export class LoginComponent implements OnInit {
           this.isFormSubmitted = false;
 
 
-          console.log(this.userLogin)
           this.router.navigate([this.returnUrl]);
 
           this.loggedService.changeLoggedStatus =true;

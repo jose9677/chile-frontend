@@ -23,7 +23,6 @@ export class LoggedService {
 
   get roleUserObservable(): Observable<boolean> {
     return this.roleUser.asObservable().pipe(map((result:any) => {
-      console.log('isloggedObservable -> ' + result)
       return result
     }));
   }

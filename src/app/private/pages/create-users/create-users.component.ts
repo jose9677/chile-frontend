@@ -71,7 +71,6 @@ export class CreateUsersComponent implements OnInit {
 
 
     this.privateService.roles().subscribe(dataRequest => {
-      console.log(dataRequest)
       let array: any[]= []
       for (let i=0; i<dataRequest.length; i++){
         if (this.id==3){
@@ -89,7 +88,6 @@ export class CreateUsersComponent implements OnInit {
         }
       }
       this.RolOfstreet=array
-      console.log(this.RolOfstreet)
     })
     this.privateService.supervisor().subscribe(dataRequest => {
       this.supervisorOfstreet=dataRequest
@@ -129,17 +127,7 @@ export class CreateUsersComponent implements OnInit {
 
     })
 
-    // this.privateService.roles().subscribe(dataRequest => {
-
-    //   console.log(dataRequest)
-    //   for (let i=0;i<dataRequest.length; i++){
-    //     this.RolOfstreet.push(dataRequest[i]);
-    //   }
-    //   console.log(this.RolOfstreet[0])
-
-
-
-    // })
+    
 
     this.addDocument();
 
@@ -160,7 +148,6 @@ export class CreateUsersComponent implements OnInit {
     this.documents.removeAt(DocumentIndex);
   }
   onRegister(e: Event){
-    console.log(this.userRegister);
     const dataUser ={
       rut:this.userRegister.value.rutUser,
       names:this.userRegister.value.names,
@@ -175,10 +162,8 @@ export class CreateUsersComponent implements OnInit {
       // supervisorofstreet:this.userRegister.value.supervisorOfstreet,
       id_rol:this.userRegister.value.RolOfstreet
     }
-    console.log(dataUser);
 
     this.privateService.register(dataUser).subscribe(result => {
-      console.log(result);
       // this.uploadFiles();
       // e.preventDefault();
      this.modalService.openModal(UserCreatedComponent)
@@ -186,7 +171,6 @@ export class CreateUsersComponent implements OnInit {
     },
     error => {
       this.errors=error;
-      console.log('errors_login->',this.errors);
       if( this.errors == '{"email":["The email has already been taken."]}'){
         let title= "";
         let message = "El correo electrónico que introdujo ya se encuentra asociado a otro usuario. Por favor verifique e intente nuevamente";
@@ -215,12 +199,9 @@ export class CreateUsersComponent implements OnInit {
 
       let fileData = file.profile_pic;
 
-      console.log(dataRutUser)
-      console.log(fileData)
 
       this.privateService.uploadFiles(fileData, rutUser).subscribe((res) =>
          {
-            console.log(res);
           },
           error => {
 
@@ -235,10 +216,8 @@ export class CreateUsersComponent implements OnInit {
 
   selectdataFile(event: any, index: any, id_document_type: any): void {
     this.file = <File>event.target.files[0];
-    console.log(this.file);
     this.documentIsValid = true;
 
-    console.log(this.file)
 
     if ( this.file != undefined ) {
 
@@ -246,7 +225,6 @@ export class CreateUsersComponent implements OnInit {
 
 
         this.selectFiles.push({'profile_pic': this.file, 'id_document_type': id_document_type});
-        console.log(this.selectFiles);
 
         this.documentIsValid = false;
 
@@ -267,12 +245,10 @@ export class CreateUsersComponent implements OnInit {
 
     } else {
 
-      console.log(this.selectFiles);
       this.deleteDocument(index);
       this.addDocument();
 
       this.selectFiles =[]
-      console.log(this.selectFiles);
       this.documentIsValid = false;
 
     }
@@ -291,7 +267,6 @@ export class CreateUsersComponent implements OnInit {
       }
 
       this.authServices.validateRut(dataRutUser).subscribe( result => {
-        console.log(result)
       },
       error => {  //recibe error del user services
         this.errors= true;

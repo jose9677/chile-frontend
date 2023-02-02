@@ -10,7 +10,6 @@ export class FilterTable1AssistantPipe implements PipeTransform {
 
   transform(value: any[], search: any, page: number): any[] {
 
-    console.log(value);
 
     const resultSearch: any[] = value.filter(res => (res.id.toString())?.includes(search));
 
@@ -37,58 +36,47 @@ export class FilterTable1AssistantPipe implements PipeTransform {
 
       if (resultSearch.length != 0 ) {
 
-        console.log(1);
 
         return resultSearch.slice(page,page + 5);
 
       } else {
-        console.log(2);
 
 
         if( resultSearch2.length != 0) {
-        console.log(2);
 
 
           return resultSearch2.slice(page,page + 5);
 
         } else {
-          console.log(3);
 
 
           if(resultSearch3.length != 0) {
 
-            console.log(3);
 
 
             return resultSearch3.slice(page,page + 5);
           } else {
 
-            console.log(4);
 
 
             if ( resultSearch4.length != 0) {
 
-              console.log(4);
 
               return resultSearch4.slice(page, page +5);
             }else {
-              console.log(5);
 
               if ( resultSearch5.length != 0 ) {
 
-              console.log(5);
 
 
                 return resultSearch5.slice(page, page+5);
 
               } else {
 
-              console.log(6);
 
 
                 if ( resultSearch6.length != 0 ) {
 
-              console.log(6);
 
                   return resultSearch6.slice(page, page + 5);
                 } else {
@@ -110,7 +98,6 @@ export class FilterTable1AssistantPipe implements PipeTransform {
                         return resultSearch9.slice(page, page +5);
 
                       }else {
-                        console.log(0);
 
                       return [];
                       }

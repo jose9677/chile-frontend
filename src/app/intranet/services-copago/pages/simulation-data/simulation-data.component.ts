@@ -170,7 +170,6 @@ export class SimulationDataComponent implements OnInit {
     let idSimulation: any = "";
 
     this.simulationServices.addSimulation(rutUser, dataSimulation).subscribe((res) => {
-      console.log(res);
 
       idSimulation = res.id_simulation;
 
@@ -180,12 +179,10 @@ export class SimulationDataComponent implements OnInit {
 
     this.isFormSubmitted = false;
 
-      console.log(error);
 
     },
     () => {
 
-      console.log(idSimulation);
       this.addServicesSimulation(idSimulation);
 
       // this.router.navigate(['copago/simulador-de-copago'], {queryParams: {id_simulation: idSimulation}});
@@ -208,13 +205,11 @@ export class SimulationDataComponent implements OnInit {
 
       this.simulationServices.addServicesSimulation( dataServices ).subscribe((res) => {
 
-        console.log(res);
 
       },
       error => {
         this.isFormSubmitted = false;
 
-        console.log(error);
 
       },
       () => {

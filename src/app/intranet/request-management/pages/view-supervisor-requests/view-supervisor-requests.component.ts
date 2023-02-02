@@ -33,7 +33,6 @@ export class ViewSupervisorRequestsComponent implements OnInit {
   ) {
 
     this.userloggedRut = sessionStorage.getItem('auth-user')
-    console.log(this.userloggedRut)
 
     this.unassignedRequest = [];
 
@@ -56,7 +55,6 @@ export class ViewSupervisorRequestsComponent implements OnInit {
 
     this.date.getAllRequest().subscribe( result => {
 
-      console.log(result);
 
       result.data_complete.map((res: any)=>{
 

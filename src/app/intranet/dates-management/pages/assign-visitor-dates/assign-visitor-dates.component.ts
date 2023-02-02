@@ -42,7 +42,6 @@ export class AssignVisitorDatesComponent implements OnInit {
 
     this.listRutSocialAssistant= [];
     this.supUser = window.sessionStorage.getItem("auth-user");
-    console.log(this.supUser)
 
   }
 
@@ -96,7 +95,6 @@ export class AssignVisitorDatesComponent implements OnInit {
 
     }
     this.datesService.assignSocialAssistant(this.nroRequest ,assignData).subscribe(result => {
-      return console.log(result);
     },
     error => {
       this.errors = true;

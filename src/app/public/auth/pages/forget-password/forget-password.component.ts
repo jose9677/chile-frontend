@@ -55,11 +55,9 @@ export class ForgetPasswordComponent implements OnInit {
       this.isFormSubmitted = true;
 
       this.authService.validateUser(dataForgetPassword).subscribe( result => {
-        console.log(result)
       },
       error => {  //recibe error del user services
         this.errors = error;
-        console.log('errors_login->',this.errors);
         // modal
         if(this.errors='{ error: "User Does Not exists in Data Base" }'){
           this.formForgetPassword.reset();
@@ -81,7 +79,6 @@ export class ForgetPasswordComponent implements OnInit {
       },
       () => {
         // modal
-        console.log(this.formForgetPassword)
         this.emailUser = 'su Correo Electronico'
         let title: any = 'Recuperar Contraseña';
         let message: any = `Hemos enviado un mensaje con instrucciones a ${this.emailUser}. Si no lo encuentra en su bandeja de entrada, recuerde revisar en el correo no deseado `;
@@ -111,8 +108,8 @@ export class ForgetPasswordComponent implements OnInit {
 
       let correctRut = rut.slice(0, -1) + "-" + code;
 
-      this.formForgetPassword.controls['rutNumber'].setValue(correctRut);    
-      
+      this.formForgetPassword.controls['rutNumber'].setValue(correctRut);
+
 
     }
 

@@ -88,7 +88,6 @@ export class AuthService {
   }
 
   uploadFiles(fileData: File, id_document_type: any): Observable<any>{
-    console.log(fileData)
 
     const formfileData = new FormData();
 
@@ -172,7 +171,6 @@ export class AuthService {
 
 
   logOut(): void {
-    console.log('sesión cerrada');
     window.sessionStorage.clear();
     window.sessionStorage.removeItem('rol-user');
     window.sessionStorage.removeItem('access_token');
@@ -222,7 +220,6 @@ export class AuthService {
 
       this.errorMessage= err.error;
     }
-    console.log(this.errorMessage);
 
     return throwError(this.errorMessage)
   }

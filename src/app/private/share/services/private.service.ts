@@ -54,7 +54,6 @@ export class PrivateService {
       let url = AUTH_API_NP + 'active-rol/'+ id;
       return this.http.put(url, null).pipe(map((result:any) => {
 
-        console.log('Rol Activado', result);
 
       }),
       catchError((err)=> this.handlerError(err))

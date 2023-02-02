@@ -29,13 +29,11 @@ export class SortByTablesService {
     if ((this.page > 0)) {
 
       this.page -= 5;
-      console.log(this.page)
     }
   }
 
   onSearch(search: any) {
     this.search = search;
-    console.log(search)
 
   }
 
@@ -67,12 +65,10 @@ export class SortByTablesService {
     if ((this.page2 > 0)) {
       this.page2 -= 5;
 
-      console.log(this.page2)
     }
   }
 
   onSearch2(search2: any) {
-    console.log(this.search2)
     this.search2 = search2.toLowerCase();
 
 

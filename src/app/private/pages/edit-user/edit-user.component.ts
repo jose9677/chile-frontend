@@ -45,7 +45,6 @@ export class EditUserComponent implements OnInit {
         this.ruts=params['id']
     })
     this.privateService.roles().subscribe(dataRequest => {
-      console.log(dataRequest)
       let array: any[]= []
       if(this.id==5){
         this.RolOfstreet=dataRequest
@@ -55,7 +54,6 @@ export class EditUserComponent implements OnInit {
         }
         this.RolOfstreet=array
       }
-      console.log(this.RolOfstreet)
     })
     this.privateService.supervisor().subscribe(dataRequest => {
       this.supervisorOfstreet=dataRequest
@@ -72,18 +70,10 @@ export class EditUserComponent implements OnInit {
           this.nuevoRut+=this.rut[i]
         }
       }
-    console.log(this.id);
     if (this.id == 3){
       this.editable=true
     }
-    // this.privateService.rutEdit.subscribe(data => {
-    //   this.ruts=data;
-    //   console.log(this.ruts.data);
-    //   this.privateService.datosUser(this.ruts.data).subscribe(dataRequest => {
-    //     console.log(dataRequest)
-    //     this.usuario=dataRequest
-    //   })
-    // })
+
     this.privateService.datosUser(this.ruts).subscribe(dataRequest => {
       this.usuario.push(dataRequest[0])
       console.log(dataRequest)
@@ -106,13 +96,7 @@ export class EditUserComponent implements OnInit {
 
     this.addDocument();
 
-    // this.ruts= this.privateService.rutUser
-    // console.log(this.ruts)
 
-    // this.privateService.datosUser(this.ruts).subscribe(dataRequest => {
-    //   console.log(dataRequest)
-    //   this.usuario=dataRequest
-    // })
   }
 
   get documents() {
@@ -140,7 +124,6 @@ export class EditUserComponent implements OnInit {
 
       this.authServices.uploadFiles(fileData, id_document_type).subscribe((res) =>
          {
-            console.log(res);
           },
           error => {
 
@@ -154,10 +137,8 @@ export class EditUserComponent implements OnInit {
 
   selectdataFile(event: any, index: any, id_document_type: any): void {
     this.file = <File>event.target.files[0];
-    // console.log(this.file);
     this.documentIsValid = true;
 
-    console.log(this.file)
 
     if ( this.file != undefined ) {
 
@@ -165,7 +146,6 @@ export class EditUserComponent implements OnInit {
 
 
         this.selectFiles.push({'fileData': this.file, 'id_document_type': id_document_type});
-        console.log(this.selectFiles);
 
         this.documentIsValid = false;
 
@@ -186,12 +166,10 @@ export class EditUserComponent implements OnInit {
 
     } else {
 
-      console.log(this.selectFiles);
       this.deleteDocument(index);
       this.addDocument();
 
       this.selectFiles =[]
-      console.log(this.selectFiles);
       this.documentIsValid = false;
 
     }
@@ -205,7 +183,6 @@ export class EditUserComponent implements OnInit {
       this.modalService2.OpenModalError2(ModalComponent, true, title, message);
     }else{
       this.buttonBlock=true
-      console.log(this.userRegister);
       if (this.userRegister.value.documents[0].document_path==""){
         if(this.userRegister.value.email==this.usuario[0].email){
           const dataUser ={
@@ -222,14 +199,11 @@ export class EditUserComponent implements OnInit {
             // supervisorofstreet:this.userRegister.value.supervisorOfstreet,
             id_rol:this.userRegister.value.RolOfstreet
           }
-          console.log(dataUser);
           this.privateService.actualizarUser(dataUser,this.nuevoRut).subscribe(result => {
-            console.log(result);
             this.modalService2.openModal(UserUpdateComponent)
           },
           error => {
             this.errors=error;
-            console.log('errors_login->',this.errors);
             if( this.errors == '{"email":["The email has already been taken."]}'){
               let title= "";
               let message = "El correo electrónico que introdujo ya se encuentra asociado a otro usuario. Por favor verifique e intente nuevamente";
@@ -265,14 +239,11 @@ export class EditUserComponent implements OnInit {
             // supervisorofstreet:this.userRegister.value.supervisorOfstreet,
             id_rol:this.userRegister.value.RolOfstreet
           }
-          console.log(dataUser);
           this.privateService.actualizarUser(dataUser,this.nuevoRut).subscribe(result => {
-            console.log(result);
             this.modalService2.openModal(UserUpdateComponent)
           },
           error => {
             this.errors=error;
-            console.log('errors_login->',this.errors);
             if( this.errors == '{"email":["The email has already been taken."]}'){
               let title= "";
               let message = "El correo electrónico que introdujo ya se encuentra asociado a otro usuario. Por favor verifique e intente nuevamente";
@@ -310,14 +281,11 @@ export class EditUserComponent implements OnInit {
             // supervisorofstreet:this.userRegister.value.supervisorOfstreet,
             id_rol:this.userRegister.value.RolOfstreet
           }
-          console.log(dataUser);
           this.privateService.actualizarUser(dataUser,this.nuevoRut).subscribe(result => {
-            console.log(result);
             this.modalService2.openModal(UserUpdateComponent)
           },
           error => {
             this.errors=error;
-            console.log('errors_login->',this.errors);
             if( this.errors == '{"email":["The email has already been taken."]}'){
               let title= "";
               let message = "El correo electrónico que introdujo ya se encuentra asociado a otro usuario. Por favor verifique e intente nuevamente";
@@ -353,14 +321,11 @@ export class EditUserComponent implements OnInit {
             // supervisorofstreet:this.userRegister.value.supervisorOfstreet,
             id_rol:this.userRegister.value.RolOfstreet
           }
-          console.log(dataUser);
           this.privateService.actualizarUser(dataUser,this.nuevoRut).subscribe(result => {
-            console.log(result);
             this.modalService2.openModal(UserUpdateComponent)
           },
           error => {
             this.errors=error;
-            console.log('errors_login->',this.errors);
             if( this.errors == '{"email":["The email has already been taken."]}'){
               let title= "";
               let message = "El correo electrónico que introdujo ya se encuentra asociado a otro usuario. Por favor verifique e intente nuevamente";

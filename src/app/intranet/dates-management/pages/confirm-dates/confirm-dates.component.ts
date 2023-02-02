@@ -50,7 +50,6 @@ export class ConfirmDatesComponent implements OnInit {
     this.idRequestSubscription = this.routerquery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
 
     this.datesService.getForIdRequest(this.idRequest).subscribe((result) => {
-      console.log(result)
 
       if (result.length === 0 || this.errors === true) {
         result = this.dataRequest

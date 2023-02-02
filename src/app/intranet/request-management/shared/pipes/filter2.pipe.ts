@@ -10,8 +10,6 @@ export class Filter2Pipe implements PipeTransform {
 
   transform(value2: any[], search2: any, page2: any): any {
 
-    console.log(value2);
-    console.log(search2);
 
     const resultSearch: any[] = value2.filter(res => (res.id_request.toString())?.includes(search2));
 
@@ -36,58 +34,47 @@ export class Filter2Pipe implements PipeTransform {
 
       if (resultSearch.length != 0 ) {
 
-        console.log(1);
 
         return resultSearch.slice(page2,page2 + 5);
 
       } else {
-        console.log(2);
 
 
         if( resultSearch2.length != 0) {
-        console.log(2);
 
 
           return resultSearch2.slice(page2,page2 + 5);
 
         } else {
-          console.log(3);
 
 
           if(resultSearch3.length != 0) {
 
-            console.log(3);
 
 
             return resultSearch3.slice(page2,page2 + 5);
           } else {
 
-            console.log(4);
 
 
             if ( resultSearch4.length != 0) {
 
-              console.log(4);
 
               return resultSearch4.slice(page2, page2 +5);
             }else {
-              console.log(5);
 
               if ( resultSearch5.length != 0 ) {
 
-              console.log(5);
 
 
                 return resultSearch5.slice(page2, page2+5);
 
               } else {
 
-                console.log(6);
 
 
                 if ( resultSearch6.length != 0 ) {
 
-              console.log(6);
 
                   return resultSearch6.slice(page2, page2 + 5);
                 } else {
@@ -103,7 +90,6 @@ export class Filter2Pipe implements PipeTransform {
                       return resultSearch8.slice(page2, page2 +5);
 
                     }else {
-                      console.log(0);
 
                       return [];
                     }

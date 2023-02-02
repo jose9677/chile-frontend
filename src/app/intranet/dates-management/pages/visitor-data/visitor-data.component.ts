@@ -43,7 +43,6 @@ export class VisitorDataComponent implements OnInit {
 
     this.dateService.detailsVisitor( rutVisitor ).subscribe((result) => {
       this.dataVisitor = result;
-      console.log(this.dataVisitor);
       return
     })
   }
