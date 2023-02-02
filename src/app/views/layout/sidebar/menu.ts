@@ -44,7 +44,7 @@ export const MENU: MenuItem[] = [
   {
     label: 'Copago',
     icon: 'file-text',
-    roles: [],
+    roles: [1, 5],
     statusRequest: 6,
     subItems: [
       {
@@ -76,7 +76,7 @@ export const MENU: MenuItem[] = [
   {
     label: 'Seguridad',
     icon: 'file-text',
-    roles: [],
+    roles: [3, 4, 5],
     subItems: [
       {
         roles: [3, 4, 5],
