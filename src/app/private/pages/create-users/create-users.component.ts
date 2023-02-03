@@ -55,6 +55,10 @@ export class CreateUsersComponent implements OnInit {
 
   public selectFiles: any[];
 
+  public genderOptions: any[];
+
+  public selectedGenderOption: any = null;
+
 
   constructor(
     private router: Router,
@@ -67,8 +71,28 @@ export class CreateUsersComponent implements OnInit {
     private modalService2: ModalsService,
   ) {
 
+    this.genderOptions = [];
+
     this.selectFiles =[];
 
+    this.isFormSubmitted = false;
+
+
+  }
+
+  ngOnInit(): void {
+
+    this.authServices.dropdownInfo().subscribe((result) => {
+
+      this.genderOptions = result.sex;
+
+
+    }, error => {
+
+    },
+    () =>{
+
+    })
 
     this.privateService.roles().subscribe(dataRequest => {
       let array: any[]= []
@@ -89,16 +113,13 @@ export class CreateUsersComponent implements OnInit {
       }
       this.RolOfstreet=array
     })
+
     this.privateService.supervisor().subscribe(dataRequest => {
       this.supervisorOfstreet=dataRequest
       for (let i=0; i<dataRequest.length; i++){
         this.supervisorOfstreet[i].names +=" "+dataRequest[i].lastname
       }
     })
-
-  }
-
-  ngOnInit(): void {
 
     if(this.id==3){
       this.editable=true
@@ -110,7 +131,6 @@ export class CreateUsersComponent implements OnInit {
       }
     }
 
-    this.isFormSubmitted = false;
 
     this.userRegister= this.fb.group({
       names: ['',[Validators.required, Validators.pattern(/^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ ]+$/)]],
@@ -118,6 +138,7 @@ export class CreateUsersComponent implements OnInit {
       rutUser: ['',[Validators.required]],
       lastNames: ['', [Validators.required,Validators.pattern(/^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ ]+$/) ]],
       datesBirth: ['', [Validators.required, CustomValidators.date]],
+      gender: ['', [ Validators.required ]],
       email: ['', [Validators.required, CustomValidators.email]],
       landLine: ['', [Validators.required, Validators.minLength(9), CustomValidators.number]],
       mobilePhone: ['', [Validators.required, Validators.minLength(9), CustomValidators.number]],
@@ -127,7 +148,7 @@ export class CreateUsersComponent implements OnInit {
 
     })
 
-    
+
 
     this.addDocument();
 
@@ -153,6 +174,7 @@ export class CreateUsersComponent implements OnInit {
       names:this.userRegister.value.names,
       lastname:this.userRegister.value.lastNames,
       f_nac:this.userRegister.value.datesBirth,
+      id_sex: this.userRegister.value.gender,
       email:this.userRegister.value.email,
       landline:this.userRegister.value.landLine,
       mobile_phone:this.userRegister.value.mobilePhone,

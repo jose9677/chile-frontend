@@ -410,6 +410,8 @@ export class RegisterComponent implements OnInit {
 
       this.authServices.register(dataUser).subscribe(result => {
 
+        console.log(result);
+
       },
       error => {
         this.errors=error;
@@ -532,24 +534,26 @@ export class RegisterComponent implements OnInit {
       let fileData = file.fileData;
       let id_document_type = file.id_document_type
 
-      this.authServices.uploadFiles(fileData, id_document_type).subscribe((res) =>
-         {
-          },
-          error => {
+      this.authServices.uploadFiles(fileData, id_document_type).subscribe((res) => {
 
-          },
-          () => {
+        console.log(res);
 
-            countArray.push({"num": 1});
+      },
+      error => {
 
-            if(this.selectFilesId1.length == countArray.length) {
+      },
+      () => {
 
-              this.uploadFilesID2();
+        countArray.push({"num": 1});
 
-            }
+        if(this.selectFilesId1.length == countArray.length) {
 
-          })
-        })
+          this.uploadFilesID2();
+
+        }
+
+      })
+    })
 
 
   }

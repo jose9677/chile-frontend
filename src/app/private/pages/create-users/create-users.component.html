@@ -81,6 +81,23 @@
           <div *ngIf="(userRegister.controls.datesBirth.touched && userRegister.controls.datesBirth.errors?.required) || (isFormSubmitted && userRegister.controls.datesBirth.errors)" class="invalid-feedback">Campo Requerido</div>
           <div class="text-danger mt-1" *ngIf="userRegister.controls.datesBirth.errors?.date">Error al ingresar la frecha de nacimiento</div>
         </div>
+
+        <div class="col-md-6 mb-3 ">
+          <label for="gender" class="form-label">Sexo</label>
+          <ng-select [items]="genderOptions"
+              id="gender"
+              class="form-control p-0"
+              bindLabel="description"
+              bindValue="id_sex"
+              placeholder="Seleccione"
+              [(ngModel)]="selectedGenderOption"
+              formControlName="gender"
+              [ngClass]="{'is-invalid': ((userRegister.controls.gender.touched && userRegister.controls.gender.errors) || (isFormSubmitted && userRegister.controls.gender.errors))}"
+              >
+          </ng-select>
+          <div *ngIf="(userRegister.controls.gender.touched && userRegister.controls.gender.errors?.required) || (userRegister.controls.gender.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+        </div>
+
         <div class="col-md-5 col-sm-12 mt-2 ">
           <label for="email" class="form-label colorTextPrimari">Correo Electrónico</label>
           <input

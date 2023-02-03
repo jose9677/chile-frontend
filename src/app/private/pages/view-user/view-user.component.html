@@ -119,31 +119,31 @@
       </div>
       <div class="row mt-4 justify-content-evenly">
         <div class="col-md-5 col-sm-12">
-          <ng-container formArrayName="documents">
+          <!-- <ng-container formArrayName="documents">
             <div class="row">
               <div class="col-md-6">
                 <div class="row">
                   <h5 class="colorTextPrimari pb-3">Fotografía de Perfil</h5>
                 </div>
-
               </div>
             </div>
             <ng-container *ngFor="let documentForm of documents.controls; let i = index">
               <div [formGroupName]="i">
-                  <div class="row" >
-                    <div class="col-md-8 mb-4">
-                      <input
-                      class="form-control"
-                      id="document_path"
-                      [readOnly] ="(userRegister.controls.documents.value[i].document_path != '') ? true : true "
-                      formControlName="document_path"
-                      (change)="selectdataFile($event, i, 1)"
-                      >
-                    </div>
+                <div class="row" >
+                  <div class="col-md-8 mb-4">
+                    <input
+                    class="form-control"
+                    id="document_path"
+                    [readOnly] ="(userRegister.controls.documents.value[i].document_path != '') ? true : true "
+                    formControlName="document_path"
+                    (change)="selectdataFile($event, i, 1)"
+                    >
                   </div>
+                </div>
               </div>
             </ng-container>
-          </ng-container>
+          </ng-container> -->
+          <img src="{{usuarios.profile_pic_srv_path}}" alt="">
         </div>
         <div class="col-md-5 col-ms-12">
         </div>

@@ -65,7 +65,7 @@
                         placeholder="Seleccione"
                         [(ngModel)]="selectedGenderOption"
                         formControlName="gender"
-                        [ngClass]="{'is-invalid': ((userRegister.controls.gender.touched && userRegister.controls.isCaretaker.errors) || (isFormSubmitted && userRegister.controls.gender.errors))}"
+                        [ngClass]="{'is-invalid': ((userRegister.controls.gender.touched && userRegister.controls.gender.errors) || (isFormSubmitted && userRegister.controls.gender.errors))}"
                         >
                     </ng-select>
                     <div *ngIf="(userRegister.controls.gender.touched && userRegister.controls.gender.errors?.required) || (userRegister.controls.gender.errors?.required)" class="invalid-feedback">Campo Requerido</div>
