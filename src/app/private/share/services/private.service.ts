@@ -211,6 +211,16 @@ export class PrivateService {
   }
 
 
+  addSupervisor(rutUser: any, dataUser: any): Observable<any>{
+    return this.http.post( AUTH_API_NP + 'add-supervisor/' + rutUser , dataUser, httpOptions).pipe(map((result:any) => {
+
+      return result;
+
+    }),
+    catchError((err)=> this.handlerError(err))
+    );
+  }
+
 
   private handlerError(err:any): Observable<never> { //pasa error al login component
     let errorMessage= 'An error ocurred';

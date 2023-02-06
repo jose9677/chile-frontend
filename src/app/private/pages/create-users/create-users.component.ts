@@ -2,16 +2,11 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomValidators } from 'ngx-custom-validators';
-import { Subscription } from 'rxjs';
 import { ModalsService } from 'src/app/shared/services/modals.service';
 import { ModalComponent } from 'src/app/public/auth/shared/modals/modal/modal.component';
 import { AuthService } from 'src/app/public/auth/shared/services/auth.service';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { PrivateService } from '../../share/services/private.service';
 import { UserCreatedComponent } from '../modales/user-created/user-created.component';
-
-
-
 
 @Component({
   selector: 'app-create-users',

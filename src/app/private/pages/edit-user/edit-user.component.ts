@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
+import {FormArray, FormBuilder, Validators } from '@angular/forms';
 import { CustomValidators } from 'ngx-custom-validators';
 import { AuthService } from 'src/app/public/auth/shared/services/auth.service';
 import { ModalsService } from 'src/app/shared/services/modals.service';
 import { ModalComponent } from 'src/app/public/auth/shared/modals/modal/modal.component';
 import { PrivateService } from '../../share/services/private.service';
 import { ActivatedRoute,Router } from '@angular/router';
-import { auto } from '@popperjs/core';
 import { UserUpdateComponent } from '../modales/user-update/user-update.component';
 @Component({
   selector: 'app-edit-user',
@@ -31,6 +30,11 @@ export class EditUserComponent implements OnInit {
   public RolOfstreet: any[]= [];
   public supervisorOfstreet: any[]= [];
   public selectedSupervisorStreet: any = null;
+
+  public changePickProfile: boolean;
+
+  private supervisorRut: any;
+
   constructor(
    private privateService:PrivateService,
    private fb: FormBuilder,
@@ -39,6 +43,10 @@ export class EditUserComponent implements OnInit {
    private router: Router,
    private activatedroute: ActivatedRoute
   ) {
+
+    this.changePickProfile = false;
+
+    this.supervisorRut= '';
 
     this.selectFiles = [];
     this.activatedroute.params.subscribe(params=>{
@@ -74,10 +82,8 @@ export class EditUserComponent implements OnInit {
       this.editable=true
     }
 
-    this.privateService.datosUser(this.ruts).subscribe(dataRequest => {
-      this.usuario.push(dataRequest[0])
-      console.log(dataRequest)
-    })
+    this.getDataUser();
+
     this.isFormSubmitted = false;
 
     this.userRegister= this.fb.group({
@@ -88,7 +94,7 @@ export class EditUserComponent implements OnInit {
       email: ['', [Validators.required, CustomValidators.email]],
       landLine: ['', [Validators.required, Validators.minLength(9), CustomValidators.number]],
       mobilePhone: ['', [Validators.required, Validators.minLength(9), CustomValidators.number]],
-      RolOfstreet: ['', Validators.required],
+      idRole: ['', Validators.required],
       supervisorOfstreet:['', Validators.required],
       documents: this.fb.array([]),
 
@@ -97,6 +103,16 @@ export class EditUserComponent implements OnInit {
     this.addDocument();
 
 
+  }
+
+  getDataUser(): void {
+    this.privateService.datosUser(this.ruts).subscribe(dataRequest => {
+      this.usuario.push(dataRequest[0])
+
+      this.supervisorRut = dataRequest[0].supervisor_rut
+      console.log(dataRequest);
+      console.log(this.supervisorRut);
+    })
   }
 
   get documents() {
@@ -115,21 +131,23 @@ export class EditUserComponent implements OnInit {
     this.documents.removeAt(DocumentIndex);
   }
 
-  uploadFiles() {
+  uploadFiles( dataRutUser: any) {
+
+    let rutUser = dataRutUser
 
     this.selectFiles.map((file) => {
 
-      let fileData = file.fileData;
-      let id_document_type = file.id_document_type
+      let fileData = file.profile_pic;
 
-      this.authServices.uploadFiles(fileData, id_document_type).subscribe((res) =>
+      this.privateService.uploadFiles(fileData, rutUser).subscribe((res) =>
          {
+          console.log(res)
           },
           error => {
 
           },
           () => {
-
+            // this.getDataUser();
           })
         })
         this.isFormSubmitted = false;
@@ -138,6 +156,8 @@ export class EditUserComponent implements OnInit {
   selectdataFile(event: any, index: any, id_document_type: any): void {
     this.file = <File>event.target.files[0];
     this.documentIsValid = true;
+    this.changePickProfile = true;
+
 
 
     if ( this.file != undefined ) {
@@ -145,7 +165,7 @@ export class EditUserComponent implements OnInit {
       if ( this.file.type == "image/jpeg" || this.file.type == "application/pdf" || this.file.type == "image/png") {
 
 
-        this.selectFiles.push({'fileData': this.file, 'id_document_type': id_document_type});
+        this.selectFiles.push({'profile_pic': this.file, 'id_document_type': id_document_type});
 
         this.documentIsValid = false;
 
@@ -153,12 +173,11 @@ export class EditUserComponent implements OnInit {
 
         this.documentIsValid = false;
 
-        if (id_document_type == 1) {
+        if (id_document_type == 3) {
 
           this.deleteDocument(index);
           this.addDocument();
           this.documentIsValid = false;
-
 
         }
 
@@ -175,181 +194,249 @@ export class EditUserComponent implements OnInit {
     }
   }
 
-  onRegister(e: Event){
-    if(this.userRegister.controls.names.errors || this.userRegister.controls.rutUser.errors  || this.userRegister.controls.lastNames.errors  || this.userRegister.controls.datesBirth.errors  || this.userRegister.controls.email.errors  || this.userRegister.controls.landLine.errors  || this.userRegister.controls.mobilePhone.errors  || this.userRegister.controls.RolOfstreet.errors  || (this.userRegister.controls.supervisorOfstreet.errors && this.userRegister.controls.RolOfstreet.value ==2) ){
-      this.isFormSubmitted = true;
-      let title= "";
-      let message = "sucedió un Error verifique en el formulario que ingreso todos los campos correctamente";
-      this.modalService2.OpenModalError2(ModalComponent, true, title, message);
-    }else{
-      this.buttonBlock=true
-      if (this.userRegister.value.documents[0].document_path==""){
-        if(this.userRegister.value.email==this.usuario[0].email){
-          const dataUser ={
-            rut:this.userRegister.value.rutUser,
-            names:this.userRegister.value.names,
-            lastname:this.userRegister.value.lastNames,
-            f_nac:this.userRegister.value.datesBirth,
-            // email:this.userRegister.value.email,
-            landline:this.userRegister.value.landLine,
-            mobile_phone:this.userRegister.value.mobilePhone,
-            // employee
-            supervisor_rut:this.userRegister.value.supervisorOfstreet,
-            profile_pic:this.usuario[0].profile_pic,
-            // supervisorofstreet:this.userRegister.value.supervisorOfstreet,
-            id_rol:this.userRegister.value.RolOfstreet
-          }
-          this.privateService.actualizarUser(dataUser,this.nuevoRut).subscribe(result => {
-            this.modalService2.openModal(UserUpdateComponent)
-          },
-          error => {
-            this.errors=error;
-            if( this.errors == '{"email":["The email has already been taken."]}'){
-              let title= "";
-              let message = "El correo electrónico que introdujo ya se encuentra asociado a otro usuario. Por favor verifique e intente nuevamente";
-              this.modalService2.OpenModalError2(ModalComponent, true, title, message);
-            }else{
-              let title= "";
-              let message = "sucedió un Error verifique en el formulario que ingreso todos los campos correctamente";
-              this.modalService2.OpenModalError2(ModalComponent, true, title, message);
-            }
-            this.buttonBlock=false
-            this.isFormSubmitted = true;
+  updateEmployee(e: Event) {
+    const dataUser ={
+      "rut" : this.userRegister.value.rutUser,
+      "names": this.userRegister.value.names,
+      "lastname": this.userRegister.value.lastNames,
+      "f_nac": this.userRegister.value.datesBirth,
+      "email": this.userRegister.value.email,
+      "landline": this.userRegister.value.landLine,
+      "mobile_phone": this.userRegister.value.mobilePhone,
+      "id_rol" : this.userRegister.value.idRole
 
-          },
-          () => {
-            this.uploadFiles();
-            // e.preventDefault();
-            // this.router.navigate(['seguridad/usuarios']);
-            this.isFormSubmitted = false;
-
-          });
-        }else{
-          const dataUser ={
-            rut:this.userRegister.value.rutUser,
-            names:this.userRegister.value.names,
-            lastname:this.userRegister.value.lastNames,
-            f_nac:this.userRegister.value.datesBirth,
-            email:this.userRegister.value.email,
-            landline:this.userRegister.value.landLine,
-            mobile_phone:this.userRegister.value.mobilePhone,
-            // employee
-            supervisor_rut:this.userRegister.value.supervisorOfstreet,
-            profile_pic:this.usuario[0].profile_pic,
-            // supervisorofstreet:this.userRegister.value.supervisorOfstreet,
-            id_rol:this.userRegister.value.RolOfstreet
-          }
-          this.privateService.actualizarUser(dataUser,this.nuevoRut).subscribe(result => {
-            this.modalService2.openModal(UserUpdateComponent)
-          },
-          error => {
-            this.errors=error;
-            if( this.errors == '{"email":["The email has already been taken."]}'){
-              let title= "";
-              let message = "El correo electrónico que introdujo ya se encuentra asociado a otro usuario. Por favor verifique e intente nuevamente";
-              this.modalService2.OpenModalError2(ModalComponent, true, title, message);
-            }else{
-              let title= "";
-              let message = "sucedió un Error verifique en el formulario que ingreso todos los campos correctamente";
-              this.modalService2.OpenModalError2(ModalComponent, true, title, message);
-            }
-            this.buttonBlock=false
-            this.isFormSubmitted = true;
-
-          },
-          () => {
-            this.uploadFiles();
-            // e.preventDefault();
-            // this.router.navigate(['seguridad/usuarios']);
-            this.isFormSubmitted = false;
-
-          });
-        }
-      }else{
-        if(this.userRegister.value.email==this.usuario[0].email){
-          const dataUser ={
-            rut:this.userRegister.value.rutUser,
-            names:this.userRegister.value.names,
-            lastname:this.userRegister.value.lastNames,
-            f_nac:this.userRegister.value.datesBirth,
-            // email:this.userRegister.value.email,
-            landline:this.userRegister.value.landLine,
-            mobile_phone:this.userRegister.value.mobilePhone,
-            // employee
-            supervisor_rut:this.userRegister.value.supervisorOfstreet,
-            profile_pic:this.userRegister.value.documents[0].document_path,
-            // supervisorofstreet:this.userRegister.value.supervisorOfstreet,
-            id_rol:this.userRegister.value.RolOfstreet
-          }
-          this.privateService.actualizarUser(dataUser,this.nuevoRut).subscribe(result => {
-            this.modalService2.openModal(UserUpdateComponent)
-          },
-          error => {
-            this.errors=error;
-            if( this.errors == '{"email":["The email has already been taken."]}'){
-              let title= "";
-              let message = "El correo electrónico que introdujo ya se encuentra asociado a otro usuario. Por favor verifique e intente nuevamente";
-              this.modalService2.OpenModalError2(ModalComponent, true, title, message);
-            }else{
-              let title= "";
-              let message = "sucedió un Error verifique en el formulario que ingreso todos los campos correctamente";
-              this.modalService2.OpenModalError2(ModalComponent, true, title, message);
-            }
-            this.buttonBlock=false
-            this.isFormSubmitted = true;
-
-          },
-          () => {
-            this.uploadFiles();
-            // e.preventDefault();
-            // this.router.navigate(['seguridad/usuarios']);
-            this.isFormSubmitted = false;
-
-          });
-        }else{
-          const dataUser ={
-            rut:this.userRegister.value.rutUser,
-            names:this.userRegister.value.names,
-            lastname:this.userRegister.value.lastNames,
-            f_nac:this.userRegister.value.datesBirth,
-            email:this.userRegister.value.email,
-            landline:this.userRegister.value.landLine,
-            mobile_phone:this.userRegister.value.mobilePhone,
-            // employee
-            supervisor_rut:this.userRegister.value.supervisorOfstreet,
-            profile_pic:this.userRegister.value.documents[0].document_path,
-            // supervisorofstreet:this.userRegister.value.supervisorOfstreet,
-            id_rol:this.userRegister.value.RolOfstreet
-          }
-          this.privateService.actualizarUser(dataUser,this.nuevoRut).subscribe(result => {
-            this.modalService2.openModal(UserUpdateComponent)
-          },
-          error => {
-            this.errors=error;
-            if( this.errors == '{"email":["The email has already been taken."]}'){
-              let title= "";
-              let message = "El correo electrónico que introdujo ya se encuentra asociado a otro usuario. Por favor verifique e intente nuevamente";
-              this.modalService2.OpenModalError2(ModalComponent, true, title, message);
-            }else{
-              let title= "";
-              let message = "sucedió un Error verifique en el formulario que ingreso todos los campos correctamente";
-              this.modalService2.OpenModalError2(ModalComponent, true, title, message);
-            }
-            this.buttonBlock=false
-            this.isFormSubmitted = true;
-
-          },
-          () => {
-            this.uploadFiles();
-            // e.preventDefault();
-            // this.router.navigate(['seguridad/usuarios']);
-            this.isFormSubmitted = false;
-
-          });
-        }
-      }
     }
+
+    this.privateService.actualizarUser(dataUser,this.nuevoRut).subscribe(result => {
+
+    },
+    error => {
+
+    },
+    () => {
+      if (( this.usuario[0].profile_pic_srv_path != '' ||     this.changePickProfile == true)) {
+
+        this.uploadFiles(dataUser.rut);
+      }
+
+      console.log(this.userRegister.value.supervisorOfstreet)
+      console.log(this.supervisorRut)
+      if ( (this.usuario[0].id_rol == 2) && (this.supervisorRut != this.userRegister.value.supervisorOfstreet )) {
+
+        this.addSupervisor( this.userRegister.value.rutUser, this.userRegister.value.supervisorOfstreet  );
+
+      } else {
+        this.addSupervisor( this.userRegister.value.rutUser, null  );
+      }
+
+
+    })
+
   }
+
+  undoProfilePicChange(DocumentIndex: any): void {
+    this.deleteDocument(DocumentIndex);
+    this.addDocument();
+    this.selectFiles =[];
+    this.changePickProfile= false;
+
+  }
+
+  addSupervisor(rutUser: any, rutSupervisor: any) {
+
+    const dataUser = {
+      'rut': rutSupervisor
+    }
+
+    this.privateService.addSupervisor( rutUser, dataUser).subscribe(result => {
+      console.log(result)
+    },
+    error => {
+
+    },
+    () => {
+      this.getDataUser();
+    })
+
+  }
+
+
+
+  // updateEmployee(e: Event){
+  //   if(this.userRegister.controls.names.errors || this.userRegister.controls.rutUser.errors  || this.userRegister.controls.lastNames.errors  || this.userRegister.controls.datesBirth.errors  || this.userRegister.controls.email.errors  || this.userRegister.controls.landLine.errors  || this.userRegister.controls.mobilePhone.errors  || this.userRegister.controls.RolOfstreet.errors  || (this.userRegister.controls.supervisorOfstreet.errors && this.userRegister.controls.RolOfstreet.value ==2) ){
+  //     this.isFormSubmitted = true;
+  //     let title= "";
+  //     let message = "sucedió un Error verifique en el formulario que ingreso todos los campos correctamente";
+  //     this.modalService2.OpenModalError2(ModalComponent, true, title, message);
+  //   }else{
+  //     this.buttonBlock=true
+  //     if (this.userRegister.value.documents[0].document_path==""){
+  //       if(this.userRegister.value.email==this.usuario[0].email){
+  //         const dataUser ={
+  //           rut:this.userRegister.value.rutUser,
+  //           names:this.userRegister.value.names,
+  //           lastname:this.userRegister.value.lastNames,
+  //           f_nac:this.userRegister.value.datesBirth,
+  //           email:this.userRegister.value.email,
+  //           landline:this.userRegister.value.landLine,
+  //           mobile_phone:this.userRegister.value.mobilePhone,
+  //           // employee
+  //           // profile_pic:this.usuario[0].profile_pic,
+  //           // supervisorofstreet:this.userRegister.value.supervisorOfstreet,
+  //           supervisor_rut: this.userRegister.value.supervisorOfstreet,
+  //           id_rol: this.userRegister.value.RolOfstreet
+  //         }
+  //         this.privateService.actualizarUser(dataUser,this.nuevoRut).subscribe(result => {
+  //           this.modalService2.openModal(UserUpdateComponent)
+  //         },
+  //         error => {
+  //           this.errors=error;
+  //           if( this.errors == '{"email":["The email has already been taken."]}'){
+  //             let title= "";
+  //             let message = "El correo electrónico que introdujo ya se encuentra asociado a otro usuario. Por favor verifique e intente nuevamente";
+  //             this.modalService2.OpenModalError2(ModalComponent, true, title, message);
+  //           }else{
+  //             let title= "";
+  //             let message = "sucedió un Error verifique en el formulario que ingreso todos los campos correctamente";
+  //             this.modalService2.OpenModalError2(ModalComponent, true, title, message);
+  //           }
+  //           this.buttonBlock=false
+  //           this.isFormSubmitted = true;
+
+  //         },
+  //         () => {
+  //           this.uploadFiles();
+  //           // e.preventDefault();
+  //           // this.router.navigate(['seguridad/usuarios']);
+  //           this.isFormSubmitted = false;
+
+  //         });
+  //       }else{
+  //         const dataUser ={
+  //           rut:this.userRegister.value.rutUser,
+  //           names:this.userRegister.value.names,
+  //           lastname:this.userRegister.value.lastNames,
+  //           f_nac:this.userRegister.value.datesBirth,
+  //           email:this.userRegister.value.email,
+  //           landline:this.userRegister.value.landLine,
+  //           mobile_phone:this.userRegister.value.mobilePhone,
+  //           // employee
+  //           supervisor_rut:this.userRegister.value.supervisorOfstreet,
+  //           profile_pic:this.usuario[0].profile_pic,
+  //           // supervisorofstreet:this.userRegister.value.supervisorOfstreet,
+  //           id_rol:this.userRegister.value.RolOfstreet
+  //         }
+  //         this.privateService.actualizarUser(dataUser,this.nuevoRut).subscribe(result => {
+  //           this.modalService2.openModal(UserUpdateComponent)
+  //         },
+  //         error => {
+  //           this.errors=error;
+  //           if( this.errors == '{"email":["The email has already been taken."]}'){
+  //             let title= "";
+  //             let message = "El correo electrónico que introdujo ya se encuentra asociado a otro usuario. Por favor verifique e intente nuevamente";
+  //             this.modalService2.OpenModalError2(ModalComponent, true, title, message);
+  //           }else{
+  //             let title= "";
+  //             let message = "sucedió un Error verifique en el formulario que ingreso todos los campos correctamente";
+  //             this.modalService2.OpenModalError2(ModalComponent, true, title, message);
+  //           }
+  //           this.buttonBlock=false
+  //           this.isFormSubmitted = true;
+
+  //         },
+  //         () => {
+  //           this.uploadFiles();
+  //           // e.preventDefault();
+  //           // this.router.navigate(['seguridad/usuarios']);
+  //           this.isFormSubmitted = false;
+
+  //         });
+  //       }
+  //     }else{
+  //       if(this.userRegister.value.email==this.usuario[0].email){
+  //         const dataUser ={
+  //           rut:this.userRegister.value.rutUser,
+  //           names:this.userRegister.value.names,
+  //           lastname:this.userRegister.value.lastNames,
+  //           f_nac:this.userRegister.value.datesBirth,
+  //           // email:this.userRegister.value.email,
+  //           landline:this.userRegister.value.landLine,
+  //           mobile_phone:this.userRegister.value.mobilePhone,
+  //           // employee
+  //           supervisor_rut:this.userRegister.value.supervisorOfstreet,
+  //           profile_pic:this.userRegister.value.documents[0].document_path,
+  //           // supervisorofstreet:this.userRegister.value.supervisorOfstreet,
+  //           id_rol:this.userRegister.value.RolOfstreet
+  //         }
+  //         this.privateService.actualizarUser(dataUser,this.nuevoRut).subscribe(result => {
+  //           this.modalService2.openModal(UserUpdateComponent)
+  //         },
+  //         error => {
+  //           this.errors=error;
+  //           if( this.errors == '{"email":["The email has already been taken."]}'){
+  //             let title= "";
+  //             let message = "El correo electrónico que introdujo ya se encuentra asociado a otro usuario. Por favor verifique e intente nuevamente";
+  //             this.modalService2.OpenModalError2(ModalComponent, true, title, message);
+  //           }else{
+  //             let title= "";
+  //             let message = "sucedió un Error verifique en el formulario que ingreso todos los campos correctamente";
+  //             this.modalService2.OpenModalError2(ModalComponent, true, title, message);
+  //           }
+  //           this.buttonBlock=false
+  //           this.isFormSubmitted = true;
+
+  //         },
+  //         () => {
+  //           this.uploadFiles();
+  //           // e.preventDefault();
+  //           // this.router.navigate(['seguridad/usuarios']);
+  //           this.isFormSubmitted = false;
+
+  //         });
+  //       }else{
+  //         const dataUser ={
+  //           rut:this.userRegister.value.rutUser,
+  //           names:this.userRegister.value.names,
+  //           lastname:this.userRegister.value.lastNames,
+  //           f_nac:this.userRegister.value.datesBirth,
+  //           email:this.userRegister.value.email,
+  //           landline:this.userRegister.value.landLine,
+  //           mobile_phone:this.userRegister.value.mobilePhone,
+  //           // employee
+  //           supervisor_rut:this.userRegister.value.supervisorOfstreet,
+  //           profile_pic:this.userRegister.value.documents[0].document_path,
+  //           // supervisorofstreet:this.userRegister.value.supervisorOfstreet,
+  //           id_rol:this.userRegister.value.RolOfstreet
+  //         }
+  //         this.privateService.actualizarUser(dataUser,this.nuevoRut).subscribe(result => {
+  //           this.modalService2.openModal(UserUpdateComponent)
+  //         },
+  //         error => {
+  //           this.errors=error;
+  //           if( this.errors == '{"email":["The email has already been taken."]}'){
+  //             let title= "";
+  //             let message = "El correo electrónico que introdujo ya se encuentra asociado a otro usuario. Por favor verifique e intente nuevamente";
+  //             this.modalService2.OpenModalError2(ModalComponent, true, title, message);
+  //           }else{
+  //             let title= "";
+  //             let message = "sucedió un Error verifique en el formulario que ingreso todos los campos correctamente";
+  //             this.modalService2.OpenModalError2(ModalComponent, true, title, message);
+  //           }
+  //           this.buttonBlock=false
+  //           this.isFormSubmitted = true;
+
+  //         },
+  //         () => {
+  //           this.uploadFiles();
+  //           // e.preventDefault();
+  //           // this.router.navigate(['seguridad/usuarios']);
+  //           this.isFormSubmitted = false;
+
+  //         });
+  //       }
+  //     }
+  //   }
+  // }
 
   // confirmRut(e: Event){
   //   if(this.userRegister.controls.names.errors || this.userRegister.controls.rutUser.errors  || this.userRegister.controls.lastNames.errors  || this.userRegister.controls.datesBirth.errors  || this.userRegister.controls.email.errors  || this.userRegister.controls.landLine.errors  || this.userRegister.controls.mobilePhone.errors  || this.userRegister.controls.RolOfstreet.errors  || (this.userRegister.controls.supervisorOfstreet.errors && this.userRegister.controls.RolOfstreet.value ==2) ){

@@ -148,7 +148,6 @@ export class ViewUserComponent implements OnInit {
           this.addDocument();
           this.documentIsValid = false;
 
-
         }
 
       }

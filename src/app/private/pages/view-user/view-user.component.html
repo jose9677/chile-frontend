@@ -1,158 +1,126 @@
 <div class="row">
   <div class="col-md-12">
-      <div class="card header p-3">
+      <div class="card header p-3 mb-3">
           <h2>Datos del Usuario</h2>
       </div>
   </div>
 </div>
-<br>
-<div class="card">
-   <form *ngFor="let usuarios of usuario" class="forms-sample container mb-5" [formGroup]="userRegister">
-    <div class="row mt-5">
-      <div class="row justify-content-evenly">
-        <div class="col-md-5 col-sm-12">
-          <h3 class="colorTextPrimari ">Datos Personales</h3>
-        </div>
-        <div class="col-md-5 col-sm-12">
-        </div>
+<div class="card py-5 px-6">
+   <form *ngFor="let usuarios of usuario" class="forms-sample container" [formGroup]="userRegister">
 
+    <div class="row justify-content-between">
+      <div class="col-md-5">
+        <h3 class="colorTextPrimari ">Datos Personales</h3>
       </div>
-      <div class="row mt-4 justify-content-evenly">
-        <div class="col-md-5 col-sm-12">
-          <label for="Rut" class="form-label colorTextPrimari">RUT</label>
-          <input id="Rut"
-          type="text"
-          [readonly]="true"
-          class="form-control"
-          id="Rut"
-          ngModel="{{usuarios.rut}}"
-          formControlName = rutUser
-          placeholder="0000000-0"
-          [readonly]="true">
-        </div>
-        <div class="col-md-5 col-sm-12"></div>
+    </div>
+    <div class="row justify-content-between">
+      <div class="col-md-6 mt-3">
+        <label for="Rut" class="form-label colorTextPrimari">RUT</label>
+        <input id="Rut"
+        type="text"
+        [readonly]="true"
+        class="form-control"
+        id="Rut"
+        ngModel="{{usuarios.rut}}"
+        formControlName = rutUser
+        placeholder="0000000-0"
+        [readonly]="true">
       </div>
-      <div class="row mt-3 justify-content-evenly">
-        <div class="col-md-5 col-sm-12">
-          <label for="Nombres" class="form-label colorTextPrimari">Nombres</label>
-          <input
-          id="Nombres"
-          type="text"
-          class="form-control"
-          placeholder="Nombres"
-          type="text"
-          ngModel="{{usuarios.names}}"
-          formControlName="names"
-          [readonly]="true"
-          >
-        </div>
-        <div class="col-md-5 col-sm-12 ">
-          <label for="Apellidos" class="form-label colorTextPrimari">Apellidos</label>
-          <input
-          id="Apellidos"
-          type="text"
-          class="form-control"
-          placeholder="Apellidos"
-          ngModel="{{usuarios.lastname}}"
-          type="text"
-          formControlName="lastNames"
-          placeholder="Introduzca sus apellidos"
-          [readonly]="true"
-          >
-        </div>
+    </div>
+    <div class="row justify-content-between">
+      <div class="col-md-6 mt-3">
+        <label for="Nombres" class="form-label colorTextPrimari">Nombres</label>
+        <input
+        id="Nombres"
+        type="text"
+        class="form-control"
+        placeholder="Nombres"
+        type="text"
+        ngModel="{{usuarios.names}}"
+        formControlName="names"
+        [readonly]="true"
+        >
       </div>
-      <div class="row mt-3 justify-content-evenly ">
-        <div class="col-md-5 col-sm-12">
-          <label for="" class="form-label colorTextPrimari ">Fecha de Nacimiento</label>
-          <input
-          type="date"
-          class="form-control form-date"
-          type="date"
-          id="FechaDeNacimiento"
-          ngModel="{{usuarios.f_nac}}"
-          formControlName="datesBirth"
-          [readonly]="true"
-          >
-        </div>
-        <div class="col-md-5 col-sm-12 mt-2 ">
-          <label for="email" class="form-label colorTextPrimari">Correo Electrónico</label>
-          <input
-          type="email"
-          class="form-control"
-          placeholder="Correo Electrónico"
-          type="email"
-          ngModel="{{usuarios.email}}"
-          id="email"
-          formControlName="email"
-          [readonly]="true"
-          >
-        </div>
+      <div class="col-md-6 mt-3">
+        <label for="Apellidos" class="form-label colorTextPrimari">Apellidos</label>
+        <input
+        id="Apellidos"
+        type="text"
+        class="form-control"
+        placeholder="Apellidos"
+        ngModel="{{usuarios.lastname}}"
+        type="text"
+        formControlName="lastNames"
+        placeholder="Introduzca sus apellidos"
+        [readonly]="true"
+        >
       </div>
-      <div class="row mt-3 justify-content-evenly">
-        <div class="col-md-5 col-sm-12 mt-2 ">
-          <label for="TeléfonoFijo" class="form-label colorTextPrimari">Teléfono Fijo</label>
-          <input
-          id="TeléfonoFijo"
-          class="form-control"
-          placeholder="Teléfono Fijo"
-          type="tel"
-          ngModel="{{usuarios.landline}}"
-          formControlName="landLine"
-          prefix="+56" mask="  0  0000 - 0000"
-          [showMaskTyped] = "false"
-          [readonly]="true"
-          >
-        </div>
-        <div class="col-md-5 col-sm-12 mt-2">
-          <label for="TeléfonoMovil" class="form-label colorTextPrimari">Teléfono Movil</label>
-          <input
-          id="TeléfonoMovil"
-          type="text"
-          class="form-control"
-          type="text"
-          [readonly]="true"
-          ngModel="{{usuarios.mobile_phone}}"
-          formControlName="mobilePhone"
-          prefix="+56" mask="  0  0000 - 0000" [showMaskTyped] = "false"
-          >
-        </div>
+      <div class="col-md-6 mt-3">
+        <label for="" class="form-label colorTextPrimari ">Fecha de Nacimiento</label>
+        <input
+        type="date"
+        class="form-control form-date"
+        type="date"
+        id="FechaDeNacimiento"
+        ngModel="{{usuarios.f_nac}}"
+        formControlName="datesBirth"
+        [readonly]="true"
+        >
       </div>
-      <div class="row mt-4 justify-content-evenly">
-        <div class="col-md-5 col-sm-12">
-          <!-- <ng-container formArrayName="documents">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="row">
-                  <h5 class="colorTextPrimari pb-3">Fotografía de Perfil</h5>
-                </div>
-              </div>
-            </div>
-            <ng-container *ngFor="let documentForm of documents.controls; let i = index">
-              <div [formGroupName]="i">
-                <div class="row" >
-                  <div class="col-md-8 mb-4">
-                    <input
-                    class="form-control"
-                    id="document_path"
-                    [readOnly] ="(userRegister.controls.documents.value[i].document_path != '') ? true : true "
-                    formControlName="document_path"
-                    (change)="selectdataFile($event, i, 1)"
-                    >
-                  </div>
-                </div>
-              </div>
-            </ng-container>
-          </ng-container> -->
-          <img src="{{usuarios.profile_pic_srv_path}}" alt="">
-        </div>
-        <div class="col-md-5 col-ms-12">
+      <div class="col-md-6 mt-3 ">
+        <label for="email" class="form-label colorTextPrimari">Correo Electrónico</label>
+        <input
+        type="email"
+        class="form-control"
+        placeholder="Correo Electrónico"
+        type="email"
+        ngModel="{{usuarios.email}}"
+        id="email"
+        formControlName="email"
+        [readonly]="true"
+        >
+      </div>
+      <div class="col-md-6 mt-3 ">
+        <label for="TeléfonoFijo" class="form-label colorTextPrimari">Teléfono Fijo</label>
+        <input
+        id="TeléfonoFijo"
+        class="form-control"
+        placeholder="Teléfono Fijo"
+        type="tel"
+        ngModel="{{usuarios.landline}}"
+        formControlName="landLine"
+        prefix="+56" mask="  0  0000 - 0000"
+        [showMaskTyped] = "false"
+        [readonly]="true"
+        >
+      </div>
+      <div class="col-md-6 mt-3">
+        <label for="TeléfonoMovil" class="form-label colorTextPrimari">Teléfono Movil</label>
+        <input
+        id="TeléfonoMovil"
+        type="text"
+        class="form-control"
+        type="text"
+        [readonly]="true"
+        ngModel="{{usuarios.mobile_phone}}"
+        formControlName="mobilePhone"
+        prefix="+56" mask="  0  0000 - 0000" [showMaskTyped] = "false"
+        >
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-4 ">
+        <label class="form-label colorTextPrimari">Fotografía de Perfil</label>
+        <div class="row justify-content-center">
+          <img class="img-thumbnail" src="{{usuarios.profile_pic_srv_path}}" alt="foto de perfil">
         </div>
       </div>
     </div>
+
     <div class="row mt-5">
-      <h3 class="colorTextPrimari text-center">Datos de Acceso</h3><br>
-      <div class="row mt-3 justify-content-evenly">
-        <div class="col-md-5 col-sm-12 mt-2">
+      <h3 class="colorTextPrimari">Datos de Acceso</h3><br>
+      <div class="row mt-3 justify-content-between">
+        <div class="col-md-5 mt-2">
           <label for="RolOfstreet" class="form-label colorTextPrimari">Rol de Usuario</label>
           <ng-select
           [items]="RolOfstreet"
@@ -161,12 +129,12 @@
           [readonly]="true"
           bindValue="id"
           placeholder="Seleccione"
-          [(ngModel)]="selectedStreet ||usuarios.id_rol"
+          [(ngModel)]="usuarios.id_rol"
           formControlName="RolOfstreet"
           >
         </ng-select>
         </div>
-        <div class="col-md-5 col-sm-12 mt-2">
+        <div class="col-md-5 mt-2">
           <label for="supervisorOfstreet" class="form-label colorTextPrimari" *ngIf="userRegister.controls.RolOfstreet.value ==2">supervisor</label>
           <ng-select
           *ngIf="userRegister.controls.RolOfstreet.value ==2"
@@ -176,16 +144,14 @@
           bindLabel="names"
           bindValue="rut"
           placeholder="Seleccione"
-          [(ngModel)]="selectedSupervisorStreet || usuarios.supervisor_rut"
+          [(ngModel)]="usuarios.supervisor_rut"
           formControlName="supervisorOfstreet"
           >
         </ng-select>
         </div>
       </div>
     </div>
-    <br>
-    <br>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-5">
       <div class="col-md-2 col-sm-12 mt-2">
         <button class="btn btn-primary style w-100 h-100"  routerLink="/seguridad/usuarios">Regresar</button>
       </div>
