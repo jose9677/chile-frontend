@@ -6,7 +6,8 @@
   </div>
 </div>
 <div class="card py-5 px-6">
-   <form *ngFor="let usuarios of usuario" class="forms-sample container" [formGroup]="userRegister" (ngSubmit)="updateEmployee($event)">
+   <!-- <form *ngFor="let usuarios of usuario" class="forms-sample container" [formGroup]="userRegister" (ngSubmit)="updateEmployee($event)"> -->
+    <form class="forms-sample container" [formGroup]="userRegister" (ngSubmit)="updateEmployee($event)">
     <div class="row justify-content-between">
       <div class="col-md-5 mt-2">
         <h3 class="colorTextPrimari ">Datos Personales</h3>
@@ -20,7 +21,6 @@
         [readonly]="true"
         class="form-control"
         id="Rut"
-        ngModel="{{usuarios.rut}}"
         formControlName = rutUser
         placeholder="0000000-0"
         [ngClass]="{'is-invalid': (userRegister.controls.rutUser.touched && userRegister.controls.rutUser.errors?.required) || (isFormSubmitted && userRegister.controls.rutUser.errors)}">
@@ -36,7 +36,6 @@
         class="form-control"
         placeholder="Nombres"
         type="text"
-        ngModel="{{usuarios.names}}"
         formControlName="names"
         [ngClass]="{'is-invalid': (userRegister.controls.names.touched && userRegister.controls.names.errors?.required) || (isFormSubmitted && userRegister.controls.names.errors)}"
         >
@@ -50,7 +49,6 @@
         type="text"
         class="form-control"
         placeholder="Apellidos"
-        ngModel="{{usuarios.lastname}}"
         type="text"
         formControlName="lastNames"
         [ngClass]="{'is-invalid': (userRegister.controls.lastNames.touched && userRegister.controls.lastNames.errors?.required) || (isFormSubmitted && userRegister.controls.lastNames.errors)}" placeholder="Introduzca sus apellidos"
@@ -65,7 +63,6 @@
         class="form-control form-date"
         type="date"
         id="FechaDeNacimiento"
-        ngModel="{{usuarios.f_nac}}"
         formControlName="datesBirth"
         [ngClass]="{'is-invalid': (userRegister.controls.datesBirth.touched && userRegister.controls.datesBirth.errors?.required) || (isFormSubmitted && userRegister.controls.datesBirth.errors)}"
         >
@@ -79,7 +76,6 @@
         class="form-control"
         placeholder="Correo Electrónico"
         type="email"
-        ngModel="{{usuarios.email}}"
         id="email"
         formControlName="email"
         [ngClass]="{'is-invalid': (userRegister.controls.email.touched && userRegister.controls.email.errors) || (isFormSubmitted && userRegister.controls.email.errors)}"
@@ -94,7 +90,6 @@
         class="form-control"
         placeholder="Teléfono Fijo"
         type="tel"
-        ngModel="{{usuarios.landline}}"
         formControlName="landLine"
         prefix="+56" mask="  0  0000 - 0000"
         [showMaskTyped] = "false"
@@ -109,7 +104,6 @@
         type="text"
         class="form-control"
         type="text"
-        ngModel="{{usuarios.mobile_phone}}"
         formControlName="mobilePhone"
         prefix="+56" mask="  0  0000 - 0000" [showMaskTyped] = "false"
         [ngClass]="{'is-invalid': (userRegister.controls.mobilePhone.touched && userRegister.controls.mobilePhone.errors?.required) || (isFormSubmitted && userRegister.controls.mobilePhone.errors)}"
@@ -122,7 +116,7 @@
       <div class="row">
         <div class="col-md-4 mt-2" *ngIf="changePickProfile == false">
           <div class="row justify-content-center" >
-            <img class="img-thumbnail" src="{{usuarios.profile_pic_srv_path}}" alt="foto de perfil" >
+            <img class="img-thumbnail" src="{{picProfile}}" alt="foto de perfil" >
           </div>
         </div>
         <div class="col d-flex align-items-center mt-5">
@@ -174,7 +168,6 @@
           [readonly]="editable"
           bindValue="id"
           placeholder="Seleccione"
-          [(ngModel)]="usuarios.id_rol"
           formControlName="idRole"
           [ngClass]="{'is-invalid': ((userRegister.controls.idRole.touched && userRegister.controls.idRole.errors) || (isFormSubmitted && userRegister.controls.idRole.error))}"
           >
@@ -191,7 +184,6 @@
           bindLabel="names"
           bindValue="rut"
           placeholder="Seleccione"
-          [(ngModel)]="selectedSupervisorStreet || usuarios.supervisor_rut"
           formControlName="supervisorOfstreet"
           [ngClass]="{'is-invalid': ((userRegister.controls.supervisorOfstreet.touched && userRegister.controls.supervisorOfstreet.errors?.required) || (isFormSubmitted && userRegister.controls.supervisorOfstreet.value == null))}"
           >

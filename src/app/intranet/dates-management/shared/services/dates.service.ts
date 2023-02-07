@@ -179,12 +179,15 @@ export class DatesService {
       if (err.status === 500) {
 
         let title: string = ''
-        let message: string = "su solicitud no pudo ser procesada intente nuevamente";
+        let message: string = "Su Solicitud no Pudo ser Procesada Intente Nuevamente";
         this.modalService.OpenModalError2(ModalComponent, true, title, message);
+
+      } else {
+
+        this.errorMessage= err.error;
 
       }
 
-      this.errorMessage= err.error;
 
     }
 

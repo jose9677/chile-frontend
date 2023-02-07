@@ -25,6 +25,7 @@ const httpOptions = {
 })
 export class PrivateService {
 
+
   private errorMessage = '';
   public rutUser:any
   private _refresh$ = new Subject<void>();
@@ -54,15 +55,13 @@ export class PrivateService {
       let url = AUTH_API_NP + 'active-rol/'+ id;
       return this.http.put(url, null).pipe(map((result:any) => {
 
-
+      }),
+      tap(() => {
+        this._refresh$.next();
       }),
       catchError((err)=> this.handlerError(err))
       )
-      .pipe(
-        tap(()=>{
-          this._refresh$.next();
-        })
-      )
+      
     }
 
     desactivarRol(rol: any): Observable<any>{
@@ -72,13 +71,12 @@ export class PrivateService {
         console.log('Rol desactivado', result);
 
       }),
+      tap(() => {
+        this._refresh$.next();
+      }),
       catchError((err)=> this.handlerError(err))
       )
-      .pipe(
-        tap(()=>{
-          this._refresh$.next();
-        })
-      )
+      
     }
 
   register(dataUser: any): Observable<any>{
@@ -86,6 +84,9 @@ export class PrivateService {
 
       console.log('Register_User-Res->', result);
 
+    }),
+    tap(() => {
+      this._refresh$.next();
     }),
     catchError((err)=> this.handlerError(err))
     );
@@ -97,6 +98,9 @@ export class PrivateService {
 
       console.log('user Actualizado', result);
 
+    }),
+    tap(() => {
+      this._refresh$.next();
     }),
     catchError((err)=> this.handlerError(err))
     );
@@ -165,13 +169,12 @@ export class PrivateService {
       console.log('user Activado', result);
 
     }),
+    tap(() => {
+      this._refresh$.next();
+    }),
     catchError((err)=> this.handlerError(err))
     )
-    .pipe(
-      tap(()=>{
-        this._refresh$.next();
-      })
-    )
+    
   }
 
 
@@ -182,13 +185,11 @@ export class PrivateService {
       console.log('user desactivado', result);
 
     }),
+    tap(() => {
+      this._refresh$.next();
+    }),
     catchError((err)=> this.handlerError(err))
-    )
-    .pipe(
-      tap(()=>{
-        this._refresh$.next();
-      })
-    )
+    )    
   }
 
   uploadFiles(fileData: File, rutUser: any): Observable<any>{
@@ -206,6 +207,9 @@ export class PrivateService {
       return result
 
     }),
+    tap(() => {
+      this._refresh$.next();
+    }),
     catchError((err)=> this.handlerError(err))
     );
   }
@@ -216,6 +220,9 @@ export class PrivateService {
 
       return result;
 
+    }),
+    tap(() => {
+      this._refresh$.next();
     }),
     catchError((err)=> this.handlerError(err))
     );
@@ -230,12 +237,15 @@ export class PrivateService {
       if (err.status === 500) {
 
         let title: string = ''
-        let message: string = "su solicitud no pudo ser procesada intente nuevamente";
+        let message: string = "Su Solicitud no Pudo ser Procesada Intente Nuevamente";
         this.modalService.OpenModalError2(ModalComponent, true, title, message);
+
+      } else {
+
+        this.errorMessage= err.error;
 
       }
 
-      this.errorMessage= err.error;
 
     }
     console.log(this.errorMessage);

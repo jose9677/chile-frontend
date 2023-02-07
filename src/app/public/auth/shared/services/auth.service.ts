@@ -216,9 +216,12 @@ export class AuthService {
         let message: string = "su solicitud no pudo ser procesada intente nuevamente";
         this.modalService.OpenModalError2(ModalComponent, true, title, message);
 
+      } else {
+
+        this.errorMessage= err.error;
+
       }
 
-      this.errorMessage= err.error;
     }
 
     return throwError(this.errorMessage)

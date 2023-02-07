@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {FormArray, FormBuilder, Validators } from '@angular/forms';
 import { CustomValidators } from 'ngx-custom-validators';
 import { AuthService } from 'src/app/public/auth/shared/services/auth.service';
@@ -7,12 +7,15 @@ import { ModalComponent } from 'src/app/public/auth/shared/modals/modal/modal.co
 import { PrivateService } from '../../share/services/private.service';
 import { ActivatedRoute,Router } from '@angular/router';
 import { UserUpdateComponent } from '../modales/user-update/user-update.component';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
   styleUrls: ['./edit-user.component.scss']
 })
 export class EditUserComponent implements OnInit {
+
+
   public errors: any = null;
   public buttonBlock:boolean;
   private id:any = sessionStorage.getItem("rol-user") ;
@@ -33,7 +36,13 @@ export class EditUserComponent implements OnInit {
 
   public changePickProfile: boolean;
 
+  public picProfile: any;
+
   private supervisorRut: any;
+
+  private subscription: Subscription;
+
+
 
   constructor(
    private privateService:PrivateService,
@@ -41,8 +50,11 @@ export class EditUserComponent implements OnInit {
    private authServices: AuthService,
    private modalService2: ModalsService,
    private router: Router,
-   private activatedroute: ActivatedRoute
+   private activatedroute: ActivatedRoute,
+   private ref: ChangeDetectorRef
   ) {
+
+    this.picProfile = '';
 
     this.changePickProfile = false;
 
@@ -91,8 +103,8 @@ export class EditUserComponent implements OnInit {
     this.isFormSubmitted = false;
 
     this.userRegister= this.fb.group({
-      names: ['',[Validators.required,Validators.pattern(/^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ ]+$/) ]],
       rutUser: ['',[Validators.required]],
+      names: ['',[Validators.required,Validators.pattern(/^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ ]+$/) ]],
       lastNames: ['', [Validators.required,Validators.pattern(/^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ ]+$/) ]],
       datesBirth: ['', [Validators.required, CustomValidators.date]],
       email: ['', [Validators.required, CustomValidators.email]],
@@ -106,16 +118,39 @@ export class EditUserComponent implements OnInit {
 
     this.addDocument();
 
+    this.subscription = this.privateService.refresh$.subscribe( () => {
+      this.getDataUser();
+    })
+
 
   }
 
   getDataUser(): void {
-    this.privateService.datosUser(this.ruts).subscribe(dataRequest => {
-      this.usuario.push(dataRequest[0])
 
-      this.supervisorRut = dataRequest[0].supervisor_rut
+    let picProfile = '';
+
+    this.privateService.datosUser(this.ruts).subscribe(dataRequest => {
+
+
+      this.userRegister.get('rutUser').setValue(dataRequest[0].rut),
+      this.userRegister.get('names').setValue(dataRequest[0].names),
+      this.userRegister.get('lastNames').setValue(dataRequest[0].lastname),
+      this.userRegister.get('datesBirth').setValue(dataRequest[0].f_nac),
+      this.userRegister.get('email').setValue(dataRequest[0].email),
+      this.userRegister.get('landLine').setValue(dataRequest[0].landline),
+      this.userRegister.get('mobilePhone').setValue(dataRequest[0].mobile_phone),
+      this.userRegister.get('idRole').setValue(dataRequest[0].id_rol),
+      this.userRegister.get('supervisorOfstreet').setValue(dataRequest[0].supervisor_rut),
+
+      dataRequest.map((res: any) => {
+        picProfile = res.profile_pic_srv_path
+        this.picProfile = picProfile;
+      })
+
 
     })
+
+
   }
 
   get documents() {
@@ -150,7 +185,6 @@ export class EditUserComponent implements OnInit {
 
           },
           () => {
-            // this.getDataUser();
           })
         })
         this.isFormSubmitted = false;
@@ -217,20 +251,22 @@ export class EditUserComponent implements OnInit {
 
     },
     () => {
-      if (( this.usuario[0].profile_pic_srv_path != '' ||     this.changePickProfile == true)) {
+      if (( this.picProfile != '' || this.changePickProfile == true)) {
 
         this.uploadFiles(dataUser.rut);
       }
 
       console.log(this.userRegister.value.supervisorOfstreet)
       console.log(this.supervisorRut)
-      if ( (this.usuario[0].id_rol == 2) && (this.supervisorRut != this.userRegister.value.supervisorOfstreet )) {
+      if ( (dataUser.rut == 2) && (this.supervisorRut != this.userRegister.value.supervisorOfstreet )) {
 
         this.addSupervisor( this.userRegister.value.rutUser, this.userRegister.value.supervisorOfstreet  );
 
       } else {
-        this.addSupervisor( this.userRegister.value.rutUser, '');
+        // this.addSupervisor( this.userRegister.value.rutUser, '');
       }
+
+      this.changePickProfile= false;
 
 
     })
@@ -258,7 +294,6 @@ export class EditUserComponent implements OnInit {
 
     },
     () => {
-      this.getDataUser();
     })
 
   }
