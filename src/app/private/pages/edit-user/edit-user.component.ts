@@ -263,7 +263,7 @@ export class EditUserComponent implements OnInit {
         this.addSupervisor( this.userRegister.value.rutUser, this.userRegister.value.supervisorOfstreet  );
 
       } else {
-        // this.addSupervisor( this.userRegister.value.rutUser, '');
+        this.addSupervisor( this.userRegister.value.rutUser, '');
       }
 
       this.changePickProfile= false;

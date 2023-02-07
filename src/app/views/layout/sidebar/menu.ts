@@ -84,7 +84,7 @@ export const MENU: MenuItem[] = [
         link: '/seguridad/usuarios',
       },
       {
-        roles: [4, 5],
+        roles: [],
         label: 'Roles',
         link: '/seguridad/roles'
       },
