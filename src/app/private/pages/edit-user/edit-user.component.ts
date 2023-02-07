@@ -54,8 +54,12 @@ export class EditUserComponent implements OnInit {
     })
     this.privateService.roles().subscribe(dataRequest => {
       let array: any[]= []
+
       if(this.id==5){
-        this.RolOfstreet=dataRequest
+        this.RolOfstreet=dataRequest;
+        this.RolOfstreet.splice(0, 1)
+        console.log(this.RolOfstreet)
+
       }else{
         for (let i=1; i<dataRequest.length; i++){
           array.push(dataRequest[i])
@@ -110,8 +114,7 @@ export class EditUserComponent implements OnInit {
       this.usuario.push(dataRequest[0])
 
       this.supervisorRut = dataRequest[0].supervisor_rut
-      console.log(dataRequest);
-      console.log(this.supervisorRut);
+
     })
   }
 
@@ -226,7 +229,7 @@ export class EditUserComponent implements OnInit {
         this.addSupervisor( this.userRegister.value.rutUser, this.userRegister.value.supervisorOfstreet  );
 
       } else {
-        this.addSupervisor( this.userRegister.value.rutUser, null  );
+        this.addSupervisor( this.userRegister.value.rutUser, '');
       }
 
 

@@ -27,7 +27,7 @@
                     >
                     <div *ngIf="(userRegister.controls.names.touched && userRegister.controls.names.errors?.required) || (isFormSubmitted && userRegister.controls.names.errors?.required)" class="invalid-feedback">Campo Requerido</div>
 
-                    <div class="text-danger mt-1" *ngIf="userRegister.controls.names.errors?.pattern">Este campo solo admite letas</div>
+                    <div class="text-danger mt-1" *ngIf="userRegister.controls.names.errors?.pattern">Este campo solo admite letras</div>
                   </div>
                   <div class="col-md-6 mb-3">
                     <label for="lastNames" class="form-label ">Apellidos</label>
@@ -39,7 +39,7 @@
                     [ngClass]="{'is-invalid': (userRegister.controls.lastNames.touched && userRegister.controls.lastNames.errors) || (isFormSubmitted && userRegister.controls.lastNames.errors)}" placeholder="Introduzca sus apellidos"
                     >
                     <div *ngIf="(userRegister.controls.lastNames.touched && userRegister.controls.lastNames.errors?.required) || (isFormSubmitted && userRegister.controls.lastNames.errors?.required)" class="invalid-feedback">Campo Requerido</div>
-                    <div class="text-danger mt-1" *ngIf="userRegister.controls.lastNames.errors?.pattern">Este campo solo admite letas</div>
+                    <div class="text-danger mt-1" *ngIf="userRegister.controls.lastNames.errors?.pattern">Este campo solo admite letras</div>
                   </div>
                 </div>
                 <div class="row">
@@ -538,6 +538,5 @@
       </div>
     </div>
   </div>
-  {{userRegister.value | json}}
 </div>
 
