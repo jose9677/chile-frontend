@@ -15,7 +15,7 @@ export class AddServicesComponent implements OnInit {
 
   public isAddServices: boolean;
 
-  public isUploadedData: boolean;
+  // public isUploadedData: boolean;
 
   private dataServiceUser: any[];
 
@@ -48,7 +48,7 @@ export class AddServicesComponent implements OnInit {
 
     this.isAddServices = false;
 
-    this.isUploadedData = false;
+    // this.isUploadedData = false;
 
     this.dataServiceUser = [];
 
@@ -93,7 +93,7 @@ export class AddServicesComponent implements OnInit {
 
       this.dataServices.map((res: any) => {
 
-        listServices.push({"id": res.id, "nameService": res.description})
+        listServices.push({"id": res.id, "nameService": res.description});
 
       })
 
@@ -104,7 +104,7 @@ export class AddServicesComponent implements OnInit {
     },
     () => {
 
-      this.isUploadedData = true;
+      // this.isUploadedData = true;
 
     });
 
@@ -116,9 +116,7 @@ export class AddServicesComponent implements OnInit {
       this.selectedServices = this.dataServiceUser[0].idService;
       this.amountServicesUser = this.dataServiceUser[0].amountServices;
 
-
     }
-
 
     this.formAddService = this.fb.group({
       typeService: [this.selectedTypeService, [ Validators.required ]],
@@ -197,7 +195,6 @@ export class AddServicesComponent implements OnInit {
       this.serviceCopago.updateServices(index);
 
     }
-
 
   }
 

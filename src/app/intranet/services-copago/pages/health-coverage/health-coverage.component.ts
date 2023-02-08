@@ -25,7 +25,7 @@ export class HealthCoverageComponent implements OnInit {
 
   public status: any;
 
-  public coveragePercentageIsapre: any;
+  public coveragePercentage: any;
 
   public coveragePercentageSupplementary: any;
 
@@ -62,6 +62,8 @@ export class HealthCoverageComponent implements OnInit {
 
       result.map((res:any) => {
 
+        console.log(res)
+
 
         this.dateOfIssue = res.emition_date;
 
@@ -73,7 +75,7 @@ export class HealthCoverageComponent implements OnInit {
 
         this.status = res.status;
 
-        this.coveragePercentageIsapre = res.percent_prevition;
+        this.coveragePercentage = res.percent_prevition;
 
         this.coveragePercentageSupplementary= res.percent_sec_comp;
 
@@ -89,6 +91,8 @@ export class HealthCoverageComponent implements OnInit {
 
     this.simulationServices.calcCopago(this.idSimulation).subscribe(result => {
 
+      console.log(result);
+
 
       this.subTotal = result.SubTotal;
 
@@ -97,6 +101,14 @@ export class HealthCoverageComponent implements OnInit {
       this.coverageSupplementaryInsurance = result.Secure_Comp;
 
       this.totalCopago = result.Copago;
+
+    },
+    error => {
+
+      console.log(error);
+
+    },
+    () => {
 
     })
 

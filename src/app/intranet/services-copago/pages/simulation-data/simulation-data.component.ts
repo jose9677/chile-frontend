@@ -86,6 +86,8 @@ export class SimulationDataComponent implements OnInit {
 
     this.copagoServices.getDataUser(this.rutNeighbor).subscribe(result => {
 
+      console.log(result)
+
       result.data_user.map((res: any) => {
 
         this.nameNeighbor = res.names + ' ' + res.lastname;
@@ -210,7 +212,6 @@ export class SimulationDataComponent implements OnInit {
       error => {
         this.isFormSubmitted = false;
 
-
       },
       () => {
 
@@ -224,10 +225,6 @@ export class SimulationDataComponent implements OnInit {
       })
 
     })
-
-
-
-
   }
 
   cancel (e: Event) {

@@ -54,8 +54,8 @@
       </div>
     </div>
     <div class="position-relative text-center">
-      <button type="submit" class="mt-4 btn btn-primary me-2 mb-2 mb-md-0 style" *ngIf="data2 == undefined" [disabled]=" isUploadedData != true " >Agregar</button>
-      <button type="submit" (click)="addServices($event); updateServices($event)" class="mt-4 btn btn-primary me-2 mb-2 mb-md-0 style" *ngIf="data2 != undefined" [disabled]=" isUploadedData != true " >Actualizar</button>
+      <button type="submit" class="mt-4 btn btn-primary me-2 mb-2 mb-md-0 style" *ngIf="data2 == undefined" >Agregar</button>
+      <button type="submit" (click)="addServices($event); updateServices($event)" class="mt-4 btn btn-primary me-2 mb-2 mb-md-0 style" *ngIf="data2 != undefined" >Actualizar</button>
       <button type="button" (click)=" modalService.dismiss()" class="mt-4 btn btn-primary me-2 mb-2 mb-md-0 style">Cancelar</button>
     </div>
   </form>

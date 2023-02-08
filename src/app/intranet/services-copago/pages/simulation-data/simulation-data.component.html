@@ -13,7 +13,6 @@
           <label for="nameNeighbor" class="form-label colorTextPrimari">Nombre Beneficiario</label>
           <input type="text" id="nameNeighbor" value= {{nameNeighbor}} disabled class="form-control">
         </div>
-
       </div>
     </div>
     <div class="row mt-5 justify-content-center">
@@ -61,7 +60,6 @@
           </div>
         </div>
 
-
         <div class="row col-6" *ngIf="supplementary == true">
           <div class="col-md-4 col-sm-12">
             <label for="coveragePercentageSupplementary" class="form-label colorTextPrimari" >Seguro Complementario</label>
@@ -80,7 +78,7 @@
       </div>
     </div>
     <div class="row mt-5 justify-content-center">
-      <h3 class="colorTextPrimari">Proveedor</h3><br>
+      <h3 class="colorTextPrimari mb-2">Proveedor</h3>
 
       <div class="row mt-3">
         <div class="col-md-6 col-sm-12">
@@ -109,7 +107,7 @@
       <h3 class="colorTextPrimari col-9" >Servicios</h3>
 
       <div class="col-3"><button type="button" class=" btn btn-primary mb-2  style " (click)="addService($event)"
-        [disabled]=" isFormSubmitted || (addServices && formCopago.controls.serviceProvider.errors)" >Agregar Servicio</button></div>
+        [disabled]=" (addServices && formCopago.controls.serviceProvider.errors)" >Agregar Servicio</button></div>
 
       <div class="mt-4" >
         <table class="table">
@@ -136,15 +134,14 @@
           </tbody>
         </table>
       </div>
-
     </div>
 
     <div class="d-flex flex-row justify-content-evenly mt-4">
       <div>
-        <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" [disabled]=" isFormSubmitted || (isFormSubmitted && listServicesCopago.length === 0) ">Simular</button>
+        <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" [disabled]=" isFormSubmitted && listServicesCopago.length < 1 ">Simular</button>
       </div>
       <div>
-        <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="cancel($event)" [disabled]=" isFormSubmitted" >Cancelar</button>
+        <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="cancel($event)" >Cancelar</button>
       </div>
     </div>
   </form>
