@@ -7,8 +7,8 @@
         <label for="nameOfstreet" class="form-label">Motivo</label>
         <ng-select [items]="listReasonForCancellation"
             class="form-control p-0"
-            bindLabel="reasonForCancellation"
-            bindValue="idReason"
+            bindLabel="description"
+            bindValue="id_motive"
             placeholder="Seleccione"
             [(ngModel)]="selectedReasonForCancellation"
             formControlName="reasonForCancellation"

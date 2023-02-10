@@ -64,6 +64,22 @@ export class SimulationsCopagoService {
     );
   }
 
+  generateSimulation( idSimulation: any ) {
+    return this.http.put<any>( AUTH_API_NP + "generate-simulation/" + idSimulation, httpOptions ).pipe((map((result:any) => {
+      return result;
+    })),
+    catchError((err) => this.handlerError(err))
+    );
+  }
+
+  cancelSimulation( idSimulation: any, idMotive: any) {
+    return this.http.put<any>( AUTH_API_NP + "cancel-simulation/" + idSimulation + "/" + idMotive, httpOptions ).pipe((map((result:any) => {
+      return result;
+    })),
+    catchError((err) => this.handlerError(err))
+    );
+  }
+
   private handlerError(err:any): Observable<never> { //pasa error al login component
     let errorMessage= 'An error ocurred';
     if (err) {

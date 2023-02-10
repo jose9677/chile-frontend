@@ -34,9 +34,9 @@
                   <td>{{simulation.status}}</td>
                   <td>
 
-                    <button (click)="viewCertificate($event, simulation.idSimulation)"><i class="mdi mdi-eye" style="font-size: 1.5em;"></i></button>
+                    <button (click)="viewCertificate($event, simulation.idSimulation)" ><i class="mdi mdi-eye" style="font-size: 1.5em;"></i></button>
 
-                    <button (click)="downloadCertificate($event)" disabled ><i class="mdi mdi-file-pdf-box" style="font-size: 1.5em;"></i></button>
+                    <button (click)="downloadCertificate($event)" disabled *ngIf="simulation.idStatus == 10"><i class="mdi mdi-file-pdf-box" style="font-size: 1.5em;"></i></button>
 
                   </td>
                 </tr>

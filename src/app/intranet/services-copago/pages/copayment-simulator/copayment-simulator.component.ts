@@ -32,7 +32,7 @@ export class CopaymentSimulatorComponent implements OnInit {
 
   public status: any;
 
-  public coveragePercentageIsapre: any;
+  public coveragePercentagePrevention: any;
 
   public coveragePercentageSupplementary: any;
 
@@ -49,6 +49,12 @@ export class CopaymentSimulatorComponent implements OnInit {
   public coverageSupplementaryInsurance: any;
 
   public totalCopago: any;
+
+  public assurance: boolean;
+
+  public idPreventionType: any;
+
+  public descriptionPreventionType: any;
 
   public formCopago = this.fb.group({
     coveragePercentageIsapre: ["", []],
@@ -76,6 +82,12 @@ export class CopaymentSimulatorComponent implements OnInit {
 
     this.listServiceProvider = [];
 
+    this.assurance = false;
+
+    this.idPreventionType = '';
+
+    this.descriptionPreventionType = '';
+
    }
 
   ngOnInit(): void {
@@ -85,6 +97,8 @@ export class CopaymentSimulatorComponent implements OnInit {
     let listServicesCopago: any[] = [];
 
     this.simulationServices.getDataSimulation(this.idSimulation).subscribe(result => {
+
+      console.log(result)
 
 
       result.map((res:any) => {
@@ -99,7 +113,7 @@ export class CopaymentSimulatorComponent implements OnInit {
 
         this.status = res.status;
 
-        this.coveragePercentageIsapre = res.percent_prevition;
+        this.coveragePercentagePrevention = res.percent_prevition;
 
         this.coveragePercentageSupplementary= res.percent_sec_comp;
 
@@ -116,7 +130,21 @@ export class CopaymentSimulatorComponent implements OnInit {
     },
     () => {
       this.listServicesCopago = listServicesCopago;
+
+      this.copagoService.getDataUser(this.rutNeighbor).subscribe( result => {
+        console.log(result);
+
+        result.data_user.map((res:any) => {
+
+          this.assurance = res.assurance;
+          this.idPreventionType = res.id_prevention_type;
+          this.descriptionPreventionType = res.prevention_type;
+        })
+
     } )
+
+
+    })
 
 
   }
@@ -152,12 +180,23 @@ export class CopaymentSimulatorComponent implements OnInit {
 
     if (this.formCopago.status == "VALID") {
 
-      let error= false;
-      let title= "Certificado Generado";
-      let message = 'Se ha generado su certificado de Prestación de servicios de forma exitosa. el mismo sera descargado de forma automática en su computadora y podra visualizarlo en la opción "ver certificados" del menú lateral';
-      this.modalService.OpenModalError2(ModalComponent, error, title, message);
+      this.simulationServices.generateSimulation(this.idSimulation).subscribe(result => {
 
-      this.router.navigate(['copago', 'sus-certificados'])
+      },
+      error => {
+
+      },
+      () => {
+
+        let error= false;
+        let title= "Certificado Generado";
+        let message = 'Se ha generado su certificado de Prestación de servicios de forma exitosa. el mismo sera descargado de forma automática en su computadora y podra visualizarlo en la opción "ver certificados" del menú lateral';
+        this.modalService.OpenModalError2(ModalComponent, error, title, message);
+
+        this.router.navigate(['copago', 'sus-certificados'])
+
+      })
+
 
     }
 

@@ -34,24 +34,24 @@
       <h3 class="colorTextPrimari">Coberturas de Salud</h3><br>
 
       <div class="row mt-3">
-        <div class="col-md-2 col-sm-12">
-          <label for="coveragePercentageIsapre" class="form-label colorTextPrimari">Isapre</label>
+        <div class="col-md-2 col-sm-12" *ngIf="idPreventionType != 4">
+          <label for="coveragePercentageIsapre" class="form-label colorTextPrimari">{{descriptionPreventionType}}</label>
         </div>
-        <div class="col-md-3 col-sm-12">
+        <div class="col-md-3 col-sm-12" *ngIf="idPreventionType != 4">
           <input
           class="form-control"
           type="number"
           id="coveragePercentageIsapre"
-          value={{coveragePercentageIsapre}}
+          value={{coveragePercentagePrevention}}
           min="0" max="100"
           readonly
           >
         </div>
 
-        <div class="col-md-2 col-sm-12">
+        <div class="col-md-2 col-sm-12" *ngIf="assurance != false">
           <label for="coveragePercentageSupplementary" class="form-label colorTextPrimari" >Seguro Complementario</label>
         </div>
-        <div class="col-md-3 col-sm-12">
+        <div class="col-md-3 col-sm-12" *ngIf="assurance != false">
           <input
           type="number"
           id="coveragePercentageSupplementary"
@@ -134,11 +134,11 @@
             <td>SubTotal</td>
             <td>{{subTotal}}</td>
           </tr>
-          <tr>
-            <td>Cobertura Isapre</td>
+          <tr *ngIf="idPreventionType != 4">
+            <td >Cobertura {{descriptionPreventionType}} </td>
             <td>{{coveragePrevision}}</td>
           </tr>
-          <tr>
+          <tr *ngIf="assurance != false">
             <td>Cobertura Seg. Complementario </td>
             <td>{{coverageSupplementaryInsurance}}</td>
           </tr>
@@ -166,7 +166,7 @@
         </ol>
       </div>
 
-      <div class="form-check form-switch mb-2 colorTextPrimari col-12">
+      <div class="form-check form-switch mb-2 colorTextPrimari col-12 px-5">
         <input
           type="checkbox"
           class="form-check-input"
@@ -181,7 +181,7 @@
 
     <div class="d-flex flex-row justify-content-evenly mt-4">
       <div>
-        <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" [disabled]="isFormSubmitted || formCopago.status != 'VALID'" >Generar Certificado</button>
+        <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" [disabled]="isFormSubmitted || formCopago.value.authCheck == false" >Generar Certificado</button>
       </div>
       <div>
         <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="cancel($event)" >Cancelar</button>

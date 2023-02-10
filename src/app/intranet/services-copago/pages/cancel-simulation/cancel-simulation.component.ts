@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from 'src/app/public/auth/shared/services/auth.service';
+import { SimulationsCopagoService } from '../../shared/services/simulations-copago.service';
 
 @Component({
   selector: 'app-cancel-simulation',
@@ -27,13 +29,15 @@ export class CancelSimulationComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public modalService: NgbActiveModal,
-    public router: Router
+    public router: Router,
+    private dataMotive: AuthService,
+    private simulationService: SimulationsCopagoService
   ) {
 
     this.isFormSubmitted = false;
 
     this.listReasonForCancellation = [
-      {"idReason": 1, "reasonForCancellation": "Motivo de rechazo de solicitud"}
+      {"id_motive": 1, "description": "Motivo de rechazo de solicitud"}
     ];
 
     this.selectedReasonForCancellation = null;
@@ -43,6 +47,15 @@ export class CancelSimulationComponent implements OnInit {
   ngOnInit(): void {
 
     this.idSimulation = this.data;
+
+    this.getMotivesCancel();
+  }
+
+
+  getMotivesCancel () {
+    this.dataMotive.dropdownInfo().subscribe(result => {
+      this.listReasonForCancellation = result.cancel_motives
+    })
   }
 
   acceptCancellationCopago(e: Event) {
@@ -53,9 +66,20 @@ export class CancelSimulationComponent implements OnInit {
 
     if (( this.formCancelCopago.status == 'VALID' )) {
 
-      // endpoint para cancelar simulación
-      this.modalService.close();
-      this.router.navigate(['copago','datos-de-simulacion']);
+      this.simulationService.cancelSimulation(this.idSimulation, this.formCancelCopago.value.reasonForCancellation).subscribe( result => {
+
+      },
+      error => {
+
+      },
+      () => {
+
+        // endpoint para cancelar simulación
+        this.modalService.close();
+        this.router.navigate(['copago','datos-de-simulacion']);
+
+      })
+
 
     }
 

@@ -12,8 +12,6 @@ export class YourCertificatesComponent implements OnInit {
   public listSimulations: any[];
 
 
-
-
   constructor(
     private router: Router,
     private simulationServices: SimulationsCopagoService
@@ -28,15 +26,16 @@ export class YourCertificatesComponent implements OnInit {
     let rut_user: any= window.sessionStorage.getItem("auth-user");
 
     this.simulationServices.getRutSimulation(rut_user.replace(/["']/g, "")).subscribe(result => {
-
+      console.log(result)
       result.map((res:any) => {
         this.listSimulations.push({
-          "idSimulation": res.id_simulation,
-          "dateOfIssue": res.emition_date,
-          "dateOfDue": res.expiration_date,
-          "provider": res.provider_description,
-          "copago": res.copago_value,
-          "status": res.status
+          "idSimulation" : res.id_simulation,
+          "dateOfIssue" : res.emition_date,
+          "dateOfDue" : res.expiration_date,
+          "provider" : res.provider_description,
+          "copago" : res.copago_value,
+          "status" : res.status,
+          "idStatus" : res.id_status
       })
       })
 
