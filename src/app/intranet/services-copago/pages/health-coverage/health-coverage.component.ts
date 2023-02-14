@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ServiceCopagoService } from '../../shared/services/service-copago.service';
 import { SimulationsCopagoService } from '../../shared/services/simulations-copago.service';
 
 @Component({
@@ -25,6 +26,8 @@ export class HealthCoverageComponent implements OnInit {
 
   public status: any;
 
+  public idStatus: any;
+
   public coveragePercentage: any;
 
   public coveragePercentageSupplementary: any;
@@ -43,14 +46,27 @@ export class HealthCoverageComponent implements OnInit {
 
   public listServicesCopago:any[];
 
+  public assurance: boolean;
+
+  public idPreventionType: any;
+
+  public descriptionPreventionType: any;
+
   constructor(
     private router: Router,
     private simulationServices: SimulationsCopagoService,
     private routerquery: ActivatedRoute,
+    private copagoService: ServiceCopagoService
 
   ) {
 
     this.listServicesCopago = [];
+
+    this.assurance = false;
+
+    this.idPreventionType= '';
+
+    this.descriptionPreventionType = '';
 
   }
 
@@ -75,6 +91,8 @@ export class HealthCoverageComponent implements OnInit {
 
         this.status = res.status;
 
+        this.idStatus = res.id_status;
+
         this.coveragePercentage = res.percent_prevition;
 
         this.coveragePercentageSupplementary= res.percent_sec_comp;
@@ -85,9 +103,17 @@ export class HealthCoverageComponent implements OnInit {
         this.listServicesCopago.push({"code": res.services_cod, "typeService": res.category_description, "nameService": res.service_description, "amountServices": res.quantity,"total": (res.total_value*res.quantity)});
 
       })
+    },
+    error => {
+
+    },
+    () => {
+
+      this.getDataUser();
+
     })
 
-    let rut_user: any= window.sessionStorage.getItem("auth-user");
+    // let rut_user: any= window.sessionStorage.getItem("auth-user");
 
     this.simulationServices.calcCopago(this.idSimulation).subscribe(result => {
 
@@ -112,6 +138,19 @@ export class HealthCoverageComponent implements OnInit {
 
     })
 
+  }
+
+  getDataUser() {
+    this.copagoService.getDataUser(this.rutNeighbor).subscribe( result => {
+      console.log(result);
+
+      result.data_user.map((res:any) => {
+
+        this.assurance = res.assurance;
+        this.idPreventionType = res.id_prevention_type;
+        this.descriptionPreventionType = res.prevention_type;
+      })
+    })
   }
 
   printCertificate( e: Event ) {

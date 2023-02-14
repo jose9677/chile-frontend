@@ -42,6 +42,7 @@ export class VisitorDataComponent implements OnInit {
     let rutVisitor= this.rutAssistant;
 
     this.dateService.detailsVisitor( rutVisitor ).subscribe((result) => {
+      console.log(result);
       this.dataVisitor = result;
       return
     })

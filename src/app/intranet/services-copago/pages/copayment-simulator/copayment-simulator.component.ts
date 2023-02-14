@@ -132,7 +132,6 @@ export class CopaymentSimulatorComponent implements OnInit {
       this.listServicesCopago = listServicesCopago;
 
       this.copagoService.getDataUser(this.rutNeighbor).subscribe( result => {
-        console.log(result);
 
         result.data_user.map((res:any) => {
 
