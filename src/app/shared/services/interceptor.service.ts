@@ -1,7 +1,7 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, finalize, Observable, throwError } from 'rxjs';
+import { catchError, delay, finalize, Observable, throwError } from 'rxjs';
 import { SpinnerService } from './spinner.service';
 
 import { TokenService } from './token.service';
@@ -33,9 +33,10 @@ export class InterceptorService implements HttpInterceptor {
     // manejar error
     return next.handle(authReq).pipe(
 
+      delay(0),
+
       finalize(() => this.spinnerService.hide()),
       // retry(3),
-      // delay(3000),
       catchError( this.error )
     );
   }

@@ -26,7 +26,6 @@ export class YourCertificatesComponent implements OnInit {
     let rut_user: any= window.sessionStorage.getItem("auth-user");
 
     this.simulationServices.getRutSimulation(rut_user.replace(/["']/g, "")).subscribe(result => {
-      console.log(result)
       result.map((res:any) => {
         this.listSimulations.push({
           "idSimulation" : res.id_simulation,
