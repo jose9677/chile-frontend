@@ -31,17 +31,16 @@ export class VisitorDataComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.viewDataVisitor();
-
-  }
-
-  viewDataVisitor() {
-
     this.rutAssistant = this.data;
 
-    let rutVisitor= this.rutAssistant;
+    console.log(this.rutAssistant)
 
-    this.dateService.detailsVisitor( rutVisitor ).subscribe((result) => {
+    this.viewDataVisitor( this.rutAssistant );
+  }
+
+  viewDataVisitor( rutAssistant: any) {
+
+    this.dateService.detailsVisitor( rutAssistant ).subscribe((result) => {
       console.log(result);
       this.dataVisitor = result;
       return

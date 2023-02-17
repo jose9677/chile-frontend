@@ -76,6 +76,14 @@ export class EnterRutComponent implements OnInit {
           let message = "El Rut ingresado ya esta registrado, por favor verifique y vuelva a intentarlo";
           this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
         }
+
+        else if ( this.errors.error == 'User registered incompleted in DB') {
+
+          this.modalService.close()
+          this.router.navigate(['/auth/registro'], { queryParams: { rut: this.rut } });
+
+        }
+
         else{
           this.errors= true;
           let title: string = "RUT Invalido"
@@ -112,13 +120,13 @@ export class EnterRutComponent implements OnInit {
 
       let correctRut = rut.slice(0, -1) + "-" + code;
 
-      this.formRutUser.controls['rutNumber'].setValue(correctRut);    
-      
+      this.formRutUser.controls['rutNumber'].setValue(correctRut);
+
 
     }
 
   }
 
-  
+
 
 }

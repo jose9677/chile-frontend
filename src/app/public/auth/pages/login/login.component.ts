@@ -108,7 +108,6 @@ export class LoginComponent implements OnInit {
         () => {
           this.isFormSubmitted = false;
 
-
           this.router.navigate([this.returnUrl]);
 
           this.loggedService.changeLoggedStatus =true;

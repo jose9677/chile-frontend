@@ -50,8 +50,8 @@
                   <td>{{(request.status ?? ' ')}}</td>
                   <td>
 
-                    <button (click)="viewDate(request.id_request)" ><i class="mdi mdi-eye" style="font-size: 1.5em;"></i></button>
-                    <button (click)="assignDayDate(request.id)" ><i class="mdi mdi-calendar-today"></i></button>
+                    <button (click)="viewDate(request.id)" ><i class="mdi mdi-eye" style="font-size: 1.5em;"></i></button>
+                    <button (click)="assignDayDate(request.id)" ><i class="mdi mdi-calendar-today" style="font-size: 1.5em;"></i></button>
 
                   </td>
                 </tr>
@@ -116,9 +116,12 @@
                   <td>{{(request.assistant_name ?? ' ') + " " + (request.assistant_lastname ?? ' ') }}</td>
                   <td>{{(request.status ?? ' ')}}</td>
                   <td>
-                    <button (click)="approveDates(request.id)" *ngIf="request.id_status == 4"><i class="mdi mdi-check-circle"></i></button>
 
-                    <button (click)="assignDayDate(request.id)" *ngIf="request.id_status == 3"><i class="mdi mdi-eye"></i></button>
+                    <button (click)="viewDate(request.id)" ><i class="mdi mdi-eye" style="font-size: 1.5em;"></i></button>
+
+                    <button (click)="approveDates(request.id)" *ngIf="request.id_status == 4" style="font-size: 1.5em;"><i class="mdi mdi-check-circle"></i></button>
+
+                    <button (click)="assignDayDate(request.id)" *ngIf="request.id_status == 3" style="font-size: 1.5em;"><i class="mdi mdi-calendar-check"></i></button>
 
                   </td>
                 </tr>
