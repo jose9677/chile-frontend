@@ -38,6 +38,8 @@ export class HealthCoverageComponent implements OnInit {
 
   public subTotal: any;
 
+  public corporateDiscount: any;
+
   public coveragePrevision: any;
 
   public coverageSupplementaryInsurance: any;
@@ -121,6 +123,8 @@ export class HealthCoverageComponent implements OnInit {
 
 
       this.subTotal = result.SubTotal;
+
+      this.corporateDiscount = result.Desc_Corporation
 
       this.coveragePrevision = result.Cobert_Prevition;
 

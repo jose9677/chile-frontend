@@ -11,7 +11,10 @@ export class SpinnerService {
   constructor() { }
 
   show(): void {
-    this.isLoading$.next(true);
+
+    setTimeout(() => {
+      this.isLoading$.next(true);
+    }, 0)
   }
 
   hide(): void {

@@ -109,19 +109,23 @@
       <div class="mt-4  col-4 ">
         <table class="table">
           <tr>
-            <td>SubTotal</td>
+            <td class=" colorTextPrimari h5 text-end pe-3" >SubTotal</td>
             <td>{{subTotal}}</td>
           </tr>
           <tr *ngIf="idPreventionType != 4">
-            <td>Cobertura {{descriptionPreventionType}}</td>
+            <td class=" colorTextPrimari h5 text-end pe-3" >Cobertura {{descriptionPreventionType}}</td>
             <td>{{coveragePrevision}}</td>
           </tr>
           <tr *ngIf="assurance != false">
-            <td>Cobertura Seg. Complementario </td>
+            <td class=" colorTextPrimari h5 text-end pe-3" >Cobertura Seg. Complementario </td>
             <td>{{coverageSupplementaryInsurance}}</td>
           </tr>
           <tr>
-            <td>Copago</td>
+            <td class=" colorTextPrimari h5 text-end pe-3" >Descuento Salud a tu alcance</td>
+            <td>{{corporateDiscount}}</td>
+          </tr>
+          <tr>
+            <td class=" colorTextPrimari h5 text-end pe-3" >Copago</td>
             <td>{{totalCopago}}</td>
           </tr>
         </table>

@@ -97,5 +97,11 @@ export class ViewVisitorRequestsComponent implements OnInit {
 
   }
 
+  viewDate (id_request: any) {
+
+    this.router.navigate(['citas/estatus-cita'],{queryParams: {id_request : id_request}});
+
+  }
+
 
 }

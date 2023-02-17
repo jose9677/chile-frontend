@@ -49,7 +49,10 @@
                   <td>{{(request.assistant_name ?? ' ') + " " + (request.assistant_lastname ?? ' ') }}</td>
                   <td>{{(request.status ?? ' ')}}</td>
                   <td>
+
+                    <button (click)="viewDate(request.id_request)" ><i class="mdi mdi-eye" style="font-size: 1.5em;"></i></button>
                     <button (click)="assignDayDate(request.id)" ><i class="mdi mdi-calendar-today"></i></button>
+
                   </td>
                 </tr>
             </tbody>

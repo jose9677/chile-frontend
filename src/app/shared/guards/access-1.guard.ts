@@ -16,13 +16,14 @@ export class Access1Guard implements CanActivate {
       this.rolUser = sessionStorage.getItem('rol-user');
 
 
-      if ( this.rolUser == 1 || this.rolUser == 5 ) {
+      // if ( this.rolUser == 1 || this.rolUser == 5 ) {
 
-        return true;
-      }else {
-        return false;
-      }
+      //   return true;
+      // }else {
+      //   return false;
+      // }
 
+      return true
   }
 
 }

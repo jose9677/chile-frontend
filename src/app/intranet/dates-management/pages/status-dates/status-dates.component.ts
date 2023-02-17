@@ -88,7 +88,7 @@ export class StatusDatesComponent implements OnInit {
 
 
   return() {
-    this.router.navigate(['/solicitud/solicitudes-de-inscripcion'])
+    this.router.navigate(['/'])
 
   }
 

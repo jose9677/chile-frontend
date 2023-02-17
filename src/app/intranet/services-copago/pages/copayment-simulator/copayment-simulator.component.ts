@@ -48,6 +48,8 @@ export class CopaymentSimulatorComponent implements OnInit {
 
   public coverageSupplementaryInsurance: any;
 
+  public corporateDiscount: any;
+
   public totalCopago: any;
 
   public assurance: boolean;
@@ -154,11 +156,15 @@ export class CopaymentSimulatorComponent implements OnInit {
 
     this.simulationServices.calcCopago(this.idSimulation).subscribe(result => {
 
+      console.log(result)
+
       this.subTotal = result.SubTotal;
 
       this.coveragePrevision = result.Cobert_Prevition;
 
       this.coverageSupplementaryInsurance = result.Secure_Comp;
+
+      this.corporateDiscount = result.Desc_Corporation
 
       this.totalCopago = result.Copago;
 
