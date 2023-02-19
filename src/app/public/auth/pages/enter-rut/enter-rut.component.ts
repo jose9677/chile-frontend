@@ -67,9 +67,14 @@ export class EnterRutComponent implements OnInit {
         console.log(result)
       },
       error => {  //recibe error del user services
-        console.log(error.error)
+        console.log(error.error);
+        // console.log(error.errors['rut'][0]);
+        console.log(error.message);
 
-        if (error.error == "User exists in Data Base") {
+
+        if (error.error == "Users exists in DB") {
+
+          this.isFormSubmitted = false;
 
           this.errors= true;
           let title: string = "Usuario Registrado"
@@ -77,14 +82,22 @@ export class EnterRutComponent implements OnInit {
           this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
         }
 
-        else if ( this.errors.error == 'User registered incompleted in DB') {
+        else if ( error.error == 'User registered incompleted in DB ') {
 
-          this.modalService.close()
+          this.isFormSubmitted = false;
+
+          this.modalService.close();
+
           this.router.navigate(['/auth/registro'], { queryParams: { rut: this.rut } });
 
         }
 
         else{
+
+          this.isFormSubmitted = false;
+
+          console.log('caso 3');
+
           this.errors= true;
           let title: string = "RUT Invalido"
           let message = "El Rut ingresado es invalido, por favor verifique y vuelva a intentarlo";
@@ -92,12 +105,12 @@ export class EnterRutComponent implements OnInit {
 
         }
 
-        this.isFormSubmitted = false;
 
 
       },
       () => {
 
+        this.isFormSubmitted = false;
         this.modalService.close()
         this.router.navigate(['/auth/registro'], { queryParams: { rut: this.rut } });
 
