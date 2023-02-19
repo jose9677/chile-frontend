@@ -55,22 +55,14 @@ export class EnterRutComponent implements OnInit {
       rut: this.rut
     }
 
-    console.log(this.rut)
-
-
     if ( this.formRutUser.status == "VALID") {
 
       this.isFormSubmitted = true;
 
 
       this.authServices.validateRut(dataRutUser).subscribe( result => {
-        console.log(result)
       },
       error => {  //recibe error del user services
-        console.log(error.error);
-        // console.log(error.errors['rut'][0]);
-        console.log(error.message);
-
 
         if (error.error == "Users exists in DB") {
 
@@ -95,8 +87,6 @@ export class EnterRutComponent implements OnInit {
         else{
 
           this.isFormSubmitted = false;
-
-          console.log('caso 3');
 
           this.errors= true;
           let title: string = "RUT Invalido"
