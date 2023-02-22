@@ -101,7 +101,7 @@ export class EnterRutComponent implements OnInit {
       () => {
 
         this.isFormSubmitted = false;
-        this.modalService.close()
+        this.modalService.close();
         this.router.navigate(['/auth/registro'], { queryParams: { rut: this.rut } });
 
 

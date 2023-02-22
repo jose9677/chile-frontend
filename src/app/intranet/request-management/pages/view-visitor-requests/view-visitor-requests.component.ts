@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatesService } from 'src/app/intranet/dates-management/shared/services/dates.service';
-import { ModalComponent } from 'src/app/public/auth/shared/modals/modal/modal.component';
 import { ModalsService } from 'src/app/shared/services/modals.service';
 import { SortByTablesService } from '../../shared/services/sort-by-tables.service';
 
@@ -59,7 +58,7 @@ export class ViewVisitorRequestsComponent implements OnInit {
 
 
       let dataUser= result.data_employe;
-      this.dataUser = dataUser
+      this.dataUser = dataUser;
 
       let datarequests= result.data_Neightbor;
 
