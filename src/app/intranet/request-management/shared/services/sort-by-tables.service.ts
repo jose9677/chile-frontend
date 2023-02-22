@@ -21,14 +21,14 @@ export class SortByTablesService {
    }
 
   nextPage() {
-    this.page += 5;
+    this.page += 20;
 
   }
 
   prevPage() {
     if ((this.page > 0)) {
 
-      this.page -= 5;
+      this.page -= 20;
     }
   }
 
@@ -57,13 +57,13 @@ export class SortByTablesService {
 
   nextPage2() {
 
-    this.page2 += 5;
+    this.page2 += 20;
 
   }
 
   prevPage2() {
     if ((this.page2 > 0)) {
-      this.page2 -= 5;
+      this.page2 -= 20;
 
     }
   }

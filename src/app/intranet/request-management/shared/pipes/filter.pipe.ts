@@ -29,13 +29,13 @@ export class FilterPipe implements PipeTransform {
 
 
     if (search.length ===0 ) {
-      return value.slice(page, page + 5);
+      return value.slice(page, page + 20);
     } else {
 
       if (resultSearch.length != 0 ) {
 
 
-        return resultSearch.slice(page,page + 5);
+        return resultSearch.slice(page,page + 20);
 
       } else {
 
@@ -43,7 +43,7 @@ export class FilterPipe implements PipeTransform {
         if( resultSearch2.length != 0) {
 
 
-          return resultSearch2.slice(page,page + 5);
+          return resultSearch2.slice(page,page + 20);
 
         } else {
 
@@ -52,7 +52,7 @@ export class FilterPipe implements PipeTransform {
 
 
 
-            return resultSearch3.slice(page,page + 5);
+            return resultSearch3.slice(page,page + 20);
           } else {
 
 
@@ -60,14 +60,14 @@ export class FilterPipe implements PipeTransform {
             if ( resultSearch4.length != 0) {
 
 
-              return resultSearch4.slice(page, page +5);
+              return resultSearch4.slice(page, page + 20);
             }else {
 
               if ( resultSearch5.length != 0 ) {
 
 
 
-                return resultSearch5.slice(page, page+5);
+                return resultSearch5.slice(page, page + 20);
 
               } else {
 
@@ -76,18 +76,18 @@ export class FilterPipe implements PipeTransform {
                 if ( resultSearch6.length != 0 ) {
 
 
-                  return resultSearch6.slice(page, page + 5);
+                  return resultSearch6.slice(page, page + 20);
                 } else {
 
                   if ( resultSearch7.length != 0) {
 
-                    return resultSearch7.slice(page, page +5);
+                    return resultSearch7.slice(page, page + 20);
 
                   } else {
 
                     if ( resultSearch8.length != 0 ) {
 
-                      return resultSearch8.slice(page, page +5);
+                      return resultSearch8.slice(page, page + 20);
 
                     }else {
 
