@@ -64,7 +64,7 @@ export class EnterRutComponent implements OnInit {
       },
       error => {  //recibe error del user services
 
-        if (error.error == "Users exists in DB") {
+        if (error.error == "User exists in DB") {
 
           this.isFormSubmitted = false;
 
