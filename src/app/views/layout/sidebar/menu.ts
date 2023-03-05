@@ -41,26 +41,26 @@ export const MENU: MenuItem[] = [
       },
     ]
   },
-  // {
-  //   label: 'Copago',
-  //   icon: 'file-text',
-  //   roles: [1, 5],
-  //   statusRequest: 6,
-  //   subItems: [
-  //     {
-  //       roles: [1, 5],
-  //       statusRequest: 6,
-  //       label: 'Simulador de Copago',
-  //       link: '/copago/datos-de-simulacion',
-  //     },
-  //     {
-  //       roles: [1, 5],
-  //       statusRequest: 6,
-  //       label: ' Ver Certificados',
-  //       link: '/copago/sus-certificados'
-  //     },
-  //   ]
-  // },
+  {
+    label: 'Copago',
+    icon: 'file-text',
+    roles: [1, 5],
+    statusRequest: 6,
+    subItems: [
+      {
+        roles: [1, 5],
+        statusRequest: 6,
+        label: 'Simulador de Copago',
+        link: '/copago/datos-de-simulacion',
+      },
+      {
+        roles: [1, 5],
+        statusRequest: 6,
+        label: 'Historial de Simulaciones',
+        link: '/copago/sus-certificados'
+      },
+    ]
+  },
   // {
   //   label: 'Seguridad',
   //   icon: 'file-text',

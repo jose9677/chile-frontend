@@ -1,6 +1,14 @@
+<div class="row">
+  <div class="col-md-12">
+      <div class="card header p-3">
+          <h2>Simulación de Copago</h2>
+      </div>
+  </div>
+</div>
+<br>
 <div class="card">
   <form class="forms-sample container pb-5 px-5" [formGroup]="formCopago" (ngSubmit)="
-  generateCertificate($event)">
+  aceptSimulation($event)">
     <div class="row mt-5 justify-content-center">
       <h3 class="colorTextPrimari">Datos de Simulación</h3><br>
       <div class="row mt-3">
@@ -13,7 +21,7 @@
           <input type="text" id="dateOfIssue" value={{dateOfIssue}} disabled class="form-control">
         </div>
         <div class="col-md-4 col-sm-12">
-          <label for="expirationDate" class="form-label colorTextPrimari">Fecha de Vencimiento</label>
+          <!-- <label for="expirationDate" class="form-label colorTextPrimari">Fecha de Vencimiento</label> -->
           <input type="text" id="expirationDate" value={{expirationDate}} disabled class="form-control">
         </div>
         <div class="col-md-4 col-sm-12">
@@ -34,10 +42,10 @@
       <h3 class="colorTextPrimari">Coberturas de Salud</h3><br>
 
       <div class="row mt-3">
-        <div class="col-md-2 col-sm-12" *ngIf="idPreventionType != 4">
+        <div class="col-md-2 col-sm-12" *ngIf="(idPreventionType == 2) || (idPreventionType == 3)">
           <label for="coveragePercentageIsapre" class="form-label colorTextPrimari">{{descriptionPreventionType}}</label>
         </div>
-        <div class="col-md-3 col-sm-12" *ngIf="idPreventionType != 4">
+        <div class="col-md-3 col-sm-12" *ngIf="(idPreventionType == 2) || (idPreventionType == 3)">
           <input
           class="form-control"
           type="number"
@@ -102,8 +110,8 @@
       </div>
     </div> -->
 
-    <div class="row mt-5 justify-content-end">
-      <h3 class="colorTextPrimari col-9" >Servicios</h3>
+    <div class="row mt-5 justify-content-center">
+      <h3 class="colorTextPrimari" >Servicios</h3>
 
       <div class="mt-4 col-12" >
         <table class="table">
@@ -122,54 +130,81 @@
               <td>{{service.typeService}}</td>
               <td>{{service.nameService}}</td>
               <td>{{service.amountServices}}</td>
-              <td>{{service.total}}</td>
+              <td>{{service.total | currency:'USD':true:'2.0-0'}}</td>
             </tr>
           </tbody>
+          <tfoot>
+            <tr>
+              <td class=" colorTextPrimari h5 text-end bold" colspan="4">Total Servicios</td>
+              <td class="bold">{{subTotal | currency:'USD':true:'2.0-0' }}</td>
+            </tr>
+            <tr *ngIf="idPreventionType != 4">
+              <td class=" colorTextPrimari h5 text-end"  colspan="4">Cobertura {{descriptionPreventionType}}</td>
+              <td>{{coveragePrevision | currency:'USD':true:'2.0-0' }}</td>
+            </tr>
+            <tr *ngIf="assurance != false">
+              <td class=" colorTextPrimari h5 text-end pe-3"  colspan="4">Cobertura Seg. Complementario </td>
+              <td>{{coverageSupplementaryInsurance | currency:'USD':true:'2.0-0' }}</td>
+            </tr>
+            <tr>
+              <td class=" colorTextPrimari h5 text-end pe-3 bold"  colspan="4">Subtotal</td>
+              <td class="bold"></td>
+            </tr>
+            <tr>
+              <td class=" colorTextPrimari h5 text-end pe-3 "  colspan="4">   </td>
+              <td class=""></td>
+            </tr>
+            <tr>
+              <td class=" colorTextPrimari h5 text-end pe-3"  colspan="4">Subsidio Corporación</td>
+              <td>{{corporateDiscount | currency:'USD':true:'2.0-0' }}</td>
+            </tr>
+            <tr>
+              <td class=" colorTextPrimari h5 text-end pe-3 bold"  colspan="4">Copago Vecino</td>
+              <td class="bold">{{totalCopago | currency:'USD':true:'2.0-0' }}</td>
+            </tr>
+          </tfoot>
         </table>
       </div>
-      <div class="mt-4  col-4 ">
+      <!-- <div class="mt-4  col-4 ">
         <table class="table">
           <tr>
-            <td class=" colorTextPrimari h4">SubTotal</td>
-            <td>{{subTotal}}</td>
+            <td class=" colorTextPrimari h5 text-end pe-3">SubTotal</td>
+            <td>{{subTotal | currency:'USD':true:'2.0-0'}}</td>
           </tr>
           <tr *ngIf="idPreventionType != 4">
             <td class=" colorTextPrimari h5 text-end pe-3" >Cobertura {{descriptionPreventionType}}</td>
-            <td>{{coveragePrevision}}</td>
+            <td>{{coveragePrevision | currency:'USD':true:'2.0-0' }}</td>
           </tr>
           <tr *ngIf="assurance != false">
             <td class=" colorTextPrimari h5 text-end pe-3" >Cobertura Seg. Complementario </td>
-            <td>{{coverageSupplementaryInsurance}}</td>
+            <td>{{coverageSupplementaryInsurance | currency:'USD':true:'2.0-0' }}</td>
           </tr>
           <tr>
             <td class=" colorTextPrimari h5 text-end pe-3" >Descuento Salud a tu alcance</td>
-            <td>{{corporateDiscount}}</td>
+            <td>{{corporateDiscount | currency:'USD':true:'2.0-0' }}</td>
           </tr>
           <tr>
             <td class=" colorTextPrimari h5 text-end pe-3" >Copago</td>
-            <td>{{totalCopago}}</td>
+            <td>{{totalCopago | currency:'USD':true:'2.0-0' }}</td>
           </tr>
         </table>
-      </div>
+      </div> -->
 
-      <div class="colorTextPrimari mt-4 col-12">
+      <div class="colorTextPrimari mt-4 col-12" style="text-align: justify;">
         <p>
           IMPORTANTE:
         </p>
         <ol>
           <li>
-            Los costos presentados en esta página son con fines informativos y no representan un documento válido para la presentación de los servicios simulado
+            Los costos presentados en esta página son con fines informativos y no representan un documento válido para la presentación de los servicios simulados.
           </li>
           <li>
             El costo del Copago es referencial y esta sujeto a la veracidad y precisión de los porcentajes de cobertura suministrados por usted.
           </li>
-          <li>
-            Si esta de acuerdo con los costos de los servicios simulados asi como del Copago asociado, debe presionar el botón "Generar Certificado" para obtener el Certificado de Prestación de Servicios que debería presentar al proveedor.
-          </li>
         </ol>
       </div>
 
-      <div class="form-check form-switch mb-2 colorTextPrimari col-12 px-5">
+      <!-- <div class="form-check form-switch mb-2 colorTextPrimari col-12 px-5">
         <input
           type="checkbox"
           class="form-check-input"
@@ -178,13 +213,14 @@
 
           <label class="form-check-label" >He leído y acepto realizar el copago correspondiente al proveedor de servicios</label>
           <div *ngIf="(isFormSubmitted && formCopago.controls.authCheck.errors?.required) || (formCopago.controls.authCheck.touched && formCopago.controls.authCheck.value == false || isFormSubmitted && formCopago.controls.authCheck.value == false)" class="invalid-feedback">Debe aceptar los términos y condiciones</div>
-        </div>
+        </div> -->
 
     </div>
 
     <div class="d-flex flex-row justify-content-evenly mt-4">
       <div>
-        <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" [disabled]="isFormSubmitted || formCopago.value.authCheck == false" >Generar Certificado</button>
+        <!-- <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" [disabled]="isFormSubmitted || formCopago.value.authCheck == false" >Generar Certificado</button> -->
+        <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" >Aceptar</button>
       </div>
       <div>
         <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="cancel($event)" >Cancelar</button>

@@ -20,6 +20,8 @@ div.modal-content{
     }
     & td {
         vertical-align: middle;
+    
+    
     }
 
     & tr:nth-child(even) {
@@ -35,7 +37,14 @@ div.modal-content{
         background-color: transparent;
         border: 0px;
     }
+    
+    & tfoot tr:nth-child(even) {
+        background-color: transparent;
+    }
 
+    & tfoot tr, tfoot td{
+        padding: 0.3rem !important;
+    }
 
     text-align: center;
     border: 0px solid transparent;
@@ -92,4 +101,8 @@ button.file_add{
 
 .table th, .table td {
     white-space: break-spaces !important;
+}
+
+.bold{
+    font-weight: bold;
 }

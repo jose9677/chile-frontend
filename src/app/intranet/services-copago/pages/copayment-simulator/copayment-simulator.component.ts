@@ -177,37 +177,50 @@ export class CopaymentSimulatorComponent implements OnInit {
   }
 
 
-  generateCertificate(e: Event) {
+  // generateCertificate(e: Event) {
+
+  //   e.preventDefault();
+
+  //   this.isFormSubmitted = true;
+
+  //   if (this.formCopago.status == "VALID") {
+
+  //     this.simulationServices.generateSimulation(this.idSimulation).subscribe(result => {
+
+  //     },
+  //     error => {
+
+  //     },
+  //     () => {
+
+  //       let error= false;
+  //       let title= "Certificado Generado";
+  //       let message = 'Se ha generado su certificado de Prestación de servicios de forma exitosa. el mismo sera descargado de forma automática en su computadora y podra visualizarlo en la opción "ver certificados" del menú lateral';
+  //       this.modalService.OpenModalError2(ModalComponent, error, title, message);
+
+  //       this.router.navigate(['copago', 'sus-certificados'])
+
+  //     })
+
+
+  //   }
+
+
+  // }
+
+  aceptSimulation(e: Event) {
 
     e.preventDefault();
 
-    this.isFormSubmitted = true;
+    let error= false;
+    let title= "Simulación de Copago Realizada";
+    let message = 'Se ha realizado la simulación de Copago de forma exitosa';
+    this.modalService.OpenModalError2(ModalComponent, error, title, message);
 
-    if (this.formCopago.status == "VALID") {
-
-      this.simulationServices.generateSimulation(this.idSimulation).subscribe(result => {
-
-      },
-      error => {
-
-      },
-      () => {
-
-        let error= false;
-        let title= "Certificado Generado";
-        let message = 'Se ha generado su certificado de Prestación de servicios de forma exitosa. el mismo sera descargado de forma automática en su computadora y podra visualizarlo en la opción "ver certificados" del menú lateral';
-        this.modalService.OpenModalError2(ModalComponent, error, title, message);
-
-        this.router.navigate(['copago', 'sus-certificados'])
-
-      })
-
-
-    }
-
+    this.router.navigate([ 'copago', 'sus-certificados'])
 
   }
-
+  
   cancel (e: Event) {
 
     e.preventDefault();

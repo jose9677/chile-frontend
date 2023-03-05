@@ -1,3 +1,11 @@
+<div class="row">
+  <div class="col-md-12">
+      <div class="card header p-3">
+          <h2>Ver Simulación</h2>
+      </div>
+  </div>
+</div>
+<br>
 <div class="card">
   <form class="forms-sample container pb-5 px-5">
     <div class="row mt-5 justify-content-center">
@@ -12,7 +20,7 @@
           <input type="text" id="dateOfIssue" value={{dateOfIssue}} disabled class="form-control">
         </div>
         <div class="col-md-4 col-sm-12">
-          <label for="expirationDate" class="form-label colorTextPrimari">Fecha de Vencimiento</label>
+          <!-- <label for="expirationDate" class="form-label colorTextPrimari">Fecha de Vencimiento</label> -->
           <input type="text" id="expirationDate" value={{expirationDate}} disabled class="form-control">
         </div>
         <div class="col-md-4 col-sm-12">
@@ -33,16 +41,16 @@
       <h3 class="colorTextPrimari">Coberturas de Salud</h3><br>
 
       <div class="row mt-3">
-        <div class="col-md-2 col-sm-12" *ngIf="idPreventionType != 4">
+        <div class="col-md-2 col-sm-12" *ngIf=" (idPreventionType == 2) || (idPreventionType == 3) ">
           <label for="coveragePercentageIsapre" class="form-label colorTextPrimari">{{descriptionPreventionType}}</label>
         </div>
-        <div class="col-md-3 col-sm-12" *ngIf="idPreventionType != 4">
+        <div class="col-md-3 col-sm-12" *ngIf=" (idPreventionType == 2) || (idPreventionType == 3) ">
           <input
-          mask="percent" suffix="%"
+
           class="form-control"
-          type="text"
+          type=""
           id="coveragePercentageIsapre"
-          value={{coveragePercentage}}
+          value={{coveragePercentage}}%
           disabled
 
           >
@@ -53,9 +61,9 @@
         </div>
         <div class="col-md-3 col-sm-12" *ngIf="assurance != false">
           <input
-          type="number"
+          type=""
           id="coveragePercentageSupplementary"
-          value={{coveragePercentageSupplementary}}
+          value={{coveragePercentageSupplementary}}%
           class="form-control"
           disabled
           >
@@ -68,7 +76,7 @@
       <div class="row mt-3">
         <div class="col-md-6 col-sm-12">
           <label for="serviceProvider" class="form-label colorTextPrimari">Proveedor de Servicios</label>
-          <div class="col-md-3 col-sm-12">
+          <div class="col-md-6 col-sm-12">
             <input
             class="form-control"
             type="text"
@@ -81,8 +89,8 @@
       </div>
     </div>
 
-    <div class="row mt-5 justify-content-end">
-      <h3 class="colorTextPrimari col-9" >Servicios</h3>
+    <div class="row mt-5 justify-content-center">
+      <h3 class="colorTextPrimari" >Servicios</h3>
 
       <div class="mt-4 col-12" >
         <table class="table">
@@ -101,43 +109,73 @@
               <td>{{service.typeService}}</td>
               <td>{{service.nameService}}</td>
               <td>{{service.amountServices}}</td>
-              <td>{{service.total}}</td>
+              <td>{{service.total | currency:'USD':true:'2.0-0' }}</td>
             </tr>
           </tbody>
+          <tfoot>
+            <tr>
+              <td class=" colorTextPrimari h5 text-end bold" colspan="4">Total Servicios</td>
+              <td class="bold">{{subTotal | currency:'USD':true:'2.0-0' }}</td>
+            </tr>
+            <tr *ngIf="idPreventionType != 4">
+              <td class=" colorTextPrimari h5 text-end"  colspan="4">Cobertura {{descriptionPreventionType}}</td>
+              <td>{{coveragePrevision | currency:'USD':true:'2.0-0' }}</td>
+            </tr>
+            <tr *ngIf="assurance != false">
+              <td class=" colorTextPrimari h5 text-end pe-3"  colspan="4">Cobertura Seg. Complementario </td>
+              <td>{{coverageSupplementaryInsurance | currency:'USD':true:'2.0-0' }}</td>
+            </tr>
+            <tr>
+              <td class=" colorTextPrimari h5 text-end pe-3 bold"  colspan="4">Subtotal</td>
+              <td class="bold"></td>
+            </tr>
+            <tr>
+              <td class=" colorTextPrimari h5 text-end pe-3 "  colspan="4">   </td>
+              <td class=""></td>
+            </tr>
+            <tr>
+              <td class=" colorTextPrimari h5 text-end pe-3"  colspan="4">Subsidio Corporación</td>
+              <td>{{corporateDiscount | currency:'USD':true:'2.0-0' }}</td>
+            </tr>
+            <tr>
+              <td class=" colorTextPrimari h5 text-end pe-3 bold"  colspan="4">Copago Vecino</td>
+              <td class="bold">{{totalCopago | currency:'USD':true:'2.0-0' }}</td>
+            </tr>
+          </tfoot>
         </table>
       </div>
-      <div class="mt-4  col-4 ">
+      <!-- <div class="mt-4  col-4 ">
         <table class="table">
           <tr>
             <td class=" colorTextPrimari h5 text-end pe-3" >SubTotal</td>
-            <td>{{subTotal}}</td>
+            <td>{{subTotal | currency:'USD':true:'2.0-0' }}</td>
           </tr>
           <tr *ngIf="idPreventionType != 4">
             <td class=" colorTextPrimari h5 text-end pe-3" >Cobertura {{descriptionPreventionType}}</td>
-            <td>{{coveragePrevision}}</td>
+            <td>{{coveragePrevision | currency:'USD':true:'2.0-0' }}</td>
           </tr>
           <tr *ngIf="assurance != false">
             <td class=" colorTextPrimari h5 text-end pe-3" >Cobertura Seg. Complementario </td>
-            <td>{{coverageSupplementaryInsurance}}</td>
+            <td>{{coverageSupplementaryInsurance | currency:'USD':true:'2.0-0' }}</td>
           </tr>
           <tr>
             <td class=" colorTextPrimari h5 text-end pe-3" >Descuento Salud a tu alcance</td>
-            <td>{{corporateDiscount}}</td>
+            <td>{{corporateDiscount | currency:'USD':true:'2.0-0' }}</td>
           </tr>
           <tr>
             <td class=" colorTextPrimari h5 text-end pe-3" >Copago</td>
-            <td>{{totalCopago}}</td>
+            <td>{{totalCopago | currency:'USD':true:'2.0-0' }}</td>
           </tr>
         </table>
-      </div>
+      </div> -->
 
-      <div class="colorTextPrimari col-12">
+      <div class="colorTextPrimari col-12" style="text-align: justify;">
         <p>
           IMPORTANTE:
         </p>
         <ol>
           <li>
-            Los costos presentados en esta página son con fines informativos y no representan un documento válido para la presentación de los servicios simulado
+            Los costos presentados en esta página son con fines informativos y no representan un documento válido para la presentación de los servicios simulados.
           </li>
           <li>
             El costo del Copago es referencial y esta sujeto a la veracidad y precisión de los porcentajes de cobertura suministrados por usted.
@@ -150,7 +188,7 @@
         <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="printCertificate($event)"  >Imprimir Certificado</button>
       </div>
       <div>
-        <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="cancel($event)" >Cancelar</button>
+        <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="cancel($event)" >Regresar</button>
       </div>
     </div>
   </form>
