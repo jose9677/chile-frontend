@@ -44,6 +44,8 @@ export class CopaymentSimulatorComponent implements OnInit {
 
   public subTotal: any;
 
+  public subTotal2: any;
+
   public coveragePrevision: any;
 
   public coverageSupplementaryInsurance: any;
@@ -160,6 +162,8 @@ export class CopaymentSimulatorComponent implements OnInit {
 
       this.subTotal = result.SubTotal;
 
+      this.subTotal2 = result.Balance_2;
+
       this.coveragePrevision = result.Cobert_Prevition;
 
       this.coverageSupplementaryInsurance = result.Secure_Comp;
@@ -220,7 +224,7 @@ export class CopaymentSimulatorComponent implements OnInit {
     this.router.navigate([ 'copago', 'sus-certificados'])
 
   }
-  
+
   cancel (e: Event) {
 
     e.preventDefault();

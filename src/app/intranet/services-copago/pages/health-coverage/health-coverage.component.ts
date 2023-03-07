@@ -38,6 +38,8 @@ export class HealthCoverageComponent implements OnInit {
 
   public subTotal: any;
 
+  public subtotal2: any;
+
   public corporateDiscount: any;
 
   public coveragePrevision: any;
@@ -80,9 +82,6 @@ export class HealthCoverageComponent implements OnInit {
 
       result.map((res:any) => {
 
-        console.log(res)
-
-
         this.dateOfIssue = res.emition_date;
 
         this.expirationDate = res.expiration_date;
@@ -123,6 +122,8 @@ export class HealthCoverageComponent implements OnInit {
 
 
       this.subTotal = result.SubTotal;
+
+      this.subtotal2 = result.Balance_2;
 
       this.corporateDiscount = result.Desc_Corporation
 
