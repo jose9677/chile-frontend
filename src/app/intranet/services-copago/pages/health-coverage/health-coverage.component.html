@@ -109,25 +109,25 @@
               <td>{{service.typeService}}</td>
               <td>{{service.nameService}}</td>
               <td>{{service.amountServices}}</td>
-              <td>{{service.total | currency:'USD':true:'2.0-0' }}</td>
+              <td>{{service.total | currency:'USD':true:'1.0-0' }}</td>
             </tr>
           </tbody>
           <tfoot>
             <tr>
               <td class=" colorTextPrimari h5 text-end bold" colspan="4">Total Servicios</td>
-              <td class="bold">{{subTotal | currency:'USD':true:'2.0-0' }}</td>
+              <td class="bold">{{subTotal | currency:'USD':true:'1.0-0' }}</td>
             </tr>
             <tr *ngIf="idPreventionType != 4">
               <td class=" colorTextPrimari h5 text-end"  colspan="4">Cobertura {{descriptionPreventionType}}</td>
-              <td>{{coveragePrevision | currency:'USD':true:'2.0-0' }}</td>
+              <td>{{coveragePrevision | currency:'USD':true:'1.0-0' }}</td>
             </tr>
             <tr *ngIf="assurance != false">
               <td class=" colorTextPrimari h5 text-end pe-3"  colspan="4">Cobertura Seg. Complementario </td>
-              <td>{{coverageSupplementaryInsurance | currency:'USD':true:'2.0-0' }}</td>
+              <td>{{coverageSupplementaryInsurance | currency:'USD':true:'1.0-0' }}</td>
             </tr>
             <tr>
               <td class=" colorTextPrimari h5 text-end pe-3 bold"  colspan="4">Subtotal</td>
-              <td>{{subtotal2 | currency:'USD':true:'2.0-0' }}</td>
+              <td>{{subtotal2 | currency:'USD':true:'1.0-0' }}</td>
             </tr>
             <tr>
               <td class=" colorTextPrimari h5 text-end pe-3 "  colspan="4">   </td>
@@ -135,11 +135,11 @@
             </tr>
             <tr>
               <td class=" colorTextPrimari h5 text-end pe-3"  colspan="4">Subsidio Corporación</td>
-              <td>{{corporateDiscount | currency:'USD':true:'2.0-0' }}</td>
+              <td>{{corporateDiscount | currency:'USD':true:'1.0-0' }}</td>
             </tr>
             <tr>
               <td class=" colorTextPrimari h5 text-end pe-3 bold"  colspan="4">Copago Vecino</td>
-              <td class="bold">{{totalCopago | currency:'USD':true:'2.0-0' }}</td>
+              <td class="bold">{{totalCopago | currency:'USD':true:'1.0-0' }}</td>
             </tr>
           </tfoot>
         </table>
@@ -148,23 +148,23 @@
         <table class="table">
           <tr>
             <td class=" colorTextPrimari h5 text-end pe-3" >SubTotal</td>
-            <td>{{subTotal | currency:'USD':true:'2.0-0' }}</td>
+            <td>{{subTotal | currency:'USD':true:'1.0-0' }}</td>
           </tr>
           <tr *ngIf="idPreventionType != 4">
             <td class=" colorTextPrimari h5 text-end pe-3" >Cobertura {{descriptionPreventionType}}</td>
-            <td>{{coveragePrevision | currency:'USD':true:'2.0-0' }}</td>
+            <td>{{coveragePrevision | currency:'USD':true:'1.0-0' }}</td>
           </tr>
           <tr *ngIf="assurance != false">
             <td class=" colorTextPrimari h5 text-end pe-3" >Cobertura Seg. Complementario </td>
-            <td>{{coverageSupplementaryInsurance | currency:'USD':true:'2.0-0' }}</td>
+            <td>{{coverageSupplementaryInsurance | currency:'USD':true:'1.0-0' }}</td>
           </tr>
           <tr>
             <td class=" colorTextPrimari h5 text-end pe-3" >Descuento Salud a tu alcance</td>
-            <td>{{corporateDiscount | currency:'USD':true:'2.0-0' }}</td>
+            <td>{{corporateDiscount | currency:'USD':true:'1.0-0' }}</td>
           </tr>
           <tr>
             <td class=" colorTextPrimari h5 text-end pe-3" >Copago</td>
-            <td>{{totalCopago | currency:'USD':true:'2.0-0' }}</td>
+            <td>{{totalCopago | currency:'USD':true:'1.0-0' }}</td>
           </tr>
         </table>
       </div> -->
