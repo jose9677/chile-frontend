@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private loggedService: LoggedService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
 
     ) {
 
