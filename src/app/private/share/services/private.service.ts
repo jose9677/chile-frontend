@@ -61,14 +61,13 @@ export class PrivateService {
       }),
       catchError((err)=> this.handlerError(err))
       )
-      
+
     }
 
     desactivarRol(rol: any): Observable<any>{
       let url = AUTH_API_NP + 'desactive-rol/'+ rol;
       return this.http.put(url, null).pipe(map((result:any) => {
 
-        console.log('Rol desactivado', result);
 
       }),
       tap(() => {
@@ -76,13 +75,12 @@ export class PrivateService {
       }),
       catchError((err)=> this.handlerError(err))
       )
-      
+
     }
 
   register(dataUser: any): Observable<any>{
     return this.http.post( AUTH_API + 'registerEmployee', dataUser, httpOptions).pipe(map((result:any) => {
 
-      console.log('Register_User-Res->', result);
 
     }),
     tap(() => {
@@ -96,7 +94,6 @@ export class PrivateService {
     let url = AUTH_API_NP + 'update-employee/'+rut;
     return this.http.put(url, dataUser).pipe(map((result:any) => {
 
-      console.log('user Actualizado', result);
 
     }),
     tap(() => {
@@ -111,7 +108,6 @@ export class PrivateService {
     let url = AUTH_API_NP + 'search-user/'+ rutUser;
     return this.http.get<any>(url, httpOptions).pipe(map((result:any) => {
 
-      console.log(result)
 
       return result
 
@@ -130,7 +126,6 @@ export class PrivateService {
     catchError((err)=> this.handlerError(err))
     );
   }
-
 
   verUsuarios(): Observable<any>{
     return this.http.get<any>( AUTH_API_NP + 'details-assistants-and-supervisors', httpOptions).pipe(map((result:any) => {
@@ -166,7 +161,6 @@ export class PrivateService {
     let url = AUTH_API_NP + 'active-user/'+ rutUser;
     return this.http.put(url, null).pipe(map((result:any) => {
 
-      console.log('user Activado', result);
 
     }),
     tap(() => {
@@ -174,7 +168,7 @@ export class PrivateService {
     }),
     catchError((err)=> this.handlerError(err))
     )
-    
+
   }
 
 
@@ -182,25 +176,22 @@ export class PrivateService {
     let url = AUTH_API_NP + 'desactive-user/'+ rutUser;
     return this.http.put(url, null).pipe(map((result:any) => {
 
-      console.log('user desactivado', result);
 
     }),
     tap(() => {
       this._refresh$.next();
     }),
     catchError((err)=> this.handlerError(err))
-    )    
+    )
   }
 
   uploadFiles(fileData: File, rutUser: any): Observable<any>{
-    console.log(fileData);
 
     const formfileData = new FormData();
 
 
     formfileData.append('profile_pic', fileData);
 
-    console.log(FormData);
 
     return this.http.post( AUTH_API_NP + 'profile-pic/' + rutUser , formfileData).pipe(map((result:any) => {
 
@@ -228,6 +219,22 @@ export class PrivateService {
     );
   }
 
+  downloadReport1(): void{
+
+    let url = `${AUTH_API_NP}export-reports`;
+
+    window.location.href = url;
+
+  }
+
+  downloadReport2(): void{
+
+    let url = `${AUTH_API_NP}export-reports`;
+
+    window.location.href = url;
+
+  }
+
 
   private handlerError(err:any): Observable<never> { //pasa error al login component
     let errorMessage= 'An error ocurred';
@@ -248,7 +255,6 @@ export class PrivateService {
 
 
     }
-    console.log(this.errorMessage);
 
     return throwError(this.errorMessage)
   }

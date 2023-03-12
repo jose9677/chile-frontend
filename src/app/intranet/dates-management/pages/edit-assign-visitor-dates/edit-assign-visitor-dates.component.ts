@@ -88,6 +88,9 @@ export class EditAssignVisitorDatesComponent implements OnInit {
         res1.push(res);
       })
 
+      console
+
+
       return this.listRutSocialAssistant = res1;
 
     },
@@ -121,6 +124,9 @@ export class EditAssignVisitorDatesComponent implements OnInit {
       this.typePrevention = dataRequest[0]?.prevention_type +' - '+ dataRequest[0]?.prevention_detail;
 
       this.selecterutSocialAssistant = dataRequest[0]?.rut_assistant;
+
+      console.log(this.selecterutSocialAssistant)
+
 
       dataRequest.map((res:any) => {
 

@@ -23,7 +23,6 @@ export class RolesComponent implements OnInit, OnDestroy {
         array.push(dataRequest[i])
       }
       this.roles=array
-      console.log(this.roles)
     })
    }
 
@@ -36,7 +35,6 @@ export class RolesComponent implements OnInit, OnDestroy {
           array.push(dataRequest[i])
         }
         this.roles=array
-        console.log(this.roles)
 
       })
     })
@@ -45,7 +43,6 @@ export class RolesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.suscription.unsubscribe();
-    console.log('observable destruido');
   }
 
   editar(Rol:any){
@@ -57,14 +54,12 @@ export class RolesComponent implements OnInit, OnDestroy {
 
    activarRol(id:any){
     this.privateService.ActivarRol(id).subscribe(dataRequest => {
-      console.log(dataRequest)
     })
 
    }
 
    desactivarRol(id:any){
     this.privateService.desactivarRol(id).subscribe(dataRequest => {
-      console.log(dataRequest)
     })
 
    }

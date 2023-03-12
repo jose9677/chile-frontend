@@ -88,6 +88,11 @@ export const MENU: MenuItem[] = [
         label: 'Roles',
         link: '/seguridad/roles'
       },
+      {
+        roles: [4, 5],
+        label: 'Reportes',
+        link: '/seguridad/reportes'
+      },
     ]
   },
   // {

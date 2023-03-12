@@ -38,13 +38,11 @@ export class ViewUserComponent implements OnInit {
       this.ruts=params['id']
   })
   this.privateService.roles().subscribe(dataRequest => {
-    console.log(dataRequest)
     let array: any[]= []
     for (let i=1; i<dataRequest.length; i++){
       array.push(dataRequest[i])
     }
     this.RolOfstreet=array
-    console.log(this.RolOfstreet)
   })
   this.privateService.supervisor().subscribe(dataRequest => {
     this.supervisorOfstreet=dataRequest
@@ -61,7 +59,6 @@ export class ViewUserComponent implements OnInit {
         this.nuevoRut+=this.rut[i]
       }
     }
-    console.log(this.id);
     this.privateService.datosUser(this.ruts).subscribe(dataRequest => {
       this.usuario.push(dataRequest[0])
     })
@@ -109,7 +106,6 @@ export class ViewUserComponent implements OnInit {
 
       this.authServices.uploadFiles(fileData, id_document_type).subscribe((res) =>
          {
-            console.log(res);
           },
           error => {
 
@@ -123,10 +119,8 @@ export class ViewUserComponent implements OnInit {
 
   selectdataFile(event: any, index: any, id_document_type: any): void {
     this.file = <File>event.target.files[0];
-    // console.log(this.file);
     this.documentIsValid = true;
 
-    console.log(this.file)
 
     if ( this.file != undefined ) {
 
@@ -134,7 +128,6 @@ export class ViewUserComponent implements OnInit {
 
 
         this.selectFiles.push({'fileData': this.file, 'id_document_type': id_document_type});
-        console.log(this.selectFiles);
 
         this.documentIsValid = false;
 
@@ -154,12 +147,10 @@ export class ViewUserComponent implements OnInit {
 
     } else {
 
-      console.log(this.selectFiles);
       this.deleteDocument(index);
       this.addDocument();
 
       this.selectFiles =[]
-      console.log(this.selectFiles);
       this.documentIsValid = false;
 
     }
