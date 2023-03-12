@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ModalComponent } from 'src/app/public/auth/shared/modals/modal/modal.component';
 import { ModalsService } from 'src/app/shared/services/modals.service';
+import { PDFMAKERService } from 'src/app/shared/services/pdfmaker.service';
 import { ServiceCopagoService } from '../../shared/services/service-copago.service';
 import { SimulationsCopagoService } from '../../shared/services/simulations-copago.service';
 import { CancelSimulationComponent } from '../cancel-simulation/cancel-simulation.component';
@@ -75,7 +76,8 @@ export class CopaymentSimulatorComponent implements OnInit {
     private copagoService: ServiceCopagoService,
     private router: Router,
     private routerquery: ActivatedRoute,
-    private simulationServices: SimulationsCopagoService
+    private simulationServices: SimulationsCopagoService,
+    private pdf: PDFMAKERService
 
   ) {
 
@@ -130,6 +132,7 @@ export class CopaymentSimulatorComponent implements OnInit {
 
     },
     () => {
+
       this.listServicesCopago = listServicesCopago;
 
       this.copagoService.getDataUser(this.rutNeighbor).subscribe( result => {
@@ -189,6 +192,10 @@ export class CopaymentSimulatorComponent implements OnInit {
 
     },
     () => {
+
+      this.simulationServices.PDFCertificates(this.idSimulation).subscribe(result => {
+        this.pdf.pdftext(result[0].names+' '+result[0].lastname,result[0].rut_user,result[0].prevention_type+' '+result[0].prevention_detail);
+      })
 
       let error= false;
       let title= "Certificado Generado";
