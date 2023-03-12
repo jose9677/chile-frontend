@@ -125,8 +125,6 @@ export class EditAssignVisitorDatesComponent implements OnInit {
 
       this.selecterutSocialAssistant = dataRequest[0]?.rut_assistant;
 
-      console.log(this.selecterutSocialAssistant)
-
 
       dataRequest.map((res:any) => {
 
