@@ -32,17 +32,14 @@ export class ViewUsersComponent implements OnInit, OnDestroy {
       }
     if(this.id==3){
       this.privateService.verAsistentes(this.nuevoRut).subscribe(dataRequest => {
-        // console.log(dataRequest)
         this.Usuarios=dataRequest
       })
     }else if(this.id==4){
       this.privateService.verUsuarios().subscribe(dataRequest => {
-        // console.log(dataRequest)
         this.Usuarios=dataRequest
       })
     }else if(this.id==5){
       this.privateService.verTodosLosUsuarios().subscribe(dataRequest => {
-        // console.log(dataRequest)
         this.Usuarios=dataRequest
       })
     }
@@ -52,21 +49,18 @@ export class ViewUsersComponent implements OnInit, OnDestroy {
     if(this.id==3){
       this.suscription = this.privateService.refresh$.subscribe(()=>{
         this.privateService.verAsistentes(this.nuevoRut).subscribe(dataRequest => {
-          // console.log(dataRequest)
           this.Usuarios=dataRequest
         })
       })
     }else if(this.id==4){
       this.suscription = this.privateService.refresh$.subscribe(()=>{
         this.privateService.verUsuarios().subscribe(dataRequest => {
-          // console.log(dataRequest)
           this.Usuarios=dataRequest
         })
       })
     }else if(this.id==5){
       this.suscription = this.privateService.refresh$.subscribe(()=>{
         this.privateService.verTodosLosUsuarios().subscribe(dataRequest => {
-          // console.log(dataRequest)
           this.Usuarios=dataRequest
         })
       })
@@ -74,33 +68,24 @@ export class ViewUsersComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.suscription.unsubscribe();
-    console.log('observable destruido');
   }
   activarUser(Rut:any){
     this.privateService.ActivarUser(Rut).subscribe(dataRequest => {
       this.modalService.openModal(UserActiveComponent)
-      // console.log(dataRequest)
     })
    }
 
    desactivarUser(Rut:any){
     this.privateService.desactivarUser(Rut).subscribe(dataRequest => {
       this.modalService.openModal(UserDesactiveComponent)
-      // console.log(dataRequest)
     })
    }
 
    editar(Rut:any){
-    //  this.privateService.rutEdit.emit({
-    //    data:Rut
-    //   })
     this.router.navigate(['/seguridad/editar-usuario/' + Rut])
    }
 
    VerUsuario(Rut:any){
-    //  this.privateService.rutEdit.emit({
-    //    data:Rut
-    //   })
     this.router.navigate(['/seguridad/ver-usuario/' + Rut])
    }
 }

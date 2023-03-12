@@ -410,7 +410,6 @@ export class RegisterComponent implements OnInit {
 
       this.authServices.register(dataUser).subscribe(result => {
 
-        console.log(result);
 
       },
       error => {
@@ -536,7 +535,6 @@ export class RegisterComponent implements OnInit {
 
       this.authServices.uploadFiles(fileData, id_document_type).subscribe((res) => {
 
-        console.log(res);
 
       },
       error => {

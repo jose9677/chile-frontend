@@ -10,6 +10,7 @@ import { EditRoleComponent } from './pages/edit-role/edit-role.component';
 import { ViewUserComponent } from './pages/view-user/view-user.component';
 import { Access345Guard } from '../shared/guards/access-3-4-5.guard';
 import { Access45Guard } from '../shared/guards/access-4-5.guard';
+import { GenerateReportsComponent } from './pages/generate-reports/generate-reports.component';
 
 const routes: Routes = [
   { path: '',
@@ -48,6 +49,11 @@ const routes: Routes = [
       {
         path:'editar-rol/:id',
         component:EditRoleComponent,
+        canActivate: [Access45Guard]
+      },
+      {
+        path: 'reportes',
+        component: GenerateReportsComponent,
         canActivate: [Access45Guard]
       }
 

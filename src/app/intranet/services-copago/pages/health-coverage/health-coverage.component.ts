@@ -121,9 +121,6 @@ export class HealthCoverageComponent implements OnInit {
 
     this.simulationServices.calcCopago(this.idSimulation).subscribe(result => {
 
-      console.log(result);
-
-
       this.subTotal = result.SubTotal;
 
       this.subtotal2 = result.Balance_2;
@@ -139,8 +136,6 @@ export class HealthCoverageComponent implements OnInit {
     },
     error => {
 
-      console.log(error);
-
     },
     () => {
 
@@ -150,7 +145,6 @@ export class HealthCoverageComponent implements OnInit {
 
   getDataUser() {
     this.copagoService.getDataUser(this.rutNeighbor).subscribe( result => {
-      console.log(result);
 
       result.data_user.map((res:any) => {
 

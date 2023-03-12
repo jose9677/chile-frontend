@@ -19,6 +19,7 @@ import { UserCreatedComponent } from './pages/modales/user-created/user-created.
 import { UserActiveComponent } from './pages/modales/user-active/user-active.component';
 import { UserDesactiveComponent } from './pages/modales/user-desactive/user-desactive.component';
 import { ViewUserComponent } from './pages/view-user/view-user.component';
+import { GenerateReportsComponent } from './pages/generate-reports/generate-reports.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { ViewUserComponent } from './pages/view-user/view-user.component';
     UserCreatedComponent,
     UserActiveComponent,
     UserDesactiveComponent,
-    ViewUserComponent
+    ViewUserComponent,
+    GenerateReportsComponent
   ],
   imports: [
     CommonModule,
