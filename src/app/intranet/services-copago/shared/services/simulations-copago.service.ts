@@ -48,6 +48,14 @@ export class SimulationsCopagoService {
     );
   }
 
+  PDFCertificates(rutUser: any) {
+    return this.http.get<any>( AUTH_API_NP + "guard-card/" + rutUser, httpOptions ).pipe((map((result:any) => {
+      return result;
+    })),
+    catchError((err) => this.handlerError(err))
+    );
+  }
+
   getDataSimulation(idSimulation: any) {
     return this.http.get<any>( AUTH_API_NP + "details-copago/" + idSimulation, httpOptions ).pipe((map((result:any) => {
       return result;

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SimulationsCopagoService } from '../../shared/services/simulations-copago.service';
+import { PDFMAKERService } from 'src/app/shared/services/pdfmaker.service';
 
 @Component({
   selector: 'app-your-certificates',
@@ -14,7 +15,8 @@ export class YourCertificatesComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private simulationServices: SimulationsCopagoService
+    private simulationServices: SimulationsCopagoService,
+    private pdf: PDFMAKERService
   ) {
 
     this.listSimulations= [];
@@ -53,8 +55,10 @@ export class YourCertificatesComponent implements OnInit {
   downloadCertificate(e: Event) {
 
     e.preventDefault();
-
-    alert('descargar certificado');
+    let rut_user: any= window.sessionStorage.getItem("auth-user");
+    this.simulationServices.PDFCertificates(rut_user.replace(/["']/g, "")).subscribe(result => {
+      this.pdf.pdftext(result[0].names+' '+result[0].lastname,result[0].rut_user,result[0].prevention_type+' '+result[0].prevention_detail);
+    })
   }
 
 }
