@@ -192,7 +192,7 @@ export class CopaymentSimulatorComponent implements OnInit {
 
       let error= false;
       let title= "Certificado Generado";
-      let message = 'Se ha generado su certificado de Prestación de servicios de forma exitosa. el mismo sera descargado de forma automática en su computadora y podra visualizarlo en la opción "ver certificados" del menú lateral';
+      let message = 'Se ha generado su certificado de prestación de servicios de forma exitosa, el mismo podrá encontrarlo tambien en la opción "Historial de Simulaciones" del menú lateral y ubicando el botón PDF en la tabla de simulaciones';
       this.modalService.OpenModalError2(ModalComponent, error, title, message);
 
       this.router.navigate(['copago', 'sus-certificados'])
