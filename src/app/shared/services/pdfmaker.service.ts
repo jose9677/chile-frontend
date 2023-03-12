@@ -44,22 +44,22 @@ export class PDFMAKERService {
     const docDefinition:any={
       content:[
         {  toc: {
-            title:{text: 'Carta de Resguardo', style: 'header', alignment:'center', bold: true}
+            title:{text: '\n\n CARTA RESGUARDO \n\n', style: 'header', alignment:'center', bold: true, fontSize: 14, decoration:'underline'}
           }
         },
         {
-          text:[{text: '\nSantiago, '+fecha.getDate()+' de '+Mes[fecha.getMonth()]+' del '+fecha.getFullYear()+'.\n', style: 'header', alignment:'right'},
+          text:[{text: '\nSantiago, '+fecha.getDate()+' de '+Mes[fecha.getMonth()]+' del '+fecha.getFullYear()+'.\n\n\n', style: 'header', alignment:'right'},
           {text:'SEÑORES\n'},
           {text:'INTEGRAMÉDICA S.A.\n'},
           {text:'Y EXÁMENES DE LABORATORIO S.A.\n\n'},
           {text:'PRESENTE\n\n', decoration:'underline'},
-          {text:'Por medio de la presente, y en representación de '},
-          {text:'CORPORACIÓN DE DESARROLLO LA REINA', fontSize: 12, bold: true},
+          {text:'Por medio de la presente, y en representación de ', alignment:'justify'},
+          {text:'CORPORACIÓN DE DESARROLLO LA REINA', fontSize: 12, bold: true, alignment:'justify'},
           {text:', Rol Único Tributario número 71.378.000-6, declaro lo siguiente:\n\n'},
           {text:'Que en razón del contrato de prestación de servicios suscrito entre mi representada e Integramédica S.A. y Exámenes de Laboratorio S.A., por la cual se acordó la realización de las prestaciones indicadas en la cláusula cuarta del Convenio vigente, respecto de los beneficiarios de la Corporación, de conformidad a los términos y condiciones contenidos en el referido instrumento, garantizo el pago a Integramédica S.A., según corresponda y en un plazo de 30 días corridos a la fecha de emisión de la respectiva factura.\n\n', alignment:'justify'},
-          {text:'Paciente: '+paciente+'\n\n'},
-          {text:'Rut: '+rut+'\n\n'},
-          {text:'Tipo de previsión: '+prevesion+'\n\n\n'},
+          {text:'Paciente: '+paciente+'\n', bold: true},
+          {text:'Rut: '+rut+'\n', bold: true},
+          {text:'Tipo de previsión: '+prevesion+'\n\n\n\n\n', bold: true},
           {text: '___________________________________________\n', alignment:'center', bold: true},
           {text: 'Jose Luis León Marquéz\n', alignment:'center', bold: true},
           {text: '11.978.063-2\n\n', alignment:'center', bold: true},
