@@ -229,7 +229,7 @@ export class PrivateService {
 
   downloadReport2(): void{
 
-    let url = `${AUTH_API_NP}export-reports`;
+    let url = `${AUTH_API_NP}export-integramedica`;
 
     window.location.href = url;
 
