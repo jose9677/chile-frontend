@@ -162,8 +162,7 @@ export class HealthCoverageComponent implements OnInit {
   }
 
   printCertificate( e: Event ) {
-    let rut_user: any= window.sessionStorage.getItem("auth-user");
-    this.simulationServices.PDFCertificates(rut_user.replace(/["']/g, "")).subscribe(result => {
+    this.simulationServices.PDFCertificates(this.idSimulation).subscribe(result => {
       this.pdf.pdftext(result[0].names+' '+result[0].lastname,result[0].rut_user,result[0].prevention_type+' '+result[0].prevention_detail);
     })
 
