@@ -88,9 +88,16 @@ export const MENU: MenuItem[] = [
         label: 'Roles',
         link: '/seguridad/roles'
       },
+    ]
+  },
+  {
+    label: 'Reportes',
+    icon: 'file-text',
+    roles: [4, 5],
+    subItems: [
       {
         roles: [4, 5],
-        label: 'Reportes',
+        label: 'Descargar Reportes',
         link: '/seguridad/reportes'
       },
     ]
