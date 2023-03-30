@@ -164,8 +164,11 @@ export class CreateUsersComponent implements OnInit {
     this.documents.removeAt(DocumentIndex);
   }
   onRegister(e: Event){
+
+    e.preventDefault;
+
     const dataUser ={
-      rut:this.userRegister.value.rutUser,
+      rut:(this.userRegister.value.rutUser).toUpperCase(),
       names:this.userRegister.value.names,
       lastname:this.userRegister.value.lastNames,
       f_nac:this.userRegister.value.datesBirth,
@@ -280,18 +283,25 @@ export class CreateUsersComponent implements OnInit {
     }else{
       this.buttonBlock=true
       const dataRutUser= {
-        rut: this.userRegister.value.rutUser
+        rut: (this.userRegister.value.rutUser).toUpperCase()
       }
 
       this.authServices.validateRut(dataRutUser).subscribe( result => {
       },
       error => {  //recibe error del user services
         this.errors= true;
-        let title: string = "Rut Incorrecto"
-        let message = "El Rut ingresado no es correcto, por favor verifique y vuelva a intentarlo";
-        this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
-        this.buttonBlock=false
 
+        if (error.error == 'User exists in DB'){
+          this.errors= true;
+          let title: string = "Usuario Registrado"
+          let message = "El Rut ingresado ya esta registrado, por favor verifique y vuelva a intentarlo";
+          this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
+        }else{
+          let title: string = "RUT Invalido"
+          let message = "El Rut ingresado es invalido, por favor verifique y vuelva a intentarlo";
+          this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
+          this.buttonBlock=false
+        }
 
       },
       () => {
