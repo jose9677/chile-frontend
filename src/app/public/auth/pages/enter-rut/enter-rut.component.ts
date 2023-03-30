@@ -48,8 +48,10 @@ export class EnterRutComponent implements OnInit {
     // setTimeout(this.correctRut(), 10000);
 
 
-    this.rut = this.formRutUser.value.rutNumber;
+    this.rut = (this.formRutUser.value.rutNumber).toUpperCase();
     this.rut = this.rut.replace(/\.|,/g, "");
+
+    console.log(this.rut)
 
     const dataRutUser= {
       rut: this.rut
