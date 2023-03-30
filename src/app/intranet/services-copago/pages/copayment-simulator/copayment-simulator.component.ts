@@ -179,7 +179,7 @@ export class CopaymentSimulatorComponent implements OnInit {
   }
 
 
-  generateCertificate(e: Event) {
+  generateSimulation(e: Event) {
 
     e.preventDefault();
 
@@ -193,16 +193,17 @@ export class CopaymentSimulatorComponent implements OnInit {
     },
     () => {
 
-      this.simulationServices.PDFCertificates(this.idSimulation).subscribe(result => {
-        this.pdf.pdftext(result[0].names+' '+result[0].lastname,result[0].rut_user,result[0].prevention_type+' '+result[0].prevention_detail);
-      })
+      // this.simulationServices.PDFCertificates(this.idSimulation).subscribe(result => {
+      //   this.pdf.pdftext(result[0].names+' '+result[0].lastname,result[0].rut_user,result[0].prevention_type+' '+result[0].prevention_detail);
+      // })
 
       let error= false;
-      let title= "Certificado Generado";
-      let message = 'Se ha generado su certificado de prestación de servicios de forma exitosa, el mismo podrá encontrarlo tambien en la opción "Historial de Simulaciones" del menú lateral y ubicando el botón PDF en la tabla de simulaciones';
+      let title= "Simulación Generada";
+      // let message = 'Se ha generado su certificado de prestación de servicios de forma exitosa, el mismo podrá encontrarlo tambien en la opción "Historial de Simulaciones" del menú lateral y ubicando el botón PDF en la tabla de simulaciones';
+      let message = 'Se ha generado la simulación de prestación de servicios de forma exitosa';
       this.modalService.OpenModalError2(ModalComponent, error, title, message);
 
-      this.router.navigate(['copago', 'sus-certificados'])
+      this.router.navigate(['copago', 'sus-certificados']);
 
     })
   }

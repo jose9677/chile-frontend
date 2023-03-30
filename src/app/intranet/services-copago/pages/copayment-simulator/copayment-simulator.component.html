@@ -8,7 +8,7 @@
 <br>
 <div class="card">
   <form class="forms-sample container pb-5 px-5" [formGroup]="formCopago" (ngSubmit)="
-  generateCertificate($event)">
+  generateSimulation($event)">
     <div class="row mt-5 justify-content-center">
       <h3 class="colorTextPrimari">Datos de Simulación</h3><br>
       <div class="row mt-3">
@@ -221,7 +221,7 @@
     <div class="d-flex flex-row justify-content-evenly mt-4">
       <div>
         <!-- <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" [disabled]="isFormSubmitted || formCopago.value.authCheck == false" >Generar Certificado</button> -->
-        <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" >Generar Certificado</button>
+        <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" >Generar simulación</button>
       </div>
       <div>
         <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="cancel($event)" >Cancelar</button>

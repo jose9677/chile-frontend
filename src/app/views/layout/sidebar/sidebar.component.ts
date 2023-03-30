@@ -268,17 +268,18 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   hiddenSubitem(roles: number[], statusRequest: number = 0): boolean {
     let roleUser: any = window.sessionStorage.getItem("rol-user");
 
-    let statusRequestUser: any = window.sessionStorage.getItem("status-request");
+    // let statusRequestUser: any = window.sessionStorage.getItem("status-request");
 
 
     if ( roles.includes( parseInt(roleUser) ) || roles.includes( 0 ) ){
-      if ( roles.includes(5) || statusRequest == statusRequestUser || statusRequest == 0) {
-        return false;
-      } else {
-        return true;
-      }
+      return false;
+      // if ( roles.includes(5) || statusRequest == statusRequestUser || statusRequest == 0) {
+      //   return false;
+      // } else {
+      //   return true;
+      // }
     }else{
-      return true
+      return true;
     }
   }
 
