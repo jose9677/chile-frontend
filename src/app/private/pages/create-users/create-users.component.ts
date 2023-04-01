@@ -296,6 +296,7 @@ export class CreateUsersComponent implements OnInit {
           let title: string = "Usuario Registrado"
           let message = "El Rut ingresado ya esta registrado, por favor verifique y vuelva a intentarlo";
           this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
+          this.buttonBlock=false
         }else{
           let title: string = "RUT Invalido"
           let message = "El Rut ingresado es invalido, por favor verifique y vuelva a intentarlo";
