@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
     this.isFormSubmitted = true;
 
     const dataLogin = {
-      rut: this.userLogin.value.rutNumber,
+      rut: (this.userLogin.value.rutNumber).toUpperCase(),
       password: this.userLogin.value.password
     }
     // window.sessionStorage.setItem('auth-user', JSON.stringify(dataLogin.rut));

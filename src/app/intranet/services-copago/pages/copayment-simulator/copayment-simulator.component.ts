@@ -198,9 +198,9 @@ export class CopaymentSimulatorComponent implements OnInit {
       // })
 
       let error= false;
-      let title= "Simulación Generada";
+      let title= "Simulación Completada";
       // let message = 'Se ha generado su certificado de prestación de servicios de forma exitosa, el mismo podrá encontrarlo tambien en la opción "Historial de Simulaciones" del menú lateral y ubicando el botón PDF en la tabla de simulaciones';
-      let message = 'Se ha generado la simulación de prestación de servicios de forma exitosa';
+      let message = 'Se ha completado la simulación de copago de forma exitosa';
       this.modalService.OpenModalError2(ModalComponent, error, title, message);
 
       this.router.navigate(['copago', 'sus-certificados']);

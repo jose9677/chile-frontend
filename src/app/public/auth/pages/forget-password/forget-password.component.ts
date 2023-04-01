@@ -47,7 +47,7 @@ export class ForgetPasswordComponent implements OnInit {
 
 
     const dataForgetPassword = {
-      rut: this.formForgetPassword.value.rutNumber,
+      rut: (this.formForgetPassword.value.rutNumber).toUpperCase(),
     }
 
     if (this.formForgetPassword.status == "VALID") {
@@ -63,7 +63,7 @@ export class ForgetPasswordComponent implements OnInit {
           this.formForgetPassword.reset();
           this.errors = true;
           let title: any = 'Usuario no registrado';
-          let message: any  = `"El Rut que introdujo no se encuentra registrado en el sistema`;
+          let message: any  = 'El Rut que introdujo no se encuentra registrado en el sistema';
           this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
           this.isFormSubmitted = false;
         } else {
@@ -71,7 +71,7 @@ export class ForgetPasswordComponent implements OnInit {
           this.formForgetPassword.reset();
           this.errors = true;
           let title: any = 'Rut Invalido';
-          let message: any  = `El Rut que introdujo no es correcto, por favor verifique e intente nuevamente`;
+          let message: any  = 'El Rut que introdujo no es correcto, por favor verifique e intente nuevamente';
           this.modalService2.OpenModalError2(ModalComponent, this.errors, title, message);
           this.isFormSubmitted = false;
         }
@@ -81,7 +81,7 @@ export class ForgetPasswordComponent implements OnInit {
         // modal
         this.emailUser = 'su Correo Electronico'
         let title: any = 'Recuperar Contraseña';
-        let message: any = `Hemos enviado un mensaje con instrucciones a ${this.emailUser}. Si no lo encuentra en su bandeja de entrada, recuerde revisar en el correo no deseado `;
+        let message: any = 'Hemos enviado un mensaje con instrucciones a su Correo Electónico. Si no lo encuentra en su bandeja de entrada, recuerde revisar en el correo no deseado';
         this.modalService2.OpenModalError2(ModalComponent, false, title, message)
 
         this.modalService.close();
