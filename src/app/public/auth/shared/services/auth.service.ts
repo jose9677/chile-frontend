@@ -87,14 +87,15 @@ export class AuthService {
     );
   }
 
-  uploadFiles(fileData: File, id_document_type: any): Observable<any>{
+  uploadFiles(fileData: File, rut: any, id_document_type: any): Observable<any>{
 
     const formfileData = new FormData();
 
 
     formfileData.append('document_path', fileData);
 
-    return this.http.post( AUTH_API_NP + 'file/' + id_document_type , formfileData).pipe(map((result:any) => {
+    return this.http.post( AUTH_API_NP + 'file/' + rut +"/"+ id_document_type , formfileData).pipe(map((result:any) => {
+
 
     }),
     catchError((err)=> this.handlerError(err))

@@ -43,7 +43,6 @@ export class EnterRutComponent implements OnInit {
   confirmRut(e: Event) {
     e.preventDefault();
 
-    this.correctRut()
 
     // setTimeout(this.correctRut(), 10000);
 
@@ -51,7 +50,6 @@ export class EnterRutComponent implements OnInit {
     this.rut = (this.formRutUser.value.rutNumber).toUpperCase();
     this.rut = this.rut.replace(/\.|,/g, "");
 
-    console.log(this.rut)
 
     const dataRutUser= {
       rut: this.rut

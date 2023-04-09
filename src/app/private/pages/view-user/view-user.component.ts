@@ -104,7 +104,7 @@ export class ViewUserComponent implements OnInit {
       let fileData = file.fileData;
       let id_document_type = file.id_document_type
 
-      this.authServices.uploadFiles(fileData, id_document_type).subscribe((res) =>
+      this.authServices.uploadFiles(fileData, this.rut, id_document_type).subscribe((res) =>
          {
           },
           error => {
