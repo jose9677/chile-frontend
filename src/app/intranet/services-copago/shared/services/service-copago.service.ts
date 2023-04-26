@@ -41,7 +41,7 @@ export class ServiceCopagoService {
    }
 
    getDataUser( rutNeighbor: any): Observable<any | void> {
-    return this.http.get<any>( AUTH_API_NP + 'provider-user/' + rutNeighbor, httpOptions).pipe(map((result: any) => {
+    return this.http.get<any>( AUTH_API + 'provider-user/' + rutNeighbor, httpOptions).pipe(map((result: any) => {
       return result
     }),
     catchError((err) => this.handlerError(err))
@@ -49,7 +49,7 @@ export class ServiceCopagoService {
    }
 
    getServicesCategories() {
-    return this.http.get<any>( AUTH_API_NP + 'services-categories', httpOptions).pipe(map((result: any) => {
+    return this.http.get<any>( AUTH_API + 'services-categories', httpOptions).pipe(map((result: any) => {
       return result
     }),
     catchError((err) => this.handlerError(err))
@@ -64,7 +64,7 @@ export class ServiceCopagoService {
    }
 
    PDFCertificates(rutUser: any) {
-    return this.http.get<any>( AUTH_API_NP + "guard-card/" + rutUser, httpOptions ).pipe((map((result:any) => {
+    return this.http.get<any>( AUTH_API + "guard-card/" + rutUser, httpOptions ).pipe((map((result:any) => {
       return result;
     })),
     catchError((err) => this.handlerError(err))

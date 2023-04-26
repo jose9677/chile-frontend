@@ -38,7 +38,7 @@ export class DatesService {
 
 
   getForRut(rutNeighbor: any): Observable<any | void> {
-    return this.http.get<any>( AUTH_API_NP + 'detail-neightbor/'+ rutNeighbor, httpOptions).pipe(map((result:any) => {
+    return this.http.get<any>( AUTH_API + 'detail-neightbor/'+ rutNeighbor, httpOptions).pipe(map((result:any) => {
 
 
       return result['data_User_Request'];
@@ -51,7 +51,7 @@ export class DatesService {
 
 
   getForIdRequest(idRequest: any): Observable<any | void> {
-    return this.http.get<any>( AUTH_API_NP + 'joinRequestUsers/'+ idRequest, httpOptions).pipe(map((result:any) => {
+    return this.http.get<any>( AUTH_API + 'joinRequestUsers/'+ idRequest, httpOptions).pipe(map((result:any) => {
       return result;
 
     }),
@@ -61,7 +61,7 @@ export class DatesService {
   }
 
   confirmRequest(idRequest: any): Observable<any | void> {
-    return this.http.put<any>( AUTH_API_NP + 'confirmNeightbor/'+ idRequest, httpOptions).pipe(map((result:any) => {
+    return this.http.put<any>( AUTH_API + 'confirmNeightbor/'+ idRequest, httpOptions).pipe(map((result:any) => {
 
       return result;
 
@@ -72,7 +72,7 @@ export class DatesService {
   }
 
   reasignRequest(idRequest: any): Observable<any | void> {
-    return this.http.put<any>( AUTH_API_NP + 'reprogramDate/'+ idRequest, httpOptions).pipe(map((result:any) => {
+    return this.http.put<any>( AUTH_API + 'reprogramDate/'+ idRequest, httpOptions).pipe(map((result:any) => {
 
       return result;
 
@@ -83,7 +83,7 @@ export class DatesService {
   }
 
   getAllRequest(): Observable<any | void> {
-    return this.http.get<any>( AUTH_API_NP + 'request-assigned', httpOptions).pipe(map((result:any) => {
+    return this.http.get<any>( AUTH_API + 'request-assigned', httpOptions).pipe(map((result:any) => {
 
       return result;
 
@@ -94,7 +94,7 @@ export class DatesService {
 
   assignSocialAssistant(idRequest:any, assignData: any): Observable<any | void> {
 
-    return this.http.post<any>(AUTH_API_NP + 'add-visitor/'+ idRequest, assignData).pipe(map((result: any) => {
+    return this.http.post<any>(AUTH_API + 'add-visitor/'+ idRequest, assignData).pipe(map((result: any) => {
 
 
       return result;
@@ -106,7 +106,7 @@ export class DatesService {
 
   getforSocialAssistant(rutSocialAssistant: any): Observable<any | void> {
 
-    return this.http.get<any>(AUTH_API_NP + 'joinRequestEmployee/' + rutSocialAssistant, httpOptions).pipe(map((result: any) => {
+    return this.http.get<any>(AUTH_API + 'joinRequestEmployee/' + rutSocialAssistant, httpOptions).pipe(map((result: any) => {
 
       return result;
 
@@ -117,7 +117,7 @@ export class DatesService {
 
   programVisitDate(idRequest: any, Date: any): Observable<any | void> {
 
-    return this.http.put<any>(AUTH_API_NP + 'programVisitDate/'+ idRequest, Date).pipe(map((result: any) => {
+    return this.http.put<any>(AUTH_API + 'programVisitDate/'+ idRequest, Date).pipe(map((result: any) => {
 
       return result;
 
@@ -128,7 +128,7 @@ export class DatesService {
 
   getForRurSupervisor(): Observable<any | void> {
 
-    return this.http.get<any>(AUTH_API_NP + 'detail-request').pipe(map((result: any) => {
+    return this.http.get<any>(AUTH_API + 'detail-request').pipe(map((result: any) => {
 
       return result
 
@@ -139,7 +139,7 @@ export class DatesService {
 
   approbe( idRequest: any, dataRequest:any): Observable<any | void> {
 
-    return this.http.put<any>(AUTH_API_NP + 'approve-request/' + idRequest, dataRequest).pipe(map((result: any) => {
+    return this.http.put<any>(AUTH_API + 'approve-request/' + idRequest, dataRequest).pipe(map((result: any) => {
 
       return result;
 
@@ -150,7 +150,7 @@ export class DatesService {
 
   getEmployees(rutSupervisor: any): Observable<any | void> {
 
-    return this.http.get<any>(AUTH_API_NP + 'detailsAssistant/' + rutSupervisor).pipe(map((result: any) => {
+    return this.http.get<any>(AUTH_API + 'detailsAssistant/' + rutSupervisor).pipe(map((result: any) => {
 
       return result['message'];
 
@@ -161,7 +161,7 @@ export class DatesService {
 
   detailsVisitor( rutVisitor: any ): Observable<any | void> {
 
-    return this.http.get<any>( AUTH_API_NP + 'detailsVisitor/' + rutVisitor ).pipe(map((result: any) => {
+    return this.http.get<any>( AUTH_API + 'detailsVisitor/' + rutVisitor ).pipe(map((result: any) => {
 
       return result;
 

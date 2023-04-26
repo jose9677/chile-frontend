@@ -43,7 +43,7 @@ export class PrivateService {
     }
 
     roles(): Observable<any>{
-      return this.http.get<any>( AUTH_API_NP + 'details-roles', httpOptions).pipe(map((result:any) => {
+      return this.http.get<any>( AUTH_API + 'details-roles', httpOptions).pipe(map((result:any) => {
 
         return result
 
@@ -52,7 +52,7 @@ export class PrivateService {
       );
     }
     ActivarRol(id: any): Observable<any>{
-      let url = AUTH_API_NP + 'active-rol/'+ id;
+      let url = AUTH_API + 'active-rol/'+ id;
       return this.http.put(url, null).pipe(map((result:any) => {
 
       }),
@@ -65,7 +65,7 @@ export class PrivateService {
     }
 
     desactivarRol(rol: any): Observable<any>{
-      let url = AUTH_API_NP + 'desactive-rol/'+ rol;
+      let url = AUTH_API + 'desactive-rol/'+ rol;
       return this.http.put(url, null).pipe(map((result:any) => {
 
 
@@ -79,7 +79,7 @@ export class PrivateService {
     }
 
   register(dataUser: any): Observable<any>{
-    return this.http.post( AUTH_API + 'registerEmployee', dataUser, httpOptions).pipe(map((result:any) => {
+    return this.http.post( AUTH_API_NP + 'registerEmployee', dataUser).pipe(map((result:any) => {
 
 
     }),
@@ -91,7 +91,7 @@ export class PrivateService {
   }
 
   actualizarUser(dataUser: any, rut:any): Observable<any>{
-    let url = AUTH_API_NP + 'update-employee/'+rut;
+    let url = AUTH_API + 'update-employee/' + rut;
     return this.http.put(url, dataUser).pipe(map((result:any) => {
 
 
@@ -105,7 +105,7 @@ export class PrivateService {
   }
 
   datosUser(rutUser:any): Observable<any>{
-    let url = AUTH_API_NP + 'search-user/'+ rutUser;
+    let url = AUTH_API + 'search-user/'+ rutUser;
     return this.http.get<any>(url, httpOptions).pipe(map((result:any) => {
 
 
@@ -117,7 +117,7 @@ export class PrivateService {
   }
 
   verAsistentes(rut:any): Observable<any>{
-    let url=AUTH_API_NP + 'assistant-list/'+ rut
+    let url=AUTH_API + 'assistant-list/'+ rut
     return this.http.get<any>(url, httpOptions).pipe(map((result:any) => {
 
       return result
@@ -128,7 +128,7 @@ export class PrivateService {
   }
 
   verUsuarios(): Observable<any>{
-    return this.http.get<any>( AUTH_API_NP + 'details-assistants-and-supervisors', httpOptions).pipe(map((result:any) => {
+    return this.http.get<any>( AUTH_API + 'details-assistants-and-supervisors', httpOptions).pipe(map((result:any) => {
 
       return result
 
@@ -138,7 +138,7 @@ export class PrivateService {
   }
 
   verTodosLosUsuarios(): Observable<any>{
-    return this.http.get<any>( AUTH_API_NP + 'details-user', httpOptions).pipe(map((result:any) => {
+    return this.http.get<any>( AUTH_API + 'details-user', httpOptions).pipe(map((result:any) => {
 
       return result
 
@@ -148,7 +148,7 @@ export class PrivateService {
   }
 
   supervisor(): Observable<any>{
-    return this.http.get<any>( AUTH_API_NP + 'detailsSupervisor', httpOptions).pipe(map((result:any) => {
+    return this.http.get<any>( AUTH_API + 'detailsSupervisor', httpOptions).pipe(map((result:any) => {
 
       return result
 
@@ -158,7 +158,7 @@ export class PrivateService {
   }
 
   ActivarUser (rutUser: any): Observable<any>{
-    let url = AUTH_API_NP + 'active-user/'+ rutUser;
+    let url = AUTH_API + 'active-user/'+ rutUser;
     return this.http.put(url, null).pipe(map((result:any) => {
 
 
@@ -173,7 +173,7 @@ export class PrivateService {
 
 
   desactivarUser(rutUser: any): Observable<any>{
-    let url = AUTH_API_NP + 'desactive-user/'+ rutUser;
+    let url = AUTH_API + 'desactive-user/'+ rutUser;
     return this.http.put(url, null).pipe(map((result:any) => {
 
 
@@ -207,7 +207,7 @@ export class PrivateService {
 
 
   addSupervisor(rutUser: any, dataUser: any): Observable<any>{
-    return this.http.post( AUTH_API_NP + 'add-supervisor/' + rutUser , dataUser, httpOptions).pipe(map((result:any) => {
+    return this.http.post( AUTH_API + 'add-supervisor/' + rutUser , dataUser, httpOptions).pipe(map((result:any) => {
 
       return result;
 

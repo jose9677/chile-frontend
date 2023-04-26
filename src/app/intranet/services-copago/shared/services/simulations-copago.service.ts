@@ -26,14 +26,14 @@ export class SimulationsCopagoService {
   ) { }
 
   addSimulation( rutUser: any, dataSimulation: any) {
-    return this.http.post<any>( AUTH_API_NP + "add-simulation/" + rutUser, dataSimulation, httpOptions).pipe((map((result: any) => {
+    return this.http.post<any>( AUTH_API + "add-simulation/" + rutUser, dataSimulation, httpOptions).pipe((map((result: any) => {
       return result
     })),
     catchError((err) => this.handlerError(err)))
   }
 
   addServicesSimulation(dataService: any) {
-    return this.http.post<any>( AUTH_API_NP + "add-simulations-services", dataService, httpOptions ).pipe((map((result:any) => {
+    return this.http.post<any>( AUTH_API + "add-simulations-services", dataService, httpOptions ).pipe((map((result:any) => {
       return result;
     })),
     catchError((err) => this.handlerError(err))
@@ -41,7 +41,7 @@ export class SimulationsCopagoService {
   }
 
   getRutSimulation(rutUser: any) {
-    return this.http.get<any>( AUTH_API_NP + "details-certificate/" + rutUser, httpOptions ).pipe((map((result:any) => {
+    return this.http.get<any>( AUTH_API + "details-certificate/" + rutUser, httpOptions ).pipe((map((result:any) => {
       return result;
     })),
     catchError((err) => this.handlerError(err))
@@ -49,7 +49,7 @@ export class SimulationsCopagoService {
   }
 
   PDFCertificates(id: any) {
-    return this.http.get<any>( AUTH_API_NP + "guard-card/" + id, httpOptions ).pipe((map((result:any) => {
+    return this.http.get<any>( AUTH_API + "guard-card/" + id, httpOptions ).pipe((map((result:any) => {
       return result;
     })),
     catchError((err) => this.handlerError(err))
@@ -57,7 +57,7 @@ export class SimulationsCopagoService {
   }
 
   getDataSimulation(idSimulation: any) {
-    return this.http.get<any>( AUTH_API_NP + "details-copago/" + idSimulation, httpOptions ).pipe((map((result:any) => {
+    return this.http.get<any>( AUTH_API + "details-copago/" + idSimulation, httpOptions ).pipe((map((result:any) => {
       return result;
     })),
     catchError((err) => this.handlerError(err))
@@ -65,7 +65,7 @@ export class SimulationsCopagoService {
   }
 
   calcCopago(idSimulation: any) {
-    return this.http.put<any>( AUTH_API_NP + "calc-copago/" + idSimulation, httpOptions ).pipe((map((result:any) => {
+    return this.http.put<any>( AUTH_API + "calc-copago/" + idSimulation, httpOptions ).pipe((map((result:any) => {
       return result;
     })),
     catchError((err) => this.handlerError(err))
@@ -73,7 +73,7 @@ export class SimulationsCopagoService {
   }
 
   generateSimulation( idSimulation: any ) {
-    return this.http.put<any>( AUTH_API_NP + "generate-simulation/" + idSimulation, httpOptions ).pipe((map((result:any) => {
+    return this.http.put<any>( AUTH_API + "generate-simulation/" + idSimulation, httpOptions ).pipe((map((result:any) => {
       return result;
     })),
     catchError((err) => this.handlerError(err))
@@ -81,7 +81,7 @@ export class SimulationsCopagoService {
   }
 
   cancelSimulation( idSimulation: any, idMotive: any) {
-    return this.http.put<any>( AUTH_API_NP + "cancel-simulation/" + idSimulation + "/" + idMotive, httpOptions ).pipe((map((result:any) => {
+    return this.http.put<any>( AUTH_API + "cancel-simulation/" + idSimulation + "/" + idMotive, httpOptions ).pipe((map((result:any) => {
       return result;
     })),
     catchError((err) => this.handlerError(err))
