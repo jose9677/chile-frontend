@@ -1,0 +1,198 @@
+<section>
+    <div class="row">
+        <div [ngClass]="{'col-md-10': addNew, 'col-12': !addNew}">
+            <div class="input-group p-1 hidden-print">
+                <input
+                type="icon"
+                class="form-control"
+                placeholder="Buscar..."
+                [patterns] ="customPatterns"
+                mask="A*"
+                [value]="sortByService.search"
+                #txtSearch (keyup)="search(txtSearch.value);"
+                >
+                <div class="input-group-append">
+                    <span class="input-group-icon" id="basic-addon2"><i class="mdi mdi-magnify"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 justify-content-center align-self-end p-0 m-0" *ngIf="addNew">
+            <ng-container *ngIf="addNew.title === 'Nuevo ciudadano'">
+                <a class="p-0 m-0 d-flex justify-content-start align-items-center" >
+                    <i class="mdi mdi-plus-circle-outline h2 icon-success"></i>
+                    <p class=" colorTextPrimari h4 p-0 m-0"> {{ addNew.title }} </p>
+                </a>
+            </ng-container>
+
+        </div>
+    </div>
+
+    <div class="col-12 table-responsive mt-3 ">
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+
+                    <th *ngFor="let title of titles; let id = index" class="head-table thd-{{id}}">
+                        <div>
+                            <div class="head-table-icon">
+                                <p>{{title.title}}</p>
+                            </div>
+                            <div class="head-table-icon">
+                                <div class="container-icon-up" (click)="sortByService.dataSortBy0(title.key, $event)">
+                                    <a class="icon-up"><i class="mdi mdi-chevron-up"></i></a>
+                                </div>
+                                <div class="container-icon-down" (click)="sortByService.dataSortBy1(title.key, $event)">
+                                    <a class="icon-down"><i class="mdi mdi-chevron-down"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </th>
+
+                    <th class="head-table" *ngIf="options">
+                        <div>
+                            <div class="head-table-icon">
+                                <p class="pb-1">Opciones</p>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="tbody">
+                <ng-container *ngFor="let data of dataInput | sortBy:sortByService.dataSort:sortByService.order | filter:sortByService.search:sortByService.page:titles:this.dataForPage let id = index "
+                >
+                    <tr class="tb-{{id}}">
+
+                        <td *ngFor="let title of titles; let i = index"
+                        class="tdd-{{i}}"
+                        >
+
+                            <div class="d-flex align-items-center"
+                            *ngIf="title?.title != 'Memorandos asociados'"
+                            >
+                                <ng-container [ngSwitch]="title?.title">
+
+                                    <ng-container *ngSwitchCase="'Nro.'">
+                                        <input
+                                        class=" checkbox mx-2"
+                                        type="checkbox" name=""
+                                        title="Ver los datos ocultos"
+                                        [checked]="data.hidden"
+                                        (click)="viewDetail($event, data['Nro.'])"
+                                        >
+                                        <p class="text">{{ data[title.key] }}</p>
+
+                                    </ng-container>
+
+                                    <ng-container *ngSwitchCase="'fecha'">
+                                        {{ data[title.key] | date:'dd/MM/YYYY' }}
+                                    </ng-container>
+
+                                    <ng-container *ngSwitchDefault>
+                                        {{ data[title.key] }}
+                                    </ng-container>
+
+                                </ng-container>
+
+                            </div>
+
+
+
+                        </td>
+
+                        <td *ngIf="actionsTable.length != 0">
+
+                            <!-- <a *ngIf="actionsTable.includes('ar') && data.estatus === 'Por Asignar' "><i title = "Asignar solicitud" class="mdi mdi-account-plus h3 icon-primary-color mx-1" (click)="assignRequest($event, data['Nro. solicitud'])"></i></a>
+
+                            <a *ngIf="actionsTable.includes('rar') && data.estatus === 'Asignada'"><i title = "Reasignar solicitud" class="mdi mdi-account-switch h3 icon-primary-color mx-1" (click)="assignRequest($event, data['Nro. solicitud'])"></i></a>
+
+                            <a *ngIf="actionsTable.includes('vr')"><i title = "Ver solicitud" class="mdi mdi-eye h3 icon-primary-color mx-1" (click)="viewRequest($event, data['Nro. solicitud'])"></i></a>
+
+                            <a *ngIf="actionsTable.includes('es')"><i title = "Editar solicitud" class="mdi mdi-pencil-outline h3 icon-primary-color mx-1" (click)="editRequest($event, data['Nro. solicitud'])"></i></a>
+
+
+
+                            <a *ngIf="actionsTable.includes('nm')"><i title = "Nuevo memorando" class="mdi mdi-paperclip h3 icon-primary-color mx-1" (click)="processRequest($event, data.NumberInput)"></i></a>
+
+                            <a *ngIf="actionsTable.includes('ec')"><i title = "Editar ciudadano" class="mdi mdi-pencil-outline h3 icon-primary-color mx-1" (click)="editCitizen($event, (data.nac +'-'+ data.ced))"></i></a>
+
+                            <a *ngIf="actionsTable.includes('er')"><i title = "Eliminar registro" class="mdi mdi-close h3 icon-primary-color mx-1" (click)="removeCitizen($event, id)"></i></a>
+
+                            <a *ngIf="actionsTable.includes('em')"><i title = "Ver memorando" class="mdi mdi-file-pdf-box h3 icon-primary-color mx-1" (click)="viewMemo($event, data.NumberMemo)"></i></a>
+
+                            <a *ngIf="actionsTable.includes('em')"><i title = "Editar Memorando" class="mdi mdi-pencil-outline h3 icon-primary-color mx-1" (click)="editarMemo($event, data.NumberMemo)"></i></a>
+
+                            <a *ngIf="actionsTable.includes('vc')"><i title = "Ver Correcciones" class="mdi mdi-comment-text-outline h3 icon-primary-color mx-1" (click)="viewCorrections($event, data.corrections)"></i></a>
+
+
+
+
+                            <a *ngIf="actionsTable.includes('enr')"><i title = "Editar nota de remisión" class="mdi mdi-pencil-outline h3 icon-primary-color mx-1" (click)="editRemissionNote($event, 12)"></i></a>
+
+                            <a *ngIf="actionsTable.includes('vnr')"><i title = "Ver nota de remisión" class="mdi mdi-eye h3 icon-primary-color mx-1" (click)="viewRemissionNote($event, 12)"></i></a>
+
+                            <a *ngIf="actionsTable.includes('evnr')"><i title = "Enviar nota de remisión" class="mdi mdi-send h3 icon-primary-color mx-1" (click)="sendRemissionNote($event, 12)"></i></a>
+
+
+
+                            <a *ngIf="actionsTable.includes('dce')"><i title = "Descargar constancia de entrega" class="mdi mdi-file-pdf-box h3 icon-primary-color mx-1" (click)="downloadConstancyDelivery($event, 12)"></i></a>
+
+                            <a *ngIf="actionsTable.includes('vce')"><i title = "Ver constancia de entrega" class="mdi mdi-eye h3 icon-primary-color mx-1" (click)="viewConstancyDelivery($event, 12)"></i></a>
+
+                            <a *ngIf="actionsTable.includes('evce')"><i title = "Enviar constancia de entrega" class="mdi mdi-send h3 icon-primary-color mx-1" (click)="sendConstancyDelivery($event, 12)"></i></a> -->
+
+                            <a *ngIf="actionsTable.includes('daps')" [href]="data.path" target="_blank"><i title = "Descargar APS" class="mdi mdi-download-circle-outline h3 icon-primary-color mx-1" ></i></a>
+
+                        </td>
+
+
+                    </tr>
+
+                    <tr
+                    class="hidden-data hidden-print" [hidden]="!data.hidden">
+
+                        <td class="data-td px-1" colspan="4">
+                            <ng-container *ngFor="let title of titles; let i2 = index">
+                                <ul class="d-{{i2}}">
+                                    <p id="i-{{i2}}" class="title">{{title.title}}:</p>
+                                    <p
+                                    class="value"
+                                    [ngClass]="{'text-status-red': (data[title.key] === 'Por Asignar') || (data[title.key] === 'corrección'), 'text-status-orange': (data[title.key] === 'Asignada'), 'text-status-green': (data[title.key] === 'APROBADO')}"
+                                    >{{data[title.key]}}</p>
+                                </ul>
+                            </ng-container>
+                        </td>
+
+                    </tr>
+
+                </ng-container>
+
+            </tbody>
+        </table>
+        <hr class="m-0">
+        <div class="button-search hidden-print" *ngIf=" pages.length > 1 ">
+            <div  class="m-1 d-flex">
+
+                <div class="m-0 p-0">
+                    <button class="btn btn-outline-primary style-outline m-0 px-1"  (click)="sortByService.getPage(1); getPages();" [disabled]="sortByService.page === 0"><i class="mdi mdi-chevron-double-left"></i></button>
+
+                    <button class="btn btn-outline-primary style-outline px-1" (click)="sortByService.prevPage($event, dataForPage); getPages();" [disabled]="sortByService.page === 0"><i class="mdi mdi-arrow-left-bold"></i> <span class="btn-text">Anterior</span>  </button>
+                </div>
+
+                <div class="row m-0 p-0 ">
+                    <ng-container *ngFor="let page of pages">
+                        <button class=" col btn" [ngClass]="{'button-primary' : page.active === true, ' btn-outline-primary style-outline' : page.active != true, 'px-2' : page.pageNumber <= 9, 'px-1' : page.pageNumber >= 10 }" *ngIf="!page.hidden" (click)="sortByService.getPage(page.pageNumber); getPages();">{{ page.pageNumber }}</button>
+                    </ng-container>
+                </div>
+
+                <div class="m-0 p-0">
+                    <button class="btn btn-outline-primary style-outline px-1" (click)="sortByService.nextPage($event, dataForPage); getPages();" [disabled]="sortByService.finishPage(pages.length)">  <span class="btn-text">Siguiente</span>  <i class="mdi mdi-arrow-right-bold"></i></button>
+
+                    <button class="btn btn-outline-primary style-outline m-0 px-1"  (click)="sortByService.getPage(pages.length); getPages();" [disabled]="sortByService.finishPage(pages.length)"><i class="mdi mdi-chevron-double-right"></i></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</section>

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CreateUsersComponent } from './pages/create-users/create-users.component';
 import { EditUserComponent } from './pages/edit-user/edit-user.component';
-import { LayoutAdminUsersComponent } from './pages/layouts/layout-admin-users/layout-admin-users.component';
+import { LayoutAdminUsersComponent } from './layout-admin-users/layout-admin-users.component';
 import { ViewUsersComponent } from './pages/view-users/view-users.component';
 import { RolesComponent } from './pages/roles/roles.component';
 import { AddRoleComponent } from './pages/add-role/add-role.component';

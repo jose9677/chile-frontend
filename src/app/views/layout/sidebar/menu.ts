@@ -16,7 +16,7 @@ export const MENU: MenuItem[] = [
   // },
   {
     label: 'Solicitudes',
-    icon: 'file-text',
+    icon: 'inbox',
     roles: [0],
     subItems: [
       {
@@ -43,7 +43,7 @@ export const MENU: MenuItem[] = [
   },
   {
     label: 'Copago',
-    icon: 'file-text',
+    icon: 'credit-card',
     roles: [1, 5],
     statusRequest: 6,
     subItems: [
@@ -75,7 +75,7 @@ export const MENU: MenuItem[] = [
   // },
   {
     label: 'Seguridad',
-    icon: 'file-text',
+    icon: 'lock',
     roles: [3, 4, 5],
     subItems: [
       {
@@ -87,6 +87,18 @@ export const MENU: MenuItem[] = [
         roles: [],
         label: 'Roles',
         link: '/seguridad/roles'
+      },
+    ]
+  },
+  {
+    label: 'APS',
+    icon: 'plus-square',
+    roles: [4, 5],
+    subItems: [
+      {
+        roles: [4, 5],
+        label: 'APS',
+        link: '/aps/dashboard'
       },
     ]
   },

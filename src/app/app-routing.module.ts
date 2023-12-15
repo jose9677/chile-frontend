@@ -66,6 +66,10 @@ const routes: Routes = [
         loadChildren: () => import('./intranet/services-copago/services-copago.module').then(m => m.ServicesCopagoModule)
       },
       {
+        path: 'aps',
+        loadChildren: () => import('./intranet/aps-management/aps-management.module').then(m => m.ApsManagementModule)
+      },
+      {
         path: 'seguridad',
         loadChildren: () => import('./private/private.module').then(m => m.PrivateModule)
       },

@@ -1,0 +1,45 @@
+<form class="from-sample" [formGroup]="updateApsForm" (ngSubmit)="updateAps($event)">
+
+  <div class="card m-0 px-5 py-3 mt-3">
+    <div class="row">
+      <h3 class="col-12 colorTextPrimari">Actualizar listado APS</h3>
+      <p>Descarga el archivo modelo <a href="http://">Haga Click Aquí</a></p>
+
+      <div class="col-12 row  p-3 ">
+
+        <div class="col-md-6 mb-3">
+          <label for="generationDate" class="form-label">Fecha de Nacimiento</label>
+          <input
+          type="date"
+          [maxDate]="today"
+          class="form-control"
+          id="generationDate"
+          formControlName="generationDate"
+          [ngClass]="{'is-invalid': (updateApsForm.controls.generationDate.touched && updateApsForm.controls.generationDate.errors) || (isFormSubmitted && updateApsForm.controls.generationDate.errors)}"
+          >
+          <div *ngIf="(updateApsForm.controls.generationDate.touched && updateApsForm.controls.generationDate.errors?.required) || (isFormSubmitted && updateApsForm.controls.generationDate.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label for="generationDate" class="form-label mb-4"></label>
+          <input
+          class="form-control"
+          type="file"
+          (change)="selectDataFile($event)"
+          formEnctype="multipart/form-data"
+        >
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="card m-0 px-5 py-3 mt-3">
+    <div class="row justify-content-center gap-3 gap-md-6 p-3">
+      <button type="submit" class="col-md-1 btn btn-primary style" >Actualizar</button>
+      <button type="button" class="col-md-1 btn btn-outline-primary style" (click)="cancel($event)">cancelar</button>
+
+    </div>
+  </div>
+
+</form>
