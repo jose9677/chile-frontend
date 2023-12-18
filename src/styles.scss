@@ -65,8 +65,8 @@ label.size{
 button.style{
   font-family: 'Century Gothic';
   font-size: 1.2em;
-  min-width: 40%;
-  min-height: 40%;
+  // min-width: 40%;
+  // min-height: 40%;
   // left: 616px;
   // background: #0EADB0;
   // border: #0EADB0;
@@ -82,8 +82,8 @@ button.style:hover{
 button.style-outline{
   font-family: 'Century Gothic';
   font-size: 1.2em;
-  width: 40%;
-  height: 40%;
+  // width: 40%;
+  // height: 40%;
   // left: 616px;
   background: #fff;
   color: #0EADB0;
@@ -94,6 +94,10 @@ button.style-outline{
 button.style-outline:hover{
   background: #0EADB0 !important ;
   color: #fff;
+
+  i{
+  color: #fff;
+  }
 }
 
 span.link, a.link{

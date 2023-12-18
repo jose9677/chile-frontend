@@ -230,9 +230,7 @@ export class PrivateService {
   downloadReport2(): void{
 
     let url = `${AUTH_API_NP}export-integramedica`;
-
     window.location.href = url;
-
   }
 
 
@@ -248,9 +246,7 @@ export class PrivateService {
         this.modalService.OpenModalError2(ModalComponent, true, title, message);
 
       } else {
-
         this.errorMessage= err.error;
-
       }
 
 

@@ -1,6 +1,6 @@
 <section>
     <div class="row">
-        <div [ngClass]="{'col-md-10': addNew, 'col-12': !addNew}">
+        <div [ngClass]="{'col-md-10': addNew.status, 'col-12': !addNew.status}">
             <div class="input-group p-1 hidden-print">
                 <input
                 type="icon"
@@ -16,14 +16,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2 justify-content-center align-self-end p-0 m-0" *ngIf="addNew">
-            <ng-container *ngIf="addNew.title === 'Nuevo ciudadano'">
-                <a class="p-0 m-0 d-flex justify-content-start align-items-center" >
-                    <i class="mdi mdi-plus-circle-outline h2 icon-success"></i>
-                    <p class=" colorTextPrimari h4 p-0 m-0"> {{ addNew.title }} </p>
-                </a>
-            </ng-container>
-
+        <div class="col-md-2 justify-content-center align-self-end p-0 m-0" *ngIf="addNew.status">
+          <a class="p-0 m-0 d-flex justify-content-start align-items-center" >
+              <i class="mdi mdi-plus-circle-outline h2 icon-success"></i>
+              <p class=" colorTextPrimari h4 p-0 m-0"> {{ addNew.title }} </p>
+          </a>
         </div>
     </div>
 
@@ -32,30 +29,28 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-
-                    <th *ngFor="let title of titles; let id = index" class="head-table thd-{{id}}">
-                        <div>
-                            <div class="head-table-icon">
-                                <p>{{title.title}}</p>
-                            </div>
-                            <div class="head-table-icon">
-                                <div class="container-icon-up" (click)="sortByService.dataSortBy0(title.key, $event)">
-                                    <a class="icon-up"><i class="mdi mdi-chevron-up"></i></a>
-                                </div>
-                                <div class="container-icon-down" (click)="sortByService.dataSortBy1(title.key, $event)">
-                                    <a class="icon-down"><i class="mdi mdi-chevron-down"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </th>
-
-                    <th class="head-table" *ngIf="options">
-                        <div>
-                            <div class="head-table-icon">
-                                <p class="pb-1">Opciones</p>
-                            </div>
-                        </div>
-                    </th>
+                  <th *ngFor="let title of titles; let id = index" class="head-table thd-{{id}}">
+                      <div>
+                          <div class="head-table-text">
+                              <p>{{title.title}}</p>
+                          </div>
+                          <div class="head-table-icon">
+                              <div class="container-icon-up" (click)="sortByService.dataSortBy0(title.key, $event)">
+                                  <a class="icon-up"><i class="mdi mdi-chevron-up"></i></a>
+                              </div>
+                              <div class="container-icon-down" (click)="sortByService.dataSortBy1(title.key, $event)">
+                                  <a class="icon-down"><i class="mdi mdi-chevron-down"></i></a>
+                              </div>
+                          </div>
+                      </div>
+                  </th>
+                  <th class="head-table" *ngIf="options">
+                      <div>
+                          <div class="head-table-text">
+                              <p class="pb-1">Opciones</p>
+                          </div>
+                      </div>
+                  </th>
                 </tr>
             </thead>
             <tbody class="tbody">
@@ -80,24 +75,21 @@
                                         [checked]="data.hidden"
                                         (click)="viewDetail($event, data['Nro.'])"
                                         >
-                                        <p class="text">{{ data[title.key] }}</p>
+                                        <p class="colorTextPrimari">{{ data[title.key] }}</p>
 
                                     </ng-container>
 
                                     <ng-container *ngSwitchCase="'fecha'">
-                                        {{ data[title.key] | date:'dd/MM/YYYY' }}
+                                        <span class="colorTextPrimari">{{ data[title.key] | date:'dd/MM/YYYY' }}</span>
                                     </ng-container>
 
                                     <ng-container *ngSwitchDefault>
-                                        {{ data[title.key] }}
+                                        <span class="colorTextPrimari">{{ data[title.key] }}</span>
                                     </ng-container>
 
                                 </ng-container>
 
                             </div>
-
-
-
                         </td>
 
                         <td *ngIf="actionsTable.length != 0">
@@ -141,7 +133,7 @@
 
                             <a *ngIf="actionsTable.includes('evce')"><i title = "Enviar constancia de entrega" class="mdi mdi-send h3 icon-primary-color mx-1" (click)="sendConstancyDelivery($event, 12)"></i></a> -->
 
-                            <a *ngIf="actionsTable.includes('daps')" [href]="data.path" target="_blank"><i title = "Descargar APS" class="mdi mdi-download-circle-outline h3 icon-primary-color mx-1" ></i></a>
+                            <a *ngIf="actionsTable.includes('daps')" [href]="data.path" ><i title = "Descargar lista APS" class="mdi mdi-download-circle-outline h3 icon-primary-color mx-1" ></i></a>
 
                         </td>
 
@@ -170,25 +162,25 @@
             </tbody>
         </table>
         <hr class="m-0">
-        <div class="button-search hidden-print" *ngIf=" pages.length > 1 ">
-            <div  class="m-1 d-flex">
+        <div class="button-navigate hidden-print" *ngIf=" pages.length > 1 ">
+            <div  class="d-flex ">
 
                 <div class="m-0 p-0">
-                    <button class="btn btn-outline-primary style-outline m-0 px-1"  (click)="sortByService.getPage(1); getPages();" [disabled]="sortByService.page === 0"><i class="mdi mdi-chevron-double-left"></i></button>
+                    <button class="btn btn-outline-primary style-outline"  (click)="sortByService.getPage(1); getPages();" [disabled]="sortByService.page === 0"><i class="mdi mdi-chevron-double-left"></i></button>
 
-                    <button class="btn btn-outline-primary style-outline px-1" (click)="sortByService.prevPage($event, dataForPage); getPages();" [disabled]="sortByService.page === 0"><i class="mdi mdi-arrow-left-bold"></i> <span class="btn-text">Anterior</span>  </button>
+                    <button class="btn btn-outline-primary style-outline" (click)="sortByService.prevPage($event, dataForPage); getPages();" [disabled]="sortByService.page === 0"><i class="mdi mdi-arrow-left-bold"></i> <span class="btn-text">Anterior</span>  </button>
                 </div>
 
-                <div class="row m-0 p-0 ">
+                <div class="btn-list">
                     <ng-container *ngFor="let page of pages">
-                        <button class=" col btn" [ngClass]="{'button-primary' : page.active === true, ' btn-outline-primary style-outline' : page.active != true, 'px-2' : page.pageNumber <= 9, 'px-1' : page.pageNumber >= 10 }" *ngIf="!page.hidden" (click)="sortByService.getPage(page.pageNumber); getPages();">{{ page.pageNumber }}</button>
+                        <button class="btn" [ngClass]="{'btn-primary style' : page.active === true, 'btn-outline-primary style-outline' : page.active != true}" *ngIf="!page.hidden" (click)="sortByService.getPage(page.pageNumber); getPages();">{{ page.pageNumber }}</button>
                     </ng-container>
                 </div>
 
                 <div class="m-0 p-0">
-                    <button class="btn btn-outline-primary style-outline px-1" (click)="sortByService.nextPage($event, dataForPage); getPages();" [disabled]="sortByService.finishPage(pages.length)">  <span class="btn-text">Siguiente</span>  <i class="mdi mdi-arrow-right-bold"></i></button>
+                    <button class="btn btn-outline-primary style-outline" (click)="sortByService.nextPage($event, dataForPage); getPages();" [disabled]="sortByService.finishPage(pages.length)">  <span class="btn-text">Siguiente</span>  <i class="mdi mdi-arrow-right-bold"></i></button>
 
-                    <button class="btn btn-outline-primary style-outline m-0 px-1"  (click)="sortByService.getPage(pages.length); getPages();" [disabled]="sortByService.finishPage(pages.length)"><i class="mdi mdi-chevron-double-right"></i></button>
+                    <button class="btn btn-outline-primary style-outline"  (click)="sortByService.getPage(pages.length); getPages();" [disabled]="sortByService.finishPage(pages.length)"><i class="mdi mdi-chevron-double-right"></i></button>
                 </div>
 
             </div>

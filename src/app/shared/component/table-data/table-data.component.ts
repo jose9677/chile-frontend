@@ -2,6 +2,7 @@ import { Component, Input, OnInit, SimpleChange, SimpleChanges, ViewChild, ViewC
 import { SortByTablesService } from './services/sort-by-tables.service';
 import { ModalsService } from 'src/app/shared/services/modals.service';
 import { FilterPipe } from './pipes/filter.pipe';
+import { ApsManagementService } from 'src/app/intranet/aps-management/shared/services/aps-management.service';
 
 @Component({
   selector: 'app-table-data',
@@ -38,6 +39,7 @@ export class TableDataComponent implements OnInit {
   constructor(
 
     private modalService: ModalsService,
+    private apsService: ApsManagementService
 
     ) {
 
@@ -186,7 +188,7 @@ export class TableDataComponent implements OnInit {
     let dataForPage: number = this.dataForPage;
     let numberPages = dataInput.length/dataForPage;
     let positionPage: number = this.sortByService.positionPage;
-    let pagesForList: number = 3;
+    let pagesForList: number = 2;
 
     for (let i = 0; i < numberPages; i++) {
 

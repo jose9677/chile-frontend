@@ -26,7 +26,7 @@ export class ApsDashboardComponent implements OnInit {
   ) {
     this.dataDataTable = [];
     this.titleDataTable = [
-      'nro',
+      'Nro.',
       'fecha de actualización',
       'fecha de generación',
       'cantidad de registros',
@@ -47,15 +47,17 @@ export class ApsDashboardComponent implements OnInit {
 
     this.apsSetvices.getLatestApsUpdate().subscribe((result) => {
 
-      let {update_date, created_at, cant_records, coincidence, user, status_description, path} = result
+      console.log(result);
+
+      let {update_date, created_at, cant_records, coincidence, user_name, status_description, path} = result
 
       this.apsUpdateDate = update_date;
       this.apsGenerationDate = created_at;
       this.numberOfRecords = cant_records;
       this.coincidences = coincidence;
-      this.loadedBy = user;
+      this.loadedBy = user_name;
       this.status = status_description;
-      this.pathAps = path;
+      this.pathAps = this.apsSetvices.downloadDocumentAps(path);
 
     },
     error => {
@@ -76,14 +78,14 @@ export class ApsDashboardComponent implements OnInit {
       result.map((res: any, i: any)=> {
 
         dataResult.push({
-          'nro.': i+1,
+          'Nro.': i+1,
           'fecha de actualización': res.updated_at,
           'fecha de generación': res.created_at,
           'cantidad de registros': res.cant_records,
           'coincidencias (inscritos)': res.coincidence,
-          'cargado por': res.user,
+          'cargado por': res.user_name,
           'estatus': res.description,
-          'path': res.path
+          'path': this.apsSetvices.downloadDocumentAps(res.path)
         })
       })
 

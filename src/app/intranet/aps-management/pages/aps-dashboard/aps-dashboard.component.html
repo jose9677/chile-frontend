@@ -1,4 +1,4 @@
-<div class="card m-0 px-5 py-3 mt-3">
+<div class="card m-0 px-5 py-5 mt-3">
   <div class="row">
     <h3 class="col-12 colorTextPrimari">Última actualización APS</h3>
 
@@ -34,7 +34,7 @@
     <div class=" col-md-6">
       <div class="row justify-content-center gap-3 p-3">
         <button type="button" class="col-12 btn btn-primary style" (click)="updateAps($event)">Actualizar listado APS</button>
-        <a [href]="pathAps" target="_blank" class="m-0 p-0"><button type="button" class="col-12 btn btn-outline-primary style">Descargar listado APS</button></a>
+        <a [href]="pathAps"  class="m-0 p-0"><button type="button" class="col-12 btn btn-outline-primary style">Descargar listado APS</button></a>
 
       </div>
     </div>
@@ -42,7 +42,7 @@
   </div>
 </div>
 
-<div class="card m-0 px-5 py-3 mt-3">
+<div class="card m-0 px-5 py-5 mt-3">
   <div class="row">
     <h3 class="col-12 colorTextPrimari">Estatus actualización APS</h3>
 
@@ -52,27 +52,27 @@
 
         <div class="mb-2">
           <i class="mdi mdi-check-circle-outline fs-3"></i>
-          <span class="colorTextPrimari mx-2">Fecha de actualización: </span>
+          <span class="colorTextPrimari mx-2">Limpieza de listado actual </span>
         </div>
         <div  class="mb-2">
           <i class="mdi mdi-close-octagon-outline fs-3"></i>
-          <span class="colorTextPrimari mx-2">Fecha de generación: </span>
+          <span class="colorTextPrimari mx-2">Carga de listado nuevo en base de datos</span>
         </div>
         <div  class="mb-2">
           <i class="mdi mdi-autorenew fs-3"></i>
-          <span class="colorTextPrimari mx-2">Cantidad de registros: </span>
+          <span class="colorTextPrimari mx-2">Respaldo de archivo fuente en el servidor</span>
         </div>
         <div  class="mb-2">
           <i class="mdi mdi-dots-horizontal-circle-outline fs-3"></i>
-          <span class="colorTextPrimari mx-2">Coincidencias (Inscritos en convenio): </span>
+          <span class="colorTextPrimari mx-2">Actualización de vecinos registrados con APS</span>
         </div>
         <div  class="mb-2">
           <i class="mdi mdi-dots-horizontal-circle-outline fs-3"></i>
-          <span class="colorTextPrimari mx-2">Cargado por: </span>
+          <span class="colorTextPrimari mx-2">Actualización de porcentajes de descuento</span>
         </div>
         <div  class="mb-2">
           <i class="mdi mdi-dots-horizontal-circle-outline fs-3"></i>
-          <span class="colorTextPrimari mx-2">Estatus: </span>
+          <span class="colorTextPrimari mx-2">Proceso finalizado con éxito</span>
         </div>
 
       </div>
@@ -103,17 +103,17 @@
   </div>
 </div>
 
-<div class="card m-0 px-5 py-3 mt-3">
+<div class="card m-0 px-5 py-5 mt-3">
   <div class="row">
     <h3 class="col-12 colorTextPrimari">Última actualización APS</h3>
 
     <app-table-data
     [titlesTable]= "titleDataTable"
     [dataInput]= "dataDataTable"
-    [addNew]= "{'status': true, title: 'Nueva solicitud'}"
+    [addNew]= "{'status': false, title: ''}"
     [options] = true
     [actionsTable]= "['daps']"
-    [dataForPage]="5"
+    [dataForPage]="10"
     ></app-table-data>
 
   </div>

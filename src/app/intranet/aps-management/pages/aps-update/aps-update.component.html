@@ -3,21 +3,23 @@
   <div class="card m-0 px-5 py-3 mt-3">
     <div class="row">
       <h3 class="col-12 colorTextPrimari">Actualizar listado APS</h3>
-      <p>Descarga el archivo modelo <a href="http://">Haga Click Aquí</a></p>
+      <p  class="mt-2">Para descarga el archivo modelo <a href="http://">Haga Click Aquí</a></p>
 
       <div class="col-12 row  p-3 ">
 
         <div class="col-md-6 mb-3">
-          <label for="generationDate" class="form-label">Fecha de Nacimiento</label>
+          <label for="generationDate" class="form-label">Fecha de Generación</label>
           <input
           type="date"
           [maxDate]="today"
           class="form-control"
           id="generationDate"
           formControlName="generationDate"
-          [ngClass]="{'is-invalid': (updateApsForm.controls.generationDate.touched && updateApsForm.controls.generationDate.errors) || (isFormSubmitted && updateApsForm.controls.generationDate.errors)}"
+          [ngClass]="{'is-invalid': (updateApsForm.controls.generationDate.touched && updateApsForm.controls.generationDate.errors) || (isFormSubmitted && updateApsForm.controls.generationDate.errors), 'is-valid': ((updateApsForm.controls.generationDate.touched && !updateApsForm.controls.generationDate.errors) || isFormSubmitted && !updateApsForm.controls.generationDate.errors)}"
           >
           <div *ngIf="(updateApsForm.controls.generationDate.touched && updateApsForm.controls.generationDate.errors?.required) || (isFormSubmitted && updateApsForm.controls.generationDate.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+
+          <div *ngIf="(updateApsForm.controls.generationDate.touched && updateApsForm.controls.generationDate.errors?.maxDate) || (isFormSubmitted && updateApsForm.controls.generationDate.errors?.maxDate)" class="invalid-feedback">La fecha no puede superior a la actual</div>
         </div>
 
         <div class="col-md-6 mb-3">
@@ -25,10 +27,15 @@
           <input
           class="form-control"
           type="file"
-          (change)="selectDataFile($event)"
+          (change)="selectDataFile($event); selectFile()"
           formEnctype="multipart/form-data"
-        >
+          [ngClass]="{'is-invalid': ( isSelectFile && updateApsForm.controls.document.errors) || (isFormSubmitted && updateApsForm.controls.document.errors ), 'is-valid': ((updateApsForm.controls.document.value? true : false && !updateApsForm.controls.document.errors && !isFormatinvalid) || isFormSubmitted && !updateApsForm.controls.document.errors && !isFormatinvalid)}"
+          >
+          <div *ngIf="(isSelectFile && (!updateApsForm.controls.document.value? true : false) && updateApsForm.controls.document.errors?.required) || isFormSubmitted && updateApsForm.controls.document.errors?.required" class="invalid-feedback">Campo obligatorio</div>
+
+          <div *ngIf="(isSelectFile && isFormatinvalid) || (isFormSubmitted && isFormatinvalid)" class="invalid-feedback">Formato o tamaño del archivo no valido</div>
         </div>
+
 
       </div>
     </div>
@@ -36,8 +43,8 @@
 
   <div class="card m-0 px-5 py-3 mt-3">
     <div class="row justify-content-center gap-3 gap-md-6 p-3">
-      <button type="submit" class="col-md-1 btn btn-primary style" >Actualizar</button>
-      <button type="button" class="col-md-1 btn btn-outline-primary style" (click)="cancel($event)">cancelar</button>
+      <button type="submit" class="col-md-2 btn btn-primary style" >Actualizar</button>
+      <button type="button" class="col-md-2 btn btn-outline-primary style" (click)="cancel($event)">cancelar</button>
 
     </div>
   </div>

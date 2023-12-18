@@ -1,7 +1,3 @@
-td.data-td{
-    border: 0px solid red !important;
-}
-
 @media screen and (max-width: 768px) {
 
     button span.btn-text{
@@ -9,5 +5,1082 @@ td.data-td{
     }
 }
 
+.head-table {
+  margin: 0;
+  padding: 0px 10px 0px 10px;
+  // margin: 20px;
+  display: flex;
+  height: 10vh;
+  div{
+    height: 100%;
+    padding: 0;
+    display: flex;
 
+    & .head-table-text{
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+
+        p{
+          color: var(--ColorTextWhite);
+        }
+      }
+
+    & .head-table-icon{
+      width: max-content;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        div {
+
+            margin: 0;
+            padding: 0;
+
+            &.container-icon-up{
+              height: max-content;
+              border-radius: 30% 30% 0 0;
+            }
+
+            &.container-icon-down{
+              height: auto;
+                border-radius: 0 0 30% 30%;
+
+            }
+
+            &:hover {
+                background-color: var(--colorSecundary);
+                cursor: pointer;
+                box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+
+            }
+
+            a{
+                overflow: hidden;
+                display: flex;
+                margin: 0 10px 0 10px;
+                justify-content: center;
+                height: 15px;
+                width: 15px;
+                position: relative;
+
+                i{
+                    position: absolute;
+                    font-size: 1rem;
+                    color: white;
+
+                }
+                &.icon-up{
+                    top: -4px;
+                    left: -3px;
+                }
+
+                &.icon-down{
+                    bottom: 4px;
+                    left: -3px;
+                }
+            }
+        }
+    }
+  }
+
+}
+
+.table-responsive{
+  width: 100% !important;
+
+  & .button-navigate{
+    div.btn-list{
+      width: auto !important;
+      margin: 0px 5px 0px 5px;
+
+      button{
+        margin: 0px 2px 0px 2px;
+        border-radius: 15px !important;
+      }
+    }
+
+  }
+
+
+  table{
+    width: inherit !important;
+
+    tr{
+      td{
+
+        width: auto;
+
+        .text-status-red{
+            color: red;
+        }
+
+        .text-status-green{
+            color: green;
+        }
+
+        .text-status-orange{
+            color: orangered;
+        }
+
+
+        .ajust-text{
+            text-align: justify;
+            white-space: normal;
+            width: auto;
+        }
+
+        input[type="checkbox"]{
+            /* Double-sized Checkboxes */
+            -ms-transform: scale(2); /* IE */
+            -moz-transform: scale(2); /* FF */
+            -webkit-transform: scale(2); /* Safari and Chrome */
+            -o-transform: scale(2); /* Opera */
+            transform: scale(1.5);
+        }
+
+        div{
+          input{
+            display: none;
+            pointer-events: none;
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+
+    tr.hidden-data{
+        padding: 1px !important;
+
+        td.data-td{
+
+            // border: 1px solid red;
+            padding: inherit;
+
+            ul{
+                // border: 1px solid yellowgreen;
+
+                margin: 0;
+                padding: 0;
+
+                p{
+                    width: auto;
+                    height: auto;
+                    text-align: justify;
+                    background-color: white;
+
+                    &.title{
+
+                        color: #005894;
+                        font-weight: bold;
+
+                    }
+                    &.value{
+
+                        width: 100%;
+                        height: 100%;
+                        padding-left: 1rem;
+                        white-space: normal;
+                        // overflow: hidden;
+                        // text-overflow: ellipsis;
+
+                        // &:hover{
+
+                        //     position: static;
+                        //     z-index: 1000;
+                        //     white-space: normal;
+                        //     height: fit-content;
+
+                        // }
+                    }
+                }
+            }
+        }
+    }
+  }
+}
+
+@media only screen and (min-width: 0px) and (max-width: 768px) {
+
+    .thd-8{
+        display: none;
+    }
+
+    .tdd-8{
+        display: none;
+    }
+
+    .thd-7{
+        display: none;
+    }
+
+    .tdd-7{
+        display: none;
+    }
+
+    .thd-6{
+        display: none;
+    }
+
+    .tdd-6{
+        display: none;
+    }
+
+    .thd-5{
+        display: none;
+    }
+
+    .tdd-5{
+        display: none;
+    }
+
+    .thd-4{
+        display: none;
+    }
+
+    .tdd-4{
+        display: none;
+    }
+
+    .thd-3{
+        display: none;
+    }
+
+    .tdd-3{
+        display: none;
+    }
+
+    .thd-2{
+        display: table-cell;
+    }
+
+    .tdd-2{
+        display: table-cell;
+    }
+
+    .thd-1{
+
+        display: table-cell;
+    }
+
+    .tdd-1{
+
+        display: table-cell;
+
+    }
+
+    .thd-0{
+
+        display: table-cell;
+
+    }
+
+    .tdd-0{
+
+        display: table-cell;
+
+        input.a3{
+
+            display: flex !important;
+            pointer-events: visible !important;
+
+        }
+    }
+
+    .hidden-data{
+
+        .d-8{
+            display: flex;
+        }
+
+        .d-7{
+            display: flex;
+        }
+
+        .d-6{
+            display: flex;
+        }
+
+        .d-5{
+            display: flex;
+        }
+
+        .d-4{
+            display: flex;
+        }
+
+        .d-3{
+            display: flex;
+        }
+
+        .d-2{
+            display: none;
+        }
+
+        .d-1{
+            display: none;
+        }
+
+        .d-0{
+            display: none;
+        }
+    }
+
+
+}
+
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+
+    .thd-8{
+        display: none;
+    }
+
+    .tdd-8{
+        display: none;
+    }
+
+    .thd-7{
+        display: none;
+    }
+
+    .tdd-7{
+        display: none;
+    }
+
+    .thd-6{
+        display: none;
+    }
+
+    .tdd-6{
+        display: none;
+    }
+
+    .thd-5{
+        display: none;
+    }
+
+    .tdd-5{
+        display: none;
+    }
+
+    .thd-4{
+        display: none;
+    }
+
+    .tdd-4{
+        display: none;
+    }
+
+    .thd-3{
+        display: table-cell;
+    }
+
+    .tdd-3{
+        display: table-cell;
+    }
+
+    .thd-2{
+        display: table-cell;
+    }
+
+    .tdd-2{
+        display: table-cell;
+    }
+
+    .thd-1{
+
+        display: table-cell;
+    }
+
+    .tdd-1{
+
+        display: table-cell;
+
+    }
+
+    .thd-0{
+
+        display: table-cell;
+
+    }
+
+    .tdd-0{
+
+        display: table-cell;
+
+        input.a4{
+            display: flex !important;
+            pointer-events: visible !important;
+        }
+    }
+
+    .hidden-data{
+
+        .d-8{
+            display: flex;
+        }
+
+        .d-7{
+            display: flex;
+        }
+
+        .d-6{
+            display: flex;
+        }
+
+        .d-5{
+            display: flex;
+        }
+
+        .d-4{
+            display: flex;
+        }
+
+        .d-3{
+            display: none;
+        }
+
+        .d-2{
+            display: none;
+        }
+
+        .d-1{
+            display: none;
+        }
+
+        .d-0{
+            display: none;
+        }
+    }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+
+    .thd-8{
+        display: none;
+    }
+
+    .tdd-8{
+        display: none;
+    }
+
+    .thd-7{
+        display: none;
+    }
+
+    .tdd-7{
+        display: none;
+    }
+
+    .thd-6{
+        display: none;
+    }
+
+    .tdd-6{
+        display: none;
+    }
+
+    .thd-5{
+        display: none;
+    }
+
+    .tdd-5{
+        display: none;
+    }
+
+    .thd-4{
+        display: table-cell;
+    }
+
+    .tdd-4{
+        display: table-cell;
+    }
+
+    .thd-3{
+        display: table-cell;
+    }
+
+    .tdd-3{
+        display: table-cell;
+    }
+
+    .thd-2{
+        display: table-cell;
+    }
+
+    .tdd-2{
+        display: table-cell;
+    }
+
+    .thd-1{
+
+        display: table-cell;
+    }
+
+    .tdd-1{
+
+        display: table-cell;
+
+    }
+
+    .thd-0{
+
+        display: table-cell;
+
+    }
+
+    .tdd-0{
+
+        display: table-cell;
+
+        input.a5{
+            display: flex !important;
+            pointer-events: visible !important;
+        }
+    }
+
+
+    .hidden-data{
+
+        .d-8{
+            display: flex;
+        }
+
+        .d-7{
+            display: flex;
+        }
+
+        .d-6{
+            display: flex;
+        }
+
+        .d-5{
+            display: flex;
+        }
+
+        .d-4{
+            display: none;
+        }
+
+        .d-3{
+            display: none;
+        }
+
+        .d-2{
+            display: none;
+        }
+
+        .d-1{
+            display: none;
+        }
+
+        .d-0{
+            display: none;
+        }
+    }
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1300px) {
+
+    .thd-8{
+        display: none;
+    }
+
+    .tdd-8{
+        display: none;
+    }
+
+    .thd-7{
+        display: none;
+    }
+
+    .tdd-7{
+        display: none;
+    }
+
+    .thd-6{
+        display: none;
+    }
+
+    .tdd-6{
+        display: none;
+    }
+
+    .thd-5{
+        display: table-cell;
+    }
+
+    .tdd-5{
+        display: table-cell;
+    }
+
+    .thd-4{
+        display: table-cell;
+    }
+
+    .tdd-4{
+        display: table-cell;
+    }
+
+    .thd-3{
+        display: table-cell;
+    }
+
+    .tdd-3{
+        display: table-cell;
+    }
+
+    .thd-2{
+        display: table-cell;
+    }
+
+    .tdd-2{
+        display: table-cell;
+    }
+
+    .thd-1{
+
+        display: table-cell;
+    }
+
+    .tdd-1{
+
+        display: table-cell;
+
+    }
+
+    .thd-0{
+
+        display: table-cell;
+
+    }
+
+    .tdd-0{
+
+        display: table-cell;
+
+        input.a6{
+            display: flex !important;
+            pointer-events: visible !important;
+        }
+    }
+
+
+    .hidden-data{
+
+        .d-8{
+            display: flex;
+        }
+
+        .d-7{
+            display: flex;
+        }
+
+        .d-6{
+            display: flex;
+        }
+
+        .d-5{
+            display: none;
+        }
+
+        .d-4{
+            display: none;
+        }
+
+        .d-3{
+            display: none;
+        }
+
+        .d-2{
+            display: none;
+        }
+
+        .d-1{
+            display: none;
+        }
+
+        .d-0{
+            display: none;
+        }
+    }
+}
+
+@media only screen and (min-width: 1300px) and (max-width: 1400px) {
+
+    .thd-8{
+        display: none;
+    }
+
+    .tdd-8{
+        display: none;
+    }
+
+    .thd-7{
+        display: none;
+    }
+
+    .tdd-7{
+        display: none;
+    }
+
+    .thd-6{
+        display: table-cell;
+    }
+
+    .tdd-6{
+        display: table-cell;
+    }
+
+    .thd-5{
+        display: table-cell;
+    }
+
+    .tdd-5{
+        display: table-cell;
+    }
+
+    .thd-4{
+        display: table-cell;
+    }
+
+    .tdd-4{
+        display: table-cell;
+    }
+
+    .thd-3{
+        display: table-cell;
+    }
+
+    .tdd-3{
+        display: table-cell;
+    }
+
+    .thd-2{
+        display: table-cell;
+    }
+
+    .tdd-2{
+        display: table-cell;
+    }
+
+    .thd-1{
+
+        display: table-cell;
+    }
+
+    .tdd-1{
+
+        display: table-cell;
+
+    }
+
+    .thd-0{
+
+        display: table-cell;
+
+    }
+
+    .tdd-0{
+
+        display: table-cell;
+
+        input.a7{
+            display: flex !important;
+            pointer-events: visible !important;
+        }
+    }
+
+
+    .hidden-data{
+
+        .d-8{
+            display: flex;
+        }
+
+        .d-7{
+            display: flex;
+        }
+
+        .d-6{
+            display: none;
+        }
+
+        .d-5{
+            display: none;
+        }
+
+        .d-4{
+            display: none;
+        }
+
+        .d-3{
+            display: none;
+        }
+
+        .d-2{
+            display: none;
+        }
+
+        .d-1{
+            display: none;
+        }
+
+        .d-0{
+            display: none;
+        }
+    }
+}
+
+@media only screen and (min-width: 1400px) and (max-width: 1500px){
+
+    .thd-8{
+        display: none;
+    }
+
+    .tdd-8{
+        display: none;
+    }
+
+    .thd-7{
+        display: table-cell;
+    }
+
+    .tdd-7{
+        display: table-cell;
+    }
+
+    .thd-6{
+        display: table-cell;
+    }
+
+    .tdd-6{
+        display: table-cell;
+    }
+
+    .thd-5{
+        display: table-cell;
+    }
+
+    .tdd-5{
+        display: table-cell;
+    }
+
+    .thd-4{
+        display: table-cell;
+    }
+
+    .tdd-4{
+        display: table-cell;
+    }
+
+    .thd-3{
+        display: table-cell;
+    }
+
+    .tdd-3{
+        display: table-cell;
+    }
+
+    .thd-2{
+        display: table-cell;
+    }
+
+    .tdd-2{
+        display: table-cell;
+    }
+
+    .thd-1{
+        display: table-cell;
+    }
+
+    .tdd-1{
+        display: table-cell;
+
+    }
+
+    .thd-0{
+        display: table-cell;
+
+    }
+
+    .tdd-0{
+        display: table-cell;
+
+        input.a8{
+            display: flex !important;
+            pointer-events: visible !important;
+        }
+    }
+
+
+    .hidden-data{
+
+        .d-8{
+            display: flex;
+        }
+
+        .d-7{
+            display: none;
+        }
+
+        .d-6{
+            display: none;
+        }
+
+        .d-5{
+            display: none;
+        }
+
+        .d-4{
+            display: none;
+        }
+
+        .d-3{
+            display: none;
+        }
+
+        .d-2{
+            display: none;
+        }
+
+        .d-1{
+            display: none;
+        }
+
+        .d-0{
+            display: none;
+        }
+    }
+
+
+}
+
+@media only screen and (min-width: 1500px){
+
+    .thd-8{
+        display: table-cell;
+    }
+
+    .tdd-8{
+        display: table-cell;
+    }
+
+    .thd-7{
+        display: table-cell;
+    }
+
+    .tdd-7{
+        display: table-cell;
+    }
+
+    .thd-6{
+        display: table-cell;
+    }
+
+    .tdd-6{
+        display: table-cell;
+    }
+
+    .thd-5{
+        display: table-cell;
+    }
+
+    .tdd-5{
+        display: table-cell;
+    }
+
+    .thd-4{
+        display: table-cell;
+    }
+
+    .tdd-4{
+        display: table-cell;
+    }
+
+    .thd-3{
+        display: table-cell;
+    }
+
+    .tdd-3{
+        display: table-cell;
+    }
+
+    .thd-2{
+        display: table-cell;
+    }
+
+    .tdd-2{
+        display: table-cell;
+    }
+
+    .thd-1{
+        display: table-cell;
+    }
+
+    .tdd-1{
+        display: table-cell;
+
+    }
+
+    .thd-0{
+        display: table-cell;
+
+    }
+
+    .tdd-0{
+        display: table-cell;
+
+        input{
+            display :none !important;
+            pointer-events: none !important;
+        }
+    }
+
+
+    .hidden-data{
+
+        .d-8{
+            display: none !important;
+        }
+
+        .d-7{
+            display: none !important;
+        }
+
+        .d-6{
+            display: none !important;
+        }
+
+        .d-5{
+            display: none !important;
+        }
+
+        .d-4{
+            display: none !important;
+        }
+
+        .d-3{
+            display: none !important;
+        }
+
+        .d-2{
+            display: none !important;
+        }
+
+        .d-1{
+            display: none !important;
+        }
+
+        .d-0{
+            display: none !important;
+        }
+    }
+
+
+}
 

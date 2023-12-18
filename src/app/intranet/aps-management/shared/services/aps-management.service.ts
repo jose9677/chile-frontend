@@ -54,27 +54,33 @@ export class ApsManagementService {
     );
    }
 
+  //  downloadDocumentAps(nameDocument: string): Observable<any | void> {
+  //   return this.http.get<any>(AUTH_API_NP + 'aps-download/' + nameDocument, httpOptions).pipe(map((result: any) => {
+
+  //     return AUTH_API_NP + 'aps-download/' + nameDocument;
+
+  //   }),
+  //   catchError((err) => this.handlerError(err))
+  //   );
+  //  }
+
+  downloadDocumentAps( nameDocument: any) {
+    const urlDownload = `${AUTH_API_NP}aps-download/${nameDocument}`;
+    return urlDownload;
+  }
+
 
   private handlerError(err:any): Observable<never> { //pasa error al login component
     let errorMessage= 'An error ocurred';
     if (err) {
-      // this.errorMessage= `error code: ${err}`;
-
       if (err.status === 500) {
-
         let title: string = ''
         let message: string = "Su Solicitud no Pudo ser Procesada Intente Nuevamente";
         this.modalService.OpenModalError2(ModalComponent, true, title, message);
-
       } else {
-
         this.errorMessage= err.error;
-
       }
-
-
     }
-
     return throwError(this.errorMessage)
   }
 

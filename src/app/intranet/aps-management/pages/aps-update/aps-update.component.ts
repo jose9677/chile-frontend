@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ApsManagementService } from '../../shared/services/aps-management.service';
 import { Router } from '@angular/router';
+import { ModalsService } from 'src/app/shared/services/modals.service';
+import { ModalComponent } from 'src/app/public/auth/shared/modals/modal/modal.component';
 
 @Component({
   selector: 'app-aps-update',
@@ -12,6 +14,7 @@ export class ApsUpdateComponent implements OnInit {
 
   public isFormSubmitted: boolean;
   public isFormatinvalid: boolean;
+  public isSelectFile: boolean;
 
   public today: any;
 
@@ -23,9 +26,11 @@ export class ApsUpdateComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private apsServices: ApsManagementService,
-    private router: Router
+    private router: Router,
+    private modalService: ModalsService
   ) {
     this.isFormSubmitted = false;
+    this.isSelectFile = false;
 
     this.today = new Date();
     this.today = `${this.today.getFullYear()}-${(this.today.getMonth())+1}-${this.today.getDate()}`;
@@ -68,6 +73,10 @@ export class ApsUpdateComponent implements OnInit {
 
   }
 
+  selectFile(){
+    this.isSelectFile = true;
+  }
+
   cancel(e: Event) {
 
     e.preventDefault();
@@ -81,27 +90,42 @@ export class ApsUpdateComponent implements OnInit {
 
     e.preventDefault();
 
-    const data = new FormData();
+    this.isFormSubmitted = true;
 
-    data.append('rut', sessionStorage.getItem('auth-user'));
-    data.append('update_date', this.updateApsForm.value.generationDate);
-    data.append('document', this.updateApsForm.value.document);
+    if( this.updateApsForm.status === 'VALID') {
+
+      const data = new FormData();
+
+      data.append('rut', JSON.parse(sessionStorage.getItem('auth-user')));
+      data.append('update_date', this.updateApsForm.value.generationDate);
+      data.append('document', this.updateApsForm.value.document);
 
 
-    this.apsServices.updateAps( data ).subscribe((result) => {
+      this.apsServices.updateAps( data ).subscribe((result) => {
 
-      console.log(result);
+        console.log(result);
 
-    },
-    error => {
+      },
+      error => {
 
-      console.log(error);
 
-    },
-    () => {
+        let isError= true;
+        let title= "";
+        let message = 'No se pudo realizar la actualización del listado APS';
+        this.modalService.OpenModalError2(ModalComponent, isError, title, message);
+        console.log(error);
 
-    })
+      },
+      () => {
 
+        let isError= false;
+        let title= "Actualización Completada";
+        let message = 'Se ha actualizado la lista de APS de forma exitosa';
+        this.modalService.OpenModalError2(ModalComponent, isError, title, message);
+
+        this.router.navigate(['aps/dashboard']);
+
+      })
+    }
   }
-
 }
