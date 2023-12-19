@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ApsManagementService } from '../../shared/services/aps-management.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-layout-aps',
@@ -7,7 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LayoutApsComponent implements OnInit {
 
-  constructor() { }
+  public viewTitle: Observable<string>;
+
+  constructor(
+    private apsServices : ApsManagementService
+  ) {
+    this.viewTitle = this.apsServices.viewTitleObservable;
+   }
 
   ngOnInit(): void {
   }

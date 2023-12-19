@@ -133,7 +133,7 @@
 
                             <a *ngIf="actionsTable.includes('evce')"><i title = "Enviar constancia de entrega" class="mdi mdi-send h3 icon-primary-color mx-1" (click)="sendConstancyDelivery($event, 12)"></i></a> -->
 
-                            <a *ngIf="actionsTable.includes('daps')" [href]="data.path" ><i title = "Descargar lista APS" class="mdi mdi-download-circle-outline h3 icon-primary-color mx-1" ></i></a>
+                            <a *ngIf="actionsTable.includes('daps')" [href]="data.path" ><i title = "Descargar lista APS" class="color-secondary mdi mdi-download-circle-outline h3 icon-primary-color mx-1" ></i></a>
 
                         </td>
 
@@ -143,7 +143,7 @@
                     <tr
                     class="hidden-data hidden-print" [hidden]="!data.hidden">
 
-                        <td class="data-td px-1" colspan="4">
+                        <td class="data-td " colspan="4">
                             <ng-container *ngFor="let title of titles; let i2 = index">
                                 <ul class="d-{{i2}}">
                                     <p id="i-{{i2}}" class="title">{{title.title}}:</p>
@@ -161,7 +161,7 @@
 
             </tbody>
         </table>
-        <hr class="m-0">
+        <hr class="m-0 mb-1">
         <div class="button-navigate hidden-print" *ngIf=" pages.length > 1 ">
             <div  class="d-flex ">
 

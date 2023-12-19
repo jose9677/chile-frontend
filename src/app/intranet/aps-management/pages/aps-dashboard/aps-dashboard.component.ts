@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApsManagementService } from '../../shared/services/aps-management.service';
 import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-aps-dashboard',
@@ -9,6 +10,8 @@ import { Router } from '@angular/router';
 })
 export class ApsDashboardComponent implements OnInit {
 
+  public isUpdateNewList: Observable<boolean>;
+
   public apsUpdateDate: string;
   public apsGenerationDate: string;
   public numberOfRecords: number;
@@ -16,15 +19,23 @@ export class ApsDashboardComponent implements OnInit {
   public loadedBy: string;
   public status: string;
   public pathAps: string;
+  public listStatusOfProcess: any[];
 
   public titleDataTable: string[];
   public dataDataTable: any[];
 
+  public subscription: Subscription;
+
+
   constructor(
-    private apsSetvices: ApsManagementService,
+    private apsServices: ApsManagementService,
     private router: Router
   ) {
+
+    this.isUpdateNewList = this.apsServices.statusUpdateNewListObservable;
+
     this.dataDataTable = [];
+    this.listStatusOfProcess = [];
     this.titleDataTable = [
       'Nro.',
       'fecha de actualización',
@@ -34,18 +45,36 @@ export class ApsDashboardComponent implements OnInit {
       'cargado por',
       'estatus'
     ]
-   }
+  }
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this.apsServices.newViewTitle = 'APS';
+    })
+
+
+    this.subscription = this.apsServices.refresh$.subscribe(() => {
+
+      this.latestApsUpdate();
+      this.statusOfProcess();
+      this.getAllAps();
+
+    })
 
     this.latestApsUpdate();
     this.getAllAps();
-
+    if(this.apsServices.statusUpdateNewListValue) {
+      setTimeout(() => {
+        this.statusOfProcess();
+      }, 1000)
+    } else {
+      this.statusOfProcess();
+    }
   }
 
   latestApsUpdate() {
 
-    this.apsSetvices.getLatestApsUpdate().subscribe((result) => {
+    this.apsServices.getLatestApsUpdate().subscribe((result) => {
 
       console.log(result);
 
@@ -57,7 +86,7 @@ export class ApsDashboardComponent implements OnInit {
       this.coincidences = coincidence;
       this.loadedBy = user_name;
       this.status = status_description;
-      this.pathAps = this.apsSetvices.downloadDocumentAps(path);
+      this.pathAps = this.apsServices.downloadDocumentAps(path);
 
     },
     error => {
@@ -71,7 +100,7 @@ export class ApsDashboardComponent implements OnInit {
   }
 
   getAllAps() {
-    this.apsSetvices.getAllAps().subscribe((result: any) => {
+    this.apsServices.getAllAps().subscribe((result: any) => {
 
       const dataResult : any = [];
 
@@ -85,7 +114,7 @@ export class ApsDashboardComponent implements OnInit {
           'coincidencias (inscritos)': res.coincidence,
           'cargado por': res.user_name,
           'estatus': res.description,
-          'path': this.apsSetvices.downloadDocumentAps(res.path)
+          'path': this.apsServices.downloadDocumentAps(res.path)
         })
       })
 
@@ -101,12 +130,30 @@ export class ApsDashboardComponent implements OnInit {
     })
   }
 
+  statusOfProcess() {
+    this.apsServices.statusOfProcess().subscribe((result: any) => {
+      console.log(result);
+
+      return this.listStatusOfProcess = result;
+    },
+    error => {
+
+    },
+    () => {
+
+    })
+  }
+
   updateAps(e: Event) {
 
     e.preventDefault();
 
     this.router.navigate(['aps/actualizar-aps']);
 
+  }
+
+  ngOnDestroy(): void{
+    this.subscription.unsubscribe();
   }
 
 }

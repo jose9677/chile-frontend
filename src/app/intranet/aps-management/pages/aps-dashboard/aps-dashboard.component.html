@@ -1,4 +1,4 @@
-<div class="card m-0 px-5 py-5 mt-3">
+<div class="card m-0 px-5 py-5 mt-3" *ngIf=" !(isUpdateNewList | async)">
   <div class="row">
     <h3 class="col-12 colorTextPrimari">Última actualización APS</h3>
 
@@ -42,15 +42,42 @@
   </div>
 </div>
 
-<div class="card m-0 px-5 py-5 mt-3">
+<div class="card m-0 px-5 py-5 mt-3" >
   <div class="row">
-    <h3 class="col-12 colorTextPrimari">Estatus actualización APS</h3>
+    <div class="col-12 d-flex align-items-center gap-3">
+      <h3 class="colorTextPrimari">Estatus actualización APS</h3>
+      <button type="button" class="btn btn-primary style" (click)="statusOfProcess()" *ngIf=" (isUpdateNewList | async)">Actualizar</button>
+    </div>
 
     <div class="col p-3 d-flex flex-column" >
 
       <div class="mx-3">
 
-        <div class="mb-2">
+        <ng-container *ngFor="let process of listStatusOfProcess">
+
+          <div class="mb-2">
+            <container-element [ngSwitch]="process.status">
+              <span *ngSwitchCase="'REALIZADO CON EXITO'">
+                <i class="text-success mdi mdi-check-circle-outline fs-3"></i>
+              </span>
+              <span *ngSwitchCase="'EN PROCESO'">
+                <i class="text-primary mdi mdi-sync-circle fs-3"></i>
+              </span>
+              <span *ngSwitchCase="'PENDIENTE'">
+                <i class="text-secondary mdi mdi-dots-horizontal-circle-outline fs-3"></i>
+              </span>
+              <span *ngSwitchCase="'FINALIZADO CON ERROR'">
+                <i class="text-danger mdi mdi-close-octagon-outline fs-3"></i>
+              </span>
+
+            </container-element>
+            <!-- <i class="mdi mdi-check-circle-outline fs-3"></i> -->
+            <span class="colorTextPrimari mx-2">{{process.process}}</span>
+          </div>
+
+        </ng-container>
+
+        <!-- <div class="mb-2">
           <i class="mdi mdi-check-circle-outline fs-3"></i>
           <span class="colorTextPrimari mx-2">Limpieza de listado actual </span>
         </div>
@@ -73,26 +100,26 @@
         <div  class="mb-2">
           <i class="mdi mdi-dots-horizontal-circle-outline fs-3"></i>
           <span class="colorTextPrimari mx-2">Proceso finalizado con éxito</span>
-        </div>
+        </div> -->
 
       </div>
 
       <div class="d-flex flex-wrap justify-content-center px-3">
 
         <div  class="">
-          <i class="mdi mdi-check-circle-outline fs-3"></i>
+          <i class="text-success mdi mdi-check-circle-outline fs-3"></i>
           <span class="colorTextPrimari mx-2">Realizado con éxito</span>
         </div>
         <div  class="mb-2">
-          <i class="mdi mdi-sync-circle fs-3"></i>
+          <i class="text-primary mdi mdi-sync-circle fs-3"></i>
           <span class="colorTextPrimari mx-2">En proceso </span>
         </div>
         <div  class="mb-2">
-          <i class="mdi mdi-dots-horizontal-circle-outline fs-3"></i>
+          <i class="text-secondary mdi mdi-dots-horizontal-circle-outline fs-3"></i>
           <span class="colorTextPrimari mx-2">Pendiente</span>
         </div>
         <div  class="mb-2">
-          <i class="mdi mdi-close-octagon-outline fs-3"></i>
+          <i class="text-danger mdi mdi-close-octagon-outline fs-3"></i>
           <span class="colorTextPrimari mx-2">Finalizado con error</span>
         </div>
 
@@ -105,7 +132,7 @@
 
 <div class="card m-0 px-5 py-5 mt-3">
   <div class="row">
-    <h3 class="col-12 colorTextPrimari">Última actualización APS</h3>
+    <h3 class="col-12 colorTextPrimari">Histórico de listados APS</h3>
 
     <app-table-data
     [titlesTable]= "titleDataTable"

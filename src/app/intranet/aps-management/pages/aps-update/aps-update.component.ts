@@ -4,6 +4,7 @@ import { ApsManagementService } from '../../shared/services/aps-management.servi
 import { Router } from '@angular/router';
 import { ModalsService } from 'src/app/shared/services/modals.service';
 import { ModalComponent } from 'src/app/public/auth/shared/modals/modal/modal.component';
+import { SpinnerService } from 'src/app/shared/services/spinner.service';
 
 @Component({
   selector: 'app-aps-update',
@@ -15,6 +16,8 @@ export class ApsUpdateComponent implements OnInit {
   public isFormSubmitted: boolean;
   public isFormatinvalid: boolean;
   public isSelectFile: boolean;
+  public IsUpdateNewList: boolean;
+
 
   public today: any;
 
@@ -27,16 +30,24 @@ export class ApsUpdateComponent implements OnInit {
     private fb: FormBuilder,
     private apsServices: ApsManagementService,
     private router: Router,
-    private modalService: ModalsService
+    private modalService: ModalsService,
+    private spinnerService: SpinnerService
   ) {
+
     this.isFormSubmitted = false;
     this.isSelectFile = false;
 
     this.today = new Date();
     this.today = `${this.today.getFullYear()}-${(this.today.getMonth())+1}-${this.today.getDate()}`;
-   }
+  }
 
   ngOnInit(): void {
+
+    setTimeout(() => {
+      this.apsServices.newViewTitle = 'Actualizar listado APS';
+    })
+
+
   }
 
   selectDataFile(event: any): void {
@@ -100,32 +111,44 @@ export class ApsUpdateComponent implements OnInit {
       data.append('update_date', this.updateApsForm.value.generationDate);
       data.append('document', this.updateApsForm.value.document);
 
+      setTimeout(()=>{
 
-      this.apsServices.updateAps( data ).subscribe((result) => {
+        console.log('proceso');
+        this.apsServices.isUpdateNewList= true;
+        this.spinnerService.hide();
+        this.apsServices.updateAps( data ).subscribe((result) => {
 
-        console.log(result);
+          console.log(result);
 
-      },
-      error => {
+        },
+        error => {
+          this.apsServices.isUpdateNewList= false;
+
+          let isError= true;
+          let title= "";
+          let message = 'No se pudo realizar la actualización del listado APS';
+          this.modalService.OpenModalError2(ModalComponent, isError, title, message);
+          console.log(error);
+
+        },
+        () => {
+          this.apsServices.isUpdateNewList= false;
+          let isError= false;
+          let title= "Actualización Completada";
+          let message = 'Se ha actualizado la lista de APS de forma exitosa';
+          this.modalService.OpenModalError2(ModalComponent, isError, title, message);
 
 
-        let isError= true;
-        let title= "";
-        let message = 'No se pudo realizar la actualización del listado APS';
-        this.modalService.OpenModalError2(ModalComponent, isError, title, message);
-        console.log(error);
-
-      },
-      () => {
-
-        let isError= false;
-        let title= "Actualización Completada";
-        let message = 'Se ha actualizado la lista de APS de forma exitosa';
-        this.modalService.OpenModalError2(ModalComponent, isError, title, message);
-
-        this.router.navigate(['aps/dashboard']);
-
+        })
       })
+
+      setTimeout(()=> {
+        console.log('salto')
+        this.router.navigate(['aps/dashboard'])
+      })
+
     }
+
+
   }
 }
