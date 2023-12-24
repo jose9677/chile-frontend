@@ -166,9 +166,9 @@
             <div  class="d-flex ">
 
                 <div class="m-0 p-0">
-                    <button class="btn btn-outline-primary style-outline"  (click)="sortByService.getPage(1); getPages();" [disabled]="sortByService.page === 0"><i class="mdi mdi-chevron-double-left"></i></button>
+                    <button class="btn btn-outline-primary style-outline"  (click)="sortByService.getPage(1); getPages();" [disabled]="sortByService.page === 0" title="ir al inicio"><i class="mdi mdi-chevron-double-left"></i></button>
 
-                    <button class="btn btn-outline-primary style-outline" (click)="sortByService.prevPage($event, dataForPage); getPages();" [disabled]="sortByService.page === 0"><i class="mdi mdi-arrow-left-bold"></i> <span class="btn-text">Anterior</span>  </button>
+                    <button class="btn btn-outline-primary style-outline" (click)="sortByService.prevPage($event, dataForPage); getPages();" [disabled]="sortByService.page === 0" title="Anterior"><i class="mdi mdi-arrow-left-bold"></i> <span class="btn-text">Anterior</span>  </button>
                 </div>
 
                 <div class="btn-list">
@@ -178,9 +178,9 @@
                 </div>
 
                 <div class="m-0 p-0">
-                    <button class="btn btn-outline-primary style-outline" (click)="sortByService.nextPage($event, dataForPage); getPages();" [disabled]="sortByService.finishPage(pages.length)">  <span class="btn-text">Siguiente</span>  <i class="mdi mdi-arrow-right-bold"></i></button>
+                    <button class="btn btn-outline-primary style-outline" (click)="sortByService.nextPage($event, dataForPage); getPages();" [disabled]="sortByService.finishPage(pages.length)" title="Siguiente"><span class="btn-text">Siguiente</span>  <i class="mdi mdi-arrow-right-bold"></i></button>
 
-                    <button class="btn btn-outline-primary style-outline"  (click)="sortByService.getPage(pages.length); getPages();" [disabled]="sortByService.finishPage(pages.length)"><i class="mdi mdi-chevron-double-right"></i></button>
+                    <button class="btn btn-outline-primary style-outline"  (click)="sortByService.getPage(pages.length); getPages();" [disabled]="sortByService.finishPage(pages.length)" title="Ir al final"><i class="mdi mdi-chevron-double-right"></i></button>
                 </div>
 
             </div>

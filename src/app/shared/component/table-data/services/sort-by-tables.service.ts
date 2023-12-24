@@ -28,29 +28,28 @@ export class SortByTablesService {
     e.preventDefault();
     this.page += itemsForPage;
     this.positionPage += 1;
-    
+
   }
-  
+
   prevPage(e: Event, itemsForPage: any) {
-    
+
     e.preventDefault();
-    
+
     if ((this.page > 0)) {
-      
+
       this.page -= itemsForPage;
-      this.positionPage -= 1; 
-      
+      this.positionPage -= 1;
+
     }
   }
 
   getPage(positionPage: any) {
-
-    this.page = ((positionPage-1)*5);
-    this.positionPage = positionPage; 
+    this.page = ((positionPage-1)*10);
+    this.positionPage = positionPage;
 
   }
-  
-  finishPage(maxPages: any){    
+
+  finishPage(maxPages: any){
     if (this.positionPage === maxPages) {
       return true;
     }
@@ -62,7 +61,7 @@ export class SortByTablesService {
 
     this.search = search.toUpperCase();
 
-  }  
+  }
 
   dataSortBy1(value: any, e: Event) {
 
@@ -90,7 +89,7 @@ export class SortByTablesService {
     this.page = 0;
     this.dataSort = this.search;
     this.order= false;
-    
+
 
   }
 

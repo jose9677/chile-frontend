@@ -415,7 +415,6 @@ export class TableDataComponent implements OnInit {
   }
 
   search(textSearch: any) {
-    console.log(textSearch);
 
     let data = [];
 
@@ -424,9 +423,6 @@ export class TableDataComponent implements OnInit {
     let filter = new FilterPipe
 
     data = filter.transform(this.dataInput, this.sortByService.search, this.sortByService.page, this.titles, 100);
-
-    console.log(this.dataInput);
-    console.log(data);
 
     // this.pages = data;
 

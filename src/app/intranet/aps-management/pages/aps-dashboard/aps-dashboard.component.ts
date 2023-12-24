@@ -76,8 +76,6 @@ export class ApsDashboardComponent implements OnInit {
 
     this.apsServices.getLatestApsUpdate().subscribe((result) => {
 
-      console.log(result);
-
       let {update_date, created_at, cant_records, coincidence, user_name, status_description, path} = result
 
       this.apsUpdateDate = update_date;
@@ -125,14 +123,12 @@ export class ApsDashboardComponent implements OnInit {
 
     },
     () => {
-      console.log( this.dataDataTable);
 
     })
   }
 
   statusOfProcess() {
     this.apsServices.statusOfProcess().subscribe((result: any) => {
-      console.log(result);
 
       return this.listStatusOfProcess = result;
     },
