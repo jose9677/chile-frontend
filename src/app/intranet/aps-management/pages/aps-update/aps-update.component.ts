@@ -124,28 +124,30 @@ export class ApsUpdateComponent implements OnInit {
         error => {
           this.apsServices.isUpdateNewList= false;
 
-          let isError= true;
-          let title= "";
-          let message = 'No se pudo realizar la actualización del listado APS';
-          this.modalService.OpenModalError2(ModalComponent, isError, title, message);
-          console.log(error);
+          if(window.sessionStorage.getItem('isLoggedin')) {
 
+            let isError= true;
+            let title= "";
+            let message = 'No se pudo realizar la actualización del listado APS';
+            this.modalService.OpenModalError2(ModalComponent, isError, title, message);
+            console.log(error);
+          }
         },
         () => {
           this.apsServices.isUpdateNewList= false;
-          let isError= false;
-          let title= "Actualización Completada";
-          let message = 'Se ha actualizado la lista de APS de forma exitosa';
-          this.modalService.OpenModalError2(ModalComponent, isError, title, message);
-
-
+          if(window.sessionStorage.getItem('isLoggedin')) {
+            let isError= false;
+            let title= "Actualización Completada";
+            let message = 'Se ha actualizado la lista de APS de forma exitosa';
+            this.modalService.OpenModalError2(ModalComponent, isError, title, message);
+          }
         })
       })
 
       setTimeout(()=> {
         console.log('salto')
         this.router.navigate(['aps/dashboard'])
-      })
+      }, 5000)
 
     }
 

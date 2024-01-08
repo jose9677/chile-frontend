@@ -90,18 +90,27 @@ export const MENU: MenuItem[] = [
       },
     ]
   },
+  // {
+  //   label: 'APS',
+  //   icon: 'plus-square',
+  //   roles: [4, 5],
+  //   subItems: [
+    //     {
+      //       roles: [4, 5],
+      //       label: 'APS',
+      //       link: '/aps/dashboard'
+      //     },
+      //   ]
+      // },
+
   {
-    label: 'APS',
-    icon: 'plus-square',
     roles: [4, 5],
-    subItems: [
-      {
-        roles: [4, 5],
-        label: 'APS',
-        link: '/aps/dashboard'
-      },
-    ]
+    icon: 'plus-square',
+    label: 'APS',
+    link: '/aps/dashboard'
   },
+
+
   {
     label: 'Reportes',
     icon: 'file-text',

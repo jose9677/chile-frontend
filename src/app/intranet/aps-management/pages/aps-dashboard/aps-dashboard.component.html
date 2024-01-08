@@ -1,4 +1,4 @@
-<div class="card m-0 px-5 py-5 mt-3" *ngIf=" !(isUpdateNewList | async)">
+<div class="card m-0 px-5 py-5 mt-3" *ngIf=" ( apsUpdateDate)">
   <div class="row">
     <h3 class="col-12 colorTextPrimari">Última actualización APS</h3>
 
@@ -46,7 +46,7 @@
   <div class="row">
     <div class="col-12 d-flex align-items-center gap-3">
       <h3 class="colorTextPrimari">Estatus actualización APS</h3>
-      <button type="button" class="btn btn-primary style" (click)="statusOfProcess()" *ngIf=" (isUpdateNewList | async)">Actualizar</button>
+      <button type="button" class="btn btn-primary style" (click)="statusOfProcess()" *ngIf=" (isUpdateNewList | async) || !apsUpdateDate">Actualizar</button>
     </div>
 
     <div class="col p-3 d-flex flex-column" >
@@ -76,31 +76,6 @@
           </div>
 
         </ng-container>
-
-        <!-- <div class="mb-2">
-          <i class="mdi mdi-check-circle-outline fs-3"></i>
-          <span class="colorTextPrimari mx-2">Limpieza de listado actual </span>
-        </div>
-        <div  class="mb-2">
-          <i class="mdi mdi-close-octagon-outline fs-3"></i>
-          <span class="colorTextPrimari mx-2">Carga de listado nuevo en base de datos</span>
-        </div>
-        <div  class="mb-2">
-          <i class="mdi mdi-autorenew fs-3"></i>
-          <span class="colorTextPrimari mx-2">Respaldo de archivo fuente en el servidor</span>
-        </div>
-        <div  class="mb-2">
-          <i class="mdi mdi-dots-horizontal-circle-outline fs-3"></i>
-          <span class="colorTextPrimari mx-2">Actualización de vecinos registrados con APS</span>
-        </div>
-        <div  class="mb-2">
-          <i class="mdi mdi-dots-horizontal-circle-outline fs-3"></i>
-          <span class="colorTextPrimari mx-2">Actualización de porcentajes de descuento</span>
-        </div>
-        <div  class="mb-2">
-          <i class="mdi mdi-dots-horizontal-circle-outline fs-3"></i>
-          <span class="colorTextPrimari mx-2">Proceso finalizado con éxito</span>
-        </div> -->
 
       </div>
 

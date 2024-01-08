@@ -4,7 +4,6 @@ import { BehaviorSubject, Observable, Subject, catchError, map, tap, throwError 
 import { ModalComponent } from 'src/app/public/auth/shared/modals/modal/modal.component';
 import { ModalsService } from 'src/app/shared/services/modals.service';
 import { environment } from 'src/environments/environment';
-import { random } from 'underscore';
 
 const AUTH_API = environment.urlApi;
 const AUTH_API_NP = environment.urlApiNp;

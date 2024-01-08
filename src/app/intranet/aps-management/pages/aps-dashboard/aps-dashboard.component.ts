@@ -45,6 +45,8 @@ export class ApsDashboardComponent implements OnInit {
       'cargado por',
       'estatus'
     ]
+
+
   }
 
   ngOnInit(): void {
@@ -66,7 +68,7 @@ export class ApsDashboardComponent implements OnInit {
     if(this.apsServices.statusUpdateNewListValue) {
       setTimeout(() => {
         this.statusOfProcess();
-      }, 1000)
+      })
     } else {
       this.statusOfProcess();
     }
@@ -128,9 +130,50 @@ export class ApsDashboardComponent implements OnInit {
   }
 
   statusOfProcess() {
+
+    const listStatusOfProcess = [
+      {
+        "process": "LIMPIEZA DE LISTADO ACTUAL",
+        "status": null
+      },
+      {
+        "process": "CARGA DE LISTADO NUEVO EN BASE DE DATOS",
+        "status": null
+    },
+      {
+          "process": "RESPALDO DE ARCHIVO FUENTE EN EL SERVIDOR",
+          "status": null
+      },
+      {
+          "process": "ACTUALIZACION DE VECINOS REGISTRADOS CON APS",
+          "status": null
+      },
+      {
+          "process": "ACTUALIZACION DE PORCENTAJES DE DESCUENTO",
+          "status": null
+      },
+      {
+          "process": "PROCESO FINALIZADO CON EXITO",
+          "status": null
+      }
+    ]
     this.apsServices.statusOfProcess().subscribe((result: any) => {
 
-      return this.listStatusOfProcess = result;
+      listStatusOfProcess.map(status => {
+        result.map(res => {
+          if(status.process === res.process) status.status = res.status
+        })
+      })
+
+      listStatusOfProcess.map(res => {
+        if ( res.status === null) {
+          res.status = 'PENDIENTE'
+        }
+      })
+
+      this.latestApsUpdate()
+
+      return this.listStatusOfProcess = listStatusOfProcess;
     },
     error => {
 
