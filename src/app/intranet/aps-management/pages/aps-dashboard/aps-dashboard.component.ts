@@ -80,8 +80,8 @@ export class ApsDashboardComponent implements OnInit {
 
       let {update_date, created_at, cant_records, coincidence, user_name, status_description, path} = result
 
-      this.apsUpdateDate = update_date;
-      this.apsGenerationDate = created_at;
+      this.apsUpdateDate = created_at;
+      this.apsGenerationDate = update_date;
       this.numberOfRecords = cant_records;
       this.coincidences = coincidence;
       this.loadedBy = user_name;
@@ -108,8 +108,8 @@ export class ApsDashboardComponent implements OnInit {
 
         dataResult.push({
           'Nro.': i+1,
-          'fecha de actualización': res.updated_at,
-          'fecha de generación': res.created_at,
+          'fecha de actualización': res.created_at,
+          'fecha de generación': res.update_date,
           'cantidad de registros': res.cant_records,
           'coincidencias (inscritos)': res.coincidence,
           'cargado por': res.user_name,
