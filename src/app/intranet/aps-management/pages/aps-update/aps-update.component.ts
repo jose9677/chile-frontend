@@ -18,7 +18,6 @@ export class ApsUpdateComponent implements OnInit {
   public isSelectFile: boolean;
   public IsUpdateNewList: boolean;
 
-
   public today: any;
 
   public updateApsForm: any = this.fb.group({
@@ -47,21 +46,17 @@ export class ApsUpdateComponent implements OnInit {
       this.apsServices.newViewTitle = 'Actualizar listado APS';
     })
 
-
   }
 
   selectDataFile(event: any): void {
 
     let  file = <File>event.target.files[0];
 
-    console.log(file);
-
-
     this.updateApsForm.controls['document'].reset();
 
     if ( file != undefined ) {
 
-      if ( (file.type == "application/vnd.ms-excel" || file.type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ) && file.size < 50000000)  {
+      if ( (file.type == "text/csv" ) && file.size < 50000000)  {
 
         this.updateApsForm.controls['document'].setValue(file);
 
@@ -94,7 +89,6 @@ export class ApsUpdateComponent implements OnInit {
 
     this.router.navigate(['aps/dashboard']);
 
-
   }
 
   updateAps(e: Event) {
@@ -105,6 +99,7 @@ export class ApsUpdateComponent implements OnInit {
 
     if( this.updateApsForm.status === 'VALID') {
 
+      this.apsServices.isUpdateNewList= true;
       const data = new FormData();
 
       data.append('rut', JSON.parse(sessionStorage.getItem('auth-user')));
@@ -114,11 +109,8 @@ export class ApsUpdateComponent implements OnInit {
       setTimeout(()=>{
 
         console.log('proceso');
-        this.apsServices.isUpdateNewList= true;
         this.spinnerService.hide();
         this.apsServices.updateAps( data ).subscribe((result) => {
-
-          console.log(result);
 
         },
         error => {
@@ -130,7 +122,6 @@ export class ApsUpdateComponent implements OnInit {
             let title= "";
             let message = 'No se pudo realizar la actualización del listado APS';
             this.modalService.OpenModalError2(ModalComponent, isError, title, message);
-            console.log(error);
           }
         },
         () => {
@@ -145,9 +136,8 @@ export class ApsUpdateComponent implements OnInit {
       })
 
       setTimeout(()=> {
-        console.log('salto')
         this.router.navigate(['aps/dashboard'])
-      }, 5000)
+      }, 10000)
 
     }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApsManagementService } from '../../shared/services/aps-management.service';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-aps-dashboard',
@@ -95,8 +95,6 @@ export class ApsDashboardComponent implements OnInit {
     () => {
 
     })
-
-
   }
 
   getAllAps() {
@@ -139,7 +137,7 @@ export class ApsDashboardComponent implements OnInit {
       {
         "process": "CARGA DE LISTADO NUEVO EN BASE DE DATOS",
         "status": null
-    },
+      },
       {
           "process": "RESPALDO DE ARCHIVO FUENTE EN EL SERVIDOR",
           "status": null

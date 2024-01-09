@@ -33,7 +33,7 @@
           >
           <div *ngIf="(isSelectFile && (!updateApsForm.controls.document.value? true : false) && updateApsForm.controls.document.errors?.required) || isFormSubmitted && updateApsForm.controls.document.errors?.required" class="invalid-feedback">Campo obligatorio</div>
 
-          <div *ngIf="(isSelectFile && isFormatinvalid) || (isFormSubmitted && isFormatinvalid)" class="invalid-feedback">El archivo tiene que ser formato .xls o .xlsx y no puede tener un tamaño superior a 5mb</div>
+          <div *ngIf="(isSelectFile && isFormatinvalid) || (isFormSubmitted && isFormatinvalid)" class="invalid-feedback">El archivo tiene que ser formato .csv y no puede tener un tamaño superior a 5mb</div>
         </div>
 
 
