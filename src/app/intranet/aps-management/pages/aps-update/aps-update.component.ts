@@ -108,9 +108,10 @@ export class ApsUpdateComponent implements OnInit {
 
       setTimeout(()=>{
 
-        console.log('proceso');
         this.spinnerService.hide();
         this.apsServices.updateAps( data ).subscribe((result) => {
+
+          console.log(result)
 
         },
         error => {
