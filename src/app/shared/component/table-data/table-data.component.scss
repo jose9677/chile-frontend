@@ -1,9 +1,5 @@
-@media screen and (max-width: 768px) {
 
-    button span.btn-text{
-        display: none;
-    }
-}
+
 
 .head-table {
   margin: 0;
@@ -144,10 +140,14 @@
         }
 
         div{
-          input{
+          div{
             display: none;
             pointer-events: none;
-            margin-right: 10px;
+            margin-right: 5px;
+          }
+          p{
+            margin: auto 0 auto 0;
+            padding: auto 0 auto 0;
           }
         }
       }
@@ -285,7 +285,7 @@
 
         display: table-cell;
 
-        input.a3{
+        div.a3{
 
             display: flex !important;
             pointer-events: visible !important;
@@ -414,7 +414,7 @@
 
         display: table-cell;
 
-        input.a4{
+        div.a4{
             display: flex !important;
             pointer-events: visible !important;
         }
@@ -539,7 +539,7 @@
 
         display: table-cell;
 
-        input.a5{
+        div.a5{
             display: flex !important;
             pointer-events: visible !important;
         }
@@ -665,7 +665,7 @@
 
         display: table-cell;
 
-        input.a6{
+        div.a6{
             display: flex !important;
             pointer-events: visible !important;
         }
@@ -791,7 +791,7 @@
 
         display: table-cell;
 
-        input.a7{
+        div.a7{
             display: flex !important;
             pointer-events: visible !important;
         }
@@ -913,7 +913,7 @@
     .tdd-0{
         display: table-cell;
 
-        input.a8{
+        div.a8{
             display: flex !important;
             pointer-events: visible !important;
         }
@@ -1037,7 +1037,7 @@
     .tdd-0{
         display: table-cell;
 
-        input{
+        div{
             display :none !important;
             pointer-events: none !important;
         }
@@ -1085,4 +1085,38 @@
 
 
 }
+
+// buttons navigation
+
+div.btn-content{
+  min-width: 450px;
+}
+
+div.btn-move{
+  display: flex;
+  align-content: space-between;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 910px) {
+
+
+  // div.btn-move{
+    //   width: max-content;
+    // }
+
+    button span.btn-text{
+      display: none;
+    }
+}
+
+// @media screen and (max-width: 620px) {
+//   div.btn-content{
+//     display: flex;
+//     justify-content: center !important;
+//     align-items: center !important;
+//   }
+
+// }
 

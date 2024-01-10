@@ -402,7 +402,8 @@ export class TableDataComponent implements OnInit {
 
       if (res['Nro.'] === id_request) {
 
-        res.hidden= e.target.checked;
+        // res.hidden= e.target.checked;
+        res.hidden= !res.hidden;
 
       }
 
