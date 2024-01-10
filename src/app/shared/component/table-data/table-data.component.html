@@ -172,8 +172,12 @@
                 </div>
 
                 <div class="btn-list">
-                    <ng-container *ngFor="let page of pages">
-                        <button class="btn" [ngClass]="{'btn-primary style' : page.active === true, 'btn-outline-primary style-outline' : page.active != true}" *ngIf="!page.hidden" (click)="sortByService.getPage(page.pageNumber); getPages();">{{ page.pageNumber }}</button>
+                  <ng-container *ngFor="let page of pages">
+                    <button class="btn btn-outline-primary style-outline"  *ngIf="(page.pageNumber === (pages.length - 1)) && (page.hidden === true)" disabled>...</button>
+
+                    <button class="btn" [ngClass]="{'btn-primary style' : page.active === true, 'btn-outline-primary style-outline' : page.active != true}" *ngIf="!page.hidden || (page.pageNumber === pages.length) || (page.pageNumber === 1 )" (click)="sortByService.getPage(page.pageNumber); getPages();">{{ page.pageNumber }}</button>
+
+                    <button class="btn btn-outline-primary style-outline" *ngIf="(page.pageNumber === 2) && (page.hidden === true)" disabled>...</button>
                     </ng-container>
                 </div>
 
