@@ -13,6 +13,8 @@ import { ApproveDatesComponent } from './pages/approve-dates/approve-dates.compo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { VisitorDataComponent } from './pages/visitor-data/visitor-data.component';
+import { NgxMaskModule } from 'ngx-mask';
+import { CustomFormsModule } from 'ngx-custom-validators';
 
 
 @NgModule({
@@ -32,8 +34,11 @@ import { VisitorDataComponent } from './pages/visitor-data/visitor-data.componen
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    CustomFormsModule,
     DatesManagementRoutingModule,
-    NgSelectModule
+    NgSelectModule,
+    NgxMaskModule.forRoot()
+
   ]
 })
 export class DatesManagementModule { }

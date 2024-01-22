@@ -1,0 +1,50 @@
+[{
+  "rut": "55555555-5",
+  "names": "Eduy Omaña",
+  "lastNames": "Omaña Hernandez",
+  "id_sex": 1,
+  "datesBirth": "1984-08-14",
+  "email": "eduyeoh@gmail.com",
+  "landLine": "123456789",
+  "mobilePhone": "987654321",
+
+  "id_request": "2",
+  "request_date": "2024-01-01",
+  "id_status": 1,
+  "id_prevention_type_detail": 2,
+  "id_prevention_type": 2,
+  "assurance": true,
+  
+  "id_origin_direction": 1,
+  "address_wots": "dirección Wots",
+  "longitude": "00000",
+  "latitude": "0000000",
+  
+  "id_locations": 1,
+  "way_number": "1",
+  "id_property_type": 1,
+  "property_number": "1",
+
+
+  "documents":[
+    {
+    "id_document_type": 1,
+    "document_ext": ".jpg",
+    "document_path": "https://www.shutterstock.com/image-vector/cartoon-media-file-document-management-260nw-2350886357.jpg"
+    },
+    {
+      "id_document_type": 2,
+      "document_ext": ".jpg",
+      "document_path": "https://img.freepik.com/vector-gratis/diseno-colorido-vector-documento_341269-1262.jpg"
+      }
+  ],
+
+  "carer": true,
+  "id_motive": 1,
+  "id_dedication": 1,
+  "id_remuneration": 1,
+  "aps": true,
+  "percent": "20%",
+  "origin": "wots",
+  "comments": "nada"
+}]

@@ -1,0 +1,54 @@
+[
+  {
+    "gender": [
+      {
+        "id": 1,
+        "description": "Masculino"
+      },
+      {
+        "id": 2,
+        "description": "Femenino"
+      }
+    ],
+    "locations": [
+      {
+        "id": 1,
+        "street": "ACHAO"
+      },
+      {
+        "id": 2, "street":	"AGUAS CLARAS"
+      }
+    ],
+    "property_types": [
+      {"id": 1,	"description": "CASA"},
+      {"id": 2,	"description": "DEPARTAMENTO"},
+      {"id": 3,	"description": "OFICINA"}
+    ],
+    "prevention_types": [
+      {"id": 1,	"description": "FONASA"},
+      {"id": 2,	"description": "ISAPRE"},
+      {"id": 3,	"description": "OTRO"},
+      {"id": 4,	"description": "NINGUNO"}
+    ],
+    "prevention_details": [
+      {"id": 1, "description":	"A"},
+      {"id": 2, "description":	"B"},
+      {"id": 3, "description":	"C"},
+      {"id": 4, "description":	"D"}
+    ],
+    "remunerations": [
+      {"id": 1, "description": "REMUNERADO"},
+      {"id": 2, "description": "NO REMUNERADO"}
+    ],
+    "motives": [
+      {"id": 1, "description": "PERSONA CON DEPENDENCIA SEVERA"},
+      {"id": 2, "description": "PERSONA CON DISCAPACIDAD"},
+      {"id": 3, "description": "NIÑO"}
+    ],
+    "dedication": [
+      {"id": 1, "description": "TIEMPO PARCIAL"},
+     {"id": 2, "description": "TIEMPO COMPLETO"}
+    ]
+
+  }
+]

@@ -61,26 +61,26 @@ export class ApproveDatesComponent implements OnInit {
 
     this.idRequestSubscription = this.routerquery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
 
-    this.datesService.getForIdRequest(this.idRequest).subscribe((result) => {
+    // this.datesService.getForIdRequest(this.idRequest).subscribe((result) => {
 
-      result.map((res: any)=>{
-        res.fullName = res.names_assistant +' '+ res.lastname_assistant;
-        res.fullNameUser = res.names +' '+ res.lastname;
-        res.fullPeventionData = res.prevention_type +' - '+ res.prevention_detail;
-        res.fullDirection = res.street + ' ' + res.way_number + ', ' + res.description + ' ' + (res.property_number ?? 's/n');
+    //   result.map((res: any)=>{
+    //     res.fullName = res.names_assistant +' '+ res.lastname_assistant;
+    //     res.fullNameUser = res.names +' '+ res.lastname;
+    //     res.fullPeventionData = res.prevention_type +' - '+ res.prevention_detail;
+    //     res.fullDirection = res.street + ' ' + res.way_number + ', ' + res.description + ' ' + (res.property_number ?? 's/n');
 
-        if ( res.id_document_type === 1 ) {
-          this.documentsDom.push({'doc_srv_path': res.doc_srv_path, 'document_type': res.document_type, 'document_path': res.document_path, 'document_ext': res.document_ext});
+    //     if ( res.id_document_type === 1 ) {
+    //       this.documentsDom.push({'doc_srv_path': res.doc_srv_path, 'document_type': res.document_type, 'document_path': res.document_path, 'document_ext': res.document_ext});
 
-        }
-        else if ( res.id_document_type === 2 ) {
-          this.documentsPre.push({'doc_srv_path': res.doc_srv_path, 'document_type': res.document_type, 'document_path': res.document_path, 'document_ext': res.document_ext})
-        }
+    //     }
+    //     else if ( res.id_document_type === 2 ) {
+    //       this.documentsPre.push({'doc_srv_path': res.doc_srv_path, 'document_type': res.document_type, 'document_path': res.document_path, 'document_ext': res.document_ext})
+    //     }
 
 
-        this.dataRequest.push(res);
-      })
-    })
+    //     this.dataRequest.push(res);
+    //   })
+    // })
 
   }
 
@@ -101,20 +101,20 @@ export class ApproveDatesComponent implements OnInit {
 
     if ( this.formApprove.status == "VALID" ) {
 
-      this.datesService.approbe(idRequest, dataRequest).subscribe((result) => {
+      // this.datesService.approbe(idRequest, dataRequest).subscribe((result) => {
 
 
-      },
-      error => {
+      // },
+      // error => {
 
-      },
-      () => {
+      // },
+      // () => {
 
-        this.openGenerateCredential();
+      //   this.openGenerateCredential();
 
-        this.router.navigate(['/solicitud/asignar-cita']);
+      //   this.router.navigate(['/solicitud/asignar-cita']);
 
-      })
+      // })
     }
   }
 

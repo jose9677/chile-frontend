@@ -1,88 +1,509 @@
- <div class="card">
-  <form class="forms-sample container pb-5 px-5">
-    <div class="row mt-5 justify-content-center">
+ <div>
+  <form class="forms-sample container" [formGroup]="updateRequestForm" (ngSubmit)="updateRequest()">
+
+    <div class="card row justify-content-center align-items-center p-3 mb-3">
+      <h3 class="colorTextPrimari" >Datos Personales</h3><br>
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <label for="rut" class="form-label colorTextPrimari">RUT</label>
+          <input
+          class="form-control"
+          id="rut"
+          type="text"
+          [readOnly]="true"
+          formControlName="rut"
+          >
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="name" class="form-label">Nombres</label>
+          <input
+          class="form-control"
+          type="text"
+          id="name"
+          formControlName="names"
+          [readOnly]="!isEditingPersonalData"
+          [ngClass]="{'is-invalid': (updateRequestForm.controls.names.touched && updateRequestForm.controls.names.errors) || (isFormSubmitted && updateRequestForm.controls.names.errors)}" placeholder="Introduzca sus nombres"
+          >
+          <div *ngIf="(updateRequestForm.controls.names.touched && updateRequestForm.controls.names.errors?.required) || (isFormSubmitted && updateRequestForm.controls.names.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+
+          <div class="text-danger mt-1" *ngIf="updateRequestForm.controls.names.errors?.pattern">Este campo solo admite letras</div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="lastNames" class="form-label ">Apellidos</label>
+          <input
+          type="text"
+          class="form-control"
+          id="lastNames"
+          formControlName="lastNames"
+          [readOnly]="!isEditingPersonalData"
+          [ngClass]="{'is-invalid': (updateRequestForm.controls.lastNames.touched && updateRequestForm.controls.lastNames.errors) || (isFormSubmitted && updateRequestForm.controls.lastNames.errors)}" placeholder="Introduzca sus apellidos"
+          >
+          <div *ngIf="(updateRequestForm.controls.lastNames.touched && updateRequestForm.controls.lastNames.errors?.required) || (isFormSubmitted && updateRequestForm.controls.lastNames.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+          <div class="text-danger mt-1" *ngIf="updateRequestForm.controls.lastNames.errors?.pattern">Este campo solo admite letras</div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="gender" class="form-label">Sexo</label>
+          <ng-select
+          class="form-control p-0"
+          id="gender"
+          placeholder="Seleccione"
+          formControlName="gender"
+          [clearable]="false"
+          [readonly]="!isEditingPersonalData"
+          [ngClass]="{'is-invalid': ((updateRequestForm.controls.gender.touched && updateRequestForm.controls.gender.errors) || (isFormSubmitted && updateRequestForm.controls.gender.errors))}"
+          >
+            <ng-option *ngFor="let gender of genders" [value]="gender.id">{{gender.description}}</ng-option>
+          </ng-select>
+          <div *ngIf="(updateRequestForm.controls.gender.touched && updateRequestForm.controls.gender.errors?.required) || (updateRequestForm.controls.gender.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="datesBirth" class="form-label">Fecha de Nacimiento</label>
+          <input
+          class="form-control"
+          type="date"
+          [maxDate]="today"
+          id="datesBirth"
+          formControlName="datesBirth"
+          [readOnly]="!isEditingPersonalData"
+          [ngClass]="{'is-invalid': (updateRequestForm.controls.datesBirth.touched && updateRequestForm.controls.datesBirth.errors) || (isFormSubmitted && updateRequestForm.controls.datesBirth.errors)}"
+          >
+          <div *ngIf="(updateRequestForm.controls.datesBirth.touched && updateRequestForm.controls.datesBirth.errors?.required) || (isFormSubmitted && updateRequestForm.controls.datesBirth.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="email" class="form-label">Correo Electrónico</label>
+          <input
+          type="email"
+          class="form-control"
+          id="email"
+          formControlName="email"
+          [readOnly]="!isEditingPersonalData"
+          [ngClass]="{'is-invalid': (updateRequestForm.controls.email.touched && updateRequestForm.controls.email.errors) || (isFormSubmitted && updateRequestForm.controls.email.errors)}" placeholder="Introduzca su email"
+          >
+          <div *ngIf="(updateRequestForm.controls.email.touched && updateRequestForm.controls.email.errors?.required) || (isFormSubmitted && updateRequestForm.controls.email.errors)" class="invalid-feedback">Campo Requerido</div>
+
+          <div class="text-danger mt-1" *ngIf="updateRequestForm.controls.email.errors?.email">Verifique el formato de email</div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="landLine" class="form-label">Teléfono Fijo</label>
+          <input
+          type="tel"
+          class="form-control"
+          id="landLine"
+          formControlName="landLine"
+          prefix="+56" mask="  0  0000 - 0000" [showMaskTyped] = "false"
+          [readOnly]="!isEditingPersonalData"
+          [ngClass]="{'is-invalid': (updateRequestForm.controls.landLine.touched && updateRequestForm.controls.landLine.errors) || (isFormSubmitted && updateRequestForm.controls.landLine.errors)}"
+          >
+          <div *ngIf="(updateRequestForm.controls.landLine.touched && updateRequestForm.controls.landLine.errors?.required) || (isFormSubmitted && updateRequestForm.controls.landLine.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="mobilePhone" class="form-label">Teléfono Móvil</label>
+          <input
+          type="text"
+          class="form-control"
+          id="mobilePhone"
+          formControlName="mobilePhone"
+          prefix="+56" mask="  0  0000 - 0000" [showMaskTyped] = "false"
+          [readOnly]="!isEditingPersonalData"
+          [ngClass]="{'is-invalid': (updateRequestForm.controls.mobilePhone.touched && updateRequestForm.controls.mobilePhone.errors) || (isFormSubmitted && updateRequestForm.controls.mobilePhone.errors)}"
+          >
+          <div *ngIf="(updateRequestForm.controls.mobilePhone.touched && updateRequestForm.controls.mobilePhone.errors?.required) || (isFormSubmitted && updateRequestForm.controls.mobilePhone.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end mt-3">
+        <a href="#" (click)="editPersonalData($event)" *ngIf="!isEditingPersonalData">Editar</a>
+        <div *ngIf="isEditingPersonalData">
+          <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" >Actualizar</button>
+          <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="editPersonalData($event)" >Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card row justify-content-center align-items-center p-3 mb-3">
       <h3 class="colorTextPrimari">Datos de la Solicitud</h3><br>
       <div class="row mt-3">
-        <div class="col-md-4 col-sm-12">
+        <div class="col-md-4 mb-3">
           <label for="" class="form-label colorTextPrimari">Número de Solicitud</label>
-          <input type="text" value={{idRequest}} disabled class="form-control">
+          <input
+          type="text"
+          formControlName="requestNumber"
+          [readOnly]="true"
+          class="form-control">
         </div>
-        <div class="col-md-4 col-sm-12">
+        <div class="col-md-4 mb-3">
           <label for="" class="form-label colorTextPrimari">Fecha de Solicitud</label>
-          <input type="text" value={{unassignedRequest[0]?.request_date}} disabled class="form-control">
+          <input
+          type="text"
+          formControlName="dateRequest"
+          [readOnly]="true"
+          class="form-control">
         </div>
-        <div class="col-md-4 col-sm-12">
+        <div class="col-md-4 mb-3">
           <label for="" class="form-label colorTextPrimari">Estatus</label>
-          <input type="text" value={{unassignedRequest[0]?.status}} disabled class="form-control">
+          <input
+          type="text"
+          formControlName="statusRequest"
+          value={{unassignedRequest[0]?.status}}
+          [readOnly]="!isEditingRequestData"
+          class="form-control">
         </div>
-      </div>
-      <div class="row mt-3 ">
-        <div class="col-md-4 col-sm-12">
-          <label for="" class="form-label colorTextPrimari ">Solicitante</label>
-          <input type="text" value={{unassignedRequest[0]?.fullNameUser}} disabled class="form-control">
+        <div class="col-md-4 mb-3">
+          <label for="preventions_types" class="form-label">Tipo de Previsión</label>
+          <ng-select
+              id="preventions_types"
+              class="form-control p-0"
+              bindLabel="prevention_type"
+              bindValue="id"
+              [clearable]="false"
+              formControlName="preventionsTypes"
+              placeholder="Seleccione"
+              [readonly]="!isEditingRequestData"
+              [ngClass]="{'is-invalid': ((updateRequestForm.controls.preventionsTypes.touched && updateRequestForm.controls.preventionsTypes.errors) || (isFormSubmitted && updateRequestForm.controls.preventionsTypes.errors))}"
+              >
+              <ng-option *ngFor="let preventionType of preventionsTypes" [value]="preventionType.id">{{preventionType.description}}</ng-option>
+          </ng-select>
+          <div *ngIf="(updateRequestForm.controls.preventionsTypes.touched && updateRequestForm.controls.preventionsTypes.errors?.required) || (isFormSubmitted && updateRequestForm.controls.preventionsTypes.errors?.required)" class="invalid-feedback">Campo Requerido</div>
         </div>
-        <div class="col-md-8 col-sm-12">
-          <label for="" class="form-label colorTextPrimari ">Dirección</label>
-          <textarea wrap="soft" style="overflow:hidden; resize:none;" value={{unassignedRequest[0]?.fullDirection}} disabled class="form-control"></textarea>
+        <div class="col-md-4 mb-3">
+        <label for="preventions_types_details" class="form-label">Detalle de previsión</label>
+        <ng-select
+            id="preventions_types_details"
+            class="form-control p-0"
+            [clearable]="false"
+            formControlName="preventionsTypesDetails"
+            placeholder="Seleccione"
+            [readonly]="!isEditingRequestData"
+            [ngClass]="{'is-invalid': ((updateRequestForm.controls.preventionsTypesDetails.touched && updateRequestForm.controls.preventionsTypesDetails.errors) || (isFormSubmitted && updateRequestForm.controls.preventionsTypesDetails.errors))}"
+            >
+            <ng-option *ngFor="let detail of preventionDetails" [value]="detail.id">{{detail.description}}</ng-option>
+        </ng-select>
+        <div *ngIf="(updateRequestForm.controls.preventionsTypesDetails.touched && updateRequestForm.controls.preventionsTypesDetails.errors) || (isFormSubmitted && updateRequestForm.controls.preventionsTypesDetails.errors)" class="invalid-feedback">Campo Requerido</div>
         </div>
-      </div>
-      <div class="row mt-3 ">
-        <div class="col-md-4 col-sm-12">
-          <label for="" class="form-label colorTextPrimari ">Asistente Social</label>
-          <div class="row">
-            <div class="col-md-5">
-              <input type="text" value={{unassignedRequest[0]?.fullName}} disabled class="form-control">
-            </div>
-            <a class="col-md-3 mt-1" (click)="visitador() ">
-              <i class="h4 feather icon-eye"></i>
-            </a>
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-12">
-          <label for="" class="form-label colorTextPrimari ">Fecha de Visita</label>
-          <input type="text" value={{unassignedRequest[0]?.visit_date}} disabled class="form-control">
+        <div class="col-md-4 mb-3">
+          <label for="haveInsurance" class="form-label">¿Tiene Seguro Complementario?</label>
+          <ng-select
+              id="haveInsurance"
+              class="form-control p-0"
+              [clearable]="false"
+              placeholder="Seleccione"
+              formControlName="haveInsurance"
+              [readonly]="!isEditingRequestData"
+              [ngClass]="{'is-invalid': ((updateRequestForm.controls.haveInsurance.touched && updateRequestForm.controls.haveInsurance.errors) || (isFormSubmitted && updateRequestForm.controls.haveInsurance.errors))}"
+              >
+              <ng-option [value]="true">Si</ng-option>
+              <ng-option [value]="false">No</ng-option>
+          ></ng-select>
+          <div *ngIf="(updateRequestForm.controls.haveInsurance.touched && updateRequestForm.controls.haveInsurance.errors) || (isFormSubmitted && updateRequestForm.controls.haveInsurance.errors)" class="invalid-feedback">Campo Requerido</div>
         </div>
 
-      </div>
-    </div>
-    <div class="row mt-5 justify-content-center">
-      <h3 class="colorTextPrimari">Documentos</h3><br>
-    </div>
-    <div class="row mt-3 justify-content-start">
-      <div class="col-md-6 col-sm-12">
-          <div class="row">
-            <div class="col-md-6 col-sm-12">
-              <label for="" class="form-label colorTextPrimari ">Tipo de Prevision </label>
-            </div>
-            <div class="col-md-6">
-             <input type="text" name="" id="" class="form-control" value={{unassignedRequest[0]?.fullPeventionData}} disabled>
-            </div>
-          </div>
-      </div>
-      <div class="col-sm-12 text-center d-flex align-items-center justify-content-start" *ngFor=" let document of documentsPre">
-        <a href={{document?.doc_srv_path}} target="_blank">{{document?.document_path}}<i class="ms-4 h4 feather icon-eye"></i></a>
-      </div>
-    </div>
-    <div class="row mt-3 justify-content-start">
-      <div class="col-md-6 col-sm-12">
-          <div class="row">
-            <div class="col-md-6 col-sm-12">
-              <label for="" class="form-label colorTextPrimari ">Comprobante de domicilio</label>
-            </div>
-          </div>
-      </div>
-      <div class="col-sm-12 text-center d-flex align-items-center justify-content-start" *ngFor=" let document of documentsDom">
-        <a href={{document?.doc_srv_path}} target="_blank">{{document?.document_path}}<i class="ms-5 h4 feather icon-eye"></i></a>
-      </div>
-    </div>
-    <br>
-    <!-- <div class="row mt-3 justify-content-center">
-        <div>
-          <a href="" class=" d-flex align-items-center fs-4"><i class="ms-5 mdi mdi-file-pdf-box " style="font-size: 50px;"></i><strong> Ver Credencial</strong></a>
+        <div class="col-md-4 mb-3">
+          <label for="directionToUse" class="form-label">Utilizar Dirección</label>
+          <ng-select
+              id="directionToUse"
+              class="form-control p-0"
+              [clearable]="false"
+              placeholder="Seleccione"
+              formControlName="directionToUse"
+              [readonly]="!isEditingRequestData"
+              (change)="changeOriginAddress($event)"
+              [ngClass]="{'is-invalid': ((updateRequestForm.controls.haveInsurance.touched && updateRequestForm.controls.haveInsurance.errors) || (isFormSubmitted && updateRequestForm.controls.haveInsurance.errors))}"
+              >
+              <ng-option [value]="1">REGISTRO POR PAGINA</ng-option>
+              <ng-option [value]="2">WOTS</ng-option>
+          ></ng-select>
+          <div *ngIf="(updateRequestForm.controls.haveInsurance.touched && updateRequestForm.controls.haveInsurance.errors) || (isFormSubmitted && updateRequestForm.controls.haveInsurance.errors)" class="invalid-feedback">Campo Requerido</div>
         </div>
-    </div> -->
-    <div class="d-flex flex-row justify-content-evenly pt-4">
-      <div>
+
+        <div class="col-12 mb-3" *ngIf="!isEditingRequestData">
+          <label for="" class="form-label colorTextPrimari ">Dirección</label>
+          <textarea
+          wrap="soft"
+          style="overflow:hidden;
+          resize:none;"
+          [value]="fullAddress()"
+          [readOnly]="!isEditingRequestData"
+          class="form-control"></textarea>
+        </div>
+
+
+        <ng-container formArrayName="addressRegisteredToPage" >
+          <ng-container *ngFor=" let address of directionRegisteredOnThePageArray.controls; let i = index ">
+            <div [formGroupName]="i" class="row" *ngIf="isEditingRequestData">
+              <div class="col-md-6 mb-3 ">
+                <label for="locations" class="form-label">Calle/Avenida</label>
+                <ng-select
+                  class="form-control p-0"
+                  bindLabel="street"
+                  bindValue="id"
+                  placeholder="Seleccione"
+                  formControlName="location"
+                  (change)="locationChange()"
+                  [clearable]="false"
+                  [readonly]="!isEditingRequestData"
+                  [ngClass]="{'is-invalid': ((address.touched && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.location.errors) || (isFormSubmitted && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.location.errors))}"
+                  >
+                  <ng-option *ngFor="let location of locations" [value]="location.id">{{location.street}}</ng-option>
+                </ng-select>
+                <div *ngIf="(address.touched && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.location.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="numberStreet" class="form-label">Número</label>
+                <input
+                type="text"
+                class="form-control"
+                id="numberStreet"
+                formControlName="numberStreet"
+                placeholder="Especifique"
+                maxlength="10"
+                [readonly]="!isEditingRequestData"
+                [ngClass]="{'is-invalid': (((address.touched || address.dirty) && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.numberStreet.errors) || (isFormSubmitted && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.numberStreet.errors))}"
+                >
+                <div *ngIf="((address.touched || address.dirty) && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.numberStreet.errors?.required) || (isFormSubmitted && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.numberStreet.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+              </div>
+
+              <div class="col-md-6 mb-3 ">
+                <label for="propertyTypes" class="form-label">Casa/Departamento/Oficina</label>
+                <ng-select
+                class="form-control p-0"
+                placeholder="Seleccione"
+                formControlName="propertyType"
+                [readonly]="!isEditingRequestData"
+                [clearable]="false"
+                [ngClass]="{'is-invalid': ((address.touched && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.propertyType.errors) || (isFormSubmitted && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.propertyType.errors))}"
+                (change)="typePropertyChange()"
+                >
+                <ng-option *ngFor="let propertyType of propertyTypes" [value]="propertyType.id">{{propertyType.description}}</ng-option>
+              </ng-select>
+              <div *ngIf="(address.touched && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.propertyType.errors?.required) || (updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.propertyType.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label
+                for="nameHome" class="form-label">Número de {{typeProperty}}</label>
+                <input
+                type="text"
+                class="form-control"
+                id="nameHome"
+                formControlName="nameHome"
+                placeholder="Especifique"
+                maxlength="10"
+                [readonly]="!isEditingRequestData"
+                [ngClass]="{'is-invalid': (((address.touched || address.dirty) && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.nameHome.errors) || (isFormSubmitted && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.nameHome.errors))}"
+                >
+                <div *ngIf="((address.touched || address.dirty) && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.nameHome.errors?.required) || (isFormSubmitted && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.nameHome.errors?.required)" class="invalid-feedback">Campo Requerido, si no aplica coloque S/N</div>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+
+        <ng-container formArrayName="addressWots" >
+          <ng-container *ngFor=" let address of addressWotsArray.controls; let i = index ">
+            <div [formGroupName]="i" class="row" *ngIf="isEditingRequestData">
+
+              <div class="col-12 mb-3">
+                <label for="addressWots" class="form-label">Dirección Wots</label>
+                <input
+                type="text"
+                class="form-control"
+                id="addressWots"
+                formControlName="addressWots"
+                placeholder="Especifique"
+                maxlength="100"
+                [readonly]="!isEditingRequestData"
+                [ngClass]="{'is-invalid': (((address.touched || address.dirty) && updateRequestForm.controls.addressWots.controls[i].controls.addressWots.errors) || (isFormSubmitted && updateRequestForm.controls.addressWots.controls[i].controls.addressWots.errors))}"
+                >
+                <div *ngIf="((address.touched || address.dirty) && updateRequestForm.controls.addressWots.controls[i].controls.addressWots.errors?.required) || (isFormSubmitted && updateRequestForm.controls.addressWots.controls[i].controls.addressWots.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+              </div>
+
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+
+      <div class="d-flex justify-content-end mt-2">
+        <a href="#" (click)="editRequestData($event)" *ngIf="!isEditingRequestData">Editar</a>
+        <div *ngIf="isEditingRequestData">
+          <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" >Actualizar</button>
+          <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="cancelEditRequestData($event)" >Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card row justify-content-center align-items-center p-3 mb-3">
+      <h3 class="colorTextPrimari">Documentos</h3><br>
+      <div class="row mt-3 justify-content-start">
+        <div class="col-md-6 col-sm-12">
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <label for="" class="form-label colorTextPrimari ">Tipo de Prevision </label>
+              </div>
+              <div class="col-md-6">
+               <input type="text" name="" id="" class="form-control" value={{unassignedRequest[0]?.fullPeventionData}} disabled>
+              </div>
+            </div>
+        </div>
+        <div class="col-sm-12 text-center d-flex align-items-center justify-content-start" *ngFor=" let document of documentsPre">
+          <a href={{document?.doc_srv_path}} target="_blank">{{document?.document_path}}<i class="ms-4 h4 feather icon-eye"></i></a>
+        </div>
+      </div>
+      <div class="row mt-3 justify-content-start">
+        <div class="col-md-6 col-sm-12">
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <label for="" class="form-label colorTextPrimari ">Comprobante de domicilio</label>
+              </div>
+            </div>
+        </div>
+        <div class="col-sm-12 text-center d-flex align-items-center justify-content-start" *ngFor=" let document of documentsDom">
+          <a href={{document?.doc_srv_path}} target="_blank">{{document?.document_path}}<i class="ms-5 h4 feather icon-eye"></i></a>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end mt-2">
+        <a href="#" (click)="editDocument($event)" *ngIf="!isEditingDocuments">Editar</a>
+        <div *ngIf="isEditingDocuments">
+          <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" >Actualizar</button>
+          <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="editDocument($event)" >Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card row justify-content-center align-items-center p-3 mb-3">
+      <h3 class="colorTextPrimari">Información adicional</h3><br>
+      <div class="row mt-3">
+
+        <div class="col-md-4 mb-3 ">
+          <label for="isCaretaker" class="form-label">¿Cumple con labores de cuidador?</label>
+          <ng-select
+              id="isCaretaker"
+              class="form-control p-0"
+              bindLabel="description"
+              bindValue="value"
+              placeholder="Seleccione"
+              formControlName="isCaretaker"
+              [clearable]="false"
+              [readonly]="!isEditingAdditionalInformation"
+              (change)=" statusCaretaker(updateRequestForm.controls.isCaretaker.value)"
+              [ngClass]="{'is-invalid': ((updateRequestForm.controls.isCaretaker.touched && updateRequestForm.controls.isCaretaker.errors) || (isFormSubmitted && updateRequestForm.controls.isCaretaker.errors))}"
+              >
+              <ng-option [value]='true'>Si</ng-option>
+              <ng-option [value]='false'>No</ng-option>
+          </ng-select>
+          <div *ngIf="(updateRequestForm.controls.isCaretaker.touched && updateRequestForm.controls.isCaretaker.errors?.required) || (updateRequestForm.controls.isCaretaker.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+        </div>
+
+        <ng-container formArrayName = "dataCaretaker">
+
+          <ng-container *ngFor=" let data of dataCaretakerArray.controls; let i= index ">
+
+            <div [formGroupName]="i">
+
+              <div class="row">
+
+                <div class="col-md-4 mb-3 ">
+                  <label for="reason" class="form-label">Motivo</label>
+                  <ng-select
+                      id="reason"
+                      class="form-control p-0"
+                      placeholder="Seleccione"
+                      formControlName="reason"
+                      [clearable]="false"
+                      [readonly]="!isEditingAdditionalInformation"
+                      [ngClass]="{'is-invalid': ((data.touched && updateRequestForm.controls.dataCaretaker.controls[i].controls.reason.errors) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[i].controls.reason.errors))}"
+                      >
+                      <ng-option *ngFor="let motive of motives" [value]="motive.id"> {{motive.description}} </ng-option>
+                  </ng-select>
+                  <div *ngIf="((data.touched && updateRequestForm.controls.dataCaretaker.controls[i].controls.reason.errors?.required) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[i].controls.reason.errors?.required))" class="invalid-feedback">Campo Requerido</div>
+
+                </div>
+
+                <div class="col-md-3 mb-3 " *ngIf="updateRequestForm.controls.isCaretaker.value == true" >
+                  <label for="dedication" class="form-label">Dedicación</label>
+                  <ng-select
+                      id="dedication"
+                      class="form-control p-0"
+                      placeholder="Seleccione"
+                      formControlName="dedicationsTypes"
+                      [clearable]="false"
+                      [readonly]="!isEditingAdditionalInformation"
+                      [ngClass]="{'is-invalid': ((data.touched && updateRequestForm.controls.dataCaretaker.controls[i].controls.dedicationsTypes.errors) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[i].controls.dedicationsTypes.errors))}"
+                      >
+                      <ng-option *ngFor="let dedication of dedicationsTypes" [value]="dedication.id"> {{ dedication.description }} </ng-option>
+                  </ng-select>
+                  <div *ngIf="((data.touched && updateRequestForm.controls.dataCaretaker.controls[i].controls.dedicationsTypes.errors?.required) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[i].controls.dedicationsTypes.errors?.required))" class="invalid-feedback">Campo Requerido</div>
+                </div>
+
+                <div class="col-md-4 mb-3 " *ngIf="updateRequestForm.controls.isCaretaker.value == true">
+                  <label for="remuneration" class="form-label">Remuneración</label>
+                  <ng-select
+                      id="remuneration"
+                      class="form-control p-0"
+                      placeholder="Seleccione"
+                      formControlName="remunerationType"
+                      [clearable]="false"
+                      [readonly]="!isEditingAdditionalInformation"
+                      [ngClass]="{'is-invalid': ((data.touched && updateRequestForm.controls.dataCaretaker.controls[i].controls.remunerationType.errors) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[i].controls.remunerationType.errors))}"
+                      >
+                      <ng-option *ngFor="let remunerationType of remunerationsTypes" [value]="remunerationType.id">{{remunerationType.description}}</ng-option>
+
+                  </ng-select>
+                  <div *ngIf="((data.touched && updateRequestForm.controls.dataCaretaker.controls[i].controls.remunerationType.errors?.required) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[i].controls.remunerationType.errors?.required))" class="invalid-feedback">Campo Requerido</div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+        </ng-container>
+
+
+        <div class="col-md-4 col-sm-12">
+          <label for="" class="form-label colorTextPrimari">Registro en APS</label>
+          <input
+          type="text"
+          value={{unassignedRequest[0]?.status}}
+          [readOnly]="true"
+          class="form-control">
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <label for="" class="form-label colorTextPrimari">Porcentaje de Descuento</label>
+          <input
+          type="text"
+          value={{unassignedRequest[0]?.status}}
+          [readOnly]="true"
+          class="form-control">
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <label for="" class="form-label colorTextPrimari">Origen de Registro</label>
+          <input
+          type="text"
+          value={{unassignedRequest[0]?.status}}
+          [readOnly]="true"
+          class="form-control">
+        </div>
+        <div class="col-12 mb-3">
+          <label for="" class="form-label colorTextPrimari ">Comentarios</label>
+          <textarea
+          wrap="soft"
+          style="overflow:hidden;
+          resize:none;"
+          value={{unassignedRequest[0]?.fullDirection}}
+          [readOnly]="!isEditingAdditionalInformation"
+          class="form-control"></textarea>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end mt-2">
+        <a href="#" (click)="editAdditionalInformation($event)" *ngIf="!isEditingAdditionalInformation">Editar</a>
+        <div *ngIf="isEditingAdditionalInformation">
+          <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" >Actualizar</button>
+          <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="editAdditionalInformation($event)" >Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card row py-3">
+      <div class="d-flex justify-content-center align-items-center">
         <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="return()" >Regresar</button>
       </div>
     </div>
