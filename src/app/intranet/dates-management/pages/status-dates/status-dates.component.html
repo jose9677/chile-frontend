@@ -115,7 +115,7 @@
         <a href="#" (click)="editPersonalData($event)" *ngIf="!isEditingPersonalData">Editar</a>
         <div *ngIf="isEditingPersonalData">
           <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" >Actualizar</button>
-          <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="editPersonalData($event)" >Cancelar</button>
+          <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="cancelEditPersonalData($event)" >Cancelar</button>
         </div>
       </div>
     </div>
@@ -340,11 +340,17 @@
                 <label for="" class="form-label colorTextPrimari ">Tipo de Prevision </label>
               </div>
               <div class="col-md-6">
-               <input type="text" name="" id="" class="form-control" value={{unassignedRequest[0]?.fullPeventionData}} disabled>
+               <input
+               type="text"
+               name=""
+               id=""
+               class="form-control"
+               value="{{preventionTypeRequest}} - {{preventionDetailRequest}}"
+               disabled>
               </div>
             </div>
         </div>
-        <div class="col-sm-12 text-center d-flex align-items-center justify-content-start" *ngFor=" let document of documentsPre">
+        <div class="col-sm-12 text-center d-flex align-items-center justify-content-start" *ngFor=" let document of documentsRequest">
           <a href={{document?.doc_srv_path}} target="_blank">{{document?.document_path}}<i class="ms-4 h4 feather icon-eye"></i></a>
         </div>
       </div>
@@ -458,39 +464,47 @@
 
 
         <div class="col-md-4 col-sm-12">
-          <label for="" class="form-label colorTextPrimari">Registro en APS</label>
+          <label for="registeredInAPS" class="form-label colorTextPrimari">Registro en APS</label>
           <input
+          id="registeredInAPS"
           type="text"
-          value={{unassignedRequest[0]?.status}}
+          formControlName="registeredInAPS"
           [readOnly]="true"
           class="form-control">
         </div>
+
         <div class="col-md-4 col-sm-12">
-          <label for="" class="form-label colorTextPrimari">Porcentaje de Descuento</label>
+          <label for="discountPercentage" class="form-label colorTextPrimari">Porcentaje de Descuento</label>
           <input
+          id="discountPercentage"
           type="text"
-          value={{unassignedRequest[0]?.status}}
+          formControlName="discountPercentage"
           [readOnly]="true"
           class="form-control">
         </div>
+
         <div class="col-md-4 col-sm-12">
-          <label for="" class="form-label colorTextPrimari">Origen de Registro</label>
+          <label for="dataOrigin" class="form-label colorTextPrimari">Origen de Registro</label>
           <input
+          id="dataOrigin"
           type="text"
-          value={{unassignedRequest[0]?.status}}
+          formControlName="dataOrigin"
           [readOnly]="true"
           class="form-control">
         </div>
+
         <div class="col-12 mb-3">
-          <label for="" class="form-label colorTextPrimari ">Comentarios</label>
+          <label for="comments" class="form-label colorTextPrimari ">Comentarios</label>
           <textarea
+          id="comments"
           wrap="soft"
           style="overflow:hidden;
           resize:none;"
-          value={{unassignedRequest[0]?.fullDirection}}
+          formControlName="comments"
           [readOnly]="!isEditingAdditionalInformation"
           class="form-control"></textarea>
         </div>
+
       </div>
 
       <div class="d-flex justify-content-end mt-2">
@@ -501,7 +515,6 @@
         </div>
       </div>
     </div>
-
     <div class="card row py-3">
       <div class="d-flex justify-content-center align-items-center">
         <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="return()" >Regresar</button>

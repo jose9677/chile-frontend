@@ -1,50 +1,70 @@
-[{
-  "rut": "55555555-5",
-  "names": "Eduy Omaña",
-  "lastNames": "Omaña Hernandez",
-  "id_sex": 1,
-  "datesBirth": "1984-08-14",
-  "email": "eduyeoh@gmail.com",
-  "landLine": "123456789",
-  "mobilePhone": "987654321",
+[
+  {
+    "user_data": [
+        {
+            "rut": "311442342144-2",
+            "names": "PRUEBA",
+            "lastname": "APS 4",
+            "id_sex": 1,
+            "f_nac": "1953-11-12",
+            "email": "eduye2342oh@gmail.com",
+            "landline": 2125742371,
+            "mobile_phone": 4125630451
+        }
+    ],
+    "data_sol": [
+        {
+            "id_solicitude": 256,
+            "request_date": "2024-01-17 00:00:00",
+            "id_status": 4,
+            "id_prevention_type_detail": 1,
+            "prevention_type": 1,
+            "assurance": true,
+            "comments": "",
+            "id_location": 2,
+            "way_number": 300,
+            "id_property_type": 1,
+            "property_number": "1",
+            "origin": 2,
+            "dir_wots": null,
+            "latitude": null,
+            "longitude": null
+        }
+    ],
+    "data_doc": [
+        {
+            "id": 372,
+            "id_request": 256,
+            "id_document_type": 2,
+            "document_path": "PREVISION_SOL256-372.jpg",
+            "document_ext": "jpg",
+            "created_at": "2023-05-23 05:27:14",
+            "updated_at": "2023-05-23 05:27:14",
+            "active": true
+        },
+        {
+            "id": 381,
+            "id_request": 256,
+            "id_document_type": 1,
+            "document_path": "DOMICILIO_SOL256-1.xlsx",
+            "document_ext": "xlsx",
+            "created_at": null,
+            "updated_at": null,
+            "active": true
+        }
+    ],
+    "aditional_data": [
+        {
+            "rut_user": "311442342144-2",
+            "cuidador": true,
+            "porcentaje_descuento": 50,
+            "aps": false,
+            "id_motive": 1,
+            "id_dedication": 1,
+            "id_remuneration": 1,
+            "origen": "wots"
+        }
+    ]
+}
 
-  "id_request": "2",
-  "request_date": "2024-01-01",
-  "id_status": 1,
-  "id_prevention_type_detail": 2,
-  "id_prevention_type": 2,
-  "assurance": true,
-  
-  "id_origin_direction": 1,
-  "address_wots": "dirección Wots",
-  "longitude": "00000",
-  "latitude": "0000000",
-  
-  "id_locations": 1,
-  "way_number": "1",
-  "id_property_type": 1,
-  "property_number": "1",
-
-
-  "documents":[
-    {
-    "id_document_type": 1,
-    "document_ext": ".jpg",
-    "document_path": "https://www.shutterstock.com/image-vector/cartoon-media-file-document-management-260nw-2350886357.jpg"
-    },
-    {
-      "id_document_type": 2,
-      "document_ext": ".jpg",
-      "document_path": "https://img.freepik.com/vector-gratis/diseno-colorido-vector-documento_341269-1262.jpg"
-      }
-  ],
-
-  "carer": true,
-  "id_motive": 1,
-  "id_dedication": 1,
-  "id_remuneration": 1,
-  "aps": true,
-  "percent": "20%",
-  "origin": "wots",
-  "comments": "nada"
-}]
+]

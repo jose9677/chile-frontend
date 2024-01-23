@@ -45,7 +45,7 @@
       {"id": 2, "description": "PERSONA CON DISCAPACIDAD"},
       {"id": 3, "description": "NIÑO"}
     ],
-    "dedication": [
+    "dedications": [
       {"id": 1, "description": "TIEMPO PARCIAL"},
      {"id": 2, "description": "TIEMPO COMPLETO"}
     ]

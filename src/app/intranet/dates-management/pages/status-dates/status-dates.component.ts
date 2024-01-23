@@ -44,7 +44,11 @@ export class StatusDatesComponent implements OnInit {
 
   public preventionsTypes: any[];
 
+  public preventionTypeRequest: any;
+
   public preventionDetails: any[];
+
+  public preventionDetailRequest: any;
 
   public remunerationsTypes: any[];
 
@@ -58,6 +62,8 @@ export class StatusDatesComponent implements OnInit {
 
   private dataRequest: any[];
 
+  public documentsRequest: any[];
+
 
 
   public updateRequestForm: any = this.fb.group({
@@ -69,6 +75,7 @@ export class StatusDatesComponent implements OnInit {
     email: ['', [Validators.required, CustomValidators.email]],
     landLine: ['', [Validators.minLength(9)]],
     mobilePhone: ['', [Validators.required, Validators.minLength(9)]],
+
     requestNumber: ['', [Validators.required]],
     dateRequest: ['', [Validators.required]],
     statusRequest: ['', [Validators.required]],
@@ -76,11 +83,15 @@ export class StatusDatesComponent implements OnInit {
     preventionsTypesDetails: ['', [Validators.required]],
     haveInsurance: ['', [Validators.required]],
     directionToUse: ['', [Validators.required]],
-
     addressRegisteredToPage: this.fb.array([]),
     addressWots: this.fb.array([]),
+
     isCaretaker: ['', [Validators.required]],
-    dataCaretaker: this.fb.array([])
+    dataCaretaker: this.fb.array([]),
+    registeredInAPS: ['', []],
+    discountPercentage: ['', []],
+    dataOrigin: ['', []],
+    comments: ['', []]
   });
 
 
@@ -111,6 +122,8 @@ export class StatusDatesComponent implements OnInit {
     this.unassignedRequest = [];
 
     this.dataRequest = [];
+
+    this.documentsRequest = []
 
   }
 
@@ -236,7 +249,9 @@ export class StatusDatesComponent implements OnInit {
   fillForm(data: any) {
 
     data.map((res: any)=>{
-      const {rut, names, lastNames, gender, datesBirth, email, landLine, mobilePhone, haveInsurance,idRequest, dateRequest, statusRequest, preventionsTypes, preventionsTypesDetails, originDirection, idLocation, wayNumber,idPropertyType, propertyNumber, addressWots, isCaretaker} = res;
+      const {rut, names, lastNames, gender, datesBirth, email, landLine, mobilePhone, haveInsurance,idRequest, dateRequest, statusRequest, preventionsTypes, preventionsTypesDetails, originDirection, idLocation, wayNumber,idPropertyType, propertyNumber, addressWots, isCaretaker, motive, dedication, remuneration, registeredInAPS, discountPercentage, dataOrigin, comments } = res;
+
+      console.log(res);
 
       const f = this.updateRequestForm.controls;
 
@@ -279,9 +294,23 @@ export class StatusDatesComponent implements OnInit {
         return `${street}, ${this.updateRequestForm.value.addressRegisteredToPage[0].numberStreet ? this.updateRequestForm.value.addressRegisteredToPage[0].numberStreet : 's/n'}, ${typeProperty}, ${this.updateRequestForm.value.addressRegisteredToPage[0].nameHome ? this.updateRequestForm.value.addressRegisteredToPage[0].nameHome : 's/n'}`
       }
 
-      f.isCaretaker.setValue(isCaretaker);
+      this.preventionTypeRequest =  this.preventionsTypes.find(({id}) => id === Number(this.updateRequestForm.value.preventionsTypes));
+      this.preventionTypeRequest = this.preventionTypeRequest.description;
 
+      this.preventionDetailRequest = this.preventionDetails.find(({id})=> id === Number( this.updateRequestForm.value.preventionsTypesDetails));
+      this.preventionDetailRequest = this.preventionDetailRequest.description;
+
+
+      f.isCaretaker.setValue(isCaretaker);
       this.statusCaretaker(isCaretaker);
+
+      f.dataCaretaker.controls[0]?.controls.reason.setValue(motive);
+      f.dataCaretaker.controls[0]?.controls.dedicationsTypes.setValue(dedication);
+      f.dataCaretaker.controls[0]?.controls.remunerationType.setValue(remuneration);
+      f.registeredInAPS.setValue(registeredInAPS),
+      f.discountPercentage.setValue(discountPercentage),
+      f.dataOrigin.setValue(dataOrigin),
+      f.comments.setValue(comments)
 
 
     //   this.unassignedRequest.push(res);
@@ -330,8 +359,18 @@ export class StatusDatesComponent implements OnInit {
     // });
 
     mockDataRequestForId.map((res: any) => {
+      console.log(res);
 
-      const {rut, names, lastNames, id_sex, datesBirth, email, landLine, mobilePhone, id_request, request_date, id_status, id_prevention_type_detail, id_prevention_type, assurance, id_origin_direction, longitude, latitude, id_locations, way_number, id_property_type, property_number, address_wots, documents, carer, id_motive, id_dedication, id_remuneration, aps, percent, origin, comments} = res;
+      const { rut, names: names, lastname: lastNames, id_sex, f_nac: datesBirth, email, landline: landLine, mobile_phone: mobilePhone } = res.user_data[0]
+
+      const { id_solicitude: id_request, request_date, id_status, id_prevention_type_detail, prevention_type: id_prevention_type, assurance, origin : id_origin_direction, longitude, latitude, id_location, way_number, id_property_type, property_number, address_wots } = res.data_sol[0];
+
+      const { documents } = res.data_doc;
+
+      const { cuidador: carer, id_motive, id_dedication, id_remuneration, aps, porcentaje_descuento: percent, origen: origin, comments } = res.aditional_data[0];
+
+
+      // const {  , } = res;
 
       dataRequest.push({
         rut: rut,
@@ -351,15 +390,22 @@ export class StatusDatesComponent implements OnInit {
 
         originDirection: id_origin_direction,
         addressWots: address_wots,
-
-        idLocation: id_locations,
+        idLocation: id_location,
         wayNumber: way_number,
         idPropertyType: id_property_type,
         propertyNumber: property_number,
 
-
         isCaretaker: carer,
+        motive: id_motive,
+        dedication: id_dedication,
+        remuneration: id_remuneration,
+        registeredInAPS: aps,
+        discountPercentage: percent,
+        dataOrigin: origin,
+        comments: comments
       })
+
+      this.documentsRequest = documents;
     })
 
     this.fillForm(dataRequest);
@@ -386,6 +432,24 @@ export class StatusDatesComponent implements OnInit {
     return this.isEditingPersonalData = !this.isEditingPersonalData;
   }
 
+  cancelEditPersonalData (e: Event) {
+    e.preventDefault();
+
+    const {names, lastNames, datesBirth, email, gender, landLine, mobilePhone} = this.dataRequest[0];
+
+    const f = this.updateRequestForm.controls;
+
+    f.names.setValue(names);
+    f.lastNames.setValue(lastNames);
+    f.gender.setValue(gender)
+    f.datesBirth.setValue(datesBirth);
+    f.email.setValue(email);
+    f.landLine.setValue(landLine);
+    f.mobilePhone.setValue(mobilePhone);
+
+    return this.isEditingPersonalData = !this.isEditingPersonalData;
+  }
+
   editRequestData (e: Event) {
     e.preventDefault();
     return this.isEditingRequestData = !this.isEditingRequestData;
@@ -394,17 +458,22 @@ export class StatusDatesComponent implements OnInit {
   cancelEditRequestData (e: Event) {
     e.preventDefault();
 
-    const f = this.updateRequestForm.controls.addressRegisteredToPage.controls[0]?.controls;
+    const f = this.updateRequestForm.controls;
+    const fn = this.updateRequestForm.controls.addressRegisteredToPage.controls[0]?.controls;
     const fw = this.updateRequestForm.controls.addressWots.controls[0]?.controls;
 
-    const { idLocation, wayNumber, idPropertyType, propertyNumber, addressWots} = this.dataRequest[0];
+    const { preventionsTypes, preventionsTypesDetails, haveInsurance, originDirection, idLocation, wayNumber, idPropertyType, propertyNumber, addressWots} = this.dataRequest[0];
 
+    f.preventionsTypes.setValue(preventionsTypes);
+    f.preventionsTypesDetails.setValue(preventionsTypesDetails);
+    f.haveInsurance.setValue(haveInsurance);
+    f.directionToUse.setValue(originDirection);
 
     if ( this.updateRequestForm.value.directionToUse === 1) {
-      f.location.setValue(idLocation);
-      f.numberStreet.setValue(wayNumber);
-      f.propertyType.setValue(idPropertyType);
-      f.nameHome.setValue(propertyNumber);
+      fn.location.setValue(idLocation);
+      fn.numberStreet.setValue(wayNumber);
+      fn.propertyType.setValue(idPropertyType);
+      fn.nameHome.setValue(propertyNumber);
     }
 
     if ( this.updateRequestForm.value.directionToUse === 2) {
