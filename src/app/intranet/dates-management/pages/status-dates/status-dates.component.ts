@@ -363,7 +363,7 @@ export class StatusDatesComponent implements OnInit {
 
       const { rut, names: names, lastname: lastNames, id_sex, f_nac: datesBirth, email, landline: landLine, mobile_phone: mobilePhone } = res.user_data[0]
 
-      const { id_solicitude: id_request, request_date, id_status, id_prevention_type_detail, prevention_type: id_prevention_type, assurance, origin : id_origin_direction, longitude, latitude, id_location, way_number, id_property_type, property_number, address_wots } = res.data_sol[0];
+      const { id_solicitude: id_request, request_date, id_status, id_prevention_type_detail, prevention_type: id_prevention_type, assurance, origin : id_origin_direction, longitude, latitude, id_location, way_number, id_property_type, property_number, dir_wots: address_wots } = res.data_sol[0];
 
       const { documents } = res.data_doc;
 
@@ -458,27 +458,31 @@ export class StatusDatesComponent implements OnInit {
   cancelEditRequestData (e: Event) {
     e.preventDefault();
 
-    const f = this.updateRequestForm.controls;
-    const fn = this.updateRequestForm.controls.addressRegisteredToPage.controls[0]?.controls;
-    const fw = this.updateRequestForm.controls.addressWots.controls[0]?.controls;
+    // this.statusOriginAddress(this.updateRequestForm.value.directionToUse);
+
+
+    // const f = this.updateRequestForm.controls;
+    // const fn = this.updateRequestForm.controls.addressRegisteredToPage.controls[0]?.controls;
+    // const fw = this.updateRequestForm.controls.addressWots.controls[0]?.controls;
 
     const { preventionsTypes, preventionsTypesDetails, haveInsurance, originDirection, idLocation, wayNumber, idPropertyType, propertyNumber, addressWots} = this.dataRequest[0];
+    this.changeOriginAddress(originDirection);
 
-    f.preventionsTypes.setValue(preventionsTypes);
-    f.preventionsTypesDetails.setValue(preventionsTypesDetails);
-    f.haveInsurance.setValue(haveInsurance);
-    f.directionToUse.setValue(originDirection);
+    // f.preventionsTypes.setValue(preventionsTypes);
+    // f.preventionsTypesDetails.setValue(preventionsTypesDetails);
+    // f.haveInsurance.setValue(haveInsurance);
+    // f.directionToUse.setValue(originDirection);
 
-    if ( this.updateRequestForm.value.directionToUse === 1) {
-      fn.location.setValue(idLocation);
-      fn.numberStreet.setValue(wayNumber);
-      fn.propertyType.setValue(idPropertyType);
-      fn.nameHome.setValue(propertyNumber);
-    }
+    // if ( this.updateRequestForm.value.directionToUse === 1) {
+    //   fn.location.setValue(idLocation);
+    //   fn.numberStreet.setValue(wayNumber);
+    //   fn.propertyType.setValue(idPropertyType);
+    //   fn.nameHome.setValue(propertyNumber);
+    // }
 
-    if ( this.updateRequestForm.value.directionToUse === 2) {
-      fw.addressWots.setValue(addressWots)
-    }
+    // if ( this.updateRequestForm.value.directionToUse === 2) {
+    //   fw.addressWots.setValue(addressWots)
+    // }
 
     return this.isEditingRequestData = !this.isEditingRequestData;
   }
