@@ -62,7 +62,7 @@ export class StatusDatesComponent implements OnInit {
 
   private dataRequest: any[];
 
-  public documentsRequest: any[];
+  public documentsRequest: any[];  
 
 
 
@@ -131,9 +131,10 @@ export class StatusDatesComponent implements OnInit {
 
     this.idRequestSubscription = this.routerQuery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
 
+    this.getDataRequestForId();
+    
     this.fillOptionsSelectForm(mockDataForm);
 
-    this.getDataRequestForId();
 
   }
 
@@ -280,19 +281,7 @@ export class StatusDatesComponent implements OnInit {
       f.addressRegisteredToPage.controls[0]?.controls.propertyType.setValue(idPropertyType);
       f.addressRegisteredToPage.controls[0]?.controls.nameHome.setValue(propertyNumber);
 
-      f.addressWots.controls[0]?.controls.addressWots.setValue(addressWots);
-
-      this.fullAddress = () => {
-
-        if (this.updateRequestForm.value.directionToUse === 2) return this.updateRequestForm.value.addressWots[0].addressWots;
-
-
-        let street = this.locationChange();
-
-        let typeProperty = this.typePropertyChange();
-
-        return `${street}, ${this.updateRequestForm.value.addressRegisteredToPage[0].numberStreet ? this.updateRequestForm.value.addressRegisteredToPage[0].numberStreet : 's/n'}, ${typeProperty}, ${this.updateRequestForm.value.addressRegisteredToPage[0].nameHome ? this.updateRequestForm.value.addressRegisteredToPage[0].nameHome : 's/n'}`
-      }
+      f.addressWots.controls[0]?.controls.addressWots.setValue(addressWots);      
 
       this.preventionTypeRequest =  this.preventionsTypes.find(({id}) => id === Number(this.updateRequestForm.value.preventionsTypes));
       this.preventionTypeRequest = this.preventionTypeRequest.description;
@@ -328,14 +317,14 @@ export class StatusDatesComponent implements OnInit {
 
 
   locationChange() {
-    let street = (this.locations.find(({id}) => id === Number(this.updateRequestForm.value.addressRegisteredToPage[0].location)));
-    return street = street.street;
+    let street = (this.locations.find(({id}) => id === Number(this.updateRequestForm.value.addressRegisteredToPage[0]?.location)));
+    return street = street?.street;
   }
 
   typePropertyChange() {
     let type = this.propertyTypes.find(({id}) => id === Number(this.updateRequestForm.value.addressRegisteredToPage[0]?.propertyType))
 
-    return this.typeProperty = type.description;
+    return this.typeProperty = type?.description;
 
   }
 
@@ -343,81 +332,93 @@ export class StatusDatesComponent implements OnInit {
 
     let dataRequest: any = [];
 
-    // this.dateService.getForIdRequest(this.idRequest).subscribe((result) => {
-    //   console.log(result);
+    this.dateService.getForIdRequest(this.idRequest).subscribe((result) => {
+      const data: any[] = [result];
+      console.log(data);
 
-    // },
-    // error => {
+      data.map((res: any) => {
+        console.log(res);
+  
+        const { rut, names: names, lastname: lastNames, id_sex, f_nac: datesBirth, email, landline: landLine, mobile_phone: mobilePhone } = res.user_data[0]
+  
+        const { id_solicitude: id_request, request_date, id_status, id_prevention_type_detail, prevention_type: id_prevention_type, assurance, origin : id_origin_direction, longitude, latitude, id_location, way_number, id_property_type, property_number, address_wots } = res.data_sol[0];
+  
+        const { documents } = res.data_doc;
+  
+        const { cuidador: carer, id_motive, id_dedication, id_remuneration, aps, porcentaje_descuento: percent, origen: origin, comments } = res.aditional_data[0];  
+  
+        dataRequest.push({
+          rut: rut,
+          names: names,
+          lastNames: lastNames,
+          gender: id_sex,
+          datesBirth: datesBirth,
+          email: email,
+          landLine: landLine,
+          mobilePhone: mobilePhone,
+          idRequest: id_request,
+          dateRequest: request_date,
+          statusRequest: id_status,
+          preventionsTypes: id_prevention_type,
+          preventionsTypesDetails: id_prevention_type_detail,
+          haveInsurance: assurance,
+  
+          originDirection: id_origin_direction === 'wots' ? 2 : 1,
+          addressWots: address_wots,
+          idLocation: id_location,
+          wayNumber: way_number,
+          idPropertyType: id_property_type,
+          propertyNumber: property_number,
+  
+          isCaretaker: carer,
+          motive: id_motive,
+          dedication: id_dedication,
+          remuneration: id_remuneration,
+          registeredInAPS: aps === true ? 'Si' : 'No',
+          discountPercentage: percent,
+          dataOrigin: origin ? origin : 'Registro por Pagina',
+          comments: comments
+        })
+  
+        this.documentsRequest = documents;
+      });
 
-    //   this.errors = true;
+    },
+    error => {
+
+      this.errors = true;
 
 
-    // },
-    // () => {
+    },
+    () => {
 
-
-    // });
-
-    mockDataRequestForId.map((res: any) => {
-      console.log(res);
-
-      const { rut, names: names, lastname: lastNames, id_sex, f_nac: datesBirth, email, landline: landLine, mobile_phone: mobilePhone } = res.user_data[0]
-
-      const { id_solicitude: id_request, request_date, id_status, id_prevention_type_detail, prevention_type: id_prevention_type, assurance, origin : id_origin_direction, longitude, latitude, id_location, way_number, id_property_type, property_number, dir_wots: address_wots } = res.data_sol[0];
-
-      const { documents } = res.data_doc;
-
-      const { cuidador: carer, id_motive, id_dedication, id_remuneration, aps, porcentaje_descuento: percent, origen: origin, comments } = res.aditional_data[0];
-
-
-      // const {  , } = res;
-
-      dataRequest.push({
-        rut: rut,
-        names: names,
-        lastNames: lastNames,
-        gender: id_sex,
-        datesBirth: datesBirth,
-        email: email,
-        landLine: landLine,
-        mobilePhone: mobilePhone,
-        idRequest: id_request,
-        dateRequest: request_date,
-        statusRequest: id_status,
-        preventionsTypes: id_prevention_type,
-        preventionsTypesDetails: id_prevention_type_detail,
-        haveInsurance: assurance,
-
-        originDirection: id_origin_direction,
-        addressWots: address_wots,
-        idLocation: id_location,
-        wayNumber: way_number,
-        idPropertyType: id_property_type,
-        propertyNumber: property_number,
-
-        isCaretaker: carer,
-        motive: id_motive,
-        dedication: id_dedication,
-        remuneration: id_remuneration,
-        registeredInAPS: aps,
-        discountPercentage: percent,
-        dataOrigin: origin,
-        comments: comments
-      })
-
-      this.documentsRequest = documents;
-    })
-
-    this.fillForm(dataRequest);
-
-    return this.dataRequest.push(dataRequest[0]);
-
+      
+      
+      this.fillForm(dataRequest);
+      this.generateFullAddress();
+      
+      return this.dataRequest.push(dataRequest[0]);
+      
+    });
+    
   }
+  
+  generateFullAddress = () => {
+    
+    if (this.updateRequestForm.value.directionToUse === 2) return this.updateRequestForm.value.addressWots[0]?.addressWots;
 
+    let street = this.locationChange();
+
+    let typeProperty = this.typePropertyChange();
+
+    this.fullAddress = `${street}, ${this.updateRequestForm.value.addressRegisteredToPage[0]?.numberStreet ? this.updateRequestForm.value.addressRegisteredToPage[0]?.numberStreet : 's/n'}, ${typeProperty}, ${this.updateRequestForm.value.addressRegisteredToPage[0]?.nameHome ? this.updateRequestForm.value.addressRegisteredToPage[0].nameHome : 's/n'}`;
+
+  };
 
   updateRequest() {
 
   }
+
   return() {
     this.router.navigate(['/'])
 
@@ -458,31 +459,27 @@ export class StatusDatesComponent implements OnInit {
   cancelEditRequestData (e: Event) {
     e.preventDefault();
 
-    // this.statusOriginAddress(this.updateRequestForm.value.directionToUse);
-
-
-    // const f = this.updateRequestForm.controls;
-    // const fn = this.updateRequestForm.controls.addressRegisteredToPage.controls[0]?.controls;
-    // const fw = this.updateRequestForm.controls.addressWots.controls[0]?.controls;
+    const f = this.updateRequestForm.controls;
+    const fn = this.updateRequestForm.controls.addressRegisteredToPage.controls[0]?.controls;
+    const fw = this.updateRequestForm.controls.addressWots.controls[0]?.controls;
 
     const { preventionsTypes, preventionsTypesDetails, haveInsurance, originDirection, idLocation, wayNumber, idPropertyType, propertyNumber, addressWots} = this.dataRequest[0];
-    this.changeOriginAddress(originDirection);
 
-    // f.preventionsTypes.setValue(preventionsTypes);
-    // f.preventionsTypesDetails.setValue(preventionsTypesDetails);
-    // f.haveInsurance.setValue(haveInsurance);
-    // f.directionToUse.setValue(originDirection);
+    f.preventionsTypes.setValue(preventionsTypes);
+    f.preventionsTypesDetails.setValue(preventionsTypesDetails);
+    f.haveInsurance.setValue(haveInsurance);
+    f.directionToUse.setValue(originDirection);
 
-    // if ( this.updateRequestForm.value.directionToUse === 1) {
-    //   fn.location.setValue(idLocation);
-    //   fn.numberStreet.setValue(wayNumber);
-    //   fn.propertyType.setValue(idPropertyType);
-    //   fn.nameHome.setValue(propertyNumber);
-    // }
+    if ( this.updateRequestForm.value.directionToUse === 1) {
+      fn.location.setValue(idLocation);
+      fn.numberStreet.setValue(wayNumber);
+      fn.propertyType.setValue(idPropertyType);
+      fn.nameHome.setValue(propertyNumber);
+    }
 
-    // if ( this.updateRequestForm.value.directionToUse === 2) {
-    //   fw.addressWots.setValue(addressWots)
-    // }
+    if ( this.updateRequestForm.value.directionToUse === 2) {
+      fw.addressWots.setValue(addressWots)
+    }
 
     return this.isEditingRequestData = !this.isEditingRequestData;
   }
