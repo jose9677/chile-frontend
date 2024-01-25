@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { catchError, map, Observable, Subject, tap, throwError } from 'rxjs';
 import { ModalsService } from 'src/app/shared/services/modals.service';
 import { ModalComponent } from 'src/app/views/pages/ui-components/modal/modal.component';
 import { environment } from 'src/environments/environment';
@@ -10,21 +10,20 @@ const AUTH_API = environment.urlApi;
 const AUTH_API_NP = environment.urlApiNp;
 const TOKEN_KEY = 'access_token';
 
-
-
-
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
-
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class DatesService {
 
+  private _refresh$ = new Subject<void>();
 
+  get refresh$(){
+    return this._refresh$;
+  }
 
   private errorMessage = '';
 
@@ -168,6 +167,66 @@ export class DatesService {
     }),
       catchError((err) => this.handlerError(err))
     );
+  }
+
+  UpdatePersonalData(id: any, personalData: any): Observable<any>{
+    let url = `${AUTH_API_NP}update-user-modify/${id}`;
+    return this.http.put(url, personalData).pipe(map((result:any) => {
+
+      return result;
+
+    }),
+    tap(() => {
+      this._refresh$.next();
+    }),
+    catchError((err)=> this.handlerError(err))
+    )
+
+  }
+
+  UpdateRequestData(idRequest: any, requestData: any): Observable<any>{
+    let url = `${AUTH_API_NP}update-sol-modify/${idRequest}`;
+    return this.http.put(url, requestData).pipe(map((result:any) => {
+
+      return result;
+
+    }),
+    tap(() => {
+      this._refresh$.next();
+    }),
+    catchError((err)=> this.handlerError(err))
+    )
+
+  }
+
+  UpdateDocuments(id: any, personalData: any): Observable<any>{
+    let url = `${AUTH_API_NP}update-user-modify/${id}`;
+    return this.http.put(url, personalData).pipe(map((result:any) => {
+
+      return result;
+
+    }),
+    tap(() => {
+      this._refresh$.next();
+    }),
+    catchError((err)=> this.handlerError(err))
+    )
+
+  }
+
+  UpdateAdditionalInformation(id: any, personalData: any): Observable<any>{
+    let url = `${AUTH_API_NP}update-user-modify/${id}`;
+    return this.http.put(url, personalData).pipe(map((result:any) => {
+
+      return result;
+
+    }),
+    tap(() => {
+      this._refresh$.next();
+    }),
+    catchError((err)=> this.handlerError(err))
+    )
+
   }
 
   private handlerError(err:any): Observable<never> { //pasa error al login component

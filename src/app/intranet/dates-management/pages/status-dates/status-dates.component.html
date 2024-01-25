@@ -1,5 +1,5 @@
  <div>
-  <form class="forms-sample container" [formGroup]="updateRequestForm" (ngSubmit)="updateRequest()">
+  <form class="forms-sample container" [formGroup]="updateRequestForm">
 
     <div class="card row justify-content-center align-items-center p-3 mb-3">
       <h3 class="colorTextPrimari" >Datos Personales</h3><br>
@@ -14,6 +14,7 @@
           formControlName="rut"
           >
         </div>
+        {{updateRequestForm.status | json}}
         <div class="col-md-4 mb-3">
           <label for="name" class="form-label">Nombres</label>
           <input
@@ -114,7 +115,7 @@
       <div class="d-flex justify-content-end mt-3">
         <a href="#" (click)="editPersonalData($event)" *ngIf="!isEditingPersonalData">Editar</a>
         <div *ngIf="isEditingPersonalData">
-          <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" >Actualizar</button>
+          <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="UpdatePersonalData($event)">Actualizar</button>
           <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="cancelEditPersonalData($event)" >Cancelar</button>
         </div>
       </div>
@@ -209,11 +210,12 @@
               (change)="changeOriginAddress($event)"
               [ngClass]="{'is-invalid': ((updateRequestForm.controls.haveInsurance.touched && updateRequestForm.controls.haveInsurance.errors) || (isFormSubmitted && updateRequestForm.controls.haveInsurance.errors))}"
               >
-              <ng-option [value]="1">REGISTRO POR PAGINA</ng-option>
-              <ng-option [value]="2">WOTS</ng-option>
+              <ng-option [value]="'registro por pagina'">REGISTRO POR PAGINA</ng-option>
+              <ng-option [value]="'wots'">WOTS</ng-option>
           ></ng-select>
           <div *ngIf="(updateRequestForm.controls.haveInsurance.touched && updateRequestForm.controls.haveInsurance.errors) || (isFormSubmitted && updateRequestForm.controls.haveInsurance.errors)" class="invalid-feedback">Campo Requerido</div>
         </div>
+
 
         <div class="col-12 mb-3" *ngIf="!isEditingRequestData">
           <label for="" class="form-label colorTextPrimari ">Dirección</label>
@@ -222,7 +224,7 @@
           style="overflow:hidden;
           resize:none;"
           [value]="fullAddress"
-          [readOnly]="!isEditingRequestData"
+          [readOnly]="!isEditingRequestData || updateRequestForm.value.directionToUse === 'wots'"
           class="form-control"></textarea>
         </div>
 
@@ -240,7 +242,7 @@
                   formControlName="location"
                   (change)="locationChange()"
                   [clearable]="false"
-                  [readonly]="!isEditingRequestData"
+                  [readonly]="!isEditingRequestData || updateRequestForm.value.directionToUse === 'wots'"
                   [ngClass]="{'is-invalid': ((address.touched && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.location.errors) || (isFormSubmitted && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.location.errors))}"
                   >
                   <ng-option *ngFor="let location of locations" [value]="location.id">{{location.street}}</ng-option>
@@ -257,7 +259,7 @@
                 formControlName="numberStreet"
                 placeholder="Especifique"
                 maxlength="10"
-                [readonly]="!isEditingRequestData"
+                [readonly]="!isEditingRequestData || updateRequestForm.value.directionToUse === 'wots'"
                 [ngClass]="{'is-invalid': (((address.touched || address.dirty) && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.numberStreet.errors) || (isFormSubmitted && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.numberStreet.errors))}"
                 >
                 <div *ngIf="((address.touched || address.dirty) && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.numberStreet.errors?.required) || (isFormSubmitted && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.numberStreet.errors?.required)" class="invalid-feedback">Campo Requerido</div>
@@ -269,7 +271,7 @@
                 class="form-control p-0"
                 placeholder="Seleccione"
                 formControlName="propertyType"
-                [readonly]="!isEditingRequestData"
+                [readonly]="!isEditingRequestData || updateRequestForm.value.directionToUse === 'wots'"
                 [clearable]="false"
                 [ngClass]="{'is-invalid': ((address.touched && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.propertyType.errors) || (isFormSubmitted && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.propertyType.errors))}"
                 (change)="typePropertyChange()"
@@ -289,7 +291,7 @@
                 formControlName="nameHome"
                 placeholder="Especifique"
                 maxlength="10"
-                [readonly]="!isEditingRequestData"
+                [readonly]="!isEditingRequestData || updateRequestForm.value.directionToUse === 'wots'"
                 [ngClass]="{'is-invalid': (((address.touched || address.dirty) && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.nameHome.errors) || (isFormSubmitted && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.nameHome.errors))}"
                 >
                 <div *ngIf="((address.touched || address.dirty) && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.nameHome.errors?.required) || (isFormSubmitted && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.nameHome.errors?.required)" class="invalid-feedback">Campo Requerido, si no aplica coloque S/N</div>
@@ -311,7 +313,7 @@
                 formControlName="addressWots"
                 placeholder="Especifique"
                 maxlength="100"
-                [readonly]="!isEditingRequestData"
+                [readonly]="!isEditingRequestData || updateRequestForm.value.directionToUse !== 'wots'"
                 [ngClass]="{'is-invalid': (((address.touched || address.dirty) && updateRequestForm.controls.addressWots.controls[i].controls.addressWots.errors) || (isFormSubmitted && updateRequestForm.controls.addressWots.controls[i].controls.addressWots.errors))}"
                 >
                 <div *ngIf="((address.touched || address.dirty) && updateRequestForm.controls.addressWots.controls[i].controls.addressWots.errors?.required) || (isFormSubmitted && updateRequestForm.controls.addressWots.controls[i].controls.addressWots.errors?.required)" class="invalid-feedback">Campo Requerido</div>
@@ -325,7 +327,7 @@
       <div class="d-flex justify-content-end mt-2">
         <a href="#" (click)="editRequestData($event)" *ngIf="!isEditingRequestData">Editar</a>
         <div *ngIf="isEditingRequestData">
-          <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" >Actualizar</button>
+          <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="UpdateRequestData($event)">Actualizar</button>
           <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="cancelEditRequestData($event)" >Cancelar</button>
         </div>
       </div>

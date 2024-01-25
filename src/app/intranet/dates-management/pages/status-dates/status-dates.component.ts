@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { DatesService } from '../../shared/services/dates.service';
 import { ModalsService } from 'src/app/shared/services/modals.service';
 import { VisitorDataComponent } from '../visitor-data/visitor-data.component';
@@ -8,6 +8,7 @@ import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { CustomValidators } from 'ngx-custom-validators';
 import {default as mockDataRequestForId} from '../../mocks/dataRequesForId.json'
 import {default as mockDataForm} from '../../mocks/dataSelectForm.json'
+import { ModalComponent } from 'src/app/public/auth/shared/modals/modal/modal.component';
 
 @Component({
   selector: 'app-status-dates',
@@ -15,6 +16,9 @@ import {default as mockDataForm} from '../../mocks/dataSelectForm.json'
   styleUrls: ['./status-dates.component.scss']
 })
 export class StatusDatesComponent implements OnInit {
+
+  private subscription: Subscription;
+
 
   public isEditingPersonalData: boolean;
   public isEditingRequestData: boolean;
@@ -62,12 +66,12 @@ export class StatusDatesComponent implements OnInit {
 
   private dataRequest: any[];
 
-  public documentsRequest: any[];  
+  public documentsRequest: any[];
 
 
 
   public updateRequestForm: any = this.fb.group({
-    rut: ['', [Validators.required]],
+    rut: ['', []],
     names: ['',[Validators.required, Validators.pattern(/^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ ]+$/)]],
     lastNames: ['', [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ ]+$/)]],
     gender: ['', [ Validators.required]],
@@ -76,8 +80,8 @@ export class StatusDatesComponent implements OnInit {
     landLine: ['', [Validators.minLength(9)]],
     mobilePhone: ['', [Validators.required, Validators.minLength(9)]],
 
-    requestNumber: ['', [Validators.required]],
-    dateRequest: ['', [Validators.required]],
+    requestNumber: ['', []],
+    dateRequest: ['', []],
     statusRequest: ['', [Validators.required]],
     preventionsTypes: ['', [Validators.required]],
     preventionsTypesDetails: ['', [Validators.required]],
@@ -131,8 +135,12 @@ export class StatusDatesComponent implements OnInit {
 
     this.idRequestSubscription = this.routerQuery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
 
+    this.subscription = this.dateService.refresh$.subscribe( () => {
+      this.getDataRequestForId();
+    })
+
     this.getDataRequestForId();
-    
+
     this.fillOptionsSelectForm(mockDataForm);
 
 
@@ -157,14 +165,17 @@ export class StatusDatesComponent implements OnInit {
     return this.updateRequestForm.controls['addressRegisteredToPage'] as FormArray
   }
 
+
   addDirectionRegisteredOnThePageForm() {
+    let validatorRegisterToPage = this.updateRequestForm.value.directionToUse !== 'wots' ? [Validators.required] : [];
+
     const dataForm = this.fb.group({
-      location: ['', [Validators.required]],
-      numberStreet: ['', [Validators.required]],
-      propertyType: ['', [Validators.required]],
-      nameHome: ['', [Validators.required]]
+      location: ['', validatorRegisterToPage],
+      numberStreet: ['', validatorRegisterToPage],
+      propertyType: ['', validatorRegisterToPage],
+      nameHome: ['', validatorRegisterToPage]
     })
-    this.updateRequestForm.controls.directionToUse.setValue(1);
+    // this.updateRequestForm.controls.directionToUse.setValue(1);
     this.directionRegisteredOnThePageArray.push(dataForm);
   }
 
@@ -178,10 +189,12 @@ export class StatusDatesComponent implements OnInit {
   }
 
   addAddressWots() {
+    let validatorWots = this.updateRequestForm.value.directionToUse === 'wots' ? [Validators.required] : [];
+
     const dataForm = this.fb.group({
-      addressWots: ['', [Validators.required]]
+      addressWots: ['', validatorWots]
     })
-    this.updateRequestForm.controls.directionToUse.setValue(2);
+    // this.updateRequestForm.controls.directionToUse.setValue('wots');
 
     this.addressWotsArray.push(dataForm);
   }
@@ -191,10 +204,13 @@ export class StatusDatesComponent implements OnInit {
     this.addressWotsArray.clear();
   }
 
-  statusOriginAddress( origin: any ) {
+  statusOriginAddress() {
 
-    if (origin === 1) this.addDirectionRegisteredOnThePageForm(), this.deleteAddressWots();
-    if (origin === 2) this.addAddressWots(), this.deleteDirectionRegisteredOnThePageForm();
+    // if (origin === 1) this.addDirectionRegisteredOnThePageForm(), this.deleteAddressWots();
+    // if (origin === 2) this.addAddressWots(), this.deleteDirectionRegisteredOnThePageForm();
+
+    this.addDirectionRegisteredOnThePageForm();
+    this.addAddressWots();
 
   }
 
@@ -202,22 +218,22 @@ export class StatusDatesComponent implements OnInit {
 
     e.preventDefault;
 
-    this.statusOriginAddress(e);
+    // this.statusOriginAddress(e);
     const f = this.updateRequestForm.controls.addressRegisteredToPage.controls[0]?.controls;
     const fw = this.updateRequestForm.controls.addressWots.controls[0]?.controls;
 
     const { idLocation, wayNumber, idPropertyType, propertyNumber, addressWots} = this.dataRequest[0];
 
-    if ( e === 1) {
-      f.location.setValue(idLocation);
-      f.numberStreet.setValue(wayNumber);
-      f.propertyType.setValue(idPropertyType);
-      f.nameHome.setValue(propertyNumber);
-    }
+    f.location.setValue(idLocation);
+    f.numberStreet.setValue(wayNumber);
+    f.propertyType.setValue(idPropertyType);
+    f.nameHome.setValue(propertyNumber);
+    // if ( e === 1) {
+    // }
 
-    if ( e === 2) {
-      fw.addressWots.setValue(addressWots)
-    }
+    fw.addressWots.setValue(addressWots)
+    // if ( e === 2) {
+    // }
   }
 
 
@@ -266,22 +282,22 @@ export class StatusDatesComponent implements OnInit {
       f.mobilePhone.setValue(mobilePhone);
       f.haveInsurance.setValue(haveInsurance);
 
+      f.directionToUse?.setValue(originDirection);
       f.requestNumber.setValue(idRequest);
       f.dateRequest.setValue(dateRequest);
       f.statusRequest.setValue(statusRequest);
       f.preventionsTypes.setValue(preventionsTypes);
       f.preventionsTypesDetails.setValue(preventionsTypesDetails);
 
-      f.directionToUse?.setValue(originDirection);
 
-      this.statusOriginAddress(this.updateRequestForm.value.directionToUse);
+      this.statusOriginAddress();
+      f.addressWots.controls[0]?.controls.addressWots.setValue(addressWots);
 
       f.addressRegisteredToPage.controls[0]?.controls.location.setValue(idLocation);
       f.addressRegisteredToPage.controls[0]?.controls.numberStreet.setValue(wayNumber);
       f.addressRegisteredToPage.controls[0]?.controls.propertyType.setValue(idPropertyType);
       f.addressRegisteredToPage.controls[0]?.controls.nameHome.setValue(propertyNumber);
 
-      f.addressWots.controls[0]?.controls.addressWots.setValue(addressWots);      
 
       this.preventionTypeRequest =  this.preventionsTypes.find(({id}) => id === Number(this.updateRequestForm.value.preventionsTypes));
       this.preventionTypeRequest = this.preventionTypeRequest.description;
@@ -338,15 +354,15 @@ export class StatusDatesComponent implements OnInit {
 
       data.map((res: any) => {
         console.log(res);
-  
+
         const { rut, names: names, lastname: lastNames, id_sex, f_nac: datesBirth, email, landline: landLine, mobile_phone: mobilePhone } = res.user_data[0]
-  
-        const { id_solicitude: id_request, request_date, id_status, id_prevention_type_detail, prevention_type: id_prevention_type, assurance, origin : id_origin_direction, longitude, latitude, id_location, way_number, id_property_type, property_number, address_wots } = res.data_sol[0];
-  
+
+        const { id_solicitude: id_request, request_date, id_status, id_prevention_type_detail, prevention_type: id_prevention_type, assurance, origin : id_origin_direction, longitude, latitude, id_location, way_number, id_property_type, property_number, dir_wots: address_wots } = res.data_sol[0];
+
         const { documents } = res.data_doc;
-  
-        const { cuidador: carer, id_motive, id_dedication, id_remuneration, aps, porcentaje_descuento: percent, origen: origin, comments } = res.aditional_data[0];  
-  
+
+        const { cuidador: carer, id_motive, id_dedication, id_remuneration, aps, porcentaje_descuento: percent, origen: origin, comments } = res.aditional_data[0];
+
         dataRequest.push({
           rut: rut,
           names: names,
@@ -362,14 +378,14 @@ export class StatusDatesComponent implements OnInit {
           preventionsTypes: id_prevention_type,
           preventionsTypesDetails: id_prevention_type_detail,
           haveInsurance: assurance,
-  
-          originDirection: id_origin_direction === 'wots' ? 2 : 1,
-          addressWots: address_wots,
+
+          originDirection: id_origin_direction,
+          addressWots: address_wots ? address_wots : 'n/a',
           idLocation: id_location,
           wayNumber: way_number,
           idPropertyType: id_property_type,
           propertyNumber: property_number,
-  
+
           isCaretaker: carer,
           motive: id_motive,
           dedication: id_dedication,
@@ -379,7 +395,7 @@ export class StatusDatesComponent implements OnInit {
           dataOrigin: origin ? origin : 'Registro por Pagina',
           comments: comments
         })
-  
+
         this.documentsRequest = documents;
       });
 
@@ -392,32 +408,26 @@ export class StatusDatesComponent implements OnInit {
     },
     () => {
 
-      
-      
       this.fillForm(dataRequest);
       this.generateFullAddress();
-      
+
       return this.dataRequest.push(dataRequest[0]);
-      
+
     });
-    
+
   }
-  
+
   generateFullAddress = () => {
-    
-    if (this.updateRequestForm.value.directionToUse === 2) return this.updateRequestForm.value.addressWots[0]?.addressWots;
+
+    if (this.updateRequestForm.value.directionToUse === 'wots') return this.fullAddress = this.updateRequestForm.value.addressWots[0]?.addressWots;
 
     let street = this.locationChange();
 
     let typeProperty = this.typePropertyChange();
 
-    this.fullAddress = `${street}, ${this.updateRequestForm.value.addressRegisteredToPage[0]?.numberStreet ? this.updateRequestForm.value.addressRegisteredToPage[0]?.numberStreet : 's/n'}, ${typeProperty}, ${this.updateRequestForm.value.addressRegisteredToPage[0]?.nameHome ? this.updateRequestForm.value.addressRegisteredToPage[0].nameHome : 's/n'}`;
+    return this.fullAddress = `${street}, ${this.updateRequestForm.value.addressRegisteredToPage[0]?.numberStreet ? this.updateRequestForm.value.addressRegisteredToPage[0]?.numberStreet : 's/n'}, ${typeProperty}, ${this.updateRequestForm.value.addressRegisteredToPage[0]?.nameHome ? this.updateRequestForm.value.addressRegisteredToPage[0].nameHome : 's/n'}`;
 
   };
-
-  updateRequest() {
-
-  }
 
   return() {
     this.router.navigate(['/'])
@@ -432,6 +442,50 @@ export class StatusDatesComponent implements OnInit {
     e.preventDefault();
     return this.isEditingPersonalData = !this.isEditingPersonalData;
   }
+
+  UpdatePersonalData(e: Event) {
+    e.preventDefault();
+
+    const form = this.updateRequestForm.value
+
+    this.isFormSubmitted = true;
+
+    const personalData = {
+      "rut": form.rut,
+      "names": form.names,
+      "lastname": form.lastNames,
+      "id_sex": form.gender,
+      "f_nac": form.datesBirth,
+      "email": form.email,
+      "landline": form.landLine,
+      "mobile_phone": form.mobilePhone,
+      "rut_employee": JSON.parse(sessionStorage.getItem('auth-user'))
+    }
+    console.log(personalData)
+
+    if(this.updateRequestForm.status === 'INVALID') return;
+
+    this.dateService.UpdatePersonalData(this.idRequest, personalData).subscribe((result) => {
+      console.log(result);
+
+    },
+    error => {
+
+      let title: string = ''
+      let message: string = "Su Solicitud no Pudo ser Procesada Intente Nuevamente";
+      this.modalService.OpenModalError2(ModalComponent, true, title, message);
+
+    },
+    () => {
+
+      let title: string = ''
+      let message: string = "Los datos personales se han actualizado exitosamente";
+      this.modalService.OpenModalError2(ModalComponent, false, title, message);
+
+    })
+  }
+
+
 
   cancelEditPersonalData (e: Event) {
     e.preventDefault();
@@ -456,6 +510,46 @@ export class StatusDatesComponent implements OnInit {
     return this.isEditingRequestData = !this.isEditingRequestData;
   }
 
+  UpdateRequestData(e: Event) {
+    e.preventDefault();
+
+    const form = this.updateRequestForm.value
+
+    this.isFormSubmitted = true;
+
+    const requestData = {
+      "request_date": form.dateRequest,
+      "id_status": form.statusRequest,
+      "id_prevention_type_detail": form.preventionsTypesDetails,
+       "assurance": form.haveInsurance,
+       "id_location": form.addressRegisteredToPage[0]?.location,
+       "way_number": form.addressRegisteredToPage[0]?.numberStreet,
+       "rut_employee": JSON.parse(sessionStorage.getItem('auth-user'))
+}
+    console.log(requestData)
+
+    if(this.updateRequestForm.status === 'INVALID') return;
+
+    this.dateService.UpdateRequestData(this.idRequest, requestData).subscribe((result) => {
+      console.log(result);
+
+    },
+    error => {
+
+      let title: string = ''
+      let message: string = "Su Solicitud no Pudo ser Procesada Intente Nuevamente";
+      this.modalService.OpenModalError2(ModalComponent, true, title, message);
+
+    },
+    () => {
+
+      let title: string = ''
+      let message: string = "Los datos personales se han actualizado exitosamente";
+      this.modalService.OpenModalError2(ModalComponent, false, title, message);
+
+    })
+  }
+
   cancelEditRequestData (e: Event) {
     e.preventDefault();
 
@@ -470,16 +564,16 @@ export class StatusDatesComponent implements OnInit {
     f.haveInsurance.setValue(haveInsurance);
     f.directionToUse.setValue(originDirection);
 
-    if ( this.updateRequestForm.value.directionToUse === 1) {
-      fn.location.setValue(idLocation);
-      fn.numberStreet.setValue(wayNumber);
-      fn.propertyType.setValue(idPropertyType);
-      fn.nameHome.setValue(propertyNumber);
-    }
+    fn.location.setValue(idLocation);
+    fn.numberStreet.setValue(wayNumber);
+    fn.propertyType.setValue(idPropertyType);
+    fn.nameHome.setValue(propertyNumber);
+    fw.addressWots.setValue(addressWots);
+    // if ( this.updateRequestForm.value.directionToUse !== 'wots') {
+    // }
 
-    if ( this.updateRequestForm.value.directionToUse === 2) {
-      fw.addressWots.setValue(addressWots)
-    }
+    // if ( this.updateRequestForm.value.directionToUse === 'wots') {
+    // }
 
     return this.isEditingRequestData = !this.isEditingRequestData;
   }
@@ -489,12 +583,107 @@ export class StatusDatesComponent implements OnInit {
     return this.isEditingDocuments = !this.isEditingDocuments;
   }
 
+  UpdateDocuments(e: Event) {
+    e.preventDefault();
+
+    const form = this.updateRequestForm.value
+
+    this.isFormSubmitted = true;
+
+    const personalData = {
+      "rut": form.rut,
+      "names": form.names,
+      "lastname": form.lastNames,
+      "id_sex": form.gender,
+      "f_nac": form.datesBirth,
+      "email": form.email,
+      "landline": form.landLine,
+      "mobile_phone": form.mobilePhone,
+      "rut_employee": JSON.parse(sessionStorage.getItem('auth-user'))
+    }
+    console.log(personalData)
+
+    if(this.updateRequestForm.status === 'INVALID') return;
+
+    this.dateService.UpdateDocuments(this.idRequest, personalData).subscribe((result) => {
+      console.log(result);
+
+    },
+    error => {
+
+      let title: string = ''
+      let message: string = "Su Solicitud no Pudo ser Procesada Intente Nuevamente";
+      this.modalService.OpenModalError2(ModalComponent, true, title, message);
+
+    },
+    () => {
+
+      let title: string = ''
+      let message: string = "Los datos personales se han actualizado exitosamente";
+      this.modalService.OpenModalError2(ModalComponent, false, title, message);
+
+    })
+  }
+
+  cancelEditDocument (e: Event) {
+    e.preventDefault();
+    return this.isEditingDocuments = !this.isEditingDocuments;
+  }
+
   editAdditionalInformation (e: Event) {
+    e.preventDefault();
+    return this.isEditingAdditionalInformation = !this.isEditingAdditionalInformation;
+  }
+
+  UpdateAdditionalInformation(e: Event) {
+    e.preventDefault();
+
+    const form = this.updateRequestForm.value
+
+    this.isFormSubmitted = true;
+
+    const personalData = {
+      "rut": form.rut,
+      "names": form.names,
+      "lastname": form.lastNames,
+      "id_sex": form.gender,
+      "f_nac": form.datesBirth,
+      "email": form.email,
+      "landline": form.landLine,
+      "mobile_phone": form.mobilePhone,
+      "rut_employee": JSON.parse(sessionStorage.getItem('auth-user'))
+    }
+    console.log(personalData)
+
+    if(this.updateRequestForm.status === 'INVALID') return;
+
+    this.dateService.UpdateAdditionalInformation(this.idRequest, personalData).subscribe((result) => {
+      console.log(result);
+
+    },
+    error => {
+
+      let title: string = ''
+      let message: string = "Su Solicitud no Pudo ser Procesada Intente Nuevamente";
+      this.modalService.OpenModalError2(ModalComponent, true, title, message);
+
+    },
+    () => {
+
+      let title: string = ''
+      let message: string = "Los datos personales se han actualizado exitosamente";
+      this.modalService.OpenModalError2(ModalComponent, false, title, message);
+
+    })
+  }
+
+  CancelEditAdditionalInformation (e: Event) {
     e.preventDefault();
     return this.isEditingAdditionalInformation = !this.isEditingAdditionalInformation;
   }
 
   ngOnDestroy() {
     this.idRequestSubscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 }
