@@ -14,7 +14,6 @@
           formControlName="rut"
           >
         </div>
-        {{updateRequestForm.status | json}}
         <div class="col-md-4 mb-3">
           <label for="name" class="form-label">Nombres</label>
           <input
@@ -339,19 +338,27 @@
         <div class="col-md-6 col-sm-12">
             <div class="row">
               <div class="col-md-6 col-sm-12">
-                <label for="" class="form-label colorTextPrimari ">Tipo de Prevision </label>
+                <label for="prenetionDocument" class="form-label colorTextPrimari ">Tipo de Prevision </label>
               </div>
               <div class="col-md-6">
                <input
                type="text"
-               name=""
-               id=""
+               id="prenetion"p
                class="form-control"
                value="{{preventionTypeRequest}} - {{preventionDetailRequest}}"
                disabled>
               </div>
             </div>
         </div>
+        <ng-container *ngFor=" let document of documentsRequest">
+          {{document.id_document_type === 2 ? document.id_document_type : ''}}
+
+          <div class="col-sm-12 text-center d-flex align-items-center justify-content-start">
+            <a href={{document?.doc_srv_path}} target="_blank">{{document?.document_path}}<i class="ms-4 h4 feather icon-eye"></i></a>
+          </div>
+
+        </ng-container>
+
         <div class="col-sm-12 text-center d-flex align-items-center justify-content-start" *ngFor=" let document of documentsRequest">
           <a href={{document?.doc_srv_path}} target="_blank">{{document?.document_path}}<i class="ms-4 h4 feather icon-eye"></i></a>
         </div>
@@ -364,7 +371,7 @@
               </div>
             </div>
         </div>
-        <div class="col-sm-12 text-center d-flex align-items-center justify-content-start" *ngFor=" let document of documentsDom">
+        <div class="col-sm-12 text-center d-flex align-items-center justify-content-start" *ngFor=" let document of documentsRequest">
           <a href={{document?.doc_srv_path}} target="_blank">{{document?.document_path}}<i class="ms-5 h4 feather icon-eye"></i></a>
         </div>
       </div>
@@ -512,7 +519,7 @@
       <div class="d-flex justify-content-end mt-2">
         <a href="#" (click)="editAdditionalInformation($event)" *ngIf="!isEditingAdditionalInformation">Editar</a>
         <div *ngIf="isEditingAdditionalInformation">
-          <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" >Actualizar</button>
+          <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="UpdateAdditionalInformation($event)">Actualizar</button>
           <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="editAdditionalInformation($event)" >Cancelar</button>
         </div>
       </div>

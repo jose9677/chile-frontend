@@ -359,7 +359,7 @@ export class StatusDatesComponent implements OnInit {
 
         const { id_solicitude: id_request, request_date, id_status, id_prevention_type_detail, prevention_type: id_prevention_type, assurance, origin : id_origin_direction, longitude, latitude, id_location, way_number, id_property_type, property_number, dir_wots: address_wots } = res.data_sol[0];
 
-        const { documents } = res.data_doc;
+        this.documentsRequest = res.data_doc;
 
         const { cuidador: carer, id_motive, id_dedication, id_remuneration, aps, porcentaje_descuento: percent, origen: origin, comments } = res.aditional_data[0];
 
@@ -396,7 +396,6 @@ export class StatusDatesComponent implements OnInit {
           comments: comments
         })
 
-        this.documentsRequest = documents;
       });
 
     },
@@ -530,7 +529,7 @@ export class StatusDatesComponent implements OnInit {
 
     if(this.updateRequestForm.status === 'INVALID') return;
 
-    this.dateService.UpdateRequestData(this.idRequest, requestData).subscribe((result) => {
+    this.dateService.UpdateRequestData(form.rut, requestData).subscribe((result) => {
       console.log(result);
 
     },
@@ -643,15 +642,12 @@ export class StatusDatesComponent implements OnInit {
     this.isFormSubmitted = true;
 
     const personalData = {
-      "rut": form.rut,
-      "names": form.names,
-      "lastname": form.lastNames,
-      "id_sex": form.gender,
-      "f_nac": form.datesBirth,
-      "email": form.email,
-      "landline": form.landLine,
-      "mobile_phone": form.mobilePhone,
-      "rut_employee": JSON.parse(sessionStorage.getItem('auth-user'))
+      "carer": form.isCaretaker,
+      "id_motive": form.dataCaretaker[0]?.reason,
+      "id_dedication": form.dataCaretaker[0]?.dedicationsTypes,
+      "id_remuneration": form.dataCaretaker[0]?.remunerationType,
+      "comments": form.comments,
+      // "rut_employee": JSON.parse(sessionStorage.getItem('auth-user'))
     }
     console.log(personalData)
 

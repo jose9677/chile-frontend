@@ -51,6 +51,8 @@ export class DatesService {
 
   getForIdRequest(idRequest: any): Observable<any | void> {
     return this.http.get<any>( AUTH_API_NP + 'consult-modify/'+ idRequest, httpOptions).pipe(map((result:any) => {
+      console.log(result);
+
       return result;
 
     }),
@@ -169,8 +171,8 @@ export class DatesService {
     );
   }
 
-  UpdatePersonalData(id: any, personalData: any): Observable<any>{
-    let url = `${AUTH_API_NP}update-user-modify/${id}`;
+  UpdatePersonalData(rutUser: any, personalData: any): Observable<any>{
+    let url = `${AUTH_API_NP}update-user-modify/${rutUser}`;
     return this.http.put(url, personalData).pipe(map((result:any) => {
 
       return result;
@@ -214,9 +216,9 @@ export class DatesService {
 
   }
 
-  UpdateAdditionalInformation(id: any, personalData: any): Observable<any>{
-    let url = `${AUTH_API_NP}update-user-modify/${id}`;
-    return this.http.put(url, personalData).pipe(map((result:any) => {
+  UpdateAdditionalInformation(id: any, additionallData: any): Observable<any>{
+    let url = `${AUTH_API_NP}update-extra-data/${id}`;
+    return this.http.put(url, additionallData).pipe(map((result:any) => {
 
       return result;
 
