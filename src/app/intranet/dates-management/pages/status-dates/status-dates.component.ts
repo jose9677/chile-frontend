@@ -25,6 +25,7 @@ export class StatusDatesComponent implements OnInit {
   public isEditingDocuments: boolean;
   public isEditingAdditionalInformation: boolean;
   public isFormSubmitted: boolean;
+  public documentIsValid: boolean;
 
   public today: any;
 
@@ -66,8 +67,13 @@ export class StatusDatesComponent implements OnInit {
 
   private dataRequest: any[];
 
-  public documentsRequest: any[];
+  public listDocumentsDelete: any[];
 
+  private listFilesUpload : any[];
+
+  public statusRequest: any;
+
+  private status: any[];
 
 
   public updateRequestForm: any = this.fb.group({
@@ -90,6 +96,9 @@ export class StatusDatesComponent implements OnInit {
     addressRegisteredToPage: this.fb.array([]),
     addressWots: this.fb.array([]),
 
+    documents: this.fb.array([]),
+    documents2: this.fb.array([]),
+
     isCaretaker: ['', [Validators.required]],
     dataCaretaker: this.fb.array([]),
     registeredInAPS: ['', []],
@@ -97,8 +106,6 @@ export class StatusDatesComponent implements OnInit {
     dataOrigin: ['', []],
     comments: ['', []]
   });
-
-
 
   constructor(
     private routerQuery: ActivatedRoute,
@@ -117,17 +124,21 @@ export class StatusDatesComponent implements OnInit {
     this.isEditingDocuments = false
     this.isEditingAdditionalInformation = false
     this.isFormSubmitted = false;
+    this.documentIsValid = false;
 
     this.documentsDom = [];
 
     this.documentsPre = [];
 
+    this.listDocumentsDelete = [];
+
+    this.preventionDetails = [];
 
     this.unassignedRequest = [];
 
     this.dataRequest = [];
 
-    this.documentsRequest = []
+    this.listFilesUpload = [];
 
   }
 
@@ -138,12 +149,13 @@ export class StatusDatesComponent implements OnInit {
     this.subscription = this.dateService.refresh$.subscribe( () => {
       this.getDataRequestForId();
     })
+    this.dataSelectForm();
 
-    this.getDataRequestForId();
+    // this.getDataRequestForId();
 
-    this.fillOptionsSelectForm(mockDataForm);
+    // this.fillOptionsSelectForm(mockDataForm);
 
-
+    this.willBeDeleted();
   }
 
   fillOptionsSelectForm(dataOptions) {
@@ -206,11 +218,15 @@ export class StatusDatesComponent implements OnInit {
 
   statusOriginAddress() {
 
-    // if (origin === 1) this.addDirectionRegisteredOnThePageForm(), this.deleteAddressWots();
-    // if (origin === 2) this.addAddressWots(), this.deleteDirectionRegisteredOnThePageForm();
+    console.log(this.updateRequestForm.value.addressWots.length === 0);
+    if (this.updateRequestForm.value.addressWots.length === 0) {
+      this.addAddressWots();
+    };
 
-    this.addDirectionRegisteredOnThePageForm();
-    this.addAddressWots();
+    console.log(this.updateRequestForm.value.addressRegisteredToPage.length === 0);
+    if (this.updateRequestForm.value.addressRegisteredToPage.length === 0) {
+      this.addDirectionRegisteredOnThePageForm();
+    };
 
   }
 
@@ -228,12 +244,8 @@ export class StatusDatesComponent implements OnInit {
     f.numberStreet.setValue(wayNumber);
     f.propertyType.setValue(idPropertyType);
     f.nameHome.setValue(propertyNumber);
-    // if ( e === 1) {
-    // }
 
     fw.addressWots.setValue(addressWots)
-    // if ( e === 2) {
-    // }
   }
 
 
@@ -257,16 +269,115 @@ export class StatusDatesComponent implements OnInit {
 
   statusCaretaker( status: any ) {
 
-    if (status === true) return this.addDateCaretaker();
+    if (status) {
+
+      if (this.updateRequestForm.value.dataCaretaker.length !== 0) return;
+
+      this.addDateCaretaker();
+
+      if(this.dataRequest.length !== 0){
+        const {motive, dedication, remuneration} = this.dataRequest[0];
+        const f = this.updateRequestForm.controls;
+
+        f.dataCaretaker.controls[0]?.controls.reason.setValue(motive);
+        f.dataCaretaker.controls[0]?.controls.dedicationsTypes.setValue(dedication);
+        f.dataCaretaker.controls[0]?.controls.remunerationType.setValue(remuneration);
+      }
+
+      return
+    }
 
     return this.deleteDataCaretaker();
 
   }
 
-  fillForm(data: any) {
+  get dataDocumentsArray() {
+    return this.updateRequestForm.controls['documents'] as FormArray
+  }
+
+  addDocument() {
+    const dataForm = this.fb.group({
+      document: ['', Validators.required]
+    })
+    // this.updateRequestForm.controls.directionToUse.setValue('wots');
+
+    this.dataDocumentsArray.push(dataForm);
+    console.log(this.updateRequestForm.value.documents);
+  }
+
+  deleteDocument( DocumentIndex: any ) {
+
+    this.dataDocumentsArray.removeAt(DocumentIndex);
+    console.log(this.updateRequestForm.value.documents);
+
+  }
+
+  get dataDocuments2Array() {
+    return this.updateRequestForm.controls['documents2'] as FormArray
+  }
+
+  addDocument2() {
+    const dataForm = this.fb.group({
+      document: ['', Validators.required]
+    })
+    // this.updateRequestForm.controls.directionToUse.setValue('wots');
+
+    this.dataDocuments2Array.push(dataForm);
+    console.log(this.updateRequestForm.value.documents2);
+  }
+
+  deleteDocument2( DocumentIndex: any ) {
+
+    this.dataDocuments2Array.removeAt(DocumentIndex);
+    console.log(this.updateRequestForm.value.documents2);
+
+  }
+
+  selectdataFile(event: any, index: any, id_document_type: any): void {
+
+    const file = <File>event.target.files[0];
+
+    console.log(this.updateRequestForm.value);
+    console.log(file);
+
+  this.documentIsValid = true;
+
+
+  if ( file != undefined ) {
+
+    if ( file.type == "image/jpeg" || file.type == "application/pdf" || file.type == "image/png") {
+
+
+      this.listFilesUpload.push({'fileData': file, 'id_document_type': id_document_type});
+
+      this.documentIsValid = true;
+
+    }
+
+  } else {
+
+    this.deleteDocument(index);
+    this.addDocument();
+
+    this.deleteDocument2(index);
+    this.addDocument2();
+
+    this.listFilesUpload =[];
+    this.documentIsValid = false;
+  }
+
+  console.log(this.listFilesUpload);
+
+  }
+
+
+  fillForm(dataRequest: any) {
+
+    let data : any [] = [];
+    data = dataRequest;
 
     data.map((res: any)=>{
-      const {rut, names, lastNames, gender, datesBirth, email, landLine, mobilePhone, haveInsurance,idRequest, dateRequest, statusRequest, preventionsTypes, preventionsTypesDetails, originDirection, idLocation, wayNumber,idPropertyType, propertyNumber, addressWots, isCaretaker, motive, dedication, remuneration, registeredInAPS, discountPercentage, dataOrigin, comments } = res;
+      const {rut, names, lastNames, gender, datesBirth, email, landLine, mobilePhone, haveInsurance,idRequest, dateRequest, statusRequest, preventionsTypes, preventionsTypesDetails, originDirection, idLocation, wayNumber,idPropertyType, propertyNumber, addressWots, isCaretaker, motive, dedication, remuneration, registeredInAPS, discountPercentage, dataOrigin, comments, documents } = res;
 
       console.log(res);
 
@@ -282,15 +393,18 @@ export class StatusDatesComponent implements OnInit {
       f.mobilePhone.setValue(mobilePhone);
       f.haveInsurance.setValue(haveInsurance);
 
-      f.directionToUse?.setValue(originDirection);
+      this.statusRequest = this.status.find(({id}) => id === Number(statusRequest))
+      this.statusRequest = this.statusRequest.status;
+
       f.requestNumber.setValue(idRequest);
       f.dateRequest.setValue(dateRequest);
       f.statusRequest.setValue(statusRequest);
       f.preventionsTypes.setValue(preventionsTypes);
       f.preventionsTypesDetails.setValue(preventionsTypesDetails);
 
-
+      f.directionToUse?.setValue(originDirection);
       this.statusOriginAddress();
+
       f.addressWots.controls[0]?.controls.addressWots.setValue(addressWots);
 
       f.addressRegisteredToPage.controls[0]?.controls.location.setValue(idLocation);
@@ -300,9 +414,11 @@ export class StatusDatesComponent implements OnInit {
 
 
       this.preventionTypeRequest =  this.preventionsTypes.find(({id}) => id === Number(this.updateRequestForm.value.preventionsTypes));
+
       this.preventionTypeRequest = this.preventionTypeRequest.description;
 
       this.preventionDetailRequest = this.preventionDetails.find(({id})=> id === Number( this.updateRequestForm.value.preventionsTypesDetails));
+
       this.preventionDetailRequest = this.preventionDetailRequest.description;
 
 
@@ -320,17 +436,37 @@ export class StatusDatesComponent implements OnInit {
 
     //   this.unassignedRequest.push(res);
 
-    //   if ( res.id_document_type === 1 ) {
-    //     this.documentsDom.push({'doc_srv_path': res.doc_srv_path, 'document_type': res.document_type, 'document_path': res.document_path, 'document_ext': res.document_ext});
+    console.log(documents);
 
-    //   }
-    //   else if ( res.id_document_type === 2 ) {
-    //     this.documentsPre.push({'doc_srv_path': res.doc_srv_path, 'document_type': res.document_type, 'document_path': res.document_path, 'document_ext': res.document_ext})
-    //   }
+    this.documentsDom = [];
+    this.documentsPre = [];
+    documents.map((res) => {
+
+      if ( res.id_document_type === 1 ) {
+        this.documentsDom.push({
+          'doc_srv_path': res.doc_srv_path,
+          'document_type': res.document_type,
+          'document_path': res.document_path,
+          'document_ext': res.document_ext,
+          'document_id' : res.id_document
+        });
+
+      }
+
+      if ( res.id_document_type === 2 ) {
+        this.documentsPre.push({
+          'doc_srv_path': res.doc_srv_path,
+          'document_type': res.document_type,
+          'document_path': res.document_path,
+          'document_ext': res.document_ext,
+          'document_id' : res.id_document
+        })
+      }
+      })
     })
+
+    this.statusDocuments();
   }
-
-
 
   locationChange() {
     let street = (this.locations.find(({id}) => id === Number(this.updateRequestForm.value.addressRegisteredToPage[0]?.location)));
@@ -349,7 +485,8 @@ export class StatusDatesComponent implements OnInit {
     let dataRequest: any = [];
 
     this.dateService.getForIdRequest(this.idRequest).subscribe((result) => {
-      const data: any[] = [result];
+      let data: any[] = [];
+      data = [result];
       console.log(data);
 
       data.map((res: any) => {
@@ -359,7 +496,6 @@ export class StatusDatesComponent implements OnInit {
 
         const { id_solicitude: id_request, request_date, id_status, id_prevention_type_detail, prevention_type: id_prevention_type, assurance, origin : id_origin_direction, longitude, latitude, id_location, way_number, id_property_type, property_number, dir_wots: address_wots } = res.data_sol[0];
 
-        this.documentsRequest = res.data_doc;
 
         const { cuidador: carer, id_motive, id_dedication, id_remuneration, aps, porcentaje_descuento: percent, origen: origin, comments } = res.aditional_data[0];
 
@@ -385,6 +521,8 @@ export class StatusDatesComponent implements OnInit {
           wayNumber: way_number,
           idPropertyType: id_property_type,
           propertyNumber: property_number,
+
+          documents: res.data_doc,
 
           isCaretaker: carer,
           motive: id_motive,
@@ -442,7 +580,7 @@ export class StatusDatesComponent implements OnInit {
     return this.isEditingPersonalData = !this.isEditingPersonalData;
   }
 
-  UpdatePersonalData(e: Event) {
+  updatePersonalData(e: Event) {
     e.preventDefault();
 
     const form = this.updateRequestForm.value
@@ -477,6 +615,8 @@ export class StatusDatesComponent implements OnInit {
     },
     () => {
 
+      this.isEditingPersonalData = false;
+
       let title: string = ''
       let message: string = "Los datos personales se han actualizado exitosamente";
       this.modalService.OpenModalError2(ModalComponent, false, title, message);
@@ -509,7 +649,7 @@ export class StatusDatesComponent implements OnInit {
     return this.isEditingRequestData = !this.isEditingRequestData;
   }
 
-  UpdateRequestData(e: Event) {
+  updateRequestData(e: Event) {
     e.preventDefault();
 
     const form = this.updateRequestForm.value
@@ -529,7 +669,7 @@ export class StatusDatesComponent implements OnInit {
 
     if(this.updateRequestForm.status === 'INVALID') return;
 
-    this.dateService.UpdateRequestData(form.rut, requestData).subscribe((result) => {
+    this.dateService.UpdateRequestData(this.idRequest, requestData).subscribe((result) => {
       console.log(result);
 
     },
@@ -541,6 +681,8 @@ export class StatusDatesComponent implements OnInit {
 
     },
     () => {
+
+      this.isEditingRequestData = false;
 
       let title: string = ''
       let message: string = "Los datos personales se han actualizado exitosamente";
@@ -582,29 +724,47 @@ export class StatusDatesComponent implements OnInit {
     return this.isEditingDocuments = !this.isEditingDocuments;
   }
 
-  UpdateDocuments(e: Event) {
+  updateDocuments(e: Event) {
     e.preventDefault();
 
     const form = this.updateRequestForm.value
 
     this.isFormSubmitted = true;
 
-    const personalData = {
-      "rut": form.rut,
-      "names": form.names,
-      "lastname": form.lastNames,
-      "id_sex": form.gender,
-      "f_nac": form.datesBirth,
-      "email": form.email,
-      "landline": form.landLine,
-      "mobile_phone": form.mobilePhone,
-      "rut_employee": JSON.parse(sessionStorage.getItem('auth-user'))
-    }
-    console.log(personalData)
-
     if(this.updateRequestForm.status === 'INVALID') return;
 
-    this.dateService.UpdateDocuments(this.idRequest, personalData).subscribe((result) => {
+    if(this.listDocumentsDelete.length !== 0 ) {
+      this.deleteDocuments();
+    }
+
+    if(this.listFilesUpload.length !== 0) {
+
+      this.listFilesUpload.map(res => {
+
+        this.uploadFiles(res.fileData, res.id_document_type);
+
+      })
+
+      this.listFilesUpload = [];
+    }
+
+
+    // this.dataDocumentsArray.clear();
+    // this.dataDocuments2Array.clear();
+
+    this.isEditingDocuments = false;
+  }
+
+  uploadFiles(file, type) {
+
+    const  dataFiles: any = new FormData();
+    dataFiles.append("document_path", file);
+
+    for (const value of dataFiles.values() ) {
+      console.log(value);
+    }
+
+    this.dateService.UpdateDocuments(this.idRequest, type, dataFiles).subscribe((result) => {
       console.log(result);
 
     },
@@ -617,16 +777,74 @@ export class StatusDatesComponent implements OnInit {
     },
     () => {
 
-      let title: string = ''
-      let message: string = "Los datos personales se han actualizado exitosamente";
-      this.modalService.OpenModalError2(ModalComponent, false, title, message);
+      // let title: string = ''
+      // let message: string = "Los datos personales se han actualizado exitosamente";
+      // this.modalService.OpenModalError2(ModalComponent, false, title, message);
 
     })
+
+  }
+
+  deleteDocuments() {
+
+    console.log(this.listDocumentsDelete);
+
+    const listFilesUpload = {
+      id_doc: this.listDocumentsDelete
+    }
+
+    // if (true) return
+
+    this.dateService.deleteDocuments(listFilesUpload).subscribe((result) => {
+      console.log(result);
+
+    },
+    error => {
+
+      // let title: string = ''
+      // let message: string = "Su Solicitud no Pudo ser Procesada Intente Nuevamente";
+      // this.modalService.OpenModalError2(ModalComponent, true, title, message);
+
+    },
+    () => {
+
+      // this.isEditingAdditionalInformation = false;
+
+      // let title: string = ''
+      // let message: string = "Los datos personales se han actualizado exitosamente";
+      // this.modalService.OpenModalError2(ModalComponent, false, title, message);
+
+      this.listDocumentsDelete = [];
+
+    })
+
   }
 
   cancelEditDocument (e: Event) {
     e.preventDefault();
+
+    this.listDocumentsDelete = [];
+
+    this.listFilesUpload = []
+
+    this.statusDocuments();
+
+    this.willBeDeleted();
+
     return this.isEditingDocuments = !this.isEditingDocuments;
+  }
+
+  statusDocuments() {
+
+    this.dataDocumentsArray.clear();
+    this.dataDocuments2Array.clear();
+
+    if (this.documentsPre.length === 0) {
+      this.addDocument();
+    }
+    if (this.documentsDom.length === 0) {
+      this.addDocument2 ();
+    }
   }
 
   editAdditionalInformation (e: Event) {
@@ -634,7 +852,7 @@ export class StatusDatesComponent implements OnInit {
     return this.isEditingAdditionalInformation = !this.isEditingAdditionalInformation;
   }
 
-  UpdateAdditionalInformation(e: Event) {
+  updateAdditionalInformation(e: Event) {
     e.preventDefault();
 
     const form = this.updateRequestForm.value
@@ -646,8 +864,7 @@ export class StatusDatesComponent implements OnInit {
       "id_motive": form.dataCaretaker[0]?.reason,
       "id_dedication": form.dataCaretaker[0]?.dedicationsTypes,
       "id_remuneration": form.dataCaretaker[0]?.remunerationType,
-      "comments": form.comments,
-      // "rut_employee": JSON.parse(sessionStorage.getItem('auth-user'))
+      "comments": form.comments
     }
     console.log(personalData)
 
@@ -666,6 +883,8 @@ export class StatusDatesComponent implements OnInit {
     },
     () => {
 
+      this.isEditingAdditionalInformation = false;
+
       let title: string = ''
       let message: string = "Los datos personales se han actualizado exitosamente";
       this.modalService.OpenModalError2(ModalComponent, false, title, message);
@@ -676,6 +895,79 @@ export class StatusDatesComponent implements OnInit {
   CancelEditAdditionalInformation (e: Event) {
     e.preventDefault();
     return this.isEditingAdditionalInformation = !this.isEditingAdditionalInformation;
+  }
+
+
+
+
+  deleteFile(e: Event, idFile: any) {
+
+    e.preventDefault();
+
+    this.listDocumentsDelete.push(idFile);
+
+  }
+
+  recoverFile(e: Event, idFile: any) {
+
+    e.preventDefault();
+
+    this.listDocumentsDelete = this.listDocumentsDelete.filter(list => list !== idFile )
+
+    console.log(this.listDocumentsDelete);
+
+  }
+
+  willBeDeleted( idDocument: any = 0 ) {
+
+    if(this.listDocumentsDelete.includes(idDocument)) return true;
+
+    return false;
+
+  }
+
+  dataSelectForm () {
+
+    this.dateService.dropdownInfo().subscribe((result) => {
+
+      console.log(result);
+
+
+      this.locations = result.locations;
+      this.preventionsTypes = result.preventions_types;
+      this.propertyTypes = result.property_types;
+      this.motives = result.motives;
+      this.dedicationsTypes = result.dedications;
+      this.remunerationsTypes = result.remunerations;
+      this.genders = result.sex;
+      this.status = result.status;
+
+
+      result.preventions_types_details.map((res: any) => {
+        if (res.id_prevention_type === 1) {
+          this.preventionDetails.push(res);
+        } else if (res.id_prevention_type === 2) {
+          this.preventionDetails.push(res);
+
+        } else if (res.id_prevention_type === 3) {
+          this.preventionDetails.push(res);
+
+        }
+        else {
+          this.preventionDetails.push(res);
+        }
+      });
+
+
+    }, error => {
+
+    },
+    () =>{
+
+    this.getDataRequestForId();
+
+
+    })
   }
 
   ngOnDestroy() {

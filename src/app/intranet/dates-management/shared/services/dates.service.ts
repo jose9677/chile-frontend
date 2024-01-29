@@ -201,9 +201,24 @@ export class DatesService {
 
   }
 
-  UpdateDocuments(id: any, personalData: any): Observable<any>{
-    let url = `${AUTH_API_NP}update-user-modify/${id}`;
-    return this.http.put(url, personalData).pipe(map((result:any) => {
+  UpdateDocuments(idRequest: any, documentType, filesData: any): Observable<any>{
+    let url = `${AUTH_API_NP}load-file-modify/${idRequest}/${documentType}`;
+    return this.http.post(url, filesData).pipe(map((result:any) => {
+
+      return result;
+
+    }),
+    tap(() => {
+      this._refresh$.next();
+    }),
+    catchError((err)=> this.handlerError(err))
+    )
+
+  }
+
+  deleteDocuments(listDocuments: any): Observable<any>{
+    let url = `${AUTH_API_NP}delete-doc-many`;
+    return this.http.put(url, listDocuments).pipe(map((result:any) => {
 
       return result;
 
@@ -229,6 +244,16 @@ export class DatesService {
     catchError((err)=> this.handlerError(err))
     )
 
+  }
+
+  dropdownInfo(): Observable<any>{
+    return this.http.get<any>( AUTH_API_NP + 'dropdownInfo', httpOptions).pipe(map((result:any) => {
+
+      return result
+
+    }),
+    catchError((err)=> this.handlerError(err))
+    );
   }
 
   private handlerError(err:any): Observable<never> { //pasa error al login component

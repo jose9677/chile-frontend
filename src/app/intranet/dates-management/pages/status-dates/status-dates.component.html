@@ -1,4 +1,4 @@
- <div>
+<div>
   <form class="forms-sample container" [formGroup]="updateRequestForm">
 
     <div class="card row justify-content-center align-items-center p-3 mb-3">
@@ -52,7 +52,7 @@
           [readonly]="!isEditingPersonalData"
           [ngClass]="{'is-invalid': ((updateRequestForm.controls.gender.touched && updateRequestForm.controls.gender.errors) || (isFormSubmitted && updateRequestForm.controls.gender.errors))}"
           >
-            <ng-option *ngFor="let gender of genders" [value]="gender.id">{{gender.description}}</ng-option>
+            <ng-option *ngFor="let gender of genders" [value]="gender.id_sex">{{gender.description}}</ng-option>
           </ng-select>
           <div *ngIf="(updateRequestForm.controls.gender.touched && updateRequestForm.controls.gender.errors?.required) || (updateRequestForm.controls.gender.errors?.required)" class="invalid-feedback">Campo Requerido</div>
         </div>
@@ -114,7 +114,7 @@
       <div class="d-flex justify-content-end mt-3">
         <a href="#" (click)="editPersonalData($event)" *ngIf="!isEditingPersonalData">Editar</a>
         <div *ngIf="isEditingPersonalData">
-          <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="UpdatePersonalData($event)">Actualizar</button>
+          <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updatePersonalData($event)">Actualizar</button>
           <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="cancelEditPersonalData($event)" >Cancelar</button>
         </div>
       </div>
@@ -144,7 +144,7 @@
           <input
           type="text"
           formControlName="statusRequest"
-          value={{unassignedRequest[0]?.status}}
+          value={{statusRequest}}
           [readOnly]="!isEditingRequestData"
           class="form-control">
         </div>
@@ -161,7 +161,7 @@
               [readonly]="!isEditingRequestData"
               [ngClass]="{'is-invalid': ((updateRequestForm.controls.preventionsTypes.touched && updateRequestForm.controls.preventionsTypes.errors) || (isFormSubmitted && updateRequestForm.controls.preventionsTypes.errors))}"
               >
-              <ng-option *ngFor="let preventionType of preventionsTypes" [value]="preventionType.id">{{preventionType.description}}</ng-option>
+              <ng-option *ngFor="let preventionType of preventionsTypes" [value]="preventionType.id">{{preventionType.prevention_type}}</ng-option>
           </ng-select>
           <div *ngIf="(updateRequestForm.controls.preventionsTypes.touched && updateRequestForm.controls.preventionsTypes.errors?.required) || (isFormSubmitted && updateRequestForm.controls.preventionsTypes.errors?.required)" class="invalid-feedback">Campo Requerido</div>
         </div>
@@ -176,7 +176,7 @@
             [readonly]="!isEditingRequestData"
             [ngClass]="{'is-invalid': ((updateRequestForm.controls.preventionsTypesDetails.touched && updateRequestForm.controls.preventionsTypesDetails.errors) || (isFormSubmitted && updateRequestForm.controls.preventionsTypesDetails.errors))}"
             >
-            <ng-option *ngFor="let detail of preventionDetails" [value]="detail.id">{{detail.description}}</ng-option>
+            <ng-option *ngFor="let detail of preventionDetails" [value]="detail.id">{{detail.prevention_detail}}</ng-option>
         </ng-select>
         <div *ngIf="(updateRequestForm.controls.preventionsTypesDetails.touched && updateRequestForm.controls.preventionsTypesDetails.errors) || (isFormSubmitted && updateRequestForm.controls.preventionsTypesDetails.errors)" class="invalid-feedback">Campo Requerido</div>
         </div>
@@ -326,7 +326,7 @@
       <div class="d-flex justify-content-end mt-2">
         <a href="#" (click)="editRequestData($event)" *ngIf="!isEditingRequestData">Editar</a>
         <div *ngIf="isEditingRequestData">
-          <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="UpdateRequestData($event)">Actualizar</button>
+          <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updateRequestData($event)">Actualizar</button>
           <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="cancelEditRequestData($event)" >Cancelar</button>
         </div>
       </div>
@@ -343,26 +343,59 @@
               <div class="col-md-6">
                <input
                type="text"
-               id="prenetion"p
+               id="prenetion"
                class="form-control"
                value="{{preventionTypeRequest}} - {{preventionDetailRequest}}"
                disabled>
               </div>
             </div>
         </div>
-        <ng-container *ngFor=" let document of documentsRequest">
-          {{document.id_document_type === 2 ? document.id_document_type : ''}}
-
-          <div class="col-sm-12 text-center d-flex align-items-center justify-content-start">
-            <a href={{document?.doc_srv_path}} target="_blank">{{document?.document_path}}<i class="ms-4 h4 feather icon-eye"></i></a>
-          </div>
-
-        </ng-container>
-
-        <div class="col-sm-12 text-center d-flex align-items-center justify-content-start" *ngFor=" let document of documentsRequest">
-          <a href={{document?.doc_srv_path}} target="_blank">{{document?.document_path}}<i class="ms-4 h4 feather icon-eye"></i></a>
+        <div class="col-sm-12 text-center d-flex align-items-center justify-content-start" *ngFor=" let document of documentsPre">
+          <p class="p-1 m-0">{{document?.document_path}}</p>
+          <a href={{document?.doc_srv_path}} target="_blank" class=" p-0 m-0" *ngIf="!willBeDeleted(document.document_id)">
+            <i class="m-0 p-1 h4 feather icon-eye" title="Ver archivo"></i>
+          </a>
+          <a class="m-0 p-1" *ngIf="isEditingDocuments">
+            <i class="m-0 p-0 h4 text-danger feather icon-x-circle" title="Eliminar Archivo" (click)="deleteFile($event, document.document_id)" *ngIf="!willBeDeleted(document.document_id)"></i>
+          </a>
+          <a class="m-0 p-1" *ngIf="isEditingDocuments" >
+            <i class="m-0 p-0 h4 text-success mdi mdi-replay" title="No eliminar Archivo" (click)="recoverFile($event, document.document_id)" *ngIf="willBeDeleted(document.document_id)"></i>
+          </a>
         </div>
+        <ng-container formArrayName="documents" *ngIf="isEditingDocuments">
+          <div class="row mx-3">
+            <div class="col-md-6">
+              <button type="button" mat-mini-fab (click)="addDocument()" class="file_add" *ngIf="dataDocumentsArray.value.length <= 14">
+               + Haga click aquí para Adjuntar
+              </button>
+            </div>
+          </div>
+          <ng-container *ngFor="let documentForm of dataDocumentsArray.controls; let i = index">
+            <div [formGroupName]="i">
+                <div class="row" >
+
+                  <div class="col-md-8 mb-4">
+                    <input
+                  class="form-control"
+                  type="file"
+                  formControlName="document"
+                  [readOnly]="(updateRequestForm.controls.documents.value[i].document_path != '') ? true : false "
+                  (change)="selectdataFile($event, i, 2)"
+                  [ngClass]="{'is-invalid': ((updateRequestForm.controls.documents.touched && updateRequestForm.controls.documents.value[i].document_path == '') || (isFormSubmitted && updateRequestForm.controls.documents.value[i].document_path === ''))}"
+                  >
+                  <div *ngIf="(updateRequestForm.controls.documents.touched && updateRequestForm.controls.documents.value[i].document_path === '') || (isFormSubmitted && updateRequestForm.controls.documents.value[i].document_path === '')" class="invalid-feedback">Campo Requerido</div>
+
+                  <div *ngIf="(updateRequestForm.controls.documents.touched && documentIsValid != true) || (isFormSubmitted && updateRequestForm != true )" class="invalid-feedback">Este campo solo admite formatos de archivos pdf, jpeg, png</div>
+
+                  </div>
+                  <i class=" col-md-1 mdi mdi-close-circle" (click)="deleteDocument(i)" *ngIf="dataDocumentsArray.value.length >= 1"></i>
+                </div>
+            </div>
+          </ng-container>
+        </ng-container>
       </div>
+
+
       <div class="row mt-3 justify-content-start">
         <div class="col-md-6 col-sm-12">
             <div class="row">
@@ -371,15 +404,58 @@
               </div>
             </div>
         </div>
-        <div class="col-sm-12 text-center d-flex align-items-center justify-content-start" *ngFor=" let document of documentsRequest">
-          <a href={{document?.doc_srv_path}} target="_blank">{{document?.document_path}}<i class="ms-5 h4 feather icon-eye"></i></a>
+        <div class="col-sm-12 text-center d-flex align-items-center justify-content-start" *ngFor=" let document of documentsDom">
+          <p class="p-1 m-0">{{document?.document_path}}</p>
+          <a href={{document?.doc_srv_path}} target="_blank" class=" p-0 m-0" *ngIf="!willBeDeleted(document.document_id)">
+            <i class="m-0 p-1 h4 feather icon-eye" title="Ver archivo"></i>
+          </a>
+          <a class="m-0 p-1" *ngIf="isEditingDocuments">
+            <i class="m-0 p-0 h4 text-danger feather icon-x-circle" title="Eliminar Archivo" (click)="deleteFile($event, document.document_id)" *ngIf="!willBeDeleted(document.document_id)"></i>
+          </a>
+          <a class="m-0 p-1" *ngIf="isEditingDocuments" >
+            <i class="m-0 p-0 h4 text-success mdi mdi-replay" title="No eliminar Archivo" (click)="recoverFile($event, document.document_id)" *ngIf="willBeDeleted(document.document_id)"></i>
+          </a>
         </div>
+        <ng-container formArrayName="documents2" *ngIf="isEditingDocuments">
+          <div class="row mx-3">
+            <div class="col-md-6">
+              <button type="button" mat-mini-fab (click)="addDocument2()" class="file_add" *ngIf="dataDocuments2Array.value.length <= 14">
+               + Haga click aquí para Adjuntar
+              </button>
+            </div>
+          </div>
+          <ng-container *ngFor="let documentForm of dataDocuments2Array.controls; let i = index">
+            <div [formGroupName]="i">
+                <div class="row" >
+
+                  <div class="col-md-8 mb-4">
+                    <input
+                  class="form-control"
+                  type="file"
+                  formControlName="document"
+                  [readOnly]="(updateRequestForm.controls.documents2.value[i].document != '') ? true : false "
+                  (change)="selectdataFile($event, i, 1)"
+                  [ngClass]="{'is-invalid': ((updateRequestForm.controls.documents2.touched && updateRequestForm.controls.documents2.value[i].document == '') || (isFormSubmitted && updateRequestForm.controls.documents2.value[i].document === ''))}"
+                  >
+                  <div *ngIf="(updateRequestForm.controls.documents2.touched && updateRequestForm.controls.documents2.value[i].document === '') || (isFormSubmitted && updateRequestForm.controls.documents2.value[i].document_path === '')" class="invalid-feedback">Campo Requerido</div>
+
+                  <div *ngIf="(updateRequestForm.controls.documents2.touched && documentIsValid != true) || (isFormSubmitted && updateRequestForm != true )" class="invalid-feedback">Este campo solo admite formatos de archivos pdf, jpeg, png</div>
+
+                  </div>
+                  <i class=" col-md-1 mdi mdi-close-circle" (click)="deleteDocument2(i)" *ngIf="dataDocuments2Array.value.length >= 1"></i>
+                </div>
+            </div>
+          </ng-container>
+        </ng-container>
       </div>
+
+
+
       <div class="d-flex justify-content-end mt-2">
         <a href="#" (click)="editDocument($event)" *ngIf="!isEditingDocuments">Editar</a>
         <div *ngIf="isEditingDocuments">
-          <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" >Actualizar</button>
-          <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="editDocument($event)" >Cancelar</button>
+          <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updateDocuments($event)">Actualizar</button>
+          <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="cancelEditDocument($event)" >Cancelar</button>
         </div>
       </div>
     </div>
@@ -402,8 +478,8 @@
               (change)=" statusCaretaker(updateRequestForm.controls.isCaretaker.value)"
               [ngClass]="{'is-invalid': ((updateRequestForm.controls.isCaretaker.touched && updateRequestForm.controls.isCaretaker.errors) || (isFormSubmitted && updateRequestForm.controls.isCaretaker.errors))}"
               >
-              <ng-option [value]='true'>Si</ng-option>
-              <ng-option [value]='false'>No</ng-option>
+              <ng-option [value]="true">Si</ng-option>
+              <ng-option [value]="false">No</ng-option>
           </ng-select>
           <div *ngIf="(updateRequestForm.controls.isCaretaker.touched && updateRequestForm.controls.isCaretaker.errors?.required) || (updateRequestForm.controls.isCaretaker.errors?.required)" class="invalid-feedback">Campo Requerido</div>
         </div>
@@ -427,7 +503,7 @@
                       [readonly]="!isEditingAdditionalInformation"
                       [ngClass]="{'is-invalid': ((data.touched && updateRequestForm.controls.dataCaretaker.controls[i].controls.reason.errors) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[i].controls.reason.errors))}"
                       >
-                      <ng-option *ngFor="let motive of motives" [value]="motive.id"> {{motive.description}} </ng-option>
+                      <ng-option *ngFor="let motive of motives" [value]="motive.id_motive"> {{motive.description}} </ng-option>
                   </ng-select>
                   <div *ngIf="((data.touched && updateRequestForm.controls.dataCaretaker.controls[i].controls.reason.errors?.required) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[i].controls.reason.errors?.required))" class="invalid-feedback">Campo Requerido</div>
 
@@ -444,7 +520,7 @@
                       [readonly]="!isEditingAdditionalInformation"
                       [ngClass]="{'is-invalid': ((data.touched && updateRequestForm.controls.dataCaretaker.controls[i].controls.dedicationsTypes.errors) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[i].controls.dedicationsTypes.errors))}"
                       >
-                      <ng-option *ngFor="let dedication of dedicationsTypes" [value]="dedication.id"> {{ dedication.description }} </ng-option>
+                      <ng-option *ngFor="let dedication of dedicationsTypes" [value]="dedication.id_dedication"> {{ dedication.description }} </ng-option>
                   </ng-select>
                   <div *ngIf="((data.touched && updateRequestForm.controls.dataCaretaker.controls[i].controls.dedicationsTypes.errors?.required) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[i].controls.dedicationsTypes.errors?.required))" class="invalid-feedback">Campo Requerido</div>
                 </div>
@@ -460,7 +536,7 @@
                       [readonly]="!isEditingAdditionalInformation"
                       [ngClass]="{'is-invalid': ((data.touched && updateRequestForm.controls.dataCaretaker.controls[i].controls.remunerationType.errors) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[i].controls.remunerationType.errors))}"
                       >
-                      <ng-option *ngFor="let remunerationType of remunerationsTypes" [value]="remunerationType.id">{{remunerationType.description}}</ng-option>
+                      <ng-option *ngFor="let remunerationType of remunerationsTypes" [value]="remunerationType.id_remuneration">{{remunerationType.description}}</ng-option>
 
                   </ng-select>
                   <div *ngIf="((data.touched && updateRequestForm.controls.dataCaretaker.controls[i].controls.remunerationType.errors?.required) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[i].controls.remunerationType.errors?.required))" class="invalid-feedback">Campo Requerido</div>
@@ -519,7 +595,7 @@
       <div class="d-flex justify-content-end mt-2">
         <a href="#" (click)="editAdditionalInformation($event)" *ngIf="!isEditingAdditionalInformation">Editar</a>
         <div *ngIf="isEditingAdditionalInformation">
-          <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="UpdateAdditionalInformation($event)">Actualizar</button>
+          <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updateAdditionalInformation($event)">Actualizar</button>
           <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="editAdditionalInformation($event)" >Cancelar</button>
         </div>
       </div>
