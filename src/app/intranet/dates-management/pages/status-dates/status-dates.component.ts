@@ -515,7 +515,7 @@ export class StatusDatesComponent implements OnInit {
           preventionsTypesDetails: id_prevention_type_detail,
           haveInsurance: assurance,
 
-          originDirection: id_origin_direction,
+          originDirection: id_origin_direction === 'wots' ? id_origin_direction : 'registro por pagina',
           addressWots: address_wots ? address_wots : 'n/a',
           idLocation: id_location,
           wayNumber: way_number,
