@@ -51,6 +51,8 @@ export class StatusDatesComponent implements OnInit {
 
   public preventionTypeRequest: any;
 
+  public dataPreventionDetails: any[];
+
   public preventionDetails: any[];
 
   public preventionDetailRequest: any;
@@ -147,13 +149,10 @@ export class StatusDatesComponent implements OnInit {
     this.idRequestSubscription = this.routerQuery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
 
     this.subscription = this.dateService.refresh$.subscribe( () => {
-      this.getDataRequestForId();
+      // this.getDataRequestForId();
+      this.dataSelectForm();
     })
     this.dataSelectForm();
-
-    // this.getDataRequestForId();
-
-    // this.fillOptionsSelectForm(mockDataForm);
 
     this.willBeDeleted();
   }
@@ -271,18 +270,17 @@ export class StatusDatesComponent implements OnInit {
 
     if (status) {
 
-      if (this.updateRequestForm.value.dataCaretaker.length !== 0) return;
-
-      this.addDateCaretaker();
+      if (this.updateRequestForm.value.dataCaretaker.length === 0) this.addDateCaretaker();
 
       if(this.dataRequest.length !== 0){
-        const {motive, dedication, remuneration} = this.dataRequest[0];
-        const f = this.updateRequestForm.controls;
-
-        f.dataCaretaker.controls[0]?.controls.reason.setValue(motive);
-        f.dataCaretaker.controls[0]?.controls.dedicationsTypes.setValue(dedication);
-        f.dataCaretaker.controls[0]?.controls.remunerationType.setValue(remuneration);
       }
+      const f = this.updateRequestForm.controls;
+      const {motive, dedication, remuneration, comments} = this.dataRequest[0];
+
+      f.dataCaretaker.controls[0]?.controls.reason.setValue(motive);
+      f.dataCaretaker.controls[0]?.controls.dedicationsTypes.setValue(dedication);
+      f.dataCaretaker.controls[0]?.controls.remunerationType.setValue(remuneration);
+      f.comments.setValue(comments);
 
       return
     }
@@ -383,89 +381,126 @@ export class StatusDatesComponent implements OnInit {
 
       const f = this.updateRequestForm.controls;
 
-      f.rut.setValue(rut);
-      f.names.setValue(names);
-      f.lastNames.setValue(lastNames);
-      f.gender.setValue(gender)
-      f.datesBirth.setValue(datesBirth);
-      f.email.setValue(email);
-      f.landLine.setValue(landLine);
-      f.mobilePhone.setValue(mobilePhone);
-      f.haveInsurance.setValue(haveInsurance);
+      if(!this.isEditingPersonalData) {
+        f.rut.setValue(rut);
+        f.names.setValue(names);
+        f.lastNames.setValue(lastNames);
+        f.gender.setValue(gender)
+        f.datesBirth.setValue(datesBirth);
+        f.email.setValue(email);
+        f.landLine.setValue(landLine);
+        f.mobilePhone.setValue(mobilePhone);
+      }
 
-      this.statusRequest = this.status.find(({id}) => id === Number(statusRequest))
-      this.statusRequest = this.statusRequest.status;
+      if(!this.isEditingRequestData) {
 
-      f.requestNumber.setValue(idRequest);
-      f.dateRequest.setValue(dateRequest);
-      f.statusRequest.setValue(statusRequest);
-      f.preventionsTypes.setValue(preventionsTypes);
-      f.preventionsTypesDetails.setValue(preventionsTypesDetails);
+        f.haveInsurance.setValue(haveInsurance);
 
-      f.directionToUse?.setValue(originDirection);
-      this.statusOriginAddress();
+        f.requestNumber.setValue(idRequest);
 
-      f.addressWots.controls[0]?.controls.addressWots.setValue(addressWots);
+        f.dateRequest.setValue(dateRequest);
 
-      f.addressRegisteredToPage.controls[0]?.controls.location.setValue(idLocation);
-      f.addressRegisteredToPage.controls[0]?.controls.numberStreet.setValue(wayNumber);
-      f.addressRegisteredToPage.controls[0]?.controls.propertyType.setValue(idPropertyType);
-      f.addressRegisteredToPage.controls[0]?.controls.nameHome.setValue(propertyNumber);
+        this.statusRequest = this.status.find(({id}) => id === Number(statusRequest))
+        this.statusRequest = this.statusRequest.status;
+
+        f.statusRequest.setValue(statusRequest);
+
+        f.preventionsTypes.setValue(preventionsTypes);
+
+        this.changePrevision(preventionsTypes);
+
+        this.preventionTypeRequest =  this.preventionsTypes.find(({id}) => id === Number(this.updateRequestForm.value.preventionsTypes));
+
+        this.preventionTypeRequest = this.preventionTypeRequest.prevention_type;
+
+        f.preventionsTypesDetails.setValue(preventionsTypesDetails);
+
+        this.preventionDetailRequest = this.preventionDetails.find(({id})=> id === Number( this.updateRequestForm.value.preventionsTypesDetails));
+
+        this.preventionDetailRequest = this.preventionDetailRequest.prevention_detail;
+
+        f.directionToUse?.setValue(originDirection);
+
+        this.statusOriginAddress();
+
+        f.addressWots.controls[0]?.controls.addressWots.setValue(addressWots);
+
+        f.addressRegisteredToPage.controls[0]?.controls.location.setValue(idLocation);
+        f.addressRegisteredToPage.controls[0]?.controls.numberStreet.setValue(wayNumber);
+        f.addressRegisteredToPage.controls[0]?.controls.propertyType.setValue(idPropertyType);
+        f.addressRegisteredToPage.controls[0]?.controls.nameHome.setValue(propertyNumber);
+
+        this.generateFullAddress();
+      }
+
+      if(!this.isEditingDocuments) {
+
+        console.log(documents);
+
+        this.documentsDom = [];
+        this.documentsPre = [];
+        documents.map((res) => {
 
 
-      this.preventionTypeRequest =  this.preventionsTypes.find(({id}) => id === Number(this.updateRequestForm.value.preventionsTypes));
+          if ( res.id_document_type === 1 ) {
+            this.documentsDom.push({
+              'doc_srv_path': res.doc_srv_path,
+              'document_type': res.document_type,
+              'document_path': res.document_path,
+              'document_ext': res.document_ext,
+              'document_id' : res.id_document
+            });
 
-      this.preventionTypeRequest = this.preventionTypeRequest.description;
+          }
 
-      this.preventionDetailRequest = this.preventionDetails.find(({id})=> id === Number( this.updateRequestForm.value.preventionsTypesDetails));
+          if ( res.id_document_type === 2 ) {
+            this.documentsPre.push({
+              'doc_srv_path': res.doc_srv_path,
+              'document_type': res.document_type,
+              'document_path': res.document_path,
+              'document_ext': res.document_ext,
+              'document_id' : res.id_document
+            })
+          }
+        })
+      }
 
-      this.preventionDetailRequest = this.preventionDetailRequest.description;
+      if(!this.isEditingAdditionalInformation) {
 
+        f.isCaretaker.setValue(isCaretaker);
+        this.statusCaretaker(isCaretaker);
+        f.dataCaretaker.controls[0]?.controls.reason.setValue(motive);
+        f.dataCaretaker.controls[0]?.controls.dedicationsTypes.setValue(dedication);
+        f.dataCaretaker.controls[0]?.controls.remunerationType.setValue(remuneration);
+        f.registeredInAPS.setValue(registeredInAPS),
+        f.discountPercentage.setValue(discountPercentage),
+        f.dataOrigin.setValue(dataOrigin),
+        f.comments.setValue(comments)
 
-      f.isCaretaker.setValue(isCaretaker);
-      this.statusCaretaker(isCaretaker);
-
-      f.dataCaretaker.controls[0]?.controls.reason.setValue(motive);
-      f.dataCaretaker.controls[0]?.controls.dedicationsTypes.setValue(dedication);
-      f.dataCaretaker.controls[0]?.controls.remunerationType.setValue(remuneration);
-      f.registeredInAPS.setValue(registeredInAPS),
-      f.discountPercentage.setValue(discountPercentage),
-      f.dataOrigin.setValue(dataOrigin),
-      f.comments.setValue(comments)
+      }
 
 
     //   this.unassignedRequest.push(res);
 
-    console.log(documents);
-
-    this.documentsDom = [];
-    this.documentsPre = [];
-    documents.map((res) => {
-
-      if ( res.id_document_type === 1 ) {
-        this.documentsDom.push({
-          'doc_srv_path': res.doc_srv_path,
-          'document_type': res.document_type,
-          'document_path': res.document_path,
-          'document_ext': res.document_ext,
-          'document_id' : res.id_document
-        });
-
-      }
-
-      if ( res.id_document_type === 2 ) {
-        this.documentsPre.push({
-          'doc_srv_path': res.doc_srv_path,
-          'document_type': res.document_type,
-          'document_path': res.document_path,
-          'document_ext': res.document_ext,
-          'document_id' : res.id_document
-        })
-      }
-      })
     })
 
-    this.statusDocuments();
+    // this.statusDocuments();
+  }
+
+  changePrevision(e: Event) {
+
+    let preventionDetails: any[] = [];
+
+    this.dataPreventionDetails.map((detail) => {
+      if (detail.id_prevention_type === e ) {
+
+        preventionDetails.push(detail);
+      }
+    })
+
+    this.updateRequestForm.controls.preventionsTypesDetails.reset();
+    this.preventionDetails = preventionDetails;
+
   }
 
   locationChange() {
@@ -544,11 +579,13 @@ export class StatusDatesComponent implements OnInit {
 
     },
     () => {
+      this.dataRequest = [];
+
+      this.dataRequest.push(dataRequest[0]);
 
       this.fillForm(dataRequest);
-      this.generateFullAddress();
 
-      return this.dataRequest.push(dataRequest[0]);
+
 
     });
 
@@ -623,8 +660,6 @@ export class StatusDatesComponent implements OnInit {
 
     })
   }
-
-
 
   cancelEditPersonalData (e: Event) {
     e.preventDefault();
@@ -701,6 +736,9 @@ export class StatusDatesComponent implements OnInit {
     const { preventionsTypes, preventionsTypesDetails, haveInsurance, originDirection, idLocation, wayNumber, idPropertyType, propertyNumber, addressWots} = this.dataRequest[0];
 
     f.preventionsTypes.setValue(preventionsTypes);
+
+    this.changePrevision(preventionsTypes);
+
     f.preventionsTypesDetails.setValue(preventionsTypesDetails);
     f.haveInsurance.setValue(haveInsurance);
     f.directionToUse.setValue(originDirection);
@@ -725,6 +763,7 @@ export class StatusDatesComponent implements OnInit {
   }
 
   updateDocuments(e: Event) {
+
     e.preventDefault();
 
     const form = this.updateRequestForm.value
@@ -748,9 +787,9 @@ export class StatusDatesComponent implements OnInit {
       this.listFilesUpload = [];
     }
 
-
-    // this.dataDocumentsArray.clear();
-    // this.dataDocuments2Array.clear();
+    let title: string = ''
+    let message: string = "Los archivos se han actualizado exitosamente";
+    this.modalService.OpenModalError2(ModalComponent, false, title, message);
 
     this.isEditingDocuments = false;
   }
@@ -770,9 +809,10 @@ export class StatusDatesComponent implements OnInit {
     },
     error => {
 
-      let title: string = ''
-      let message: string = "Su Solicitud no Pudo ser Procesada Intente Nuevamente";
-      this.modalService.OpenModalError2(ModalComponent, true, title, message);
+      // let title: string = ''
+      // let message: string = "Su Solicitud no Pudo ser Procesada Intente Nuevamente";
+      // this.modalService.OpenModalError2(ModalComponent, true, title, message);
+
 
     },
     () => {
@@ -892,13 +932,22 @@ export class StatusDatesComponent implements OnInit {
     })
   }
 
-  CancelEditAdditionalInformation (e: Event) {
+  cancelEditAdditionalInformation (e: Event) {
     e.preventDefault();
+
+    const f = this.updateRequestForm.controls;
+    const fc = this.updateRequestForm.controls.dataCaretaker.controls[0]?.controls;
+
+    console.log(this.dataRequest[0]);
+
+    const { isCaretaker, motive, remuneration, dedication} = this.dataRequest[0];
+
+    f.isCaretaker.setValue(isCaretaker);
+
+    this.statusCaretaker(isCaretaker);
+
     return this.isEditingAdditionalInformation = !this.isEditingAdditionalInformation;
   }
-
-
-
 
   deleteFile(e: Event, idFile: any) {
 
@@ -935,6 +984,7 @@ export class StatusDatesComponent implements OnInit {
 
       this.locations = result.locations;
       this.preventionsTypes = result.preventions_types;
+      this.dataPreventionDetails = result.preventions_types_details;
       this.propertyTypes = result.property_types;
       this.motives = result.motives;
       this.dedicationsTypes = result.dedications;

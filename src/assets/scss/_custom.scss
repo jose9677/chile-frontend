@@ -20,8 +20,8 @@ div.modal-content{
     }
     & td {
         vertical-align: middle;
-    
-    
+
+
     }
 
     & tr:nth-child(even) {
@@ -37,7 +37,7 @@ div.modal-content{
         background-color: transparent;
         border: 0px;
     }
-    
+
     & tfoot tr:nth-child(even) {
         background-color: transparent;
     }
@@ -106,3 +106,26 @@ button.file_add{
 .bold{
     font-weight: bold;
 }
+
+
+.disabled{
+  input{
+    background-color: white !important;
+    border: 0px !important;
+  }
+
+  .ng-select>.ng-select-container{
+    background-color: white !important;
+    border: 0px !important;
+
+    span.ng-arrow-wrapper{
+      display: none;
+    }
+  }
+
+  textarea.form-control{
+    background-color: white !important;
+    border: 0px !important;
+  }
+}
+
