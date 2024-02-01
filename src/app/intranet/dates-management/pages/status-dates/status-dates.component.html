@@ -15,21 +15,54 @@
           formControlName="rut"
           >
         </div>
-        <div
-        class="col-md-4 mb-3" [ngClass]="{'disabled': !isEditingPersonalData}">
+        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !isEditingPersonalData}">
           <label for="name" class="form-label">Nombres</label>
-          <input
-          class="form-control"
-          type="text"
-          id="name"
-          formControlName="names"
-          [readOnly]="!isEditingPersonalData"
-          [ngClass]="{'is-invalid': (updateRequestForm.controls.names.touched && updateRequestForm.controls.names.errors) || (isFormSubmitted && updateRequestForm.controls.names.errors)}" placeholder="Introduzca sus nombres"
-          >
+
+          <div>
+            <input
+            *ngIf="statusRequest2 === 1 && dataModified.user_data[0].modifiedNames"
+            class="form-control"
+            [ngClass]="{
+              'text-danger' : !dataModified.user_data[0].approvedChangeNames,
+              'text-success' : dataModified.user_data[0].approvedChangeNames
+            }"
+            type="text"
+            id="name"
+            [value] = "dataModified.user_data[0].names"
+            >
+            <input
+            *ngIf="(statusRequest2 !== 1 || statusRequest2 === 1 && !dataModified.user_data[0].modifiedNames)"
+            class="form-control"
+            type="text"
+            id="name"
+            formControlName="names"
+            [readOnly]="!isEditingPersonalData"
+            [ngClass]="{
+              'is-invalid': (updateRequestForm.controls.names.touched && updateRequestForm.controls.names.errors) || (isFormSubmitted && updateRequestForm.controls.names.errors),
+              'text-danger' : dataModified.user_data[0].approvedChangeNames,
+              '' : !dataModified.user_data[0].approvedChangeNames
+            }"
+            placeholder="Introduzca sus nombres"
+            >
+          </div>
+          <a  *ngIf="statusRequest2 === 1">
+            <i class="m-0 p-1 h4 feather icon-eye" title="Ver cambio" (click)="viewChanges(dataModified.user_data[0].modifiedNames)"></i>
+            <i
+            class="m-0 p-1 h4 "
+            [title]="dataModified.user_data[0].modifiedNames ? 'aprobar cambio' : 'rechazar cambio' "
+            [ngClass]="{'feather icon-x-circle text-danger': (!dataModified.user_data[0].modifiedNames), 'mdi mdi-check-circle-outline text-success': (dataModified.user_data[0].modifiedNames)}"
+            (click)="dataModified.user_data[0].modifiedNames ? approvedChanges(dataModified.user_data[0].names) : rejectedChanges()"
+            ></i>
+
+          </a>
+
+
           <div *ngIf="(updateRequestForm.controls.names.touched && updateRequestForm.controls.names.errors?.required) || (isFormSubmitted && updateRequestForm.controls.names.errors?.required)" class="invalid-feedback">Campo Requerido</div>
 
           <div class="text-danger mt-1" *ngIf="updateRequestForm.controls.names.errors?.pattern">Este campo solo admite letras</div>
+
         </div>
+
         <div class="col-md-4 mb-3" [ngClass]="{'disabled': !isEditingPersonalData}">
           <label for="lastNames" class="form-label ">Apellidos</label>
           <input
@@ -219,12 +252,11 @@
               (change)="changeOriginAddress($event)"
               [ngClass]="{'is-invalid': ((updateRequestForm.controls.haveInsurance.touched && updateRequestForm.controls.haveInsurance.errors) || (isFormSubmitted && updateRequestForm.controls.haveInsurance.errors))}"
               >
-              <ng-option [value]="'registro por pagina'">REGISTRO POR PAGINA</ng-option>
-              <ng-option [value]="'wots'">WOTS</ng-option>
+              <ng-option [value]="'REGISTRO POR PÁGINA'">REGISTRO POR PAGINA</ng-option>
+              <ng-option [value]="'WOTS'">WOTS</ng-option>
           ></ng-select>
           <div *ngIf="(updateRequestForm.controls.haveInsurance.touched && updateRequestForm.controls.haveInsurance.errors) || (isFormSubmitted && updateRequestForm.controls.haveInsurance.errors)" class="invalid-feedback">Campo Requerido</div>
         </div>
-
 
         <div class="col-12 mb-3" *ngIf="!isEditingRequestData" [ngClass]="{'disabled': !isEditingRequestData}">
           <label for="" class="form-label colorTextPrimari ">Dirección</label>

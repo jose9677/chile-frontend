@@ -8,6 +8,7 @@ import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { CustomValidators } from 'ngx-custom-validators';
 import {default as mockDataRequestForId} from '../../mocks/dataRequesForId.json'
 import {default as mockDataForm} from '../../mocks/dataSelectForm.json'
+import {default as changesData} from '../../mocks/changesData.json'
 import { ModalComponent } from 'src/app/public/auth/shared/modals/modal/modal.component';
 
 @Component({
@@ -77,6 +78,29 @@ export class StatusDatesComponent implements OnInit {
 
   private status: any[];
 
+  public dataModified: any = changesData;
+
+  public statusRequest2: any = 1;
+
+  public acceptChange: any = false;
+
+  viewChanges(statusChange) {
+    this.dataModified.user_data[0].modifiedNames = !statusChange;
+    console.log(this.dataModified.user_data[0].modifiedNames);
+  }
+
+  approvedChanges(statusChange) {
+    this.dataModified.user_data[0].approvedChangeNames = true;
+
+    this.updateRequestForm.controls.names.setValue(statusChange);
+    console.log(this.dataModified.user_data[0].approvedChangeNames);
+  }
+
+  rejectedChanges() {
+    this.dataModified.user_data[0].approvedChangeNames = false;
+    this.updateRequestForm.controls.names.setValue(this.dataRequest[0].names);
+    console.log(this.dataModified.user_data[0].approvedChangeNames);
+  }
 
   public updateRequestForm: any = this.fb.group({
     rut: ['', []],
@@ -141,6 +165,7 @@ export class StatusDatesComponent implements OnInit {
     this.dataRequest = [];
 
     this.listFilesUpload = [];
+
 
   }
 
@@ -696,6 +721,8 @@ export class StatusDatesComponent implements OnInit {
       "id_status": form.statusRequest,
       "id_prevention_type_detail": form.preventionsTypesDetails,
        "assurance": form.haveInsurance,
+       "reg_type":  form.directionToUse,
+       "dir_wots": form.addressWots[0]?.addressWots,
        "id_location": form.addressRegisteredToPage[0]?.location,
        "way_number": form.addressRegisteredToPage[0]?.numberStreet,
        "rut_employee": JSON.parse(sessionStorage.getItem('auth-user'))

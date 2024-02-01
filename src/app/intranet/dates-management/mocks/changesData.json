@@ -1,0 +1,128 @@
+{
+  "user_data": [
+      {
+          "rut": "311442342144-2",
+
+          "names": "Romualdo",
+          "modifiedNames": true,
+          "approvedChangeNames": false,
+          "lastname": "URIBE",
+          "modifiedLastname": "URIBE",
+          "id_sex": 1,
+          "modifiedId_sex": false,
+          "f_nac": "2024-01-17",
+          "modifiedF_nac": false,
+          "email": "dulcepecado@gmail.com",
+          "modifiedEmail": true,
+          "landline": 666666666,
+          "modifiedLandline": false,
+          "mobile_phone": 666666666,
+          "modifiedMobile_phone": true
+      }
+  ],
+  "data_sol": [
+      {
+          "id_solicitude": 256,
+          "request_date": "2024-01-17 00:00:00",
+          "id_status": 1,
+          "id_prevention_type_detail": 1,
+          "prevention_type": 1,
+          "assurance": false,
+          "id_location": 1,
+          "way_number": 1,
+          "id_property_type": 1,
+          "property_number": "1",
+          "origin": "wots",
+          "dir_wots": "NUEVA",
+          "latitude": "1",
+          "longitude": "2"
+      }
+  ],
+  "data_doc": [
+      {
+          "id_document": 405,
+          "id_request": 256,
+          "id_document_type": 2,
+          "document_path": "PREVISION_SOL256-405.jpeg",
+          "document_ext": "jpeg",
+          "active": true,
+          "doc_srv_path": "http://54.189.74.47/storage/posts/PREVISION_SOL256-405.jpeg"
+      },
+      {
+          "id_document": 442,
+          "id_request": 256,
+          "id_document_type": 1,
+          "document_path": "PRUEBA_PATH",
+          "document_ext": "png",
+          "active": true,
+          "doc_srv_path": "http://54.189.74.47/storage/posts/PRUEBA_PATH"
+      },
+      {
+          "id_document": 443,
+          "id_request": 256,
+          "id_document_type": 1,
+          "document_path": "PRUEBA_PATH",
+          "document_ext": "png",
+          "active": true,
+          "doc_srv_path": "http://54.189.74.47/storage/posts/PRUEBA_PATH"
+      },
+      {
+          "id_document": 404,
+          "id_request": 256,
+          "id_document_type": 1,
+          "document_path": "DOMICILIO_SOL256-403.jpeg",
+          "document_ext": "jpeg",
+          "active": true,
+          "doc_srv_path": "http://54.189.74.47/storage/posts/DOMICILIO_SOL256-403.jpeg"
+      },
+      {
+          "id_document": 440,
+          "id_request": 256,
+          "id_document_type": 1,
+          "document_path": "PRUEBA_PATH",
+          "document_ext": "png",
+          "active": true,
+          "doc_srv_path": "http://54.189.74.47/storage/posts/PRUEBA_PATH"
+      },
+      {
+          "id_document": 441,
+          "id_request": 256,
+          "id_document_type": 1,
+          "document_path": "PRUEBA_PATH",
+          "document_ext": "png",
+          "active": true,
+          "doc_srv_path": "http://54.189.74.47/storage/posts/PRUEBA_PATH"
+      },
+      {
+          "id_document": 444,
+          "id_request": 256,
+          "id_document_type": 1,
+          "document_path": "PRUEBA_PATH",
+          "document_ext": "png",
+          "active": true,
+          "doc_srv_path": "http://54.189.74.47/storage/posts/PRUEBA_PATH"
+      },
+      {
+          "id_document": 445,
+          "id_request": 256,
+          "id_document_type": 1,
+          "document_path": "PRUEBA_PATH",
+          "document_ext": "png",
+          "active": true,
+          "doc_srv_path": "http://54.189.74.47/storage/posts/PRUEBA_PATH"
+      }
+  ],
+  "aditional_data": [
+      {
+          "rut_user": "311442342144-2",
+          "cuidador": true,
+          "comments": "COMENTARIIO DE PRUEBA",
+          "porcentaje_descuento": 20,
+          "aps": false,
+          "id_motive": 1,
+          "id_dedication": 1,
+          "id_remuneration": 1,
+          "origen": "wots"
+      }
+  ]
+}
