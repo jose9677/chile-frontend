@@ -76,30 +76,27 @@ export class StatusDatesComponent implements OnInit {
 
   public statusRequest: any;
 
-  private status: any[];
+  public listStatus: any[];
 
   public dataModified: any = changesData;
 
-  public statusRequest2: any = 1;
+  public statusRequest2: any = 3;
 
   public acceptChange: any = false;
 
   viewChanges(statusChange) {
     this.dataModified.user_data[0].modifiedNames = !statusChange;
-    console.log(this.dataModified.user_data[0].modifiedNames);
   }
 
   approvedChanges(statusChange) {
     this.dataModified.user_data[0].approvedChangeNames = true;
 
     this.updateRequestForm.controls.names.setValue(statusChange);
-    console.log(this.dataModified.user_data[0].approvedChangeNames);
   }
 
   rejectedChanges() {
     this.dataModified.user_data[0].approvedChangeNames = false;
     this.updateRequestForm.controls.names.setValue(this.dataRequest[0].names);
-    console.log(this.dataModified.user_data[0].approvedChangeNames);
   }
 
   public updateRequestForm: any = this.fb.group({
@@ -242,12 +239,10 @@ export class StatusDatesComponent implements OnInit {
 
   statusOriginAddress() {
 
-    console.log(this.updateRequestForm.value.addressWots.length === 0);
     if (this.updateRequestForm.value.addressWots.length === 0) {
       this.addAddressWots();
     };
 
-    console.log(this.updateRequestForm.value.addressRegisteredToPage.length === 0);
     if (this.updateRequestForm.value.addressRegisteredToPage.length === 0) {
       this.addDirectionRegisteredOnThePageForm();
     };
@@ -325,13 +320,11 @@ export class StatusDatesComponent implements OnInit {
     // this.updateRequestForm.controls.directionToUse.setValue('wots');
 
     this.dataDocumentsArray.push(dataForm);
-    console.log(this.updateRequestForm.value.documents);
   }
 
   deleteDocument( DocumentIndex: any ) {
 
     this.dataDocumentsArray.removeAt(DocumentIndex);
-    console.log(this.updateRequestForm.value.documents);
 
   }
 
@@ -346,22 +339,17 @@ export class StatusDatesComponent implements OnInit {
     // this.updateRequestForm.controls.directionToUse.setValue('wots');
 
     this.dataDocuments2Array.push(dataForm);
-    console.log(this.updateRequestForm.value.documents2);
   }
 
   deleteDocument2( DocumentIndex: any ) {
 
     this.dataDocuments2Array.removeAt(DocumentIndex);
-    console.log(this.updateRequestForm.value.documents2);
 
   }
 
   selectdataFile(event: any, index: any, id_document_type: any): void {
 
     const file = <File>event.target.files[0];
-
-    console.log(this.updateRequestForm.value);
-    console.log(file);
 
   this.documentIsValid = true;
 
@@ -389,7 +377,6 @@ export class StatusDatesComponent implements OnInit {
     this.documentIsValid = false;
   }
 
-  console.log(this.listFilesUpload);
 
   }
 
@@ -401,8 +388,6 @@ export class StatusDatesComponent implements OnInit {
 
     data.map((res: any)=>{
       const {rut, names, lastNames, gender, datesBirth, email, landLine, mobilePhone, haveInsurance,idRequest, dateRequest, statusRequest, preventionsTypes, preventionsTypesDetails, originDirection, idLocation, wayNumber,idPropertyType, propertyNumber, addressWots, isCaretaker, motive, dedication, remuneration, registeredInAPS, discountPercentage, dataOrigin, comments, documents } = res;
-
-      console.log(res);
 
       const f = this.updateRequestForm.controls;
 
@@ -425,8 +410,8 @@ export class StatusDatesComponent implements OnInit {
 
         f.dateRequest.setValue(dateRequest);
 
-        this.statusRequest = this.status.find(({id}) => id === Number(statusRequest))
-        this.statusRequest = this.statusRequest.status;
+        // this.statusRequest = this.status.find(({id}) => id === Number(statusRequest))
+        // this.statusRequest = this.statusRequest.status;
 
         f.statusRequest.setValue(statusRequest);
 
@@ -444,7 +429,7 @@ export class StatusDatesComponent implements OnInit {
 
         this.preventionDetailRequest = this.preventionDetailRequest.prevention_detail;
 
-        f.directionToUse?.setValue(originDirection);
+        f.directionToUse?.setValue(originDirection.toUpperCase());
 
         this.statusOriginAddress();
 
@@ -459,8 +444,6 @@ export class StatusDatesComponent implements OnInit {
       }
 
       if(!this.isEditingDocuments) {
-
-        console.log(documents);
 
         this.documentsDom = [];
         this.documentsPre = [];
@@ -509,7 +492,7 @@ export class StatusDatesComponent implements OnInit {
 
     })
 
-    // this.statusDocuments();
+    this.statusDocuments();
   }
 
   changePrevision(e: Event) {
@@ -547,14 +530,12 @@ export class StatusDatesComponent implements OnInit {
     this.dateService.getForIdRequest(this.idRequest).subscribe((result) => {
       let data: any[] = [];
       data = [result];
-      console.log(data);
 
       data.map((res: any) => {
-        console.log(res);
 
         const { rut, names: names, lastname: lastNames, id_sex, f_nac: datesBirth, email, landline: landLine, mobile_phone: mobilePhone } = res.user_data[0]
 
-        const { id_solicitude: id_request, request_date, id_status, id_prevention_type_detail, prevention_type: id_prevention_type, assurance, origin : id_origin_direction, longitude, latitude, id_location, way_number, id_property_type, property_number, dir_wots: address_wots } = res.data_sol[0];
+        const { id_solicitude: id_request, request_date, id_status, id_prevention_type_detail, prevention_type: id_prevention_type, assurance, reg_type : id_origin_direction, longitude, latitude, id_location, way_number, id_property_type, property_number, dir_wots: address_wots } = res.data_sol[0];
 
 
         const { cuidador: carer, id_motive, id_dedication, id_remuneration, aps, porcentaje_descuento: percent, origen: origin, comments } = res.aditional_data[0];
@@ -575,7 +556,7 @@ export class StatusDatesComponent implements OnInit {
           preventionsTypesDetails: id_prevention_type_detail,
           haveInsurance: assurance,
 
-          originDirection: id_origin_direction === 'wots' ? id_origin_direction : 'registro por pagina',
+          originDirection: (id_origin_direction === 'WOTS') || (id_origin_direction === 'wots') ? id_origin_direction : 'REGISTRO POR PAGINA',
           addressWots: address_wots ? address_wots : 'n/a',
           idLocation: id_location,
           wayNumber: way_number,
@@ -590,7 +571,7 @@ export class StatusDatesComponent implements OnInit {
           remuneration: id_remuneration,
           registeredInAPS: aps === true ? 'Si' : 'No',
           discountPercentage: percent,
-          dataOrigin: origin ? origin : 'Registro por Pagina',
+          dataOrigin: origin ? origin : 'REGISTRO POR PAGINA',
           comments: comments
         })
 
@@ -618,7 +599,7 @@ export class StatusDatesComponent implements OnInit {
 
   generateFullAddress = () => {
 
-    if (this.updateRequestForm.value.directionToUse === 'wots') return this.fullAddress = this.updateRequestForm.value.addressWots[0]?.addressWots;
+    if (this.updateRequestForm.value.directionToUse === 'WOTS') return this.fullAddress = this.updateRequestForm.value.addressWots[0]?.addressWots;
 
     let street = this.locationChange();
 
@@ -660,12 +641,10 @@ export class StatusDatesComponent implements OnInit {
       "mobile_phone": form.mobilePhone,
       "rut_employee": JSON.parse(sessionStorage.getItem('auth-user'))
     }
-    console.log(personalData)
 
     if(this.updateRequestForm.status === 'INVALID') return;
 
     this.dateService.UpdatePersonalData(this.idRequest, personalData).subscribe((result) => {
-      console.log(result);
 
     },
     error => {
@@ -725,14 +704,13 @@ export class StatusDatesComponent implements OnInit {
        "dir_wots": form.addressWots[0]?.addressWots,
        "id_location": form.addressRegisteredToPage[0]?.location,
        "way_number": form.addressRegisteredToPage[0]?.numberStreet,
+       "property_number": form.addressRegisteredToPage[0]?.nameHome,
        "rut_employee": JSON.parse(sessionStorage.getItem('auth-user'))
 }
-    console.log(requestData)
 
     if(this.updateRequestForm.status === 'INVALID') return;
 
     this.dateService.UpdateRequestData(this.idRequest, requestData).subscribe((result) => {
-      console.log(result);
 
     },
     error => {
@@ -743,6 +721,8 @@ export class StatusDatesComponent implements OnInit {
 
     },
     () => {
+
+      this.fullAddress = '';
 
       this.isEditingRequestData = false;
 
@@ -826,12 +806,8 @@ export class StatusDatesComponent implements OnInit {
     const  dataFiles: any = new FormData();
     dataFiles.append("document_path", file);
 
-    for (const value of dataFiles.values() ) {
-      console.log(value);
-    }
 
     this.dateService.UpdateDocuments(this.idRequest, type, dataFiles).subscribe((result) => {
-      console.log(result);
 
     },
     error => {
@@ -854,7 +830,6 @@ export class StatusDatesComponent implements OnInit {
 
   deleteDocuments() {
 
-    console.log(this.listDocumentsDelete);
 
     const listFilesUpload = {
       id_doc: this.listDocumentsDelete
@@ -863,7 +838,6 @@ export class StatusDatesComponent implements OnInit {
     // if (true) return
 
     this.dateService.deleteDocuments(listFilesUpload).subscribe((result) => {
-      console.log(result);
 
     },
     error => {
@@ -933,12 +907,10 @@ export class StatusDatesComponent implements OnInit {
       "id_remuneration": form.dataCaretaker[0]?.remunerationType,
       "comments": form.comments
     }
-    console.log(personalData)
 
     if(this.updateRequestForm.status === 'INVALID') return;
 
     this.dateService.UpdateAdditionalInformation(this.idRequest, personalData).subscribe((result) => {
-      console.log(result);
 
     },
     error => {
@@ -965,7 +937,6 @@ export class StatusDatesComponent implements OnInit {
     const f = this.updateRequestForm.controls;
     const fc = this.updateRequestForm.controls.dataCaretaker.controls[0]?.controls;
 
-    console.log(this.dataRequest[0]);
 
     const { isCaretaker, motive, remuneration, dedication} = this.dataRequest[0];
 
@@ -990,7 +961,6 @@ export class StatusDatesComponent implements OnInit {
 
     this.listDocumentsDelete = this.listDocumentsDelete.filter(list => list !== idFile )
 
-    console.log(this.listDocumentsDelete);
 
   }
 
@@ -1006,9 +976,6 @@ export class StatusDatesComponent implements OnInit {
 
     this.dateService.dropdownInfo().subscribe((result) => {
 
-      console.log(result);
-
-
       this.locations = result.locations;
       this.preventionsTypes = result.preventions_types;
       this.dataPreventionDetails = result.preventions_types_details;
@@ -1017,7 +984,7 @@ export class StatusDatesComponent implements OnInit {
       this.dedicationsTypes = result.dedications;
       this.remunerationsTypes = result.remunerations;
       this.genders = result.sex;
-      this.status = result.status;
+      this.listStatus = result.status;
 
 
       result.preventions_types_details.map((res: any) => {
