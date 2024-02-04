@@ -640,6 +640,7 @@ export class StatusDatesComponent implements OnInit {
       "landline": form.landLine,
       "mobile_phone": form.mobilePhone,
       "rut_employee": JSON.parse(sessionStorage.getItem('auth-user'))
+
     }
 
     if(this.updateRequestForm.status === 'INVALID') return;
@@ -704,8 +705,12 @@ export class StatusDatesComponent implements OnInit {
        "dir_wots": form.addressWots[0]?.addressWots,
        "id_location": form.addressRegisteredToPage[0]?.location,
        "way_number": form.addressRegisteredToPage[0]?.numberStreet,
+       "id_property_type": form.addressRegisteredToPage[0]?.propertyType,
        "property_number": form.addressRegisteredToPage[0]?.nameHome,
-       "rut_employee": JSON.parse(sessionStorage.getItem('auth-user'))
+       "latitude": 1000,
+        "longitude": 2000,
+       "rut_employee": JSON.parse(sessionStorage.getItem('auth-user')),
+
 }
 
     if(this.updateRequestForm.status === 'INVALID') return;
