@@ -15,6 +15,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { VisitorDataComponent } from './pages/visitor-data/visitor-data.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { CustomFormsModule } from 'ngx-custom-validators';
+import { ApprovalChangesUserComponent } from './components/approval-changes-user/approval-changes-user.component';
+import { ApprovalChangesRequestComponent } from './components/approval-changes-request/approval-changes-request.component';
+import { ApprovalChangesDocumentsComponent } from './components/approval-changes-documents/approval-changes-documents.component';
+import { ApprovalChangesAdditionalComponent } from './components/approval-changes-additional/approval-changes-additional.component';
 
 
 @NgModule({
@@ -28,6 +32,10 @@ import { CustomFormsModule } from 'ngx-custom-validators';
     AssignDayDatesComponent,
     ApproveDatesComponent,
     VisitorDataComponent,
+    ApprovalChangesUserComponent,
+    ApprovalChangesRequestComponent,
+    ApprovalChangesDocumentsComponent,
+    ApprovalChangesAdditionalComponent,
 
   ],
   imports: [

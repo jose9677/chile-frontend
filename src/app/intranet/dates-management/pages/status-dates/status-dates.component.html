@@ -2,8 +2,17 @@
   <form class="forms-sample container" [formGroup]="updateRequestForm">
 
     <div class="card row justify-content-center align-items-center p-3 mb-3">
+
+      <!-- <app-approval-changes-user
+      *ngIf="updateRequestForm.value.statusRequest === 11"
+      [userData]="'hola'"
+      ></app-approval-changes-user> -->
+
+      <!-- <h3 class="colorTextPrimari" *ngIf="updateRequestForm.value.statusRequest !== 11">Datos Personales</h3><br> -->
       <h3 class="colorTextPrimari" >Datos Personales</h3><br>
+
       <div class="row">
+      <!-- <div class="row" *ngIf="updateRequestForm.value.statusRequest !== 11"> -->
 
         <div class="col-md-4 mb-3" [ngClass]="{'disabled': true}">
           <label for="rut" class="form-label colorTextPrimari">RUT</label>
@@ -162,8 +171,16 @@
     </div>
 
     <div class="card row justify-content-center align-items-center p-3 mb-3">
+
+      <!-- <app-approval-changes-request
+      *ngIf="updateRequestForm.value.statusRequest === 11"
+      ></app-approval-changes-request> -->
+
       <h3 class="colorTextPrimari">Datos de la Solicitud</h3><br>
+      <!-- <h3 class="colorTextPrimari" *ngIf="updateRequestForm.value.statusRequest !== 11">Datos de la Solicitud</h3><br> -->
+
       <div class="row mt-3">
+      <!-- <div class="row mt-3" *ngIf="updateRequestForm.value.statusRequest !== 11"> -->
         <div class="col-md-4 mb-3" [ngClass]="{'disabled': true}">
           <label for="" class="form-label colorTextPrimari">Número de Solicitud</label>
           <input
@@ -393,8 +410,14 @@
     </div>
 
     <div class="card row justify-content-center align-items-center p-3 mb-3">
-      <h3 class="colorTextPrimari">Documentos</h3><br>
+
+      <!-- <app-approval-changes-documents *ngIf="updateRequestForm.value.statusRequest === 11"></app-approval-changes-documents> -->
+
+      <h3 class="colorTextPrimari" >Documentos</h3><br>
+      <!-- <h3 class="colorTextPrimari" *ngIf="updateRequestForm.value.statusRequest !== 11">Documentos</h3><br> -->
+
       <div class="row mt-3 justify-content-start">
+      <!-- <div class="row mt-3 justify-content-start" *ngIf="updateRequestForm.value.statusRequest !== 11"> -->
         <div class="col-md-6 col-sm-12">
             <div class="d-flex">
               <label for="prenetionDocument" class="form-label colorTextPrimari w-100 ">Tipo de Prevision </label>
@@ -452,8 +475,8 @@
         </ng-container>
       </div>
 
-
       <div class="row mt-3 justify-content-start">
+      <!-- <div class="row mt-3 justify-content-start" *ngIf="updateRequestForm.value.statusRequest !== 11"> -->
         <div class="col-md-6 col-sm-12">
             <div class="row">
               <div class="col-md-6 col-sm-12">
@@ -506,8 +529,6 @@
         </ng-container>
       </div>
 
-
-
       <div class="d-flex justify-content-end mt-2">
         <a href="#" (click)="editDocument($event)" *ngIf="!isEditingDocuments">Editar</a>
         <div *ngIf="isEditingDocuments">
@@ -518,9 +539,16 @@
     </div>
 
     <div class="card row justify-content-center align-items-center p-3 mb-3">
-      <h3 class="colorTextPrimari">Información adicional</h3><br>
-      <div class="row mt-3">
 
+      <!-- <app-approval-changes-additional
+      *ngIf="updateRequestForm.value.statusRequest === 11"
+      ></app-approval-changes-additional> -->
+
+      <h3 class="colorTextPrimari">Información adicional</h3><br>
+      <!-- <h3 class="colorTextPrimari" *ngIf="updateRequestForm.value.statusRequest !== 11">Información adicional</h3><br> -->
+
+      <div class="row mt-3">
+      <!-- <div class="row mt-3" *ngIf="updateRequestForm.value.statusRequest !== 11"> -->
         <div class="col-md-4 mb-3 " [ngClass]="{'disabled': !isEditingAdditionalInformation}">
           <label for="isCaretaker" class="form-label">¿Cumple con labores de cuidador?</label>
           <ng-select
