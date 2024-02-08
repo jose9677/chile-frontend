@@ -10,6 +10,7 @@ import {default as mockDataRequestForId} from '../../mocks/dataRequesForId.json'
 import {default as mockDataForm} from '../../mocks/dataSelectForm.json'
 import {default as changesData} from '../../mocks/changesData.json'
 import { ModalComponent } from 'src/app/public/auth/shared/modals/modal/modal.component';
+import { EvaluateChangesService } from '../../shared/services/evaluate-changes.service';
 
 @Component({
   selector: 'app-status-dates',
@@ -19,12 +20,14 @@ import { ModalComponent } from 'src/app/public/auth/shared/modals/modal/modal.co
 export class StatusDatesComponent implements OnInit {
 
   private subscription: Subscription;
+  private approvalSubscription: Subscription;
 
 
-  public isEditingPersonalData: boolean;
-  public isEditingRequestData: boolean;
-  public isEditingDocuments: boolean;
-  public isEditingAdditionalInformation: boolean;
+  public isEditingPersonalData: Observable<boolean>;
+  public isEditingRequestData: Observable<boolean>;
+  public isEditingDocuments: Observable<boolean>;
+  public isEditingAdditionalInformation: Observable<boolean>;
+
   public isFormSubmitted: boolean;
   public documentIsValid: boolean;
 
@@ -68,7 +71,7 @@ export class StatusDatesComponent implements OnInit {
 
   public fullAddress: any;
 
-  private dataRequest: any[];
+  public dataRequest: any[];
 
   public listDocumentsDelete: any[];
 
@@ -78,24 +81,25 @@ export class StatusDatesComponent implements OnInit {
 
   public listStatus: any[];
 
-  public dataModified: any = changesData;
+  public modifiedData: any = changesData;
+  public originalData: any = [];
 
-  public statusRequest2: any = 3;
+  public editingStatus: any = 12;
 
   public acceptChange: any = false;
 
   viewChanges(statusChange) {
-    this.dataModified.user_data[0].modifiedNames = !statusChange;
+    this.modifiedData.user_data[0].modifiedNames = !statusChange;
   }
 
   approvedChanges(statusChange) {
-    this.dataModified.user_data[0].approvedChangeNames = true;
+    this.modifiedData.user_data[0].approvedChangeNames = true;
 
     this.updateRequestForm.controls.names.setValue(statusChange);
   }
 
   rejectedChanges() {
-    this.dataModified.user_data[0].approvedChangeNames = false;
+    this.modifiedData.user_data[0].approvedChangeNames = false;
     this.updateRequestForm.controls.names.setValue(this.dataRequest[0].names);
   }
 
@@ -134,6 +138,7 @@ export class StatusDatesComponent implements OnInit {
     private routerQuery: ActivatedRoute,
     private router: Router,
     private dateService: DatesService,
+    private evaluateChangesServices: EvaluateChangesService,
     private modalService: ModalsService,
     private fb: FormBuilder
 
@@ -142,10 +147,11 @@ export class StatusDatesComponent implements OnInit {
     this.today = new Date()
       this.today = `${this.today.getFullYear()}-${(this.today.getMonth())+1}-${this.today.getDate()}`
 
-    this.isEditingPersonalData = false
-    this.isEditingRequestData = false
-    this.isEditingDocuments = false
-    this.isEditingAdditionalInformation = false
+    this.isEditingPersonalData = this.evaluateChangesServices.editingPersonalDataObservable;
+    this.isEditingRequestData = this.evaluateChangesServices.EditingRequestDataObservable;
+    this.isEditingDocuments = this.evaluateChangesServices.EditingDocumentsObservable
+    this.isEditingAdditionalInformation = this.evaluateChangesServices.EditingAdditionalInformationObservable;
+
     this.isFormSubmitted = false;
     this.documentIsValid = false;
 
@@ -163,21 +169,27 @@ export class StatusDatesComponent implements OnInit {
 
     this.listFilesUpload = [];
 
-
   }
 
   ngOnInit(): void {
 
     this.idRequestSubscription = this.routerQuery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
 
+
     this.subscription = this.dateService.refresh$.subscribe( () => {
       // this.getDataRequestForId();
       this.dataSelectForm();
+    })
+
+    this.approvalSubscription = this.evaluateChangesServices.refresh$.subscribe( () => {
+      console.log('approval')
+      // this.dataSelectForm();
     })
     this.dataSelectForm();
 
     this.willBeDeleted();
   }
+
 
   fillOptionsSelectForm(dataOptions) {
 
@@ -391,7 +403,7 @@ export class StatusDatesComponent implements OnInit {
 
       const f = this.updateRequestForm.controls;
 
-      if(!this.isEditingPersonalData) {
+      if(!this.evaluateChangesServices.viewEditingPersonalData()) {
         f.rut.setValue(rut);
         f.names.setValue(names);
         f.lastNames.setValue(lastNames);
@@ -402,7 +414,7 @@ export class StatusDatesComponent implements OnInit {
         f.mobilePhone.setValue(mobilePhone);
       }
 
-      if(!this.isEditingRequestData) {
+      if(!this.evaluateChangesServices.viewEditingRequestData()) {
 
         f.haveInsurance.setValue(haveInsurance);
 
@@ -443,7 +455,7 @@ export class StatusDatesComponent implements OnInit {
         this.generateFullAddress();
       }
 
-      if(!this.isEditingDocuments) {
+      if(!this.evaluateChangesServices.viewEditingDocuments()) {
 
         this.documentsDom = [];
         this.documentsPre = [];
@@ -473,7 +485,7 @@ export class StatusDatesComponent implements OnInit {
         })
       }
 
-      if(!this.isEditingAdditionalInformation) {
+      if(!this.evaluateChangesServices.viewEditingAdditionalInformation()) {
 
         f.isCaretaker.setValue(isCaretaker);
         this.statusCaretaker(isCaretaker);
@@ -528,6 +540,7 @@ export class StatusDatesComponent implements OnInit {
     let dataRequest: any = [];
 
     this.dateService.getForIdRequest(this.idRequest).subscribe((result) => {
+      this.originalData = result;
       let data: any[] = [];
       data = [result];
 
@@ -620,7 +633,9 @@ export class StatusDatesComponent implements OnInit {
 
   editPersonalData (e: Event) {
     e.preventDefault();
-    return this.isEditingPersonalData = !this.isEditingPersonalData;
+
+    this.evaluateChangesServices.changeEditingPersonalData(true);
+
   }
 
   updatePersonalData(e: Event) {
@@ -657,7 +672,7 @@ export class StatusDatesComponent implements OnInit {
     },
     () => {
 
-      this.isEditingPersonalData = false;
+      this.evaluateChangesServices.changeEditingPersonalData(false);
 
       let title: string = ''
       let message: string = "Los datos personales se han actualizado exitosamente";
@@ -681,12 +696,12 @@ export class StatusDatesComponent implements OnInit {
     f.landLine.setValue(landLine);
     f.mobilePhone.setValue(mobilePhone);
 
-    return this.isEditingPersonalData = !this.isEditingPersonalData;
+    return this.evaluateChangesServices.changeEditingPersonalData(false);
   }
 
   editRequestData (e: Event) {
     e.preventDefault();
-    return this.isEditingRequestData = !this.isEditingRequestData;
+    return this.evaluateChangesServices.changeEditingRequestData(true);
   }
 
   updateRequestData(e: Event) {
@@ -729,7 +744,7 @@ export class StatusDatesComponent implements OnInit {
 
       this.fullAddress = '';
 
-      this.isEditingRequestData = false;
+      this.evaluateChangesServices.changeEditingRequestData(false);
 
       let title: string = ''
       let message: string = "Los datos personales se han actualizado exitosamente";
@@ -766,12 +781,12 @@ export class StatusDatesComponent implements OnInit {
     // if ( this.updateRequestForm.value.directionToUse === 'wots') {
     // }
 
-    return this.isEditingRequestData = !this.isEditingRequestData;
+    return this.evaluateChangesServices.changeEditingRequestData(false);
   }
 
   editDocument (e: Event) {
     e.preventDefault();
-    return this.isEditingDocuments = !this.isEditingDocuments;
+    return this.evaluateChangesServices.changeEditingDocuments(true);
   }
 
   updateDocuments(e: Event) {
@@ -803,7 +818,7 @@ export class StatusDatesComponent implements OnInit {
     let message: string = "Los archivos se han actualizado exitosamente";
     this.modalService.OpenModalError2(ModalComponent, false, title, message);
 
-    this.isEditingDocuments = false;
+    this.evaluateChangesServices.changeEditingDocuments(false);
   }
 
   uploadFiles(file, type) {
@@ -877,7 +892,7 @@ export class StatusDatesComponent implements OnInit {
 
     this.willBeDeleted();
 
-    return this.isEditingDocuments = !this.isEditingDocuments;
+    return this.evaluateChangesServices.changeEditingDocuments(false);
   }
 
   statusDocuments() {
@@ -895,7 +910,7 @@ export class StatusDatesComponent implements OnInit {
 
   editAdditionalInformation (e: Event) {
     e.preventDefault();
-    return this.isEditingAdditionalInformation = !this.isEditingAdditionalInformation;
+    return this.evaluateChangesServices.changeEditingAdditionalInformation(true);
   }
 
   updateAdditionalInformation(e: Event) {
@@ -927,7 +942,7 @@ export class StatusDatesComponent implements OnInit {
     },
     () => {
 
-      this.isEditingAdditionalInformation = false;
+      this.evaluateChangesServices.changeEditingAdditionalInformation(false);;
 
       let title: string = ''
       let message: string = "Los datos personales se han actualizado exitosamente";
@@ -949,7 +964,7 @@ export class StatusDatesComponent implements OnInit {
 
     this.statusCaretaker(isCaretaker);
 
-    return this.isEditingAdditionalInformation = !this.isEditingAdditionalInformation;
+    return this.evaluateChangesServices.changeEditingAdditionalInformation(false);
   }
 
   deleteFile(e: Event, idFile: any) {
@@ -1022,5 +1037,6 @@ export class StatusDatesComponent implements OnInit {
   ngOnDestroy() {
     this.idRequestSubscription.unsubscribe();
     this.subscription.unsubscribe();
+    this.approvalSubscription.unsubscribe();
   }
 }

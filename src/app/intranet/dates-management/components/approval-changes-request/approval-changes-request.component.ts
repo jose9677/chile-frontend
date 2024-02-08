@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EvaluateChangesService } from '../../shared/services/evaluate-changes.service';
 
 @Component({
   selector: 'app-approval-changes-request',
@@ -7,9 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ApprovalChangesRequestComponent implements OnInit {
 
-  constructor() { }
+  public authorizedEdit: boolean;
+
+  constructor(
+    private evaluateChangesService: EvaluateChangesService
+  ) {
+
+    this.authorizedEdit = this.evaluateChangesService.roleAuthorizedEdit;
+
+
+  }
 
   ngOnInit(): void {
+  }
+
+  edit(e: Event) {
+
+    e.preventDefault();
+    this.evaluateChangesService.changeEditingRequestData(true);
   }
 
 }

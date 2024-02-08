@@ -1,18 +1,18 @@
 <div>
   <form class="forms-sample container" [formGroup]="updateRequestForm">
 
-    <div class="card row justify-content-center align-items-center p-3 mb-3">
+    <app-approval-changes-user
+    class="card row justify-content-center align-items-center p-3 mb-3"
+    *ngIf="updateRequestForm.value.statusRequest === editingStatus && !(isEditingPersonalData | async)"
+    [originalData]="originalData['user_data']"
+    [modifiedData]="modifiedData['user_data']"
+    ></app-approval-changes-user>
 
-      <!-- <app-approval-changes-user
-      *ngIf="updateRequestForm.value.statusRequest === 11"
-      [userData]="'hola'"
-      ></app-approval-changes-user> -->
+    <div class="card row justify-content-center align-items-center p-3 mb-3" *ngIf="updateRequestForm.value.statusRequest !== editingStatus || updateRequestForm.value.statusRequest === editingStatus && (isEditingPersonalData | async)">
 
-      <!-- <h3 class="colorTextPrimari" *ngIf="updateRequestForm.value.statusRequest !== 11">Datos Personales</h3><br> -->
       <h3 class="colorTextPrimari" >Datos Personales</h3><br>
 
       <div class="row">
-      <!-- <div class="row" *ngIf="updateRequestForm.value.statusRequest !== 11"> -->
 
         <div class="col-md-4 mb-3" [ngClass]="{'disabled': true}">
           <label for="rut" class="form-label colorTextPrimari">RUT</label>
@@ -24,69 +24,44 @@
           formControlName="rut"
           >
         </div>
-        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !isEditingPersonalData}">
+        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !(isEditingPersonalData | async)}">
           <label for="name" class="form-label">Nombres</label>
 
           <div>
+
             <input
-            *ngIf="statusRequest2 === 1 && dataModified.user_data[0].modifiedNames"
-            class="form-control"
-            [ngClass]="{
-              'text-danger' : !dataModified.user_data[0].approvedChangeNames,
-              'text-success' : dataModified.user_data[0].approvedChangeNames
-            }"
-            type="text"
-            id="name"
-            [value] = "dataModified.user_data[0].names"
-            >
-            <input
-            *ngIf="(statusRequest2 !== 1 || statusRequest2 === 1 && !dataModified.user_data[0].modifiedNames)"
             class="form-control"
             type="text"
             id="name"
             formControlName="names"
-            [readOnly]="!isEditingPersonalData"
-            [ngClass]="{
-              'is-invalid': (updateRequestForm.controls.names.touched && updateRequestForm.controls.names.errors) || (isFormSubmitted && updateRequestForm.controls.names.errors),
-              'text-danger' : dataModified.user_data[0].approvedChangeNames,
-              '' : !dataModified.user_data[0].approvedChangeNames
-            }"
+            [readOnly]="!(isEditingPersonalData | async)"
             placeholder="Introduzca sus nombres"
+            [ngClass]="{
+              'is-invalid': (updateRequestForm.controls.names.touched && updateRequestForm.controls.names.errors) || (isFormSubmitted && updateRequestForm.controls.names.errors)
+            }"
             >
+            <div *ngIf="(updateRequestForm.controls.names.touched && updateRequestForm.controls.names.errors?.required) || (isFormSubmitted && updateRequestForm.controls.names.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+
+            <div class="text-danger mt-1" *ngIf="updateRequestForm.controls.names.errors?.pattern">Este campo solo admite letras</div>
           </div>
-          <a  *ngIf="statusRequest2 === 1">
-            <i class="m-0 p-1 h4 feather icon-eye" title="Ver cambio" (click)="viewChanges(dataModified.user_data[0].modifiedNames)"></i>
-            <i
-            class="m-0 p-1 h4 "
-            [title]="dataModified.user_data[0].modifiedNames ? 'aprobar cambio' : 'rechazar cambio' "
-            [ngClass]="{'feather icon-x-circle text-danger': (!dataModified.user_data[0].modifiedNames), 'mdi mdi-check-circle-outline text-success': (dataModified.user_data[0].modifiedNames)}"
-            (click)="dataModified.user_data[0].modifiedNames ? approvedChanges(dataModified.user_data[0].names) : rejectedChanges()"
-            ></i>
-
-          </a>
-
-
-          <div *ngIf="(updateRequestForm.controls.names.touched && updateRequestForm.controls.names.errors?.required) || (isFormSubmitted && updateRequestForm.controls.names.errors?.required)" class="invalid-feedback">Campo Requerido</div>
-
-          <div class="text-danger mt-1" *ngIf="updateRequestForm.controls.names.errors?.pattern">Este campo solo admite letras</div>
 
         </div>
 
-        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !isEditingPersonalData}">
+        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !(isEditingPersonalData | async)}">
           <label for="lastNames" class="form-label ">Apellidos</label>
           <input
           type="text"
           class="form-control"
           id="lastNames"
           formControlName="lastNames"
-          [readOnly]="!isEditingPersonalData"
+          [readOnly]="!(isEditingPersonalData | async)"
           [ngClass]="{'is-invalid': (updateRequestForm.controls.lastNames.touched && updateRequestForm.controls.lastNames.errors) || (isFormSubmitted && updateRequestForm.controls.lastNames.errors)}" placeholder="Introduzca sus apellidos"
           >
           <div *ngIf="(updateRequestForm.controls.lastNames.touched && updateRequestForm.controls.lastNames.errors?.required) || (isFormSubmitted && updateRequestForm.controls.lastNames.errors?.required)" class="invalid-feedback">Campo Requerido</div>
           <div class="text-danger mt-1" *ngIf="updateRequestForm.controls.lastNames.errors?.pattern">Este campo solo admite letras</div>
         </div>
 
-        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !isEditingPersonalData}">
+        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !(isEditingPersonalData | async)}">
           <label for="gender" class="form-label">Sexo</label>
           <ng-select
           class="form-control p-0"
@@ -94,7 +69,7 @@
           placeholder="Seleccione"
           formControlName="gender"
           [clearable]="false"
-          [readonly]="!isEditingPersonalData"
+          [readonly]="!(isEditingPersonalData | async)"
           [ngClass]="{'is-invalid': ((updateRequestForm.controls.gender.touched && updateRequestForm.controls.gender.errors) || (isFormSubmitted && updateRequestForm.controls.gender.errors))}"
           >
             <ng-option *ngFor="let gender of genders" [value]="gender.id_sex">{{gender.description}}</ng-option>
@@ -102,7 +77,7 @@
           <div *ngIf="(updateRequestForm.controls.gender.touched && updateRequestForm.controls.gender.errors?.required) || (updateRequestForm.controls.gender.errors?.required)" class="invalid-feedback">Campo Requerido</div>
         </div>
 
-        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !isEditingPersonalData}">
+        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !(isEditingPersonalData | async)}">
           <label for="datesBirth" class="form-label">Fecha de Nacimiento</label>
           <input
           class="form-control"
@@ -110,21 +85,21 @@
           [maxDate]="today"
           id="datesBirth"
           formControlName="datesBirth"
-          [readOnly]="!isEditingPersonalData"
+          [readOnly]="!(isEditingPersonalData | async)"
           [ngClass]="{'is-invalid': (updateRequestForm.controls.datesBirth.touched && updateRequestForm.controls.datesBirth.errors) || (isFormSubmitted && updateRequestForm.controls.datesBirth.errors)}"
           >
           <div *ngIf="(updateRequestForm.controls.datesBirth.touched && updateRequestForm.controls.datesBirth.errors?.required) || (isFormSubmitted && updateRequestForm.controls.datesBirth.errors?.required)" class="invalid-feedback">Campo Requerido</div>
           <div *ngIf="(updateRequestForm.controls.datesBirth.touched && updateRequestForm.controls.datesBirth.errors?.maxDate ) || (isFormSubmitted && updateRequestForm.controls.datesBirth.errors?.maxDate)" class="invalid-feedback">La fecha no puede ser superior a la actual</div>
         </div>
 
-        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !isEditingPersonalData}">
+        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !(isEditingPersonalData | async)}">
           <label for="email" class="form-label">Correo Electrónico</label>
           <input
           type="email"
           class="form-control"
           id="email"
           formControlName="email"
-          [readOnly]="!isEditingPersonalData"
+          [readOnly]="!(isEditingPersonalData | async)"
           [ngClass]="{'is-invalid': (updateRequestForm.controls.email.touched && updateRequestForm.controls.email.errors) || (isFormSubmitted && updateRequestForm.controls.email.errors)}" placeholder="Introduzca su email"
           >
           <div *ngIf="(updateRequestForm.controls.email.touched && updateRequestForm.controls.email.errors?.required) || (isFormSubmitted && updateRequestForm.controls.email.errors)" class="invalid-feedback">Campo Requerido</div>
@@ -132,7 +107,7 @@
           <div class="text-danger mt-1" *ngIf="updateRequestForm.controls.email.errors?.email">Verifique el formato de email</div>
         </div>
 
-        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !isEditingPersonalData}">
+        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !(isEditingPersonalData | async)}">
           <label for="landLine" class="form-label">Teléfono Fijo</label>
           <input
           type="tel"
@@ -140,13 +115,13 @@
           id="landLine"
           formControlName="landLine"
           prefix="+56" mask="  0  0000 - 0000" [showMaskTyped] = "false"
-          [readOnly]="!isEditingPersonalData"
+          [readOnly]="!(isEditingPersonalData | async)"
           [ngClass]="{'is-invalid': (updateRequestForm.controls.landLine.touched && updateRequestForm.controls.landLine.errors) || (isFormSubmitted && updateRequestForm.controls.landLine.errors)}"
           >
           <div *ngIf="(updateRequestForm.controls.landLine.touched && updateRequestForm.controls.landLine.errors?.required) || (isFormSubmitted && updateRequestForm.controls.landLine.errors?.required)" class="invalid-feedback">Campo Requerido</div>
         </div>
 
-        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !isEditingPersonalData}">
+        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !(isEditingPersonalData | async)}">
           <label for="mobilePhone" class="form-label">Teléfono Móvil</label>
           <input
           type="text"
@@ -154,7 +129,7 @@
           id="mobilePhone"
           formControlName="mobilePhone"
           prefix="+56" mask="  0  0000 - 0000" [showMaskTyped] = "false"
-          [readOnly]="!isEditingPersonalData"
+          [readOnly]="!(isEditingPersonalData | async)"
           [ngClass]="{'is-invalid': (updateRequestForm.controls.mobilePhone.touched && updateRequestForm.controls.mobilePhone.errors) || (isFormSubmitted && updateRequestForm.controls.mobilePhone.errors)}"
           >
           <div *ngIf="(updateRequestForm.controls.mobilePhone.touched && updateRequestForm.controls.mobilePhone.errors?.required) || (isFormSubmitted && updateRequestForm.controls.mobilePhone.errors?.required)" class="invalid-feedback">Campo Requerido</div>
@@ -162,25 +137,23 @@
       </div>
 
       <div class="d-flex justify-content-end mt-3">
-        <a href="#" (click)="editPersonalData($event)" *ngIf="!isEditingPersonalData">Editar</a>
-        <div *ngIf="isEditingPersonalData">
+        <a href="#" (click)="editPersonalData($event)" *ngIf="!(isEditingPersonalData | async)">Editar</a>
+        <div *ngIf="(isEditingPersonalData | async)">
           <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updatePersonalData($event)">Actualizar</button>
           <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="cancelEditPersonalData($event)" >Cancelar</button>
         </div>
       </div>
     </div>
 
-    <div class="card row justify-content-center align-items-center p-3 mb-3">
+    <app-approval-changes-request
+    class="card row justify-content-center align-items-center p-3 mb-3"
+    *ngIf="updateRequestForm.value.statusRequest === editingStatus && !(isEditingRequestData | async)"
+    ></app-approval-changes-request>
 
-      <!-- <app-approval-changes-request
-      *ngIf="updateRequestForm.value.statusRequest === 11"
-      ></app-approval-changes-request> -->
-
+    <div class="card row justify-content-center align-items-center p-3 mb-3" *ngIf="updateRequestForm.value.statusRequest !== editingStatus || updateRequestForm.value.statusRequest === editingStatus && (isEditingRequestData | async)">
       <h3 class="colorTextPrimari">Datos de la Solicitud</h3><br>
-      <!-- <h3 class="colorTextPrimari" *ngIf="updateRequestForm.value.statusRequest !== 11">Datos de la Solicitud</h3><br> -->
 
       <div class="row mt-3">
-      <!-- <div class="row mt-3" *ngIf="updateRequestForm.value.statusRequest !== 11"> -->
         <div class="col-md-4 mb-3" [ngClass]="{'disabled': true}">
           <label for="" class="form-label colorTextPrimari">Número de Solicitud</label>
           <input
@@ -197,7 +170,7 @@
           [readOnly]="true"
           class="form-control">
         </div>
-        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !isEditingRequestData}">
+        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !(isEditingRequestData | async)}">
           <label for="statusRequest" class="form-label">Estatus</label>
           <ng-select
               id="statusRequest"
@@ -207,7 +180,7 @@
               [clearable]="false"
               formControlName="statusRequest"
               placeholder="Seleccione"
-              [readonly]="!isEditingRequestData"
+              [readonly]="!(isEditingRequestData | async)"
               [ngClass]="{'is-invalid': ((updateRequestForm.controls.statusRequest.touched && updateRequestForm.controls.statusRequest.errors) || (isFormSubmitted && updateRequestForm.controls.statusRequest.errors))}"
               >
               <ng-option *ngFor="let status of listStatus" [value]="status.id">{{status.status}}</ng-option>
@@ -222,7 +195,7 @@
           [readOnly]="true"
           class="form-control">
         </div> -->
-        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !isEditingRequestData}">
+        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !(isEditingRequestData | async)}">
           <label for="preventions_types" class="form-label">Tipo de Previsión</label>
           <ng-select
               id="preventions_types"
@@ -232,7 +205,7 @@
               [clearable]="false"
               formControlName="preventionsTypes"
               placeholder="Seleccione"
-              [readonly]="!isEditingRequestData"
+              [readonly]="!(isEditingRequestData | async)"
               (change)="changePrevision($event)"
               [ngClass]="{'is-invalid': ((updateRequestForm.controls.preventionsTypes.touched && updateRequestForm.controls.preventionsTypes.errors) || (isFormSubmitted && updateRequestForm.controls.preventionsTypes.errors))}"
               >
@@ -241,7 +214,7 @@
           <div *ngIf="(updateRequestForm.controls.preventionsTypes.touched && updateRequestForm.controls.preventionsTypes.errors?.required) || (isFormSubmitted && updateRequestForm.controls.preventionsTypes.errors?.required)" class="invalid-feedback">Campo Requerido</div>
         </div>
 
-        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !isEditingRequestData}">
+        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !(isEditingRequestData | async)}">
         <label for="preventions_types_details" class="form-label">Detalle de previsión</label>
         <ng-select
             id="preventions_types_details"
@@ -249,7 +222,7 @@
             [clearable]="false"
             formControlName="preventionsTypesDetails"
             placeholder="Seleccione"
-            [readonly]="!isEditingRequestData"
+            [readonly]="!(isEditingRequestData | async)"
             [ngClass]="{'is-invalid': ((updateRequestForm.controls.preventionsTypesDetails.touched && updateRequestForm.controls.preventionsTypesDetails.errors) || (isFormSubmitted && updateRequestForm.controls.preventionsTypesDetails.errors))}"
             >
             <ng-option *ngFor="let detail of preventionDetails" [value]="detail.id">{{detail.prevention_detail}}</ng-option>
@@ -257,7 +230,7 @@
         <div *ngIf="(updateRequestForm.controls.preventionsTypesDetails.touched && updateRequestForm.controls.preventionsTypesDetails.errors) || (isFormSubmitted && updateRequestForm.controls.preventionsTypesDetails.errors)" class="invalid-feedback">Campo Requerido</div>
         </div>
 
-        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !isEditingRequestData}">
+        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !(isEditingRequestData | async)}">
           <label for="haveInsurance" class="form-label">¿Tiene Seguro Complementario?</label>
           <ng-select
               id="haveInsurance"
@@ -265,7 +238,7 @@
               [clearable]="false"
               placeholder="Seleccione"
               formControlName="haveInsurance"
-              [readonly]="!isEditingRequestData"
+              [readonly]="!(isEditingRequestData | async)"
               [ngClass]="{'is-invalid': ((updateRequestForm.controls.haveInsurance.touched && updateRequestForm.controls.haveInsurance.errors) || (isFormSubmitted && updateRequestForm.controls.haveInsurance.errors))}"
               >
               <ng-option [value]="true">Si</ng-option>
@@ -274,7 +247,7 @@
           <div *ngIf="(updateRequestForm.controls.haveInsurance.touched && updateRequestForm.controls.haveInsurance.errors) || (isFormSubmitted && updateRequestForm.controls.haveInsurance.errors)" class="invalid-feedback">Campo Requerido</div>
         </div>
 
-        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !isEditingRequestData}">
+        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !(isEditingRequestData | async)}">
           <label for="directionToUse" class="form-label">Utilizar Dirección</label>
           <ng-select
               id="directionToUse"
@@ -282,7 +255,7 @@
               [clearable]="false"
               placeholder="Seleccione"
               formControlName="directionToUse"
-              [readonly]="!isEditingRequestData"
+              [readonly]="!(isEditingRequestData | async)"
               (change)="changeOriginAddress($event)"
               [ngClass]="{'is-invalid': ((updateRequestForm.controls.haveInsurance.touched && updateRequestForm.controls.haveInsurance.errors) || (isFormSubmitted && updateRequestForm.controls.haveInsurance.errors))}"
               >
@@ -292,23 +265,23 @@
           <div *ngIf="(updateRequestForm.controls.haveInsurance.touched && updateRequestForm.controls.haveInsurance.errors) || (isFormSubmitted && updateRequestForm.controls.haveInsurance.errors)" class="invalid-feedback">Campo Requerido</div>
         </div>
 
-        <div class="col-12 mb-3" *ngIf="!isEditingRequestData" [ngClass]="{'disabled': !isEditingRequestData}">
+        <div class="col-12 mb-3" *ngIf="!(isEditingRequestData | async)" [ngClass]="{'disabled': !(isEditingRequestData | async)}">
           <label for="" class="form-label colorTextPrimari ">Dirección</label>
           <textarea
           wrap="soft"
           style="overflow:hidden;
           resize:none;"
           [value]="fullAddress"
-          [readOnly]="!isEditingRequestData || updateRequestForm.value.directionToUse === 'WOTS'"
+          [readOnly]="!(isEditingRequestData | async) || updateRequestForm.value.directionToUse === 'WOTS'"
           class="form-control"></textarea>
         </div>
 
 
         <ng-container formArrayName="addressRegisteredToPage">
           <ng-container *ngFor=" let address of directionRegisteredOnThePageArray.controls; let i = index ">
-            <div [formGroupName]="i" class="row" *ngIf="isEditingRequestData">
+            <div [formGroupName]="i" class="row" *ngIf="(isEditingRequestData | async)">
 
-              <div class="col-md-6 mb-3 " [ngClass]="{'disabled': !isEditingRequestData || updateRequestForm.value.directionToUse === 'WOTS'}">
+              <div class="col-md-6 mb-3 " [ngClass]="{'disabled': !(isEditingRequestData | async) || updateRequestForm.value.directionToUse === 'WOTS'}">
                 <label for="locations" class="form-label">Calle/Avenida</label>
                 <ng-select
                   class="form-control p-0"
@@ -318,7 +291,7 @@
                   formControlName="location"
                   (change)="locationChange()"
                   [clearable]="false"
-                  [readonly]="!isEditingRequestData || updateRequestForm.value.directionToUse === 'WOTS'"
+                  [readonly]="!(isEditingRequestData | async) || updateRequestForm.value.directionToUse === 'WOTS'"
                   [ngClass]="{'is-invalid': ((address.touched && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.location.errors) || (isFormSubmitted && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.location.errors))}"
                   >
                   <ng-option *ngFor="let location of locations" [value]="location.id">{{location.street}}</ng-option>
@@ -326,7 +299,7 @@
                 <div *ngIf="(address.touched && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.location.errors?.required)" class="invalid-feedback">Campo Requerido</div>
               </div>
 
-              <div class="col-md-6 mb-3" [ngClass]="{'disabled': !isEditingRequestData || updateRequestForm.value.directionToUse === 'WOTS'}">
+              <div class="col-md-6 mb-3" [ngClass]="{'disabled': !(isEditingRequestData | async) || updateRequestForm.value.directionToUse === 'WOTS'}">
                 <label for="numberStreet" class="form-label">Número</label>
                 <input
                 type="text"
@@ -335,19 +308,19 @@
                 formControlName="numberStreet"
                 placeholder="Especifique"
                 maxlength="10"
-                [readonly]="!isEditingRequestData || updateRequestForm.value.directionToUse === 'WOTS'"
+                [readonly]="!(isEditingRequestData | async) || updateRequestForm.value.directionToUse === 'WOTS'"
                 [ngClass]="{'is-invalid': (((address.touched || address.dirty) && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.numberStreet.errors) || (isFormSubmitted && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.numberStreet.errors))}"
                 >
                 <div *ngIf="((address.touched || address.dirty) && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.numberStreet.errors?.required) || (isFormSubmitted && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.numberStreet.errors?.required)" class="invalid-feedback">Campo Requerido</div>
               </div>
 
-              <div class="col-md-6 mb-3 " [ngClass]="{'disabled': !isEditingRequestData || updateRequestForm.value.directionToUse === 'WOTS'}">
+              <div class="col-md-6 mb-3 " [ngClass]="{'disabled': !(isEditingRequestData | async) || updateRequestForm.value.directionToUse === 'WOTS'}">
                 <label for="propertyTypes" class="form-label">Casa/Departamento/Oficina</label>
                 <ng-select
                 class="form-control p-0"
                 placeholder="Seleccione"
                 formControlName="propertyType"
-                [readonly]="!isEditingRequestData || updateRequestForm.value.directionToUse === 'WOTS'"
+                [readonly]="!(isEditingRequestData | async) || updateRequestForm.value.directionToUse === 'WOTS'"
                 [clearable]="false"
                 [ngClass]="{'is-invalid': ((address.touched && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.propertyType.errors) || (isFormSubmitted && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.propertyType.errors))}"
                 (change)="typePropertyChange()"
@@ -357,7 +330,7 @@
               <div *ngIf="(address.touched && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.propertyType.errors?.required) || (updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.propertyType.errors?.required)" class="invalid-feedback">Campo Requerido</div>
             </div>
 
-            <div class="col-md-6 mb-3" [ngClass]="{'disabled': !isEditingRequestData || updateRequestForm.value.directionToUse === 'WOTS'}">
+            <div class="col-md-6 mb-3" [ngClass]="{'disabled': !(isEditingRequestData | async) || updateRequestForm.value.directionToUse === 'WOTS'}">
                 <label
                 for="nameHome" class="form-label">Número de {{typeProperty}}</label>
                 <input
@@ -367,7 +340,7 @@
                 formControlName="nameHome"
                 placeholder="Especifique"
                 maxlength="10"
-                [readonly]="!isEditingRequestData || updateRequestForm.value.directionToUse === 'WOTS'"
+                [readonly]="!(isEditingRequestData | async) || updateRequestForm.value.directionToUse === 'WOTS'"
                 [ngClass]="{'is-invalid': (((address.touched || address.dirty) && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.nameHome.errors) || (isFormSubmitted && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.nameHome.errors))}"
                 >
                 <div *ngIf="((address.touched || address.dirty) && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.nameHome.errors?.required) || (isFormSubmitted && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.nameHome.errors?.required)" class="invalid-feedback">Campo Requerido, si no aplica coloque S/N</div>
@@ -378,9 +351,9 @@
 
         <ng-container formArrayName="addressWots" >
           <ng-container *ngFor=" let address of addressWotsArray.controls; let i = index ">
-            <div [formGroupName]="i" class="row" *ngIf="isEditingRequestData">
+            <div [formGroupName]="i" class="row" *ngIf="(isEditingRequestData | async)">
 
-              <div class="col-12 mb-3" [ngClass]="{'disabled': !isEditingRequestData || updateRequestForm.value.directionToUse !== 'WOTS'}">
+              <div class="col-12 mb-3" [ngClass]="{'disabled': !(isEditingRequestData | async) || updateRequestForm.value.directionToUse !== 'WOTS'}">
                 <label for="addressWots" class="form-label">Dirección Wots</label>
                 <input
                 type="text"
@@ -389,7 +362,7 @@
                 formControlName="addressWots"
                 placeholder="Especifique"
                 maxlength="100"
-                [readonly]="!isEditingRequestData || updateRequestForm.value.directionToUse !== 'WOTS'"
+                [readonly]="!(isEditingRequestData | async) || updateRequestForm.value.directionToUse !== 'WOTS'"
                 [ngClass]="{'is-invalid': (((address.touched || address.dirty) && updateRequestForm.controls.addressWots.controls[i].controls.addressWots.errors) || (isFormSubmitted && updateRequestForm.controls.addressWots.controls[i].controls.addressWots.errors))}"
                 >
                 <div *ngIf="((address.touched || address.dirty) && updateRequestForm.controls.addressWots.controls[i].controls.addressWots.errors?.required) || (isFormSubmitted && updateRequestForm.controls.addressWots.controls[i].controls.addressWots.errors?.required)" class="invalid-feedback">Campo Requerido</div>
@@ -401,23 +374,25 @@
       </div>
 
       <div class="d-flex justify-content-end mt-2">
-        <a href="#" (click)="editRequestData($event)" *ngIf="!isEditingRequestData">Editar</a>
-        <div *ngIf="isEditingRequestData">
+        <a href="#" (click)="editRequestData($event)" *ngIf="!(isEditingRequestData | async)">Editar</a>
+        <div *ngIf="(isEditingRequestData | async)">
           <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updateRequestData($event)">Actualizar</button>
           <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="cancelEditRequestData($event)" >Cancelar</button>
         </div>
       </div>
     </div>
 
-    <div class="card row justify-content-center align-items-center p-3 mb-3">
+    <app-approval-changes-documents
 
-      <!-- <app-approval-changes-documents *ngIf="updateRequestForm.value.statusRequest === 11"></app-approval-changes-documents> -->
+    class="card row justify-content-center align-items-center p-3 mb-3"
+    *ngIf="updateRequestForm.value.statusRequest === editingStatus && !(isEditingDocuments | async)"></app-approval-changes-documents>
+
+    <div class="card row justify-content-center align-items-center p-3 mb- 3 " *ngIf="updateRequestForm.value.statusRequest !== editingStatus || updateRequestForm.value.statusRequest === editingStatus && (isEditingDocuments | async)">
+
 
       <h3 class="colorTextPrimari" >Documentos</h3><br>
-      <!-- <h3 class="colorTextPrimari" *ngIf="updateRequestForm.value.statusRequest !== 11">Documentos</h3><br> -->
 
       <div class="row mt-3 justify-content-start">
-      <!-- <div class="row mt-3 justify-content-start" *ngIf="updateRequestForm.value.statusRequest !== 11"> -->
         <div class="col-md-6 col-sm-12">
             <div class="d-flex">
               <label for="prenetionDocument" class="form-label colorTextPrimari w-100 ">Tipo de Prevision </label>
@@ -435,14 +410,14 @@
           <a href={{document?.doc_srv_path}} target="_blank" class=" p-0 m-0" *ngIf="!willBeDeleted(document.document_id)">
             <i class="m-0 p-1 h4 feather icon-eye" title="Ver archivo"></i>
           </a>
-          <a class="m-0 p-1" *ngIf="isEditingDocuments">
+          <a class="m-0 p-1" *ngIf="(isEditingDocuments | async)">
             <i class="m-0 p-0 h4 text-danger feather icon-x-circle" title="Eliminar Archivo" (click)="deleteFile($event, document.document_id)" *ngIf="!willBeDeleted(document.document_id)"></i>
           </a>
-          <a class="m-0 p-1" *ngIf="isEditingDocuments" >
+          <a class="m-0 p-1" *ngIf="(isEditingDocuments | async)" >
             <i class="m-0 p-0 h4 text-success mdi mdi-replay" title="No eliminar Archivo" (click)="recoverFile($event, document.document_id)" *ngIf="willBeDeleted(document.document_id)"></i>
           </a>
         </div>
-        <ng-container formArrayName="documents" *ngIf="isEditingDocuments">
+        <ng-container formArrayName="documents" *ngIf="(isEditingDocuments | async)">
           <div class="row mx-3">
             <div class="col-md-6">
               <button type="button" mat-mini-fab (click)="addDocument()" class="file_add" *ngIf="dataDocumentsArray.value.length <= 14">
@@ -489,14 +464,14 @@
           <a href={{document?.doc_srv_path}} target="_blank" class=" p-0 m-0" *ngIf="!willBeDeleted(document.document_id)">
             <i class="m-0 p-1 h4 feather icon-eye" title="Ver archivo"></i>
           </a>
-          <a class="m-0 p-1" *ngIf="isEditingDocuments">
+          <a class="m-0 p-1" *ngIf="(isEditingDocuments | async)">
             <i class="m-0 p-0 h4 text-danger feather icon-x-circle" title="Eliminar Archivo" (click)="deleteFile($event, document.document_id)" *ngIf="!willBeDeleted(document.document_id)"></i>
           </a>
-          <a class="m-0 p-1" *ngIf="isEditingDocuments" >
+          <a class="m-0 p-1" *ngIf="(isEditingDocuments | async)" >
             <i class="m-0 p-0 h4 text-success mdi mdi-replay" title="No eliminar Archivo" (click)="recoverFile($event, document.document_id)" *ngIf="willBeDeleted(document.document_id)"></i>
           </a>
         </div>
-        <ng-container formArrayName="documents2" *ngIf="isEditingDocuments">
+        <ng-container formArrayName="documents2" *ngIf="(isEditingDocuments | async)">
           <div class="row mx-3">
             <div class="col-md-6">
               <button type="button" mat-mini-fab (click)="addDocument2()" class="file_add" *ngIf="dataDocuments2Array.value.length <= 14">
@@ -530,26 +505,26 @@
       </div>
 
       <div class="d-flex justify-content-end mt-2">
-        <a href="#" (click)="editDocument($event)" *ngIf="!isEditingDocuments">Editar</a>
-        <div *ngIf="isEditingDocuments">
+        <a href="#" (click)="editDocument($event)" *ngIf="!(isEditingDocuments | async)">Editar</a>
+        <div *ngIf="(isEditingDocuments | async)">
           <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updateDocuments($event)">Actualizar</button>
           <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="cancelEditDocument($event)" >Cancelar</button>
         </div>
       </div>
     </div>
 
-    <div class="card row justify-content-center align-items-center p-3 mb-3">
+    <app-approval-changes-additional
+    class="card row justify-content-center align-items-center p-3 mb-3"
+    *ngIf="updateRequestForm.value.statusRequest === editingStatus && !(isEditingAdditionalInformation | async)"
+    ></app-approval-changes-additional>
 
-      <!-- <app-approval-changes-additional
-      *ngIf="updateRequestForm.value.statusRequest === 11"
-      ></app-approval-changes-additional> -->
+
+    <div class="card row justify-content-center align-items-center p-3 mb-3" *ngIf="updateRequestForm.value.statusRequest !== editingStatus || updateRequestForm.value.statusRequest === editingStatus && (isEditingAdditionalInformation | async)">
 
       <h3 class="colorTextPrimari">Información adicional</h3><br>
-      <!-- <h3 class="colorTextPrimari" *ngIf="updateRequestForm.value.statusRequest !== 11">Información adicional</h3><br> -->
 
       <div class="row mt-3">
-      <!-- <div class="row mt-3" *ngIf="updateRequestForm.value.statusRequest !== 11"> -->
-        <div class="col-md-4 mb-3 " [ngClass]="{'disabled': !isEditingAdditionalInformation}">
+        <div class="col-md-4 mb-3 " [ngClass]="{'disabled': !(isEditingAdditionalInformation | async)}">
           <label for="isCaretaker" class="form-label">¿Cumple con labores de cuidador?</label>
           <ng-select
               id="isCaretaker"
@@ -559,7 +534,7 @@
               placeholder="Seleccione"
               formControlName="isCaretaker"
               [clearable]="false"
-              [readonly]="!isEditingAdditionalInformation"
+              [readonly]="!(isEditingAdditionalInformation | async)"
               (change)=" statusCaretaker(updateRequestForm.controls.isCaretaker.value)"
               [ngClass]="{'is-invalid': ((updateRequestForm.controls.isCaretaker.touched && updateRequestForm.controls.isCaretaker.errors) || (isFormSubmitted && updateRequestForm.controls.isCaretaker.errors))}"
               >
@@ -577,7 +552,7 @@
 
               <div class="row">
 
-                <div class="col-md-4 mb-3 " [ngClass]="{'disabled': !isEditingAdditionalInformation}">
+                <div class="col-md-4 mb-3 " [ngClass]="{'disabled': !(isEditingAdditionalInformation | async)}">
                   <label for="reason" class="form-label">Motivo</label>
                   <ng-select
                       id="reason"
@@ -585,7 +560,7 @@
                       placeholder="Seleccione"
                       formControlName="reason"
                       [clearable]="false"
-                      [readonly]="!isEditingAdditionalInformation"
+                      [readonly]="!(isEditingAdditionalInformation | async)"
                       [ngClass]="{'is-invalid': ((data.touched && updateRequestForm.controls.dataCaretaker.controls[i].controls.reason.errors) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[i].controls.reason.errors))}"
                       >
                       <ng-option *ngFor="let motive of motives" [value]="motive.id_motive"> {{motive.description}} </ng-option>
@@ -594,7 +569,7 @@
 
                 </div>
 
-                <div class="col-md-3 mb-3 " *ngIf="updateRequestForm.controls.isCaretaker.value == true" [ngClass]="{'disabled': !isEditingAdditionalInformation}">
+                <div class="col-md-3 mb-3 " *ngIf="updateRequestForm.controls.isCaretaker.value == true" [ngClass]="{'disabled': !(isEditingAdditionalInformation | async)}">
                   <label for="dedication" class="form-label">Dedicación</label>
                   <ng-select
                       id="dedication"
@@ -602,7 +577,7 @@
                       placeholder="Seleccione"
                       formControlName="dedicationsTypes"
                       [clearable]="false"
-                      [readonly]="!isEditingAdditionalInformation"
+                      [readonly]="!(isEditingAdditionalInformation | async)"
                       [ngClass]="{'is-invalid': ((data.touched && updateRequestForm.controls.dataCaretaker.controls[i].controls.dedicationsTypes.errors) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[i].controls.dedicationsTypes.errors))}"
                       >
                       <ng-option *ngFor="let dedication of dedicationsTypes" [value]="dedication.id_dedication"> {{ dedication.description }} </ng-option>
@@ -610,7 +585,7 @@
                   <div *ngIf="((data.touched && updateRequestForm.controls.dataCaretaker.controls[i].controls.dedicationsTypes.errors?.required) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[i].controls.dedicationsTypes.errors?.required))" class="invalid-feedback">Campo Requerido</div>
                 </div>
 
-                <div class="col-md-4 mb-3 " *ngIf="updateRequestForm.controls.isCaretaker.value == true" [ngClass]="{'disabled': !isEditingAdditionalInformation}">
+                <div class="col-md-4 mb-3 " *ngIf="updateRequestForm.controls.isCaretaker.value == true" [ngClass]="{'disabled': !(isEditingAdditionalInformation | async)}">
                   <label for="remuneration" class="form-label">Remuneración</label>
                   <ng-select
                       id="remuneration"
@@ -618,7 +593,7 @@
                       placeholder="Seleccione"
                       formControlName="remunerationType"
                       [clearable]="false"
-                      [readonly]="!isEditingAdditionalInformation"
+                      [readonly]="!(isEditingAdditionalInformation | async)"
                       [ngClass]="{'is-invalid': ((data.touched && updateRequestForm.controls.dataCaretaker.controls[i].controls.remunerationType.errors) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[i].controls.remunerationType.errors))}"
                       >
                       <ng-option *ngFor="let remunerationType of remunerationsTypes" [value]="remunerationType.id_remuneration">{{remunerationType.description}}</ng-option>
@@ -663,7 +638,7 @@
           class="form-control">
         </div>
 
-        <div class="col-12 mb-3" [ngClass]="{'disabled': !isEditingAdditionalInformation}">
+        <div class="col-12 mb-3" [ngClass]="{'disabled': !(isEditingAdditionalInformation | async)}">
           <label for="comments" class="form-label colorTextPrimari ">Comentarios</label>
           <textarea
           id="comments"
@@ -671,17 +646,21 @@
           style="overflow:hidden;
           resize:none;"
           formControlName="comments"
-          [readOnly]="!isEditingAdditionalInformation"
+          [readOnly]="!(isEditingAdditionalInformation | async)"
           class="form-control"></textarea>
         </div>
 
       </div>
 
       <div class="d-flex justify-content-end mt-2">
-        <a href="#" (click)="editAdditionalInformation($event)" *ngIf="!isEditingAdditionalInformation">Editar</a>
-        <div *ngIf="isEditingAdditionalInformation">
+
+        <a href="#" (click)="editAdditionalInformation($event)" *ngIf="!(isEditingAdditionalInformation | async)">Editar</a>
+
+        <div *ngIf="(isEditingAdditionalInformation | async)">
+
           <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updateAdditionalInformation($event)">Actualizar</button>
           <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="cancelEditAdditionalInformation($event)" >Cancelar</button>
+
         </div>
       </div>
     </div>

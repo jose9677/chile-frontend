@@ -1,1 +1,9 @@
 <p>approval-changes-additional works!</p>
+
+<div class="d-flex justify-content-end mt-3">
+  <div class="m-0 p-0">
+    <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style">Aprobar</button>
+    <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style">Rechazar</button>
+    <a href="#" (click)="edit($event)" *ngIf="authorizedEdit">Editar</a>
+  </div>
+</div>
