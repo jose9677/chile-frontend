@@ -87,7 +87,7 @@ export class StatusDatesComponent implements OnInit {
   public modifiedData: any = [];
   public originalData: any = [];
 
-  public editingStatus: any = true;
+  public editingStatus: any = ['1','2'];
 
   // public acceptChange: any = false;
 
@@ -562,9 +562,9 @@ export class StatusDatesComponent implements OnInit {
 
       data.map((res: any) => {
 
-        const { rut, names: names, lastname: lastNames, id_sex, f_nac: datesBirth, email, landline: landLine, mobile_phone: mobilePhone } = res.user_data[0]
+        const { rut, names: names, lastname: lastNames, id_sex, f_nac: datesBirth, email, landline: landLine, mobile_phone: mobilePhone,  id_mod_status: statusModDataUser } = res.user_data[0]
 
-        const { id_solicitude: id_request, request_date, id_status, id_prevention_type_detail, prevention_type: id_prevention_type, assurance, reg_type : id_origin_direction, longitude, latitude, id_location, way_number, id_property_type, property_number, dir_wots: address_wots, id_mod_status } = res.data_sol[0];
+        const { id_solicitude: id_request, request_date, id_status, id_prevention_type_detail, prevention_type: id_prevention_type, assurance, reg_type : id_origin_direction, longitude, latitude, id_location, way_number, id_property_type, property_number, dir_wots: address_wots } = res.data_sol[0];
 
 
         const { cuidador: carer, id_motive, id_dedication, id_remuneration, aps, porcentaje_descuento: percent, origen: origin, comments } = res.aditional_data[0];
@@ -584,7 +584,7 @@ export class StatusDatesComponent implements OnInit {
           preventionsTypes: id_prevention_type,
           preventionsTypesDetails: id_prevention_type_detail,
           haveInsurance: assurance,
-          id_mod_status: id_mod_status === null ? true : false,
+          statusModDataUser: statusModDataUser,
 
           originDirection: (id_origin_direction === 'WOTS') || (id_origin_direction === 'wots') ? id_origin_direction : 'REGISTRO POR PAGINA',
           addressWots: address_wots ? address_wots : 'n/a',

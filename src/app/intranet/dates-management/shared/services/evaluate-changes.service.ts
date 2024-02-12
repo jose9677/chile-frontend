@@ -147,6 +147,7 @@ export class EvaluateChangesService {
     let url = AUTH_API_NP + `reject-user-modify/${id}/${rutEmployee}`;
     return this.http.put(url, null).pipe(map((result:any) => {
 
+
       console.log(result);
 
     }),

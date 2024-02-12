@@ -3,13 +3,17 @@
 
     <app-approval-changes-user
     class="card row justify-content-center align-items-center p-3 mb-3"
-    *ngIf="(dataRequest[0]?.id_mod_status === editingStatus) && !(isEditingPersonalData | async) && (modifiedData['user_data'].length !== 0)"
+
+    *ngIf="(editingStatus.includes( dataRequest[0]?.statusModDataUser)) && !(isEditingPersonalData | async) && (modifiedData['user_data'].length !== 0)"
     [originalData]="originalData['user_data'][0]"
     [modifiedData]="modifiedData['user_data']"
     [rutEmployee]="rutEmployee"
     ></app-approval-changes-user>
 
-    <div class="card row justify-content-center align-items-center p-3 mb-3" *ngIf="(dataRequest[0]?.id_mod_status !== editingStatus || dataRequest[0]?.id_mod_status === editingStatus && (isEditingPersonalData | async)) || (modifiedData['user_data'].length === 0)">
+    <div class="card row justify-content-center align-items-center p-3 mb-3" *ngIf="(
+      !editingStatus.includes( dataRequest[0]?.statusModDataUser) ||
+      !editingStatus.includes( dataRequest[0]?.statusModDataUser) && (isEditingPersonalData | async))
+      || (modifiedData['user_data'].length === 0)">
 
       <h3 class="colorTextPrimari" >Datos Personales</h3><br>
 
@@ -140,8 +144,8 @@
       <div class="d-flex justify-content-end mt-3">
         <a href="#" (click)="editPersonalData($event)" *ngIf="!(isEditingPersonalData | async)">Editar</a>
         <div *ngIf="(isEditingPersonalData | async)">
-          <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updatePersonalData($event)">Actualizar</button>
-          <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updatePersonalDataToApprove($event)">Actualizar para aprobar</button>
+          <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updatePersonalData($event)">Actualizar ADMIN</button>
+          <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updatePersonalDataToApprove($event)">Actualizar</button>
           <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="cancelEditPersonalData($event)" >Cancelar</button>
         </div>
       </div>

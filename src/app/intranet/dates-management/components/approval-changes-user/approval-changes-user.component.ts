@@ -49,7 +49,7 @@ export class ApprovalChangesUserComponent implements OnInit {
 
     e.preventDefault();
 
-    this.evaluateChangesService.approveChangesDataUser(this.modifiedData.id_user, this.rutEmployee).subscribe((res) => {
+    this.evaluateChangesService.approveChangesDataUser(this.modifiedData.id_user, this.originalData.rut).subscribe((res) => {
 
     },
     errors => {
@@ -64,7 +64,7 @@ export class ApprovalChangesUserComponent implements OnInit {
 
     e.preventDefault();
 
-    this.evaluateChangesService.rejectChangesDataUser( this.modifiedData.id_user, this.rutEmployee ).subscribe((res) => {
+    this.evaluateChangesService.rejectChangesDataUser( this.modifiedData.id_user, this.originalData.rut ).subscribe((res) => {
 
     },
     errors => {
