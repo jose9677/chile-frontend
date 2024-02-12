@@ -172,7 +172,7 @@ export class DatesService {
   }
 
   UpdatePersonalData(rutUser: any, personalData: any): Observable<any>{
-    let url = `${AUTH_API_NP}update-user-modify/${rutUser}`;
+    let url = `${AUTH_API_NP}update-user-modify-VIP/${rutUser}`;
     return this.http.put(url, personalData).pipe(map((result:any) => {
 
       return result;

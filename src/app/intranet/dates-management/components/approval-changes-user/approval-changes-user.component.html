@@ -10,65 +10,108 @@
     id="rut"
     type="text"
     [readOnly]="true"
-    [value]="originalData[0]['rut']"
+    [value]="originalData['rut']"
     >
   </div>
 
   <div class="col-md-4 mb-3" [ngClass]="{'disabled': true}">
     <label for="name" class="form-label">Nombres</label>
-    <div>
-      <input
-      class="form-control"
-      type="text"
-      id="name"
-      [readOnly]="true"
-      [value]="originalData[0]['names']"
+    <div class="row">
+      <div class="col">
+        <input
+        class="form-control"
+        type="text"
+        id="name"
+        [readOnly]="true"
+        [value]="originalData['names']"
+        >
+        <input
+        *ngIf=" originalData['names'] !== modifiedData['names'] "
+        class="form-control"
+        type="text"
+        id="name"
+        [readOnly]="true"
+        [value]="modifiedData['names']"
+        [ngClass]="{'text-success ': modifiedData.approve === true, 'text-danger ': modifiedData.approve === false, 'text-warning ': modifiedData.approve === null }"
+        >
+      </div>
+      <div
+      class="col d-flex justify-content-start align-items-center m-0 p-0"
+      *ngIf=" originalData['names'] !== modifiedData['names']"
       >
-      <input
-      class="form-control"
-      type="text"
-      id="name"
-      [readOnly]="true"
-      [value]="modifiedData[0]['names']"
-      >
+        <i class="mdi mdi-alert-circle-outline text-warning fs-1" *ngIf="modifiedData.approve === null"></i>
+        <i class="mdi mdi-check-circle-outline text-success fs-1" *ngIf="modifiedData.approve === true"></i>
+        <i class="mdi mdi-close-circle-outline text-danger fs-1" *ngIf="modifiedData.approve === false"></i>
+      </div>
     </div>
 
   </div>
 
   <div class="col-md-4 mb-3" [ngClass]="{'disabled': true}">
     <label for="lastNames" class="form-label ">Apellidos</label>
-    <input
-    type="text"
-    class="form-control"
-    id="lastNames"
-    [readOnly]="true"
-    [value]="originalData[0]['lastname']"
-    >
-    <input
-    type="text"
-    class="form-control"
-    id="lastNames"
-    [readOnly]="true"
-    [value]="modifiedData[0]['lastname']"
-    >
+    <div class="row">
+      <div class="col">
+        <input
+        class="form-control"
+        type="text"
+        id="name"
+        [readOnly]="true"
+        [value]="originalData['lastname']"
+        >
+        <input
+        *ngIf=" originalData['lastname'] !== modifiedData['lastname'] "
+        class="form-control"
+        type="text"
+        id="name"
+        [readOnly]="true"
+        [value]="modifiedData['lastname']"
+        [ngClass]="{'text-success ': modifiedData.approve === true, 'text-danger ': modifiedData.approve === false, 'text-warning ': modifiedData.approve === null }"
+        >
+      </div>
+      <div
+      class="col d-flex justify-content-start align-items-center m-0 p-0"
+      *ngIf=" originalData['lastname'] !== modifiedData['lastname']"
+      >
+        <i class="mdi mdi-alert-circle-outline text-warning fs-1" *ngIf="modifiedData.approve === null"></i>
+        <i class="mdi mdi-check-circle-outline text-success fs-1" *ngIf="modifiedData.approve === true"></i>
+        <i class="mdi mdi-close-circle-outline text-danger fs-1" *ngIf="modifiedData.approve === false"></i>
+      </div>
+    </div>
+
   </div>
 
   <div class="col-md-4 mb-3" [ngClass]="{'disabled': true}">
     <label for="gender" class="form-label">Sexo</label>
-    <input
-    type="text"
-    class="form-control"
-    id="lastNames"
-    [readOnly]="true"
-    [value]="originalData[0]['id_sex']"
-    >
-    <input
-    type="text"
-    class="form-control"
-    id="lastNames"
-    [readOnly]="true"
-    [value]="modifiedData[0]['id_sex']"
-    >
+
+    <div class="row">
+      <div class="col">
+        <input
+        class="form-control"
+        type="text"
+        id="name"
+        [readOnly]="true"
+        [value]="originalData['id_sex']"
+        >
+        <input
+        *ngIf=" originalData['id_sex'] !== modifiedData['id_sex'] "
+        class="form-control"
+        type="text"
+        id="name"
+        [readOnly]="true"
+        [value]="modifiedData['id_sex']"
+        [ngClass]="{'text-success ': modifiedData.approve === true, 'text-danger ': modifiedData.approve === false, 'text-warning ': modifiedData.approve === null }"
+        >
+      </div>
+      <div
+      class="col d-flex justify-content-start align-items-center m-0 p-0"
+      *ngIf=" originalData['id_sex'] !== modifiedData['id_sex']"
+      >
+        <i class="mdi mdi-alert-circle-outline text-warning fs-1" *ngIf="modifiedData.approve === null"></i>
+        <i class="mdi mdi-check-circle-outline text-success fs-1" *ngIf="modifiedData.approve === true"></i>
+        <i class="mdi mdi-close-circle-outline text-danger fs-1" *ngIf="modifiedData.approve === false"></i>
+      </div>
+    </div>
+
     <!-- <ng-select
     class="form-control p-0"
     id="gender"
@@ -81,74 +124,135 @@
 
   <div class="col-md-4 mb-3" [ngClass]="{'disabled': true}">
     <label for="datesBirth" class="form-label">Fecha de Nacimiento</label>
-    <input
-    class="form-control"
-    type="date"
-    id="datesBirth"
-    [readOnly]="true"
-    [value]="originalData[0]['f_nac']"
-    >
-    <input
-    class="form-control"
-    type="date"
-    id="datesBirth"
-    [readOnly]="true"
-    [value]="modifiedData[0]['f_nac']"
-    >
+    <div class="row">
+      <div class="col">
+        <input
+        class="form-control"
+        type="text"
+        id="name"
+        [readOnly]="true"
+        [value]="originalData['f_nac']"
+        >
+        <input
+        *ngIf=" originalData['f_nac'] !== modifiedData['f_nac'] "
+        class="form-control"
+        type="text"
+        id="name"
+        [readOnly]="true"
+        [value]="modifiedData['f_nac']"
+        [ngClass]="{'text-success ': modifiedData.approve === true, 'text-danger ': modifiedData.approve === false, 'text-warning ': modifiedData.approve === null }"
+        >
+      </div>
+      <div
+      class="col d-flex justify-content-start align-items-center m-0 p-0"
+      *ngIf=" originalData['f_nac'] !== modifiedData['f_nac']"
+      >
+        <i class="mdi mdi-alert-circle-outline text-warning fs-1" *ngIf="modifiedData.approve === null"></i>
+        <i class="mdi mdi-check-circle-outline text-success fs-1" *ngIf="modifiedData.approve === true"></i>
+        <i class="mdi mdi-close-circle-outline text-danger fs-1" *ngIf="modifiedData.approve === false"></i>
+      </div>
+    </div>
+
   </div>
 
   <div class="col-md-4 mb-3" [ngClass]="{'disabled': true}">
     <label for="email" class="form-label">Correo Electrónico</label>
-    <input
-    type="email"
-    class="form-control"
-    id="email"
-    [readOnly]="true"
-    [value]="originalData[0]['email']"
-    >
-    <input
-    type="email"
-    class="form-control"
-    id="email"
-    [readOnly]="true"
-    [value]="modifiedData[0]['email']"
-    >
+    <div class="row">
+      <div class="col">
+        <input
+        class="form-control"
+        type="text"
+        id="name"
+        [readOnly]="true"
+        [value]="originalData['email']"
+        >
+        <input
+        *ngIf=" originalData['email'] !== modifiedData['email'] "
+        class="form-control"
+        type="text"
+        id="name"
+        [readOnly]="true"
+        [value]="modifiedData['email']"
+        [ngClass]="{'text-success ': modifiedData.approve === true, 'text-danger ': modifiedData.approve === false, 'text-warning ': modifiedData.approve === null }"
+        >
+      </div>
+      <div
+      class="col d-flex justify-content-start align-items-center m-0 p-0"
+      *ngIf=" originalData['email'] !== modifiedData['email']"
+      >
+        <i class="mdi mdi-alert-circle-outline text-warning fs-1" *ngIf="modifiedData.approve === null"></i>
+        <i class="mdi mdi-check-circle-outline text-success fs-1" *ngIf="modifiedData.approve === true"></i>
+        <i class="mdi mdi-close-circle-outline text-danger fs-1" *ngIf="modifiedData.approve === false"></i>
+      </div>
+    </div>
   </div>
 
   <div class="col-md-4 mb-3" [ngClass]="{'disabled': true}">
     <label for="landLine" class="form-label">Teléfono Fijo</label>
-    <input
-    type="tel"
-    class="form-control"
-    id="landLine"
-    [readOnly]="true"
-    [value]="'+56 '+originalData[0]['landline']"
-    >
-    <input
-    type="tel"
-    class="form-control"
-    id="landLine"
-    [readOnly]="true"
-    [value]="'+56 '+modifiedData[0]['landline']"
-    >
+
+    <div class="row">
+      <div class="col">
+        <input
+        class="form-control"
+        type="text"
+        id="name"
+        [readOnly]="true"
+        [value]="originalData['landline']"
+        >
+        <input
+        *ngIf=" originalData['landline'] !== modifiedData['landline'] "
+        class="form-control"
+        type="text"
+        id="name"
+        [readOnly]="true"
+        [value]="modifiedData['landline']"
+        [ngClass]="{'text-success ': modifiedData.approve === true, 'text-danger ': modifiedData.approve === false, 'text-warning ': modifiedData.approve === null }"
+        >
+      </div>
+      <div
+      class="col d-flex justify-content-start align-items-center m-0 p-0"
+      *ngIf=" originalData['landline'] !== modifiedData['landline']"
+      >
+        <i class="mdi mdi-alert-circle-outline text-warning fs-1" *ngIf="modifiedData.approve === null"></i>
+        <i class="mdi mdi-check-circle-outline text-success fs-1" *ngIf="modifiedData.approve === true"></i>
+        <i class="mdi mdi-close-circle-outline text-danger fs-1" *ngIf="modifiedData.approve === false"></i>
+      </div>
+    </div>
+
   </div>
 
   <div class="col-md-4 mb-3" [ngClass]="{'disabled': true}">
     <label for="mobilePhone" class="form-label">Teléfono Móvil</label>
-    <input
-    type="text"
-    class="form-control"
-    id="mobilePhone"
-    [readOnly]="true"
-    [value]="'+56 '+originalData[0]['mobile_phone']"
-    >
-    <input
-    type="text"
-    class="form-control"
-    id="mobilePhone"
-    [readOnly]="true"
-    [value]="'+56 '+originalData[0]['mobile_phone']"
-    >
+
+    <div class="row">
+      <div class="col">
+        <input
+        class="form-control"
+        type="text"
+        id="name"
+        [readOnly]="true"
+        [value]="originalData['mobile_phone']"
+        >
+        <input
+        *ngIf=" originalData['mobile_phone'] !== modifiedData['mobile_phone'] "
+        class="form-control"
+        type="text"
+        id="name"
+        [readOnly]="true"
+        [value]="modifiedData['mobile_phone']"
+        [ngClass]="{'text-success ': modifiedData.approve === true, 'text-danger ': modifiedData.approve === false, 'text-warning ': modifiedData.approve === null }"
+        >
+      </div>
+      <div
+      class="col d-flex justify-content-start align-items-center m-0 p-0"
+      *ngIf=" originalData['mobile_phone'] !== modifiedData['mobile_phone']"
+      >
+        <i class="mdi mdi-alert-circle-outline text-warning fs-1" *ngIf="modifiedData.approve === null"></i>
+        <i class="mdi mdi-check-circle-outline text-success fs-1" *ngIf="modifiedData.approve === true"></i>
+        <i class="mdi mdi-close-circle-outline text-danger fs-1" *ngIf="modifiedData.approve === false"></i>
+      </div>
+    </div>
+
   </div>
 </div>
 <!-- <pre>
@@ -157,10 +261,16 @@
 </pre> -->
 
 
-<div class="d-flex justify-content-end mt-3">
-  <div class="m-0 p-0">
-    <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style">Aprobar</button>
-    <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style">Rechazar</button>
-    <a href="#" (click)="edit($event)" *ngIf="authorizedEdit">Editar</a>
+<div class="row mt-3">
+  <div class="col d-flex justify-content-start align-items-center ">
+        <p >Modificado por:</p>
+  </div>
+  <div class="col d-flex justify-content-end ">
+    <div class="m-0 p-0">
+      <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="approveChanges( $event )" [disabled]="modifiedData.approve === true ">Aprobar</button>
+      <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="rejectChanges( $event )" [disabled]="modifiedData.approve === false">Rechazar</button>
+      <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="updateChanges( $event )" *ngIf="modifiedData.approve !== null">Confirmar</button>
+      <a href="#" (click)="edit($event)" *ngIf="authorizedEdit" >Editar</a>
+    </div>
   </div>
 </div>

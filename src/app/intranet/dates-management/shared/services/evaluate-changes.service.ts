@@ -78,8 +78,6 @@ export class EvaluateChangesService {
     return this.isEditingDocuments.getValue();
   }
 
-
-
   changeEditingAdditionalInformation( editionStatus: boolean ) {
     this.isEditingAdditionalInformation.next(editionStatus);
   }
@@ -96,8 +94,43 @@ export class EvaluateChangesService {
     return this._refresh$;
   }
 
-  modified(id: any): Observable<any>{
-    let url = AUTH_API + 'active-rol/'+ id;
+  createModifiedDataUser(dataModified: any): Observable<any>{
+    let url = AUTH_API_NP + 'load-user-modify';
+    return this.http.post(url, dataModified).pipe(map((result:any) => {
+
+      console.log(result[0]);
+      return result[0]
+
+    }),
+    tap(() => {
+      this._refresh$.next();
+    }),
+    catchError((err)=> this.handlerError(err))
+    )
+  }
+
+  modifiedDataUser(id: any): Observable<any>{
+    let url = AUTH_API_NP + 'search-user-modify/'+ id;
+    return this.http.get(url).pipe(map((result:any) => {
+
+
+      result.sort(((a, b) => b.id_user - a.id_user));
+      console.log(result);
+
+      return result[0]
+
+
+
+    }),
+    // tap(() => {
+    //   this._refresh$.next();
+    // }),
+    catchError((err)=> this.handlerError(err))
+    )
+  }
+
+  approveChangesDataUser( id: any, rutEmployee:any ): Observable<any>{
+    let url = AUTH_API_NP + `approve-user-modify/${id}/${rutEmployee}` ;
     return this.http.put(url, null).pipe(map((result:any) => {
 
       console.log(result);
@@ -110,8 +143,8 @@ export class EvaluateChangesService {
     )
   }
 
-  acceptChanges(id: any): Observable<any>{
-    let url = AUTH_API + 'active-rol/'+ id;
+  rejectChangesDataUser(id: any, rutEmployee: any): Observable<any>{
+    let url = AUTH_API_NP + `reject-user-modify/${id}/${rutEmployee}`;
     return this.http.put(url, null).pipe(map((result:any) => {
 
       console.log(result);
@@ -124,11 +157,12 @@ export class EvaluateChangesService {
     )
   }
 
-  declineChanges(id: any): Observable<any>{
-    let url = AUTH_API + 'active-rol/'+ id;
-    return this.http.put(url, null).pipe(map((result:any) => {
+  updateModifiedDataUser(rutUser: any, dataUser: any): Observable<any>{
+    let url = AUTH_API_NP + 'update-user-modify/'+ rutUser;
+    return this.http.put(url, dataUser).pipe(map((result:any) => {
 
-      console.log(result);
+      console.log(result[0]);
+      return result[0]
 
     }),
     tap(() => {

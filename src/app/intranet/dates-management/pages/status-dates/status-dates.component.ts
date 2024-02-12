@@ -81,27 +81,30 @@ export class StatusDatesComponent implements OnInit {
 
   public listStatus: any[];
 
-  public modifiedData: any = changesData;
+
+  public rutEmployee: any;
+
+  public modifiedData: any = [];
   public originalData: any = [];
 
-  public editingStatus: any = 12;
+  public editingStatus: any = true;
 
-  public acceptChange: any = false;
+  // public acceptChange: any = false;
 
-  viewChanges(statusChange) {
-    this.modifiedData.user_data[0].modifiedNames = !statusChange;
-  }
+  // viewChanges(statusChange) {
+  //   this.modifiedData.user_data[0].modifiedNames = !statusChange;
+  // }
 
-  approvedChanges(statusChange) {
-    this.modifiedData.user_data[0].approvedChangeNames = true;
+  // approvedChanges(statusChange) {
+  //   this.modifiedData.user_data[0].approvedChangeNames = true;
 
-    this.updateRequestForm.controls.names.setValue(statusChange);
-  }
+  //   this.updateRequestForm.controls.names.setValue(statusChange);
+  // }
 
-  rejectedChanges() {
-    this.modifiedData.user_data[0].approvedChangeNames = false;
-    this.updateRequestForm.controls.names.setValue(this.dataRequest[0].names);
-  }
+  // rejectedChanges() {
+  //   this.modifiedData.user_data[0].approvedChangeNames = false;
+  //   this.updateRequestForm.controls.names.setValue(this.dataRequest[0].names);
+  // }
 
   public updateRequestForm: any = this.fb.group({
     rut: ['', []],
@@ -144,6 +147,10 @@ export class StatusDatesComponent implements OnInit {
 
   ) {
 
+    this.rutEmployee = JSON.parse(window.sessionStorage.getItem('auth-user'));
+
+    console.log(this.rutEmployee);
+
     this.today = new Date()
       this.today = `${this.today.getFullYear()}-${(this.today.getMonth())+1}-${this.today.getDate()}`
 
@@ -169,11 +176,13 @@ export class StatusDatesComponent implements OnInit {
 
     this.listFilesUpload = [];
 
+
   }
 
   ngOnInit(): void {
 
     this.idRequestSubscription = this.routerQuery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
+
 
 
     this.subscription = this.dateService.refresh$.subscribe( () => {
@@ -183,11 +192,18 @@ export class StatusDatesComponent implements OnInit {
 
     this.approvalSubscription = this.evaluateChangesServices.refresh$.subscribe( () => {
       console.log('approval')
+
+      this.getDataUserModified();
+      this.getDataRequestForId();
+
       // this.dataSelectForm();
     })
+
     this.dataSelectForm();
 
     this.willBeDeleted();
+
+    this.getDataUserModified();
   }
 
 
@@ -548,7 +564,7 @@ export class StatusDatesComponent implements OnInit {
 
         const { rut, names: names, lastname: lastNames, id_sex, f_nac: datesBirth, email, landline: landLine, mobile_phone: mobilePhone } = res.user_data[0]
 
-        const { id_solicitude: id_request, request_date, id_status, id_prevention_type_detail, prevention_type: id_prevention_type, assurance, reg_type : id_origin_direction, longitude, latitude, id_location, way_number, id_property_type, property_number, dir_wots: address_wots } = res.data_sol[0];
+        const { id_solicitude: id_request, request_date, id_status, id_prevention_type_detail, prevention_type: id_prevention_type, assurance, reg_type : id_origin_direction, longitude, latitude, id_location, way_number, id_property_type, property_number, dir_wots: address_wots, id_mod_status } = res.data_sol[0];
 
 
         const { cuidador: carer, id_motive, id_dedication, id_remuneration, aps, porcentaje_descuento: percent, origen: origin, comments } = res.aditional_data[0];
@@ -568,6 +584,7 @@ export class StatusDatesComponent implements OnInit {
           preventionsTypes: id_prevention_type,
           preventionsTypesDetails: id_prevention_type_detail,
           haveInsurance: assurance,
+          id_mod_status: id_mod_status === null ? true : false,
 
           originDirection: (id_origin_direction === 'WOTS') || (id_origin_direction === 'wots') ? id_origin_direction : 'REGISTRO POR PAGINA',
           addressWots: address_wots ? address_wots : 'n/a',
@@ -603,6 +620,8 @@ export class StatusDatesComponent implements OnInit {
       this.dataRequest.push(dataRequest[0]);
 
       this.fillForm(dataRequest);
+
+
 
 
 
@@ -665,6 +684,8 @@ export class StatusDatesComponent implements OnInit {
     },
     error => {
 
+      console.error(error);
+
       let title: string = ''
       let message: string = "Su Solicitud no Pudo ser Procesada Intente Nuevamente";
       this.modalService.OpenModalError2(ModalComponent, true, title, message);
@@ -676,6 +697,49 @@ export class StatusDatesComponent implements OnInit {
 
       let title: string = ''
       let message: string = "Los datos personales se han actualizado exitosamente";
+      this.modalService.OpenModalError2(ModalComponent, false, title, message);
+
+    })
+  }
+
+  updatePersonalDataToApprove(e: Event) {
+    e.preventDefault();
+
+    const form = this.updateRequestForm.value
+
+    this.isFormSubmitted = true;
+
+    const personalData = {
+      "rut": form.rut,
+      "names": form.names,
+      "lastname": form.lastNames,
+      "id_sex": form.gender,
+      "f_nac": form.datesBirth,
+      "email": form.email,
+      "landline": form.landLine,
+      "mobile_phone": form.mobilePhone,
+      "rut_employee": JSON.parse(sessionStorage.getItem('auth-user'))
+
+    }
+
+    if(this.updateRequestForm.status === 'INVALID') return;
+
+    this.evaluateChangesServices.createModifiedDataUser(personalData).subscribe((result) => {
+
+    },
+    error => {
+
+      let title: string = ''
+      let message: string = "Su Solicitud no Pudo ser Procesada Intente Nuevamente";
+      this.modalService.OpenModalError2(ModalComponent, true, title, message);
+
+    },
+    () => {
+
+      this.evaluateChangesServices.changeEditingPersonalData(false);
+
+      let title: string = ''
+      let message: string = "Los datos modificados pasaran a un proceso de evaluación";
       this.modalService.OpenModalError2(ModalComponent, false, title, message);
 
     })
@@ -908,6 +972,31 @@ export class StatusDatesComponent implements OnInit {
     }
   }
 
+  deleteFile(e: Event, idFile: any) {
+
+    e.preventDefault();
+
+    this.listDocumentsDelete.push(idFile);
+
+  }
+
+  recoverFile(e: Event, idFile: any) {
+
+    e.preventDefault();
+
+    this.listDocumentsDelete = this.listDocumentsDelete.filter(list => list !== idFile )
+
+
+  }
+
+  willBeDeleted( idDocument: any = 0 ) {
+
+    if(this.listDocumentsDelete.includes(idDocument)) return true;
+
+    return false;
+
+  }
+
   editAdditionalInformation (e: Event) {
     e.preventDefault();
     return this.evaluateChangesServices.changeEditingAdditionalInformation(true);
@@ -967,30 +1056,26 @@ export class StatusDatesComponent implements OnInit {
     return this.evaluateChangesServices.changeEditingAdditionalInformation(false);
   }
 
-  deleteFile(e: Event, idFile: any) {
+  getDataUserModified() {
+    this.evaluateChangesServices.modifiedDataUser(this.idRequest).subscribe((result) => {
 
-    e.preventDefault();
-
-    this.listDocumentsDelete.push(idFile);
-
-  }
-
-  recoverFile(e: Event, idFile: any) {
-
-    e.preventDefault();
-
-    this.listDocumentsDelete = this.listDocumentsDelete.filter(list => list !== idFile )
+      console.log(result);
 
 
-  }
+      this.modifiedData['user_data'] = result;
 
-  willBeDeleted( idDocument: any = 0 ) {
 
-    if(this.listDocumentsDelete.includes(idDocument)) return true;
+    },
+    errors => {
 
-    return false;
+    },
+    () => {
+
+    })
 
   }
+
+
 
   dataSelectForm () {
 

@@ -3,12 +3,13 @@
 
     <app-approval-changes-user
     class="card row justify-content-center align-items-center p-3 mb-3"
-    *ngIf="updateRequestForm.value.statusRequest === editingStatus && !(isEditingPersonalData | async)"
-    [originalData]="originalData['user_data']"
+    *ngIf="(dataRequest[0]?.id_mod_status === editingStatus) && !(isEditingPersonalData | async) && (modifiedData['user_data'].length !== 0)"
+    [originalData]="originalData['user_data'][0]"
     [modifiedData]="modifiedData['user_data']"
+    [rutEmployee]="rutEmployee"
     ></app-approval-changes-user>
 
-    <div class="card row justify-content-center align-items-center p-3 mb-3" *ngIf="updateRequestForm.value.statusRequest !== editingStatus || updateRequestForm.value.statusRequest === editingStatus && (isEditingPersonalData | async)">
+    <div class="card row justify-content-center align-items-center p-3 mb-3" *ngIf="(dataRequest[0]?.id_mod_status !== editingStatus || dataRequest[0]?.id_mod_status === editingStatus && (isEditingPersonalData | async)) || (modifiedData['user_data'].length === 0)">
 
       <h3 class="colorTextPrimari" >Datos Personales</h3><br>
 
@@ -140,6 +141,7 @@
         <a href="#" (click)="editPersonalData($event)" *ngIf="!(isEditingPersonalData | async)">Editar</a>
         <div *ngIf="(isEditingPersonalData | async)">
           <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updatePersonalData($event)">Actualizar</button>
+          <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updatePersonalDataToApprove($event)">Actualizar para aprobar</button>
           <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="cancelEditPersonalData($event)" >Cancelar</button>
         </div>
       </div>
@@ -383,11 +385,10 @@
     </div>
 
     <app-approval-changes-documents
-
     class="card row justify-content-center align-items-center p-3 mb-3"
     *ngIf="updateRequestForm.value.statusRequest === editingStatus && !(isEditingDocuments | async)"></app-approval-changes-documents>
 
-    <div class="card row justify-content-center align-items-center p-3 mb- 3 " *ngIf="updateRequestForm.value.statusRequest !== editingStatus || updateRequestForm.value.statusRequest === editingStatus && (isEditingDocuments | async)">
+    <div class="card row justify-content-center align-items-center p-3 mb-3 " *ngIf="updateRequestForm.value.statusRequest !== editingStatus || updateRequestForm.value.statusRequest === editingStatus && (isEditingDocuments | async)">
 
 
       <h3 class="colorTextPrimari" >Documentos</h3><br>
