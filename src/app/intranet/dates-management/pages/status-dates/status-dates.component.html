@@ -4,7 +4,7 @@
     <app-approval-changes-user
     class="card row justify-content-center align-items-center p-3 mb-3"
 
-    *ngIf="(editingStatus.includes( dataRequest[0]?.statusModDataUser)) && !(isEditingPersonalData | async) && (modifiedData['user_data'].length !== 0)"
+    *ngIf="(editingStatus.includes( dataRequest[0]?.statusModDataUser)) && !(isEditingPersonalData | async) && (modifiedData['user_data']?.length !== 0)"
     [originalData]="originalData['user_data'][0]"
     [modifiedData]="modifiedData['user_data']"
     [rutEmployee]="rutEmployee"
@@ -12,8 +12,8 @@
 
     <div class="card row justify-content-center align-items-center p-3 mb-3" *ngIf="(
       !editingStatus.includes( dataRequest[0]?.statusModDataUser) ||
-      !editingStatus.includes( dataRequest[0]?.statusModDataUser) && (isEditingPersonalData | async))
-      || (modifiedData['user_data'].length === 0)">
+      editingStatus.includes( dataRequest[0]?.statusModDataUser) && (isEditingPersonalData | async))
+      || (modifiedData['user_data']?.length === 0)">
 
       <h3 class="colorTextPrimari" >Datos Personales</h3><br>
 
