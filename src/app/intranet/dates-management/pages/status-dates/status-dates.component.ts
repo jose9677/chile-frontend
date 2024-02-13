@@ -81,6 +81,7 @@ export class StatusDatesComponent implements OnInit {
 
   public listStatus: any[];
 
+  public rolUser: any;
 
   public rutEmployee: any;
 
@@ -119,6 +120,7 @@ export class StatusDatesComponent implements OnInit {
     requestNumber: ['', []],
     dateRequest: ['', []],
     statusRequest: ['', [Validators.required]],
+    statusEmp: ['', [Validators.required]],
     preventionsTypes: ['', [Validators.required]],
     preventionsTypesDetails: ['', [Validators.required]],
     haveInsurance: ['', [Validators.required]],
@@ -148,8 +150,8 @@ export class StatusDatesComponent implements OnInit {
   ) {
 
     this.rutEmployee = JSON.parse(window.sessionStorage.getItem('auth-user'));
+    this.rolUser = JSON.parse(window.sessionStorage.getItem('rol-user'));
 
-    console.log(this.rutEmployee);
 
     this.today = new Date()
       this.today = `${this.today.getFullYear()}-${(this.today.getMonth())+1}-${this.today.getDate()}`
@@ -190,20 +192,19 @@ export class StatusDatesComponent implements OnInit {
       this.dataSelectForm();
     })
 
-    this.approvalSubscription = this.evaluateChangesServices.refresh$.subscribe( () => {
-      console.log('approval')
+    // this.approvalSubscription = this.evaluateChangesServices.refresh$.subscribe( () => {
 
-      this.getDataUserModified();
-      this.getDataRequestForId();
+    //   this.getDataUserModified();
+    //   this.getDataRequestForId();
 
-      // this.dataSelectForm();
-    })
+    //   // this.dataSelectForm();
+    // })
 
     this.dataSelectForm();
 
     this.willBeDeleted();
 
-    this.getDataUserModified();
+    // this.getDataUserModified();
   }
 
 
@@ -415,7 +416,7 @@ export class StatusDatesComponent implements OnInit {
     data = dataRequest;
 
     data.map((res: any)=>{
-      const {rut, names, lastNames, gender, datesBirth, email, landLine, mobilePhone, haveInsurance,idRequest, dateRequest, statusRequest, preventionsTypes, preventionsTypesDetails, originDirection, idLocation, wayNumber,idPropertyType, propertyNumber, addressWots, isCaretaker, motive, dedication, remuneration, registeredInAPS, discountPercentage, dataOrigin, comments, documents } = res;
+      const {rut, names, lastNames, gender, datesBirth, email, landLine, mobilePhone, haveInsurance,idRequest, dateRequest, statusRequest, statusEmp, preventionsTypes, preventionsTypesDetails, originDirection, idLocation, wayNumber,idPropertyType, propertyNumber, addressWots, isCaretaker, motive, dedication, remuneration, registeredInAPS, discountPercentage, dataOrigin, comments, documents } = res;
 
       const f = this.updateRequestForm.controls;
 
@@ -438,10 +439,13 @@ export class StatusDatesComponent implements OnInit {
 
         f.dateRequest.setValue(dateRequest);
 
+
         // this.statusRequest = this.status.find(({id}) => id === Number(statusRequest))
         // this.statusRequest = this.statusRequest.status;
 
         f.statusRequest.setValue(statusRequest);
+
+        f.statusEmp.setValue(statusEmp);
 
         f.preventionsTypes.setValue(preventionsTypes);
 
@@ -564,7 +568,7 @@ export class StatusDatesComponent implements OnInit {
 
         const { rut, names: names, lastname: lastNames, id_sex, f_nac: datesBirth, email, landline: landLine, mobile_phone: mobilePhone,  id_mod_status: statusModDataUser } = res.user_data[0]
 
-        const { id_solicitude: id_request, request_date, id_status, id_prevention_type_detail, prevention_type: id_prevention_type, assurance, reg_type : id_origin_direction, longitude, latitude, id_location, way_number, id_property_type, property_number, dir_wots: address_wots } = res.data_sol[0];
+        const { id_solicitude: id_request, request_date, id_status, id_status_emp, id_prevention_type_detail, prevention_type: id_prevention_type, assurance, reg_type : id_origin_direction, longitude, latitude, id_location, way_number, id_property_type, property_number, dir_wots: address_wots } = res.data_sol[0];
 
 
         const { cuidador: carer, id_motive, id_dedication, id_remuneration, aps, porcentaje_descuento: percent, origen: origin, comments } = res.aditional_data[0];
@@ -581,6 +585,7 @@ export class StatusDatesComponent implements OnInit {
           idRequest: id_request,
           dateRequest: request_date,
           statusRequest: id_status,
+          statusEmp: id_status_emp,
           preventionsTypes: id_prevention_type,
           preventionsTypesDetails: id_prevention_type_detail,
           haveInsurance: assurance,
@@ -778,6 +783,7 @@ export class StatusDatesComponent implements OnInit {
     const requestData = {
       "request_date": form.dateRequest,
       "id_status": form.statusRequest,
+      "id_status_emp": form.statusEmp,
       "id_prevention_type_detail": form.preventionsTypesDetails,
        "assurance": form.haveInsurance,
        "reg_type":  form.directionToUse,
@@ -790,7 +796,7 @@ export class StatusDatesComponent implements OnInit {
         "longitude": 2000,
        "rut_employee": JSON.parse(sessionStorage.getItem('auth-user')),
 
-}
+    }
 
     if(this.updateRequestForm.status === 'INVALID') return;
 
@@ -1019,7 +1025,7 @@ export class StatusDatesComponent implements OnInit {
 
     if(this.updateRequestForm.status === 'INVALID') return;
 
-    this.dateService.UpdateAdditionalInformation(this.idRequest, personalData).subscribe((result) => {
+    this.dateService.UpdateAdditionalInformation(this.idRequest, this.rutEmployee, personalData).subscribe((result) => {
 
     },
     error => {
@@ -1058,10 +1064,8 @@ export class StatusDatesComponent implements OnInit {
 
   getDataUserModified() {
 
-    console.log(this.idRequest);
     this.evaluateChangesServices.modifiedDataUser(this.idRequest).subscribe((result) => {
 
-      console.log(result);
 
 
       this.modifiedData['user_data'] = result;
@@ -1124,6 +1128,6 @@ export class StatusDatesComponent implements OnInit {
   ngOnDestroy() {
     this.idRequestSubscription.unsubscribe();
     this.subscription.unsubscribe();
-    this.approvalSubscription.unsubscribe();
+    // this.approvalSubscription.unsubscribe();
   }
 }

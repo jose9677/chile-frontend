@@ -1,19 +1,21 @@
 <div>
   <form class="forms-sample container" [formGroup]="updateRequestForm">
 
-    <app-approval-changes-user
+    <!-- <app-approval-changes-user
     class="card row justify-content-center align-items-center p-3 mb-3"
 
     *ngIf="(editingStatus.includes( dataRequest[0]?.statusModDataUser)) && !(isEditingPersonalData | async) && (modifiedData['user_data']?.length !== 0)"
     [originalData]="originalData['user_data'][0]"
     [modifiedData]="modifiedData['user_data']"
     [rutEmployee]="rutEmployee"
-    ></app-approval-changes-user>
+    ></app-approval-changes-user> -->
 
-    <div class="card row justify-content-center align-items-center p-3 mb-3" *ngIf="(
+    <!-- <div class="card row justify-content-center align-items-center p-3 mb-3" *ngIf="(
       !editingStatus.includes( dataRequest[0]?.statusModDataUser) ||
       editingStatus.includes( dataRequest[0]?.statusModDataUser) && (isEditingPersonalData | async))
-      || (modifiedData['user_data']?.length === 0)">
+      || (modifiedData['user_data']?.length === 0)"> -->
+
+      <div class="card row justify-content-center align-items-center p-3 mb-3">
 
       <h3 class="colorTextPrimari" >Datos Personales</h3><br>
 
@@ -141,22 +143,24 @@
         </div>
       </div>
 
-      <div class="d-flex justify-content-end mt-3">
+      <div class="d-flex justify-content-end mt-3" *ngIf="[4, 5].includes(this.rolUser)">
         <a href="#" (click)="editPersonalData($event)" *ngIf="!(isEditingPersonalData | async)">Editar</a>
         <div *ngIf="(isEditingPersonalData | async)">
-          <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updatePersonalData($event)">Actualizar ADMIN</button>
-          <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updatePersonalDataToApprove($event)">Actualizar</button>
+          <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updatePersonalData($event)">Actualizar</button>
+          <!-- <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updatePersonalDataToApprove($event)">Actualizar</button> -->
           <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="cancelEditPersonalData($event)" >Cancelar</button>
         </div>
       </div>
     </div>
 
-    <app-approval-changes-request
+    <!-- <app-approval-changes-request
     class="card row justify-content-center align-items-center p-3 mb-3"
     *ngIf="updateRequestForm.value.statusRequest === editingStatus && !(isEditingRequestData | async)"
-    ></app-approval-changes-request>
+    ></app-approval-changes-request> -->
 
-    <div class="card row justify-content-center align-items-center p-3 mb-3" *ngIf="updateRequestForm.value.statusRequest !== editingStatus || updateRequestForm.value.statusRequest === editingStatus && (isEditingRequestData | async)">
+    <!-- <div class="card row justify-content-center align-items-center p-3 mb-3" *ngIf="updateRequestForm.value.statusRequest !== editingStatus || updateRequestForm.value.statusRequest === editingStatus && (isEditingRequestData | async)"> -->
+    <div class="card row justify-content-center align-items-center p-3 mb-3" >
+
       <h3 class="colorTextPrimari">Datos de la Solicitud</h3><br>
 
       <div class="row mt-3">
@@ -179,6 +183,35 @@
         <div class="col-md-4 mb-3" [ngClass]="{'disabled': !(isEditingRequestData | async)}">
           <label for="statusRequest" class="form-label">Estatus</label>
           <ng-select
+              *ngIf="[1, 4, 5].includes(this.rolUser)"
+              id="statusRequest"
+              class="form-control p-0"
+              [clearable]="false"
+              formControlName="statusRequest"
+              placeholder="Seleccione"
+              [readonly]="true"
+              [ngClass]="{'is-invalid': ((updateRequestForm.controls.statusRequest.touched && updateRequestForm.controls.statusRequest.errors) || (isFormSubmitted && updateRequestForm.controls.statusRequest.errors))}"
+              >
+              <ng-option *ngFor="let status of listStatus" [value]="status.id">{{status.status}}</ng-option>
+          </ng-select>
+          <div *ngIf="(updateRequestForm.controls.statusRequest.touched && updateRequestForm.controls.statusRequest.errors?.required) || (isFormSubmitted && updateRequestForm.controls.statusRequest.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+
+          <ng-select
+              *ngIf="![1].includes(this.rolUser)"
+              id="statusRequest"
+              class="form-control p-0"
+              [clearable]="false"
+              formControlName="statusEmp"
+              placeholder="Seleccione"
+              [readonly]="!(isEditingRequestData | async)"
+              [ngClass]="{'is-invalid': ((updateRequestForm.controls.statusEmp.touched && updateRequestForm.controls.statusEmp.errors) || (isFormSubmitted && updateRequestForm.controls.statusEmp.errors))}"
+              >
+              <ng-option *ngFor="let status of listStatus" [value]="status.id">{{status.status}}</ng-option>
+          </ng-select>
+          <div *ngIf="(updateRequestForm.controls.statusRequest.touched && updateRequestForm.controls.statusRequest.errors?.required) || (isFormSubmitted && updateRequestForm.controls.statusRequest.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+
+          <ng-select
+              *ngIf=""
               id="statusRequest"
               class="form-control p-0"
               bindLabel="prevention_type"
@@ -193,6 +226,8 @@
           </ng-select>
           <div *ngIf="(updateRequestForm.controls.statusRequest.touched && updateRequestForm.controls.statusRequest.errors?.required) || (isFormSubmitted && updateRequestForm.controls.statusRequest.errors?.required)" class="invalid-feedback">Campo Requerido</div>
         </div>
+
+
         <!-- <div class="col-md-4 mb-3" [ngClass]="{'disabled': true}">
           <label for="" class="form-label colorTextPrimari">Estatus</label>
           <input
@@ -379,7 +414,7 @@
         </ng-container>
       </div>
 
-      <div class="d-flex justify-content-end mt-2">
+      <div class="d-flex justify-content-end mt-2" *ngIf="[4, 5].includes(this.rolUser)">
         <a href="#" (click)="editRequestData($event)" *ngIf="!(isEditingRequestData | async)">Editar</a>
         <div *ngIf="(isEditingRequestData | async)">
           <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updateRequestData($event)">Actualizar</button>
@@ -388,11 +423,13 @@
       </div>
     </div>
 
-    <app-approval-changes-documents
+    <!-- <app-approval-changes-documents
     class="card row justify-content-center align-items-center p-3 mb-3"
-    *ngIf="updateRequestForm.value.statusRequest === editingStatus && !(isEditingDocuments | async)"></app-approval-changes-documents>
+    *ngIf="updateRequestForm.value.statusRequest === editingStatus && !(isEditingDocuments | async)">
+    </app-approval-changes-documents> -->
 
-    <div class="card row justify-content-center align-items-center p-3 mb-3 " *ngIf="updateRequestForm.value.statusRequest !== editingStatus || updateRequestForm.value.statusRequest === editingStatus && (isEditingDocuments | async)">
+    <!-- <div class="card row justify-content-center align-items-center p-3 mb-3 " *ngIf="updateRequestForm.value.statusRequest !== editingStatus || updateRequestForm.value.statusRequest === editingStatus && (isEditingDocuments | async)"> -->
+    <div class="card row justify-content-center align-items-center p-3 mb-3">
 
 
       <h3 class="colorTextPrimari" >Documentos</h3><br>
@@ -509,7 +546,7 @@
         </ng-container>
       </div>
 
-      <div class="d-flex justify-content-end mt-2">
+      <div class="d-flex justify-content-end mt-2" *ngIf="[4, 5].includes(this.rolUser)">
         <a href="#" (click)="editDocument($event)" *ngIf="!(isEditingDocuments | async)">Editar</a>
         <div *ngIf="(isEditingDocuments | async)">
           <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updateDocuments($event)">Actualizar</button>
@@ -518,13 +555,14 @@
       </div>
     </div>
 
-    <app-approval-changes-additional
+    <!-- <app-approval-changes-additional
     class="card row justify-content-center align-items-center p-3 mb-3"
     *ngIf="updateRequestForm.value.statusRequest === editingStatus && !(isEditingAdditionalInformation | async)"
-    ></app-approval-changes-additional>
+    ></app-approval-changes-additional> -->
 
 
-    <div class="card row justify-content-center align-items-center p-3 mb-3" *ngIf="updateRequestForm.value.statusRequest !== editingStatus || updateRequestForm.value.statusRequest === editingStatus && (isEditingAdditionalInformation | async)">
+    <!-- <div class="card row justify-content-center align-items-center p-3 mb-3" *ngIf="updateRequestForm.value.statusRequest !== editingStatus || updateRequestForm.value.statusRequest === editingStatus && (isEditingAdditionalInformation | async)"> -->
+    <div class="card row justify-content-center align-items-center p-3 mb-3">
 
       <h3 class="colorTextPrimari">Información adicional</h3><br>
 
@@ -657,7 +695,7 @@
 
       </div>
 
-      <div class="d-flex justify-content-end mt-2">
+      <div class="d-flex justify-content-end mt-2" *ngIf="[4, 5].includes(this.rolUser)">
 
         <a href="#" (click)="editAdditionalInformation($event)" *ngIf="!(isEditingAdditionalInformation | async)">Editar</a>
 

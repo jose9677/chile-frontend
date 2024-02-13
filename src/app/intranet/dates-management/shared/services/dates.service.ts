@@ -231,8 +231,8 @@ export class DatesService {
 
   }
 
-  UpdateAdditionalInformation(id: any, additionallData: any): Observable<any>{
-    let url = `${AUTH_API_NP}update-extra-data/${id}`;
+  UpdateAdditionalInformation(id: any, rutEmployee: any, additionallData: any): Observable<any>{
+    let url = `${AUTH_API_NP}update-extra-data/${id}/${rutEmployee}`;
     return this.http.put(url, additionallData).pipe(map((result:any) => {
 
       return result;
