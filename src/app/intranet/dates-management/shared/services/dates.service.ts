@@ -186,8 +186,8 @@ export class DatesService {
 
   }
 
-  UpdateRequestData(idRequest: any, requestData: any): Observable<any>{
-    let url = `${AUTH_API_NP}update-sol-modify/${idRequest}`;
+  UpdateRequestData(idRequest: any, rutEmployee: any, requestData: any): Observable<any>{
+    let url = `${AUTH_API_NP}update-sol-modify-VIP/${idRequest}/${rutEmployee}`;
     return this.http.put(url, requestData).pipe(map((result:any) => {
 
       return result;

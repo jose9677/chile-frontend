@@ -794,7 +794,7 @@ export class StatusDatesComponent implements OnInit {
 
     if(this.updateRequestForm.status === 'INVALID') return;
 
-    this.dateService.UpdateRequestData(this.idRequest, requestData).subscribe((result) => {
+    this.dateService.UpdateRequestData(this.idRequest, this.rutEmployee, requestData).subscribe((result) => {
 
     },
     error => {
@@ -1057,6 +1057,8 @@ export class StatusDatesComponent implements OnInit {
   }
 
   getDataUserModified() {
+
+    console.log(this.idRequest);
     this.evaluateChangesServices.modifiedDataUser(this.idRequest).subscribe((result) => {
 
       console.log(result);
