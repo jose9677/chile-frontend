@@ -31,7 +31,8 @@ export class StatusDatesComponent implements OnInit {
   public isFormSubmitted: boolean;
   public documentIsValid: boolean;
 
-  public today: any;
+  public maxDate: any;
+  public minDate: any;
 
   public errors: any = null;
 
@@ -89,6 +90,7 @@ export class StatusDatesComponent implements OnInit {
   public originalData: any = [];
 
   public editingStatus: any = ['1','2'];
+
 
   // public acceptChange: any = false;
 
@@ -153,8 +155,12 @@ export class StatusDatesComponent implements OnInit {
     this.rolUser = JSON.parse(window.sessionStorage.getItem('rol-user'));
 
 
-    this.today = new Date()
-      this.today = `${this.today.getFullYear()}-${(this.today.getMonth())+1}-${this.today.getDate()}`
+    this.maxDate = new Date()
+    this.maxDate = `${this.maxDate.getFullYear() - 1}-${(this.maxDate.getMonth())+1}-${this.maxDate.getDate()}`
+
+    this.minDate = new Date();
+    this.minDate = `${this.minDate.getFullYear() - 124 }-${(this.minDate.getMonth())+1}-${this.minDate.getDate()}`;
+
 
     this.isEditingPersonalData = this.evaluateChangesServices.editingPersonalDataObservable;
     this.isEditingRequestData = this.evaluateChangesServices.EditingRequestDataObservable;
@@ -642,7 +648,7 @@ export class StatusDatesComponent implements OnInit {
 
     let typeProperty = this.typePropertyChange();
 
-    return this.fullAddress = `${street}, ${this.updateRequestForm.value.addressRegisteredToPage[0]?.numberStreet ? this.updateRequestForm.value.addressRegisteredToPage[0]?.numberStreet : 's/n'}, ${typeProperty}, ${this.updateRequestForm.value.addressRegisteredToPage[0]?.nameHome ? this.updateRequestForm.value.addressRegisteredToPage[0].nameHome : 's/n'}`;
+    return this.fullAddress = `${street} ${this.updateRequestForm.value.addressRegisteredToPage[0]?.numberStreet ? this.updateRequestForm.value.addressRegisteredToPage[0]?.numberStreet : 's/n'}, ${typeProperty}, ${this.updateRequestForm.value.addressRegisteredToPage[0]?.nameHome ? this.updateRequestForm.value.addressRegisteredToPage[0].nameHome : 's/n'}`;
 
   };
 
@@ -1128,6 +1134,11 @@ export class StatusDatesComponent implements OnInit {
   ngOnDestroy() {
     this.idRequestSubscription.unsubscribe();
     this.subscription.unsubscribe();
+    this.evaluateChangesServices.changeEditingPersonalData(false);
+    this.evaluateChangesServices.changeEditingRequestData(false);
+    this.evaluateChangesServices.changeEditingDocuments (false);
+    this.evaluateChangesServices.changeEditingAdditionalInformation(false);
+
     // this.approvalSubscription.unsubscribe();
   }
 }

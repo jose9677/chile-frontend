@@ -89,14 +89,18 @@
           <input
           class="form-control"
           type="date"
-          [maxDate]="today"
+          [maxDate]="maxDate"
+          [minDate]="minDate"
           id="datesBirth"
           formControlName="datesBirth"
           [readOnly]="!(isEditingPersonalData | async)"
           [ngClass]="{'is-invalid': (updateRequestForm.controls.datesBirth.touched && updateRequestForm.controls.datesBirth.errors) || (isFormSubmitted && updateRequestForm.controls.datesBirth.errors)}"
           >
           <div *ngIf="(updateRequestForm.controls.datesBirth.touched && updateRequestForm.controls.datesBirth.errors?.required) || (isFormSubmitted && updateRequestForm.controls.datesBirth.errors?.required)" class="invalid-feedback">Campo Requerido</div>
-          <div *ngIf="(updateRequestForm.controls.datesBirth.touched && updateRequestForm.controls.datesBirth.errors?.maxDate ) || (isFormSubmitted && updateRequestForm.controls.datesBirth.errors?.maxDate)" class="invalid-feedback">La fecha no puede ser superior a la actual</div>
+
+          <div *ngIf="(updateRequestForm.controls.datesBirth.touched && updateRequestForm.controls.datesBirth.errors?.maxDate ) || (isFormSubmitted && updateRequestForm.controls.datesBirth.errors?.maxDate)" class="invalid-feedback">La edad minima no puede ser menor a un año</div>
+
+          <div *ngIf="(updateRequestForm.controls.datesBirth.touched && updateRequestForm.controls.datesBirth.errors?.minDate ) || (isFormSubmitted && updateRequestForm.controls.datesBirth.errors?.minDate)" class="invalid-feedback">La edad maxima no puede ser mayor a 124 años</div>
         </div>
 
         <div class="col-md-4 mb-3" [ngClass]="{'disabled': !(isEditingPersonalData | async)}">
@@ -180,24 +184,30 @@
           [readOnly]="true"
           class="form-control">
         </div>
-        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !(isEditingRequestData | async)}">
-          <label for="statusRequest" class="form-label">Estatus</label>
-          <ng-select
-              *ngIf="[1, 4, 5].includes(this.rolUser)"
-              id="statusRequest"
-              class="form-control p-0"
-              [clearable]="false"
-              formControlName="statusRequest"
-              placeholder="Seleccione"
-              [readonly]="true"
-              [ngClass]="{'is-invalid': ((updateRequestForm.controls.statusRequest.touched && updateRequestForm.controls.statusRequest.errors) || (isFormSubmitted && updateRequestForm.controls.statusRequest.errors))}"
-              >
-              <ng-option *ngFor="let status of listStatus" [value]="status.id">{{status.status}}</ng-option>
-          </ng-select>
-          <div *ngIf="(updateRequestForm.controls.statusRequest.touched && updateRequestForm.controls.statusRequest.errors?.required) || (isFormSubmitted && updateRequestForm.controls.statusRequest.errors?.required)" class="invalid-feedback">Campo Requerido</div>
 
-          <ng-select
-              *ngIf="![1].includes(this.rolUser)"
+
+        <div class="col-md-4 mb-3">
+
+          <div class="p-0 m-0" [ngClass]="{'disabled': true}">
+            <label for="statusRequest" class="form-label">Estatus</label>
+            <ng-select
+                *ngIf="[1, 5].includes(this.rolUser)"
+                id="statusRequest"
+                class="form-control p-0"
+                [clearable]="false"
+                formControlName="statusRequest"
+                placeholder="Seleccione"
+                [readonly]="true"
+                [ngClass]="{'is-invalid': ((updateRequestForm.controls.statusRequest.touched && updateRequestForm.controls.statusRequest.errors) || (isFormSubmitted && updateRequestForm.controls.statusRequest.errors))}"
+                >
+                <ng-option *ngFor="let status of listStatus" [value]="status.id">{{status.status}}</ng-option>
+            </ng-select>
+            <div *ngIf="(updateRequestForm.controls.statusRequest.touched && updateRequestForm.controls.statusRequest.errors?.required) || (isFormSubmitted && updateRequestForm.controls.statusRequest.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+          </div>
+
+          <div class="m-0 p-0" [ngClass]="{'disabled': !(isEditingRequestData | async)}">
+            <ng-select
+              *ngIf="[2, 3 ,4, 5].includes(this.rolUser)"
               id="statusRequest"
               class="form-control p-0"
               [clearable]="false"
@@ -206,25 +216,10 @@
               [readonly]="!(isEditingRequestData | async)"
               [ngClass]="{'is-invalid': ((updateRequestForm.controls.statusEmp.touched && updateRequestForm.controls.statusEmp.errors) || (isFormSubmitted && updateRequestForm.controls.statusEmp.errors))}"
               >
-              <ng-option *ngFor="let status of listStatus" [value]="status.id">{{status.status}}</ng-option>
-          </ng-select>
-          <div *ngIf="(updateRequestForm.controls.statusRequest.touched && updateRequestForm.controls.statusRequest.errors?.required) || (isFormSubmitted && updateRequestForm.controls.statusRequest.errors?.required)" class="invalid-feedback">Campo Requerido</div>
-
-          <ng-select
-              *ngIf=""
-              id="statusRequest"
-              class="form-control p-0"
-              bindLabel="prevention_type"
-              bindValue="id"
-              [clearable]="false"
-              formControlName="statusRequest"
-              placeholder="Seleccione"
-              [readonly]="!(isEditingRequestData | async)"
-              [ngClass]="{'is-invalid': ((updateRequestForm.controls.statusRequest.touched && updateRequestForm.controls.statusRequest.errors) || (isFormSubmitted && updateRequestForm.controls.statusRequest.errors))}"
-              >
-              <ng-option *ngFor="let status of listStatus" [value]="status.id">{{status.status}}</ng-option>
-          </ng-select>
-          <div *ngIf="(updateRequestForm.controls.statusRequest.touched && updateRequestForm.controls.statusRequest.errors?.required) || (isFormSubmitted && updateRequestForm.controls.statusRequest.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+                <ng-option *ngFor="let status of listStatus" [value]="status.id">{{status.status}}</ng-option>
+            </ng-select>
+            <div *ngIf="(updateRequestForm.controls.statusRequest.touched && updateRequestForm.controls.statusRequest.errors?.required) || (isFormSubmitted && updateRequestForm.controls.statusRequest.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+          </div>
         </div>
 
 
@@ -288,7 +283,9 @@
           <div *ngIf="(updateRequestForm.controls.haveInsurance.touched && updateRequestForm.controls.haveInsurance.errors) || (isFormSubmitted && updateRequestForm.controls.haveInsurance.errors)" class="invalid-feedback">Campo Requerido</div>
         </div>
 
-        <div class="col-md-4 mb-3" [ngClass]="{'disabled': !(isEditingRequestData | async)}">
+        <div
+          *ngIf="[2, 3, 4, 5].includes(this.rolUser)"
+          class="col-md-4 mb-3" [ngClass]="{'disabled': !(isEditingRequestData | async)}">
           <label for="directionToUse" class="form-label">Utilizar Dirección</label>
           <ng-select
               id="directionToUse"
@@ -589,9 +586,8 @@
 
         <ng-container formArrayName = "dataCaretaker">
 
-          <ng-container *ngFor=" let data of dataCaretakerArray.controls; let i= index ">
-
-            <div [formGroupName]="i">
+          <ng-container *ngFor=" let data of dataCaretakerArray.controls; let ic= index ">
+            <div [formGroupName]="ic">
 
               <div class="row">
 
@@ -604,11 +600,11 @@
                       formControlName="reason"
                       [clearable]="false"
                       [readonly]="!(isEditingAdditionalInformation | async)"
-                      [ngClass]="{'is-invalid': ((data.touched && updateRequestForm.controls.dataCaretaker.controls[i].controls.reason.errors) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[i].controls.reason.errors))}"
+                      [ngClass]="{'is-invalid': ((data.touched && updateRequestForm.controls.dataCaretaker.controls[ic].controls.reason.errors) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[ic].controls.reason.errors))}"
                       >
                       <ng-option *ngFor="let motive of motives" [value]="motive.id_motive"> {{motive.description}} </ng-option>
                   </ng-select>
-                  <div *ngIf="((data.touched && updateRequestForm.controls.dataCaretaker.controls[i].controls.reason.errors?.required) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[i].controls.reason.errors?.required))" class="invalid-feedback">Campo Requerido</div>
+                  <div *ngIf="((data.touched && updateRequestForm.controls.dataCaretaker.controls[ic].controls.reason.errors?.required) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[ic].controls.reason.errors?.required))" class="invalid-feedback">Campo Requerido</div>
 
                 </div>
 
@@ -621,11 +617,11 @@
                       formControlName="dedicationsTypes"
                       [clearable]="false"
                       [readonly]="!(isEditingAdditionalInformation | async)"
-                      [ngClass]="{'is-invalid': ((data.touched && updateRequestForm.controls.dataCaretaker.controls[i].controls.dedicationsTypes.errors) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[i].controls.dedicationsTypes.errors))}"
+                      [ngClass]="{'is-invalid': ((data.touched && updateRequestForm.controls.dataCaretaker.controls[ic].controls.dedicationsTypes.errors) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[ic].controls.dedicationsTypes.errors))}"
                       >
                       <ng-option *ngFor="let dedication of dedicationsTypes" [value]="dedication.id_dedication"> {{ dedication.description }} </ng-option>
                   </ng-select>
-                  <div *ngIf="((data.touched && updateRequestForm.controls.dataCaretaker.controls[i].controls.dedicationsTypes.errors?.required) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[i].controls.dedicationsTypes.errors?.required))" class="invalid-feedback">Campo Requerido</div>
+                  <div *ngIf="((data.touched && updateRequestForm.controls.dataCaretaker.controls[ic].controls.dedicationsTypes.errors?.required) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[ic].controls.dedicationsTypes.errors?.required))" class="invalid-feedback">Campo Requerido</div>
                 </div>
 
                 <div class="col-md-4 mb-3 " *ngIf="updateRequestForm.controls.isCaretaker.value == true" [ngClass]="{'disabled': !(isEditingAdditionalInformation | async)}">
@@ -637,12 +633,12 @@
                       formControlName="remunerationType"
                       [clearable]="false"
                       [readonly]="!(isEditingAdditionalInformation | async)"
-                      [ngClass]="{'is-invalid': ((data.touched && updateRequestForm.controls.dataCaretaker.controls[i].controls.remunerationType.errors) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[i].controls.remunerationType.errors))}"
+                      [ngClass]="{'is-invalid': ((data.touched && updateRequestForm.controls.dataCaretaker.controls[ic].controls.remunerationType.errors) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[ic].controls.remunerationType.errors))}"
                       >
                       <ng-option *ngFor="let remunerationType of remunerationsTypes" [value]="remunerationType.id_remuneration">{{remunerationType.description}}</ng-option>
 
                   </ng-select>
-                  <div *ngIf="((data.touched && updateRequestForm.controls.dataCaretaker.controls[i].controls.remunerationType.errors?.required) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[i].controls.remunerationType.errors?.required))" class="invalid-feedback">Campo Requerido</div>
+                  <div *ngIf="((data.touched && updateRequestForm.controls.dataCaretaker.controls[ic].controls.remunerationType.errors?.required) || (isFormSubmitted && updateRequestForm.controls.dataCaretaker.controls[ic].controls.remunerationType.errors?.required))" class="invalid-feedback">Campo Requerido</div>
                 </div>
               </div>
             </div>
@@ -671,7 +667,10 @@
           class="form-control">
         </div>
 
-        <div class="col-md-4 col-sm-12" [ngClass]="{'disabled': true}">
+        <div
+          *ngIf="[2, 3, 4, 5].includes(this.rolUser)"
+          class="col-md-4 col-sm-12"
+          [ngClass]="{'disabled': true}">
           <label for="dataOrigin" class="form-label colorTextPrimari">Origen de Registro</label>
           <input
           id="dataOrigin"
@@ -681,7 +680,10 @@
           class="form-control">
         </div>
 
-        <div class="col-12 mb-3" [ngClass]="{'disabled': !(isEditingAdditionalInformation | async)}">
+        <div
+        *ngIf="[2, 3, 4, 5].includes(this.rolUser)"
+        class="col-12 mb-3"
+        [ngClass]="{'disabled': !(isEditingAdditionalInformation | async)}">
           <label for="comments" class="form-label colorTextPrimari ">Comentarios</label>
           <textarea
           id="comments"

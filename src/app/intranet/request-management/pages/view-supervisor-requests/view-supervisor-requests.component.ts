@@ -4,6 +4,7 @@ import { AssignVisitorDatesComponent } from 'src/app/intranet/dates-management/p
 import { DatesService } from 'src/app/intranet/dates-management/shared/services/dates.service';
 import { ModalsService } from 'src/app/shared/services/modals.service';
 import { SortByTablesService } from '../../shared/services/sort-by-tables.service';
+import { LoggedService } from 'src/app/shared/services/logged.service';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class ViewSupervisorRequestsComponent implements OnInit {
   unassignedRequest2: any[];
 
   public userloggedRut: any;
+  public userloggedRole: any;
 
   name!:string;
 
@@ -26,13 +28,16 @@ export class ViewSupervisorRequestsComponent implements OnInit {
     private router: Router,
     public sortByService: SortByTablesService,
     private modalService : ModalsService,
+    private loggedService: LoggedService,
     private date: DatesService,
 
 
 
   ) {
 
-    this.userloggedRut = sessionStorage.getItem('auth-user')
+    // this.userloggedRut = sessionStorage.getItem('auth-user');
+    this.userloggedRut = this.loggedService.rutUserValue();
+    this.userloggedRole = this.loggedService.roleUserValue();
 
     this.unassignedRequest = [];
 
@@ -45,7 +50,12 @@ export class ViewSupervisorRequestsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const rutSupervisor= window.sessionStorage.getItem('auth-user');
+    if(this.userloggedRole === 3) {
+
+      const rutSupervisor= this.userloggedRut;
+
+    }
+
 
     this.getAllRequest();
   }
@@ -55,16 +65,25 @@ export class ViewSupervisorRequestsComponent implements OnInit {
 
     this.date.getAllRequest().subscribe( result => {
 
+      console.log(result);
+
 
       result.data_complete.map((res: any)=>{
 
-          if (res.assistant_rut != null) {
-            this.unassignedRequest2.push(res);
-          }else{
-            this.unassignedRequest.push(res);
-          }
-      })
+        if (this.userloggedRole === 1) {
+          res['displayStatus'] = res.status;
+        }
 
+        if (this.userloggedRole !== 1) {
+          res['displayStatus'] = res.status_emp;
+        }
+
+        if (res.assistant_rut != null) {
+          this.unassignedRequest2.push(res);
+        }else{
+          this.unassignedRequest.push(res);
+        }
+      })
     })
 
   }

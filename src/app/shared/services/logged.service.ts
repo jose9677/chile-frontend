@@ -19,15 +19,6 @@ export class LoggedService {
 
   }
 
-  private roleUser: BehaviorSubject<boolean> = new BehaviorSubject<any>(window.sessionStorage.getItem("rolUser"));
-
-  get roleUserObservable(): Observable<boolean> {
-    return this.roleUser.asObservable().pipe(map((result:any) => {
-      return result
-    }));
-  }
-
-
   private isRegisterUser: BehaviorSubject<boolean> = new BehaviorSubject<any>(false);
 
   get isRegisterUserObservable(): Observable<boolean> {
@@ -39,6 +30,27 @@ export class LoggedService {
     this.isRegisterUser.next(isRegisterUserStatus)
 
   }
+
+  private roleUser: BehaviorSubject<any> = new BehaviorSubject<any>(JSON.parse(window.sessionStorage.getItem("rol-user")));
+
+  get roleUserObservable(): Observable<any> {
+    return this.roleUser.asObservable();
+  }
+
+  roleUserValue() {
+    return this.roleUser.getValue();
+  }
+
+  private rutUser: BehaviorSubject<any> = new BehaviorSubject<any>(JSON.parse(window.sessionStorage.getItem("auth-user")));
+
+  get RutUserObservable(): Observable<any> {
+    return this.rutUser.asObservable();
+  }
+
+  rutUserValue() {
+    return this.rutUser.getValue();
+  }
+
 
 
 }

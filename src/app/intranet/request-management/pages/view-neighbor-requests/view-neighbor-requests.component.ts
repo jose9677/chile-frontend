@@ -4,6 +4,7 @@ import { DatesService } from 'src/app/intranet/dates-management/shared/services/
 import { ModalsService } from 'src/app/shared/services/modals.service';
 import { any } from 'underscore';
 import { SortByTablesService } from '../../shared/services/sort-by-tables.service';
+import { LoggedService } from 'src/app/shared/services/logged.service';
 
 @Component({
   selector: 'app-view-neighbor-requests',
@@ -13,6 +14,8 @@ import { SortByTablesService } from '../../shared/services/sort-by-tables.servic
 export class ViewNeighborRequestsComponent implements OnInit {
 
   private rutNeighbor: any;
+
+  private userloggedRole: any;
 
   public errors: any = null;
 
@@ -25,41 +28,45 @@ export class ViewNeighborRequestsComponent implements OnInit {
     private router: Router,
     public sortByService : SortByTablesService,
     private modal : ModalsService,
+    private loggedService: LoggedService,
     private date: DatesService,
 
 
 
   ) {
 
-
-
-    this.rutNeighbor = window.sessionStorage.getItem('auth-user');
-
     this.unassignedRequest = [];
-
 
   }
 
   ngOnInit(): void {
 
+     this.rutNeighbor = this.loggedService.rutUserValue();
+     this.userloggedRole = this.loggedService.roleUserValue();
+
+
     this.getForRut();
-
-
 
   }
 
   getForRut() {
 
-    this.date.getForRut(this.rutNeighbor.replace(/["']/g, "")).subscribe( result => {
-
-
+    this.date.getForRut(this.rutNeighbor).subscribe( result => {
 
       result.map((res: any)=>{
+
         res.fullName = (res.assistant_names ?? ' ') +' '+ (res.assistant_lastname ?? ' ')
         res.fullPeventionData = res.prevention_type +' - '+ res.prevention_detail
 
-        window.sessionStorage.setItem("status-request", JSON.stringify(res.id_status));
+        if (this.userloggedRole === 1) {
+          res['displayStatus'] = res.status;
+        }
 
+        if (this.userloggedRole !== 1) {
+          res['displayStatus'] = res.status_emp;
+        }
+
+        window.sessionStorage.setItem("status-request", JSON.stringify(res.id_status));
 
         this.unassignedRequest.push(res);
       })

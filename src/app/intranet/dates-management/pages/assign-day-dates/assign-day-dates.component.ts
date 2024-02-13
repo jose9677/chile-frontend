@@ -15,7 +15,8 @@ export class AssignDayDatesComponent implements OnInit {
 
   public isFormSubmitted: boolean;
 
-  public dataRequest: any[]
+  public dataRequest: any;
+  public dataUser: any;
 
   public errors: any = null;
 
@@ -48,11 +49,14 @@ export class AssignDayDatesComponent implements OnInit {
     private router: Router
   ) {
 
+
     this.documentsDom = [];
 
     this.documentsPre = [];
 
     this.dataRequest = [];
+
+    this.dataUser = [];
 
     this.idStatus = '',
 
@@ -72,16 +76,48 @@ export class AssignDayDatesComponent implements OnInit {
 
     this.datesService.getForIdRequest(this.idRequest).subscribe((result) => {
 
-      result.map((res: any) => {
-        res.fullName = res.names_assistant +' '+ res.lastname_assistant;
-        res.fullNameUser = res.names +' '+ res.lastname;
-        res.fullPeventionData = res.prevention_type +' - '+ res.prevention_detail;
-        res.fullDirection = res.street + ' ' + res.way_number + ', ' + res.description + ' ' + (res.property_number ?? 's/n');
+      let dataUser: any[];
 
-        this.dataRequest.push(res);
+      let dataRequest: any[];
+
+      let dataDoc: any[];
+
+      dataUser = result.user_data;
+
+      dataUser.map((res) => {
+
+        // res.fullName = res.names_assistant +' '+ res.lastname_assistant;
+        res.fullNameUser = res.names +' '+ res.lastname;
+        // res.fullPeventionData = res.prevention_type +' - '+ res.prevention_detail;
+        // res.fullDirection = res.street + ' ' + res.way_number + ', ' + res.description + ' ' + (res.property_number ?? 's/n');
+
+      })
+
+      this.dataUser = dataUser;
+
+      console.log(dataUser);
+
+
+      dataRequest = result.data_sol;
+      console.log(dataRequest);
+
+      dataRequest.map((res) => {
 
         this.idStatus = res.id_status
 
+        // res.fullName = res.names_assistant +' '+ res.lastname_assistant;
+        // res.fullNameUser = res.names +' '+ res.lastname;
+        // res.fullPeventionData = res.prevention_type +' - '+ res.prevention_detail;
+        // res.fullDirection = res.street + ' ' + res.way_number + ', ' + res.description + ' ' + (res.property_number ?? 's/n');
+
+      })
+
+      this.dataRequest = dataRequest;
+
+      dataDoc = result.data_doc;
+      console.log(dataDoc);
+
+      dataDoc.map((res => {
         if ( res.id_document_type === 1 ) {
           this.documentsDom.push({'doc_srv_path': res.doc_srv_path, 'document_type': res.document_type, 'document_path': res.document_path, 'document_ext': res.document_ext});
 
@@ -89,8 +125,16 @@ export class AssignDayDatesComponent implements OnInit {
         else if ( res.id_document_type === 2 ) {
           this.documentsPre.push({'doc_srv_path': res.doc_srv_path, 'document_type': res.document_type, 'document_path': res.document_path, 'document_ext': res.document_ext})
         }
+      }))
 
-      });
+      // result.map((res: any) => {
+      //   res.fullName = res.names_assistant +' '+ res.lastname_assistant;
+      //   res.fullNameUser = res.names +' '+ res.lastname;
+      //   res.fullPeventionData = res.prevention_type +' - '+ res.prevention_detail;
+      //   res.fullDirection = res.street + ' ' + res.way_number + ', ' + res.description + ' ' + (res.property_number ?? 's/n');
+
+      //   // this.dataRequest.push(res);
+      // });
 
     },
     error => {

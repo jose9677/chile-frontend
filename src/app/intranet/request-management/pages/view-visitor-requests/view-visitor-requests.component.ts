@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { DatesService } from 'src/app/intranet/dates-management/shared/services/dates.service';
 import { ModalsService } from 'src/app/shared/services/modals.service';
 import { SortByTablesService } from '../../shared/services/sort-by-tables.service';
+import { LoggedService } from 'src/app/shared/services/logged.service';
 
 @Component({
   selector: 'app-view-visitor-requests',
@@ -12,6 +13,7 @@ import { SortByTablesService } from '../../shared/services/sort-by-tables.servic
 export class ViewVisitorRequestsComponent implements OnInit {
 
   private rutUserLogged: any;
+  private roleUserLogged: any;
 
   unassignedRequest: any[];
   unassignedRequest2: any[];
@@ -33,13 +35,13 @@ export class ViewVisitorRequestsComponent implements OnInit {
     private router: Router,
     public sortByService: SortByTablesService,
     private modalService : ModalsService,
+    private loggedService: LoggedService,
     private dateServices: DatesService
-
-
-
   ) {
 
-    this.rutUserLogged = window.sessionStorage.getItem('auth-user')
+    // this.rutUserLogged = window.sessionStorage.getItem('auth-user')
+    this.rutUserLogged = this.loggedService.rutUserValue();
+    this.roleUserLogged = this.loggedService.roleUserValue();
 
     this.unassignedRequest = [];
 
@@ -48,14 +50,15 @@ export class ViewVisitorRequestsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getforSocialAssistant();
+    this.getForSocialAssistant();
 
   }
 
-  getforSocialAssistant() {
+  getForSocialAssistant() {
 
-    this.dateServices.getforSocialAssistant(this.rutUserLogged.replace(/["']/g, "")).subscribe( result => {
+    this.dateServices.getForSocialAssistant(this.rutUserLogged).subscribe( result => {
 
+      console.log(result  );
 
       let dataUser= result.data_employe;
       this.dataUser = dataUser;
@@ -64,7 +67,15 @@ export class ViewVisitorRequestsComponent implements OnInit {
 
       datarequests.map((res: any)=>{
 
-        if (res.id_status == 2 || res.id_status == 5   ) {
+        if (this.roleUserLogged === 1) {
+          res['displayStatus'] = res.status;
+        }
+
+        if (this.roleUserLogged !== 1) {
+          res['displayStatus'] = res.status_emp;
+        }
+
+        if (res.id_status == 2 || res.id_status == 5) {
           this.unassignedRequest.push(res);
         }else if (res.id_status == 3 || res.id_status == 4){
           this.unassignedRequest2.push(res);
@@ -83,11 +94,7 @@ export class ViewVisitorRequestsComponent implements OnInit {
   }
 
   assignDayDate (id_request: any) {
-
     this.router.navigate(['citas/asignar-fecha-de-cita'], {queryParams: {id_request : id_request}});
-
-
-
   }
 
   approveDates (id_request: any) {

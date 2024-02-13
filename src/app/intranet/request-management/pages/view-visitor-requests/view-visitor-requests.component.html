@@ -47,7 +47,7 @@
                   <td>{{(request.street ?? ' ') +' '+ (request.way_number ?? ' ')  +', '+ (request.description ?? ' ') +' '+ (request.property_number ?? 's/n')}}</td>
                   <td>{{(request.visit_date ?? ' ')}}</td>
                   <td>{{(request.assistant_name ?? ' ') + " " + (request.assistant_lastname ?? ' ') }}</td>
-                  <td>{{(request.status ?? ' ')}}</td>
+                  <td>{{(request.displayStatus ?? ' ')}}</td>
                   <td>
 
                     <button (click)="viewDate(request.id)" ><i class="mdi mdi-eye" style="font-size: 1.5em;"></i></button>
@@ -114,7 +114,7 @@
                   <td>{{(request.street ?? ' ') +' '+ (request.way_number ?? ' ')  +', '+ (request.description ?? ' ') +' '+ (request.property_number ?? 's/n')}}</td>
                   <td>{{(request.visit_date ?? ' ')}}</td>
                   <td>{{(request.assistant_name ?? ' ') + " " + (request.assistant_lastname ?? ' ') }}</td>
-                  <td>{{(request.status ?? ' ')}}</td>
+                  <td>{{(request.displayStatus ?? ' ')}}</td>
                   <td>
 
                     <button (click)="viewDate(request.id)" ><i class="mdi mdi-eye" style="font-size: 1.5em;"></i></button>

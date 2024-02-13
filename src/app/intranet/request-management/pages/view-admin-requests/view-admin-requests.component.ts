@@ -4,6 +4,7 @@ import { AssignVisitorDatesComponent } from 'src/app/intranet/dates-management/p
 import { DatesService } from 'src/app/intranet/dates-management/shared/services/dates.service';
 import { ModalsService } from 'src/app/shared/services/modals.service';
 import { SortByTablesService } from '../../shared/services/sort-by-tables.service';
+import { LoggedService } from 'src/app/shared/services/logged.service';
 
 @Component({
   selector: 'app-view-admin-requests',
@@ -21,6 +22,7 @@ export class ViewAdminRequestsComponent implements OnInit {
   unassignedRequest: any[];
 
   public userloggedRut: any;
+  public userloggedRole: any;
 
   name!:string;
 
@@ -29,13 +31,14 @@ export class ViewAdminRequestsComponent implements OnInit {
     private router: Router,
     public sortByService: SortByTablesService,
     private modalService : ModalsService,
+    private loggedService: LoggedService,
     private date: DatesService,
-
-
 
   ) {
 
-    this.userloggedRut = sessionStorage.getItem('auth-user');
+    this.userloggedRut = this.loggedService.rutUserValue();
+
+    this.userloggedRole = this.loggedService.roleUserValue();
 
     this.countSolicitudes = 0;
 
@@ -58,7 +61,19 @@ export class ViewAdminRequestsComponent implements OnInit {
   getAllRequest() {
     this.date.getAllRequest().subscribe( result => {
 
+
       this.unassignedRequest = result.data_complete;
+
+      this.unassignedRequest.map((res) => {
+        if (this.userloggedRole === 1) {
+          res['displayStatus'] = res.status;
+        }
+
+        if (this.userloggedRole !== 1) {
+          res['displayStatus'] = res.status_emp;
+        }
+      })
+
 
       this.countSolicitudes = result.count_solicitudes['0']?.count;
 

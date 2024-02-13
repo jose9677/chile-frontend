@@ -105,7 +105,7 @@ export class DatesService {
     );
   }
 
-  getforSocialAssistant(rutSocialAssistant: any): Observable<any | void> {
+  getForSocialAssistant(rutSocialAssistant: any): Observable<any | void> {
 
     return this.http.get<any>(AUTH_API + 'joinRequestEmployee/' + rutSocialAssistant, httpOptions).pipe(map((result: any) => {
 
