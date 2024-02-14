@@ -81,7 +81,6 @@ export class AuthService {
   register(dataUser: any): Observable<any>{
     return this.http.post( AUTH_API + 'registerNeighbor', dataUser, httpOptions).pipe(map((result:any) => {
 
-      console.log(result);
 
     }),
     catchError((err)=> this.handlerError(err))
@@ -97,7 +96,6 @@ export class AuthService {
 
     return this.http.post( AUTH_API_NP + 'file/' + rut +"/"+ id_document_type , formfileData).pipe(map((result:any) => {
 
-      console.log(result);
 
     }),
     catchError((err)=> this.handlerError(err))

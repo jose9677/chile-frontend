@@ -58,7 +58,6 @@ export class ViewVisitorRequestsComponent implements OnInit {
 
     this.dateServices.getForSocialAssistant(this.rutUserLogged).subscribe( result => {
 
-      console.log(result  );
 
       let dataUser= result.data_employe;
       this.dataUser = dataUser;

@@ -75,8 +75,6 @@ export class ApsUpdateComponent implements OnInit {
 
     }
 
-    console.log(this.updateApsForm.value)
-
   }
 
   selectFile(){
@@ -110,8 +108,6 @@ export class ApsUpdateComponent implements OnInit {
 
         this.spinnerService.hide();
         this.apsServices.updateAps( data ).subscribe((result) => {
-
-          console.log(result)
 
         },
         error => {

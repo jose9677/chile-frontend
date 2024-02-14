@@ -66,7 +66,6 @@ export class ApsManagementService {
 
   getLatestApsUpdate(): Observable<any | void> {
     return this.http.get<any>( AUTH_API_NP + 'last-aps', httpOptions).pipe(map((result: any) => {
-      // console.log(result);
       return result[0];
     }),
     catchError((err) => this.handlerError(err))
@@ -75,7 +74,6 @@ export class ApsManagementService {
 
    getAllAps(): Observable<any | void> {
     return this.http.get<any>( AUTH_API_NP + 'aps-historic', httpOptions).pipe(map((result: any) => {
-      // console.log(result);
       return result;
     }),
     catchError((err) => this.handlerError(err))

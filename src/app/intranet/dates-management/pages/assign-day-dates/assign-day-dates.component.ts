@@ -95,11 +95,9 @@ export class AssignDayDatesComponent implements OnInit {
 
       this.dataUser = dataUser;
 
-      console.log(dataUser);
 
 
       dataRequest = result.data_sol;
-      console.log(dataRequest);
 
       dataRequest.map((res) => {
 
@@ -115,7 +113,6 @@ export class AssignDayDatesComponent implements OnInit {
       this.dataRequest = dataRequest;
 
       dataDoc = result.data_doc;
-      console.log(dataDoc);
 
       dataDoc.map((res => {
         if ( res.id_document_type === 1 ) {

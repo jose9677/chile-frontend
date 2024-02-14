@@ -51,7 +51,6 @@ export class DatesService {
 
   getForIdRequest(idRequest: any): Observable<any | void> {
     return this.http.get<any>( AUTH_API_NP + 'consult-modify/'+ idRequest, httpOptions).pipe(map((result:any) => {
-      console.log(result);
 
       return result;
 
