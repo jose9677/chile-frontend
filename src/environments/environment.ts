@@ -9,9 +9,9 @@ export const environment = {
   urlApi:'http://35.90.153.149:80/api/',
   urlApiNp: "http://35.90.153.149:80/",
 
-  // Pruebas
-  // urlApi:'http://54.218.3.146:3000/api/',
-  // urlApiNp: "http://54.218.3.146:3000/",
+//   // Pruebas
+//   urlApi:'http://54.218.3.146:3000/api/',
+//   urlApiNp: "http://54.218.3.146:3000/",
 };
 
 /*

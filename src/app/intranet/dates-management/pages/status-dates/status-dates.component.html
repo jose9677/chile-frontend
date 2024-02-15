@@ -212,11 +212,11 @@
           <div *ngIf="(updateRequestForm.controls.statusRequest.touched && updateRequestForm.controls.statusRequest.errors?.required) || (isFormSubmitted && updateRequestForm.controls.statusRequest.errors?.required)" class="invalid-feedback">Campo Requerido</div>
         </div>
 
-        <div class="m-0 p-0" [ngClass]="{'disabled': !(isEditingRequestData | async)}">
+        <div class="m-0 p-0 ng-select-container" [ngClass]="{'disabled': !(isEditingRequestData | async)}">
           <ng-select
             *ngIf="[2, 3 ,4, 5].includes(this.rolUser)"
             id="statusRequest"
-            class="form-control p-0"
+            class="ng-select p-0"
             [clearable]="false"
             formControlName="statusEmp"
             placeholder="Seleccione"
@@ -225,7 +225,7 @@
             >
               <ng-option *ngFor="let status of listStatus" [value]="status.id">{{status.status}}</ng-option>
           </ng-select>
-          <div *ngIf="(updateRequestForm.controls.statusRequest.touched && updateRequestForm.controls.statusRequest.errors?.required) || (isFormSubmitted && updateRequestForm.controls.statusRequest.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+          <div *ngIf="(updateRequestForm.controls.statusEmp.touched && updateRequestForm.controls.statusEmp.errors?.required) || (isFormSubmitted && updateRequestForm.controls.statusEmp.errors?.required)" class="invalid-feedback">Campo Requerido</div>
         </div>
       </div>
 

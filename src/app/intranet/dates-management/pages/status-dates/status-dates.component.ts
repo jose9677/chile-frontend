@@ -121,7 +121,7 @@ export class StatusDatesComponent implements OnInit {
 
     requestNumber: ['', []],
     dateRequest: ['', []],
-    statusRequest: ['', [Validators.required]],
+    statusRequest: ['', []],
     statusEmp: ['', [Validators.required]],
     preventionsTypes: ['', [Validators.required]],
     preventionsTypesDetails: ['', [Validators.required]],
@@ -451,7 +451,7 @@ export class StatusDatesComponent implements OnInit {
 
         f.statusRequest.setValue(statusRequest);
 
-        f.statusEmp.setValue(statusEmp);
+        // f.statusEmp.setValue(statusEmp);
 
         f.preventionsTypes.setValue(preventionsTypes);
 
@@ -481,7 +481,12 @@ export class StatusDatesComponent implements OnInit {
         this.generateFullAddress();
       }
 
+      
+      if( this.evaluateChangesServices.viewEditingDocuments() &&  this.listFilesUpload.length !== 0) this.listFilesUpload = [];
+
       if(!this.evaluateChangesServices.viewEditingDocuments()) {
+
+       
 
         this.documentsDom = [];
         this.documentsPre = [];
