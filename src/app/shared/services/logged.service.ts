@@ -7,7 +7,8 @@ import { BehaviorSubject, map, Observable } from 'rxjs';
 export class LoggedService {
   private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<any>(sessionStorage.getItem("isLoggedin"));
 
-  constructor() { }
+  constructor() {
+   }
 
   get isLoggedObservable(): Observable<boolean> {
     return this.loggedIn.asObservable();
@@ -31,25 +32,25 @@ export class LoggedService {
 
   }
 
-  private roleUser: BehaviorSubject<any> = new BehaviorSubject<any>(JSON.parse(window.sessionStorage.getItem("rol-user")));
+  // private roleUser: BehaviorSubject<any> = new BehaviorSubject<any>(JSON.parse(sessionStorage.getItem("rol-user")));
 
-  get roleUserObservable(): Observable<any> {
-    return this.roleUser.asObservable();
-  }
+  // get roleUserObservable(): Observable<any> {
+  //   return this.roleUser.asObservable();
+  // }
 
-  roleUserValue() {
-    return this.roleUser.getValue();
-  }
+  // roleUserValue() {
+  //   return this.roleUser.getValue();
+  // }
 
-  private rutUser: BehaviorSubject<any> = new BehaviorSubject<any>(JSON.parse(window.sessionStorage.getItem("auth-user")));
+  // private rutUser: BehaviorSubject<any> = new BehaviorSubject<any>(JSON.parse(sessionStorage.getItem("auth-user")));
 
-  get RutUserObservable(): Observable<any> {
-    return this.rutUser.asObservable();
-  }
+  // get RutUserObservable(): Observable<any> {
+  //   return this.rutUser.asObservable();
+  // }
 
-  rutUserValue() {
-    return this.rutUser.getValue();
-  }
+  // rutUserValue() {
+  //   return this.rutUser.getValue();
+  // }
 
 
 

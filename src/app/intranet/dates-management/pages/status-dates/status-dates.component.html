@@ -38,6 +38,8 @@
         formControlName="rut"
         >
       </div>
+
+      <!-- {{}} -->
       <div class="col-md-4 mb-3" [ngClass]="{'disabled': !(isEditingPersonalData | async)}">
         <label for="name" class="form-label">Nombres</label>
 
@@ -154,7 +156,8 @@
       </div>
     </div>
 
-    <div class="d-flex justify-content-end mt-3" *ngIf="[4, 5].includes(this.rolUser)">
+
+    <div class="d-flex justify-content-end mt-3" *ngIf="canEdit(rolUser)">
       <a href="#" (click)="editPersonalData($event)" *ngIf="!(isEditingPersonalData | async)">Editar</a>
       <div *ngIf="(isEditingPersonalData | async)">
         <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updatePersonalData($event)">Actualizar</button>
@@ -174,8 +177,8 @@
 
     <h3 class="colorTextPrimari">Datos de la Solicitud</h3><br>
 
-    <div class="row mt-3">
-      <div class="col-md-4 mb-3" [ngClass]="{'disabled': true}">
+    <div class="row mt-3" >
+      <div class="col-md-4 mb-3" [ngClass]="{'disabled': true}" *ngIf="!isNewRequest">
         <label for="" class="form-label colorTextPrimari">Número de Solicitud</label>
         <input
         type="text"
@@ -183,7 +186,7 @@
         [readOnly]="true"
         class="form-control">
       </div>
-      <div class="col-md-4 mb-3" [ngClass]="{'disabled': true}">
+      <div class="col-md-4 mb-3" [ngClass]="{'disabled': true}" *ngIf="!isNewRequest">
         <label for="" class="form-label colorTextPrimari">Fecha de Solicitud</label>
         <input
         type="text"
@@ -193,7 +196,7 @@
       </div>
 
 
-      <div class="col-md-4 mb-3">
+      <div class="col-md-4 mb-3" *ngIf="!isNewRequest">
 
         <div class="p-0 m-0" [ngClass]="{'disabled': true}">
           <label for="statusRequest" class="form-label">Estatus</label>
@@ -394,7 +397,7 @@
         </ng-container>
       </ng-container>
 
-      <ng-container formArrayName="addressWots" >
+      <ng-container formArrayName="addressWots" *ngIf="!isNewRequest">
         <ng-container *ngFor=" let address of addressWotsArray.controls; let i = index ">
           <div [formGroupName]="i" class="row" *ngIf="(isEditingRequestData | async)">
 
@@ -418,10 +421,10 @@
       </ng-container>
     </div>
 
-    <div class="d-flex justify-content-end mt-2" *ngIf="[4, 5].includes(this.rolUser)">
+    <div class="d-flex justify-content-end mt-2" *ngIf="canEdit(rolUser)">
       <a href="#" (click)="editRequestData($event)" *ngIf="!(isEditingRequestData | async)">Editar</a>
       <div *ngIf="(isEditingRequestData | async)">
-        <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updateRequestData($event)">Actualizar</button>
+        <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updateRequestData($event)">Actualizar</button>
         <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="cancelEditRequestData($event)" >Cancelar</button>
       </div>
     </div>
@@ -550,10 +553,10 @@
       </ng-container>
     </div>
 
-    <div class="d-flex justify-content-end mt-2" *ngIf="[4, 5].includes(this.rolUser)">
+    <div class="d-flex justify-content-end mt-2" *ngIf="canEdit(rolUser)">
       <a href="#" (click)="editDocument($event)" *ngIf="!(isEditingDocuments | async)">Editar</a>
       <div *ngIf="(isEditingDocuments | async)">
-        <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updateDocuments($event)">Actualizar</button>
+        <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updateDocuments($event)">Actualizar</button>
         <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="cancelEditDocument($event)" >Cancelar</button>
       </div>
     </div>
@@ -654,7 +657,7 @@
       </ng-container>
 
 
-      <div class="col-md-4 col-sm-12" [ngClass]="{'disabled': true}">
+      <div class="col-md-4 col-sm-12" [ngClass]="{'disabled': true}" *ngIf="!isNewRequest">
         <label for="registeredInAPS" class="form-label colorTextPrimari">Registro en APS</label>
         <input
         id="registeredInAPS"
@@ -664,7 +667,7 @@
         class="form-control">
       </div>
 
-      <div class="col-md-4 col-sm-12" [ngClass]="{'disabled': true}">
+      <div class="col-md-4 col-sm-12" [ngClass]="{'disabled': true}" *ngIf="!isNewRequest">
         <label for="discountPercentage" class="form-label colorTextPrimari">Porcentaje de Descuento</label>
         <input
         id="discountPercentage"
@@ -704,21 +707,38 @@
 
     </div>
 
-    <div class="d-flex justify-content-end mt-2" *ngIf="[4, 5].includes(this.rolUser)">
+    <div class="d-flex justify-content-end mt-2" *ngIf="canEdit(rolUser)">
 
       <a href="#" (click)="editAdditionalInformation($event)" *ngIf="!(isEditingAdditionalInformation | async)">Editar</a>
 
       <div *ngIf="(isEditingAdditionalInformation | async)">
 
-        <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updateAdditionalInformation($event)">Actualizar</button>
+        <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updateAdditionalInformation($event)">Actualizar</button>
         <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="cancelEditAdditionalInformation($event)" >Cancelar</button>
 
       </div>
     </div>
   </div>
+
+  <div class="card row py-3 mb-3" *ngIf="isNewRequest">
+    <div class="d-flex flex-row justify-content-center">
+      <div class="form-check form-switch mb-2 colorTextPrimari">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        formControlName="authCheck"
+        (change)="valueAuth($event)"
+        [ngClass]="{'is-invalid': ((updateRequestForm.controls.authCheck.touched && updateRequestForm.controls.authCheck.errors || isFormSubmitted && updateRequestForm.controls.authCheck.errors) || (updateRequestForm.controls.authCheck.touched && updateRequestForm.controls.authCheck.value == false || isFormSubmitted && updateRequestForm.controls.authCheck.value == false))}">
+        <label class="form-check-label" >He leído y acepto los <a (click)="openTerminosyCondiciones()" class="link">Términos y Condiciones</a> y la <a (click)="openPoliticadePrivacidad()" class="link">Política de Privacidad</a></label>
+        <div *ngIf="(isFormSubmitted && updateRequestForm.controls.authCheck.errors?.required) || (updateRequestForm.controls.authCheck.touched && updateRequestForm.controls.authCheck.value == false || isFormSubmitted && updateRequestForm.controls.authCheck.value == false)" class="invalid-feedback">Debe aceptar los términos y condiciones</div>
+      </div>
+    </div>
+  </div>
+
   <div class="card row py-3">
     <div class="d-flex justify-content-center align-items-center">
-      <button type="submit" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="return()" >Regresar</button>
+      <button *ngIf="isNewRequest" type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="createRequest($event)" >Generar</button>
+      <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="return()" >Regresar</button>
     </div>
   </div>
 </form>

@@ -36,9 +36,9 @@ export class ViewAdminRequestsComponent implements OnInit {
 
   ) {
 
-    this.userloggedRut = this.loggedService.rutUserValue();
+    this.userloggedRut = JSON.parse(window.sessionStorage.getItem("auth-user"));
 
-    this.userloggedRole = this.loggedService.roleUserValue();
+    this.userloggedRole = JSON.parse(window.sessionStorage.getItem("rol-user"));
 
     this.countSolicitudes = 0;
 
@@ -61,6 +61,7 @@ export class ViewAdminRequestsComponent implements OnInit {
   getAllRequest() {
     this.date.getAllRequest().subscribe( result => {
 
+      console.log(result);
 
       this.unassignedRequest = result.data_complete;
 

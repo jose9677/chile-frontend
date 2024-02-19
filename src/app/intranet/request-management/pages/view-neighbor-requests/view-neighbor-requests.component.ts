@@ -41,8 +41,8 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
   ngOnInit(): void {
 
-     this.rutNeighbor = this.loggedService.rutUserValue();
-     this.userloggedRole = this.loggedService.roleUserValue();
+     this.rutNeighbor = JSON.parse(window.sessionStorage.getItem("auth-user"));
+     this.userloggedRole = JSON.parse(window.sessionStorage.getItem("rol-user"));
 
 
     this.getForRut();
@@ -51,7 +51,10 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
   getForRut() {
 
+    let requestForUser: any[] = [];
+
     this.date.getForRut(this.rutNeighbor).subscribe( result => {
+
 
       result.map((res: any)=>{
 
@@ -66,10 +69,12 @@ export class ViewNeighborRequestsComponent implements OnInit {
           res['displayStatus'] = res.status_emp;
         }
 
-        window.sessionStorage.setItem("status-request", JSON.stringify(res.id_status));
+        // window.sessionStorage.setItem("status-request", JSON.stringify(res.id_status));
 
-        this.unassignedRequest.push(res);
       })
+
+
+      requestForUser = result;
 
     },
     error => {
@@ -83,10 +88,10 @@ export class ViewNeighborRequestsComponent implements OnInit {
     },
     () => {
 
+      this.unassignedRequest = requestForUser;
 
     });
   }
-
 
   viewDate (id_request: any) {
 
@@ -100,8 +105,10 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
   }
 
-  createDate () {
-    this.router.navigate(['citas/crear-cita'])
+  createDate (e: Event) {
+
+    e.preventDefault();
+    this.router.navigate(['citas/crear-cita'], {queryParams: {rut_user: this.rutNeighbor}});
   }
 
 

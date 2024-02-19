@@ -40,8 +40,8 @@ export class ViewVisitorRequestsComponent implements OnInit {
   ) {
 
     // this.rutUserLogged = window.sessionStorage.getItem('auth-user')
-    this.rutUserLogged = this.loggedService.rutUserValue();
-    this.roleUserLogged = this.loggedService.roleUserValue();
+    this.rutUserLogged = JSON.parse(window.sessionStorage.getItem("auth-user"));
+    this.roleUserLogged = JSON.parse(window.sessionStorage.getItem("rol-user"));
 
     this.unassignedRequest = [];
 

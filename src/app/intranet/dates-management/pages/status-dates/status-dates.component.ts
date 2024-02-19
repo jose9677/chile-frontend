@@ -11,6 +11,9 @@ import {default as mockDataForm} from '../../mocks/dataSelectForm.json'
 import {default as changesData} from '../../mocks/changesData.json'
 import { ModalComponent } from 'src/app/public/auth/shared/modals/modal/modal.component';
 import { EvaluateChangesService } from '../../shared/services/evaluate-changes.service';
+import { LoggedService } from 'src/app/shared/services/logged.service';
+import { TermsAndConditionsComponent } from 'src/app/public/auth/pages/register/terms-and-conditions/terms-and-conditions.component';
+import { PrivacyPolicyComponent } from 'src/app/public/auth/pages/register/privacy-policy/privacy-policy.component';
 
 @Component({
   selector: 'app-status-dates',
@@ -20,7 +23,7 @@ import { EvaluateChangesService } from '../../shared/services/evaluate-changes.s
 export class StatusDatesComponent implements OnInit {
 
   private subscription: Subscription;
-  private approvalSubscription: Subscription;
+  // private approvalSubscription: Subscription;
 
 
   public isEditingPersonalData: Observable<boolean>;
@@ -37,6 +40,7 @@ export class StatusDatesComponent implements OnInit {
   public errors: any = null;
 
   private idRequestSubscription: Subscription;
+  private rutUseSubscription: Subscription;
 
   public idRequest: any;
 
@@ -85,11 +89,16 @@ export class StatusDatesComponent implements OnInit {
   public rolUser: any;
 
   public rutEmployee: any;
+  public rutNeighbor: any;
 
   public modifiedData: any = [];
   public originalData: any = [];
 
   public editingStatus: any = ['1','2'];
+
+  public isNewRequest: boolean;
+
+  private validateNewRequest: any = Validators.required;
 
 
   // public acceptChange: any = false;
@@ -109,37 +118,7 @@ export class StatusDatesComponent implements OnInit {
   //   this.updateRequestForm.controls.names.setValue(this.dataRequest[0].names);
   // }
 
-  public updateRequestForm: any = this.fb.group({
-    rut: ['', []],
-    names: ['',[Validators.required, Validators.pattern(/^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ ]+$/)]],
-    lastNames: ['', [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ ]+$/)]],
-    gender: ['', [ Validators.required]],
-    datesBirth: ['', [Validators.required]],
-    email: ['', [Validators.required, CustomValidators.email]],
-    landLine: ['', [Validators.minLength(9)]],
-    mobilePhone: ['', [Validators.required, Validators.minLength(9)]],
-
-    requestNumber: ['', []],
-    dateRequest: ['', []],
-    statusRequest: ['', []],
-    statusEmp: ['', [Validators.required]],
-    preventionsTypes: ['', [Validators.required]],
-    preventionsTypesDetails: ['', [Validators.required]],
-    haveInsurance: ['', [Validators.required]],
-    directionToUse: ['', [Validators.required]],
-    addressRegisteredToPage: this.fb.array([]),
-    addressWots: this.fb.array([]),
-
-    documents: this.fb.array([]),
-    documents2: this.fb.array([]),
-
-    isCaretaker: ['', [Validators.required]],
-    dataCaretaker: this.fb.array([]),
-    registeredInAPS: ['', []],
-    discountPercentage: ['', []],
-    dataOrigin: ['', []],
-    comments: ['', []]
-  });
+  public updateRequestForm: any;
 
   constructor(
     private routerQuery: ActivatedRoute,
@@ -147,13 +126,18 @@ export class StatusDatesComponent implements OnInit {
     private dateService: DatesService,
     private evaluateChangesServices: EvaluateChangesService,
     private modalService: ModalsService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private loggedService: LoggedService
 
   ) {
 
-    this.rutEmployee = JSON.parse(window.sessionStorage.getItem('auth-user'));
-    this.rolUser = JSON.parse(window.sessionStorage.getItem('rol-user'));
+    this.isFormSubmitted = false;
+    this.documentIsValid = false;
+    this.isNewRequest = false;
 
+    this.rolUser = JSON.parse(window.sessionStorage.getItem("rol-user"));
+
+    this.rutEmployee = JSON.parse(window.sessionStorage.getItem("auth-user"));
 
     this.maxDate = new Date()
     this.maxDate = `${this.maxDate.getFullYear() - 1}-${(this.maxDate.getMonth())+1}-${this.maxDate.getDate()}`
@@ -161,14 +145,49 @@ export class StatusDatesComponent implements OnInit {
     this.minDate = new Date();
     this.minDate = `${this.minDate.getFullYear() - 124 }-${(this.minDate.getMonth())+1}-${this.minDate.getDate()}`;
 
+    this.rutUseSubscription = this.routerQuery.queryParams.subscribe(rut_user => this.rutNeighbor = rut_user.rut_user);
 
-    this.isEditingPersonalData = this.evaluateChangesServices.editingPersonalDataObservable;
-    this.isEditingRequestData = this.evaluateChangesServices.EditingRequestDataObservable;
-    this.isEditingDocuments = this.evaluateChangesServices.EditingDocumentsObservable
-    this.isEditingAdditionalInformation = this.evaluateChangesServices.EditingAdditionalInformationObservable;
+    if (this.rutNeighbor) {
 
-    this.isFormSubmitted = false;
-    this.documentIsValid = false;
+      this.isNewRequest = true;
+
+      this.validateNewRequest = Validators.nullValidator;
+
+    }
+
+    this.updateRequestForm = this.fb.group({
+      rut: ['', []],
+      names: ['',[ Validators.required, Validators.pattern(/^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ ]+$/)]],
+      lastNames: ['', [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ ]+$/)]],
+      gender: ['', [ Validators.required]],
+      datesBirth: ['', [Validators.required]],
+      email: ['', [Validators.required, CustomValidators.email]],
+      landLine: ['', [Validators.minLength(9)]],
+      mobilePhone: ['', [Validators.required, Validators.minLength(9)]],
+
+      requestNumber: ['', []],
+      dateRequest: ['', []],
+      statusRequest: ['', []],
+      statusEmp: ['', [this.validateNewRequest]],
+      preventionsTypes: ['', [Validators.required]],
+      preventionsTypesDetails: ['', [Validators.required]],
+      haveInsurance: ['', [Validators.required]],
+      directionToUse: ['', [Validators.required]],
+      addressRegisteredToPage: this.fb.array([]),
+      addressWots: this.fb.array([]),
+
+      documents: this.fb.array([]),
+      documents2: this.fb.array([]),
+
+      isCaretaker: ['', [Validators.required]],
+      dataCaretaker: this.fb.array([]),
+      registeredInAPS: ['', []],
+      discountPercentage: ['', []],
+      dataOrigin: ['', []],
+      comments: ['', []],
+      authCheck: ['', this.isNewRequest ? [ Validators.required ] : [ Validators.nullValidator ] ]
+    });
+
 
     this.documentsDom = [];
 
@@ -188,8 +207,13 @@ export class StatusDatesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isEditingPersonalData = this.evaluateChangesServices.editingPersonalDataObservable;
+    this.isEditingRequestData = this.evaluateChangesServices.EditingRequestDataObservable;
+    this.isEditingDocuments = this.evaluateChangesServices.EditingDocumentsObservable;
+    this.isEditingAdditionalInformation = this.evaluateChangesServices.EditingAdditionalInformationObservable;
 
     this.idRequestSubscription = this.routerQuery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
+
 
 
 
@@ -211,6 +235,7 @@ export class StatusDatesComponent implements OnInit {
     this.willBeDeleted();
 
     // this.getDataUserModified();
+
   }
 
 
@@ -327,8 +352,11 @@ export class StatusDatesComponent implements OnInit {
 
       if (this.updateRequestForm.value.dataCaretaker.length === 0) this.addDateCaretaker();
 
+      if ( this.isNewRequest ) return;
+
       if(this.dataRequest.length !== 0){
       }
+
       const f = this.updateRequestForm.controls;
       const {motive, dedication, remuneration, comments} = this.dataRequest[0];
 
@@ -393,8 +421,16 @@ export class StatusDatesComponent implements OnInit {
 
     if ( file.type == "image/jpeg" || file.type == "application/pdf" || file.type == "image/png") {
 
+      if( this.isNewRequest) {
 
-      this.listFilesUpload.push({'fileData': file, 'id_document_type': id_document_type});
+        this.listFilesUpload.push({'document_path': file, 'id_document_type': id_document_type, 'rut_user': this.rutNeighbor});
+      } else {
+
+        this.listFilesUpload.push({'fileData': file, 'id_document_type': id_document_type});
+
+      }
+
+
 
       this.documentIsValid = true;
 
@@ -426,7 +462,7 @@ export class StatusDatesComponent implements OnInit {
 
       const f = this.updateRequestForm.controls;
 
-      if(!this.evaluateChangesServices.viewEditingPersonalData()) {
+      if(!this.evaluateChangesServices.viewEditingPersonalData() || this.isNewRequest) {
         f.rut.setValue(rut);
         f.names.setValue(names);
         f.lastNames.setValue(lastNames);
@@ -437,7 +473,7 @@ export class StatusDatesComponent implements OnInit {
         f.mobilePhone.setValue(mobilePhone);
       }
 
-      if(!this.evaluateChangesServices.viewEditingRequestData()) {
+      if(!this.evaluateChangesServices.viewEditingRequestData() || this.isNewRequest) {
 
         f.haveInsurance.setValue(haveInsurance);
 
@@ -467,7 +503,16 @@ export class StatusDatesComponent implements OnInit {
 
         this.preventionDetailRequest = this.preventionDetailRequest.prevention_detail;
 
-        f.directionToUse?.setValue(originDirection.toUpperCase());
+
+        if ( this.isNewRequest ){
+
+          f.directionToUse?.setValue('REGISTRO POR PAGINA');
+
+        }else {
+
+          f.directionToUse?.setValue(originDirection.toUpperCase());
+
+        }
 
         this.statusOriginAddress();
 
@@ -481,17 +526,14 @@ export class StatusDatesComponent implements OnInit {
         this.generateFullAddress();
       }
 
-      
+
       if( this.evaluateChangesServices.viewEditingDocuments() &&  this.listFilesUpload.length !== 0) this.listFilesUpload = [];
 
       if(!this.evaluateChangesServices.viewEditingDocuments()) {
 
-       
-
         this.documentsDom = [];
         this.documentsPre = [];
         documents.map((res) => {
-
 
           if ( res.id_document_type === 1 ) {
             this.documentsDom.push({
@@ -516,7 +558,7 @@ export class StatusDatesComponent implements OnInit {
         })
       }
 
-      if(!this.evaluateChangesServices.viewEditingAdditionalInformation()) {
+      if(!this.evaluateChangesServices.viewEditingAdditionalInformation() || this.isNewRequest) {
 
         f.isCaretaker.setValue(isCaretaker);
         this.statusCaretaker(isCaretaker);
@@ -637,11 +679,66 @@ export class StatusDatesComponent implements OnInit {
 
       this.fillForm(dataRequest);
 
-
-
-
-
     });
+
+  }
+
+  getDataUserForRut() {
+
+    this.evaluateChangesServices.changeEditingPersonalData(true);
+    this.evaluateChangesServices.changeEditingRequestData(true);
+    this.evaluateChangesServices.changeEditingDocuments (true);
+    this.evaluateChangesServices.changeEditingAdditionalInformation(true);
+
+    let dataUser: any[] = [];
+
+    this.dateService.getDataUserForRut(this.rutNeighbor).subscribe((result) => {
+
+      const {names, lastname, id_sex, f_nac, email, landline, mobile_phone, origin} = result[0];
+
+      dataUser.push({
+        rut: this.rutNeighbor,
+        names: names,
+        lastNames: lastname,
+        gender: id_sex,
+        datesBirth: f_nac,
+        email: email,
+        landLine: landline,
+        mobilePhone: mobile_phone,
+        // idRequest: '',
+        // dateRequest: '',
+        // statusRequest: '',
+        // statusEmp: '',
+        preventionsTypes: 4,
+        preventionsTypesDetails: 13,
+        // haveInsurance: '',
+        // statusModDataUser: '',
+
+        originDirection: (origin === 'WOTS') || (origin === 'wots') ? origin : 'REGISTRO POR PAGINA',
+        // addressWots: address_wots ? address_wots : 'n/a',
+        // idLocation: id_location,
+        // wayNumber: way_number,
+        // idPropertyType: id_property_type,
+        // propertyNumber: property_number,
+
+        // documents: res.data_doc,
+
+        // isCaretaker: carer,
+        // motive: id_motive,
+        // dedication: id_dedication,
+        // remuneration: id_remuneration,
+        // registeredInAPS: aps === true ? 'Si' : 'No',
+        // discountPercentage: percent,
+        // dataOrigin: origin ? origin : 'REGISTRO POR PAGINA',
+        // comments: comments
+      })
+    },
+    error => {
+
+    },
+    () => {
+      this.fillForm(dataUser);
+    })
 
   }
 
@@ -658,8 +755,7 @@ export class StatusDatesComponent implements OnInit {
   };
 
   return() {
-    this.router.navigate(['/'])
-
+    this.router.navigate(['/']);
   }
 
   visitador(){
@@ -699,9 +795,6 @@ export class StatusDatesComponent implements OnInit {
 
     },
     error => {
-
-      console.error(error);
-
       let title: string = ''
       let message: string = "Su Solicitud no Pudo ser Procesada Intente Nuevamente";
       this.modalService.OpenModalError2(ModalComponent, true, title, message);
@@ -1130,14 +1223,117 @@ export class StatusDatesComponent implements OnInit {
     },
     () =>{
 
-    this.getDataRequestForId();
+      if (!this.isNewRequest) {
 
+        return this.getDataRequestForId();
+
+      }
+
+      return this.getDataUserForRut();
 
     })
   }
 
+  createRequest(e: Event) {
+
+    this.isFormSubmitted = true;
+
+    console.log(this.updateRequestForm.status);
+
+    if( this.updateRequestForm.status !== 'VALID') return
+
+  //   let dataReuquest: any = {
+  //     "rut_user": this.rutNeighbor,
+  //     "id_prevention_type_detail": 7,
+  //     "assurance": true,
+  //     "id_location": 1,
+  //     "way_number": 777,
+  //     "id_property_type": 1,
+  //     "property_number": "1",
+  //     "terms_condition": true,
+  //     "id_status": 1,
+  //     "applicant_at_home": false,
+  //     "prevention_is_valid": false,
+  //     "location_is_valid": false,
+  //     "comments":null,
+  //     "is_active": false,
+  //     "rut_match": false,
+  //     "carer": false,
+  //     "id_motive": 1,
+  //     "id_dedication": 1,
+  //     "id_remuneration": 1
+  // };
+
+
+  //   this.dateService.createRequest(this.dataRequest).subscribe((result) => {
+
+  //     console.log(result);
+
+  //   },
+  //   error => {
+
+  //   },
+  //   () => {
+
+
+    //   })
+
+        this.uploadFilesNewRequest();
+
+
+  }
+
+  uploadFilesNewRequest() {
+
+    this.listFilesUpload.map((res) => {
+      const  dataFiles: any = new FormData();
+
+      dataFiles.append("document_path", res.document_path);
+      dataFiles.append("rut_user", res.rut_user);
+      dataFiles.append("id_document_type", res.id_document_type);
+
+      this.dateService.uploadFilesNewRequest(dataFiles).subscribe((result) => {
+
+        console.log(result);
+      },
+      error => {
+
+      },
+      () => {
+
+      });
+
+    })
+
+    // this.router.navigate(['/']);
+
+  }
+
+canEdit(rolUser) {
+
+  return [4, 5].includes(rolUser);
+
+}
+
+valueAuth(e: any) {
+
+  if (e.target.checked === false) {
+    this.updateRequestForm.controls.authCheck.reset();
+  }
+
+}
+
+openTerminosyCondiciones(){
+  this.modalService.openModal(TermsAndConditionsComponent)
+}
+openPoliticadePrivacidad(){
+  this.modalService.openModal(PrivacyPolicyComponent)
+}
+
+
   ngOnDestroy() {
     this.idRequestSubscription.unsubscribe();
+    this.rutUseSubscription.unsubscribe();
     this.subscription.unsubscribe();
     this.evaluateChangesServices.changeEditingPersonalData(false);
     this.evaluateChangesServices.changeEditingRequestData(false);

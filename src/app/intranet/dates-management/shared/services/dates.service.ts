@@ -39,9 +39,7 @@ export class DatesService {
   getForRut(rutNeighbor: any): Observable<any | void> {
     return this.http.get<any>( AUTH_API + 'detail-neightbor/'+ rutNeighbor, httpOptions).pipe(map((result:any) => {
 
-
       return result['data_User_Request'];
-
 
     }),
     catchError((err)=> this.handlerError(err))
@@ -51,6 +49,43 @@ export class DatesService {
 
   getForIdRequest(idRequest: any): Observable<any | void> {
     return this.http.get<any>( AUTH_API_NP + 'consult-modify/'+ idRequest, httpOptions).pipe(map((result:any) => {
+
+      return result;
+
+    }),
+    catchError((err)=> this.handlerError(err))
+    );
+
+  }
+
+  getDataUserForRut(rutUser: any): Observable<any | void> {
+    return this.http.get<any>( AUTH_API_NP + 'get-data-user/'+ rutUser, httpOptions).pipe(map((result:any) => {
+
+      return result;
+
+    }),
+    catchError((err)=> this.handlerError(err))
+    );
+
+  }
+
+  createRequest(dataRequest: any): Observable<any | void> {
+    return this.http.post<any>( AUTH_API_NP + 'create-request', dataRequest, httpOptions).pipe(map((result:any) => {
+
+      return result;
+
+    }),
+    catchError((err)=> this.handlerError(err))
+    );
+
+  }
+
+  uploadFilesNewRequest(documentRequest: any): Observable<any | void> {
+
+    for (const value of documentRequest.keys()) {
+      console.log(value);
+    }
+    return this.http.post<any>( AUTH_API_NP + 'sol-doc', documentRequest).pipe(map((result:any) => {
 
       return result;
 
@@ -258,8 +293,6 @@ export class DatesService {
   private handlerError(err:any): Observable<never> { //pasa error al login component
     let errorMessage= 'An error ocurred';
     if (err) {
-      // this.errorMessage= `error code: ${err}`;
-
 
       if (err.status === 500) {
 
@@ -272,7 +305,6 @@ export class DatesService {
         this.errorMessage= err.error;
 
       }
-
 
     }
 

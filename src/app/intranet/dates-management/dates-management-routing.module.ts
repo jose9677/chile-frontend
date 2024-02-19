@@ -20,7 +20,7 @@ const routes: Routes = [
     children: [
       {
         path: 'crear-cita',
-        component: CreateDatesComponent,
+        component: StatusDatesComponent,
         canActivate: [Access1Guard]
 
       },

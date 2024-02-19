@@ -11,13 +11,25 @@
     <div class="card stretch-card">
       <div class="card-body">
         <h3 class="colorTextPrimari pb-3">Tus Solicitudes</h3>
-        <div class="table-responsive">
-          <div class="input-group col-md-4 mb-3">
-            <input type="text" class="form-control" placeholder="Buscar..." #txtSearch (keyup)="sortByService.onSearch(txtSearch.value)">
-            <div class="input-group-append">
-              <span class="input-group-text" id="basic-addon2"><i class="mdi mdi-magnify"></i></span>
+
+        <div class="row">
+          <div class="col-md-10 mb-3">
+            <div class="input-group col-md-10 mb-3">
+              <input type="text" class="form-control" placeholder="Buscar..." #txtSearch (keyup)="sortByService.onSearch(txtSearch.value)">
+              <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2"><i class="mdi mdi-magnify"></i></span>
+              </div>
             </div>
           </div>
+          <div class="col-md-2 justify-content-center align-self-end p-0  mb-3">
+            <a class="p-0 m-0 d-flex justify-content-start align-items-center" (click)="createDate( $event )" >
+                <i class="mdi mdi-plus-circle-outline h2 icon-success"></i>
+                <p class=" colorTextPrimari h4 p-0 m-0"> Nueva solicitud </p>
+            </a>
+          </div>
+        </div>
+        <div class="table-responsive">
+
           <table class="table">
             <thead>
               <tr>

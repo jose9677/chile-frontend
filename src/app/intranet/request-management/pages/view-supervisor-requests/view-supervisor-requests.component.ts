@@ -36,8 +36,8 @@ export class ViewSupervisorRequestsComponent implements OnInit {
   ) {
 
     // this.userloggedRut = sessionStorage.getItem('auth-user');
-    this.userloggedRut = this.loggedService.rutUserValue();
-    this.userloggedRole = this.loggedService.roleUserValue();
+    this.userloggedRut = JSON.parse(window.sessionStorage.getItem("auth-user"));
+    this.userloggedRole = JSON.parse(window.sessionStorage.getItem("rol-user"));
 
     this.unassignedRequest = [];
 
@@ -65,7 +65,7 @@ export class ViewSupervisorRequestsComponent implements OnInit {
 
     this.date.getAllRequest().subscribe( result => {
 
-
+      console.log(result);
 
       result.data_complete.map((res: any)=>{
 
