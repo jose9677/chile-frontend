@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatesService } from 'src/app/intranet/dates-management/shared/services/dates.service';
 import { ModalsService } from 'src/app/shared/services/modals.service';
-import { any } from 'underscore';
 import { SortByTablesService } from '../../shared/services/sort-by-tables.service';
 import { LoggedService } from 'src/app/shared/services/logged.service';
 

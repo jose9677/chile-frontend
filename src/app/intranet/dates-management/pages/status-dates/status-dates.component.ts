@@ -1240,45 +1240,51 @@ export class StatusDatesComponent implements OnInit {
 
     console.log(this.updateRequestForm.status);
 
-    if( this.updateRequestForm.status !== 'VALID') return
+    if( this.updateRequestForm.status !== 'VALID') return;
 
-  //   let dataReuquest: any = {
-  //     "rut_user": this.rutNeighbor,
-  //     "id_prevention_type_detail": 7,
-  //     "assurance": true,
-  //     "id_location": 1,
-  //     "way_number": 777,
-  //     "id_property_type": 1,
-  //     "property_number": "1",
-  //     "terms_condition": true,
-  //     "id_status": 1,
-  //     "applicant_at_home": false,
-  //     "prevention_is_valid": false,
-  //     "location_is_valid": false,
-  //     "comments":null,
-  //     "is_active": false,
-  //     "rut_match": false,
-  //     "carer": false,
-  //     "id_motive": 1,
-  //     "id_dedication": 1,
-  //     "id_remuneration": 1
-  // };
+    const {rut, names, lastNames, gender, datesBirth, email, landLine, mobilePhone, preventionsTypes, preventionsTypesDetails, haveInsurance, directionToUse, addressRegisteredToPage, authCheck, isCaretaker, dataCaretaker} = this.updateRequestForm.value;
 
+    let dataRequest: any = {
+      "rut_user": rut,
+      "names": names,
+      "lastname": lastNames,
+      "id_sex": gender,
+      "f_nac": datesBirth,
+      "email": email,
+      "landline": landLine,
+      "mobile_phone": mobilePhone,
+      "id_prevention_type_detail": preventionsTypesDetails,
+      "assurance": haveInsurance,
+      "id_location": addressRegisteredToPage['0'].location,
+      "way_number": addressRegisteredToPage['0'].numberStreet,
+      "id_property_type": addressRegisteredToPage['0'].propertyType,
+      "property_number": addressRegisteredToPage['0'].nameHome,
+      "terms_condition": authCheck,
+      "carer": isCaretaker,
+      "id_motive": dataCaretaker['0']?.reason,
+      "id_dedication": dataCaretaker['0']?.dedicationsTypes,
+      "id_remuneration": dataCaretaker['0']?.remunerationType
+  };
 
-  //   this.dateService.createRequest(this.dataRequest).subscribe((result) => {
+  console.log(dataRequest);
+  // return
 
-  //     console.log(result);
+  this.dateService.createRequest(dataRequest).subscribe((result) => {
 
-  //   },
-  //   error => {
+    console.log(result);
 
-  //   },
-  //   () => {
+  },
+  error => {
 
+  },
+  () => {
 
-    //   })
+    this.uploadFilesNewRequest();
 
-        this.uploadFilesNewRequest();
+    this.router.navigate(['/']);
+
+    })
+
 
 
   }
@@ -1301,11 +1307,11 @@ export class StatusDatesComponent implements OnInit {
       },
       () => {
 
+
       });
 
     })
 
-    // this.router.navigate(['/']);
 
   }
 
