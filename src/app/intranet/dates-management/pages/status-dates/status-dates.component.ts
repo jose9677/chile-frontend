@@ -1238,11 +1238,9 @@ export class StatusDatesComponent implements OnInit {
 
     this.isFormSubmitted = true;
 
-    console.log(this.updateRequestForm.status);
-
     if( this.updateRequestForm.status !== 'VALID') return;
 
-    const {rut, names, lastNames, gender, datesBirth, email, landLine, mobilePhone, preventionsTypes, preventionsTypesDetails, haveInsurance, directionToUse, addressRegisteredToPage, authCheck, isCaretaker, dataCaretaker} = this.updateRequestForm.value;
+    const {rut, names, lastNames, gender, datesBirth, email, landLine, mobilePhone, preventionsTypesDetails, haveInsurance, addressRegisteredToPage, authCheck, isCaretaker, dataCaretaker} = this.updateRequestForm.value;
 
     let dataRequest: any = {
       "rut_user": rut,
@@ -1264,32 +1262,31 @@ export class StatusDatesComponent implements OnInit {
       "id_motive": dataCaretaker['0']?.reason,
       "id_dedication": dataCaretaker['0']?.dedicationsTypes,
       "id_remuneration": dataCaretaker['0']?.remunerationType
-  };
+    };
 
-  console.log(dataRequest);
-  // return
+    this.dateService.createRequest(dataRequest).subscribe((result) => {
 
-  this.dateService.createRequest(dataRequest).subscribe((result) => {
+    },
+    error => {
 
-    console.log(result);
+      let title: string = ''
+      let message: string = '';
 
-  },
-  error => {
+      if (error.error === 'this user has a solicitude active') message = "Usted ya posee una solicitud activa";
 
-  },
-  () => {
+      this.modalService.OpenModalError2(ModalComponent, true, title, message);
 
-    this.uploadFilesNewRequest();
+    },
+    () => {
 
-    this.router.navigate(['/']);
+      this.uploadFilesNewRequest();
 
     })
-
-
-
   }
 
   uploadFilesNewRequest() {
+
+    let count = 0;
 
     this.listFilesUpload.map((res) => {
       const  dataFiles: any = new FormData();
@@ -1300,15 +1297,30 @@ export class StatusDatesComponent implements OnInit {
 
       this.dateService.uploadFilesNewRequest(dataFiles).subscribe((result) => {
 
-        console.log(result);
       },
       error => {
+
+        let title: string = ''
+        let message: string = "El archivo no puedo ser cargado.";
+        this.modalService.OpenModalError2(ModalComponent, false, title, message);
 
       },
       () => {
 
+        count = count + 1;
 
+        if ( this.listFilesUpload.length === count) {
+
+          let title: string = ''
+          let message: string = "La solicitud se ha creado exitosamente";
+          this.modalService.OpenModalError2(ModalComponent, false, title, message);
+
+          this.router.navigate(['/']);
+
+
+        }
       });
+
 
     })
 
