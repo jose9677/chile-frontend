@@ -54,6 +54,8 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
     this.date.getForRut(this.rutNeighbor).subscribe( result => {
 
+      console.log(result);
+
 
       result.map((res: any)=>{
 

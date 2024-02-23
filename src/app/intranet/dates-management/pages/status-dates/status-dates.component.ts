@@ -1274,6 +1274,8 @@ export class StatusDatesComponent implements OnInit {
 
       if (error.error === 'this user has a solicitude active') message = "Usted ya posee una solicitud activa";
 
+      message = "Ha ocurrido un error intente mas tarde";
+
       this.modalService.OpenModalError2(ModalComponent, true, title, message);
 
     },

@@ -55,6 +55,7 @@
                     <!-- <button *ngIf="request.id_status != 1" (click)="viewDate(request.id_request)" ><i class="mdi mdi-eye" style="font-size: 1.5em;"></i></button> -->
                     <button (click)="viewDate(request.id_request)" ><i class="mdi mdi-eye" style="font-size: 1.5em;"></i></button>
                     <button  *ngIf="request.id_status == 3" (click)="confirmDate(request.id_request)" ><i class="mdi mdi-calendar-check" style="font-size: 1.5em;"></i></button>
+                    <button  *ngIf="request.id_status == 13" (click)="confirmDate(request.id_request)" ><i class="mdi mdi-check-circle-outline text-success m-0 p-0" style="font-size: 1.5em;"></i></button>
                   </td>
                 </tr>
             </tbody>
