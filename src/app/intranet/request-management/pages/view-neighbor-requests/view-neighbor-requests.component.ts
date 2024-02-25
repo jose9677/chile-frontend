@@ -54,7 +54,13 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
     this.date.getForRut(this.rutNeighbor).subscribe( result => {
 
-      console.log(result);
+      let lastRequest = (result.sort((a, b) => b.id_request - a.id_request)).slice(0,1);
+
+      let statusLastRequest = lastRequest[0].id_status;
+
+      let isExpiredRequest = [7, 14].includes(statusLastRequest);
+
+      sessionStorage.setItem('isExpiredRequest', isExpiredRequest.toString());
 
 
       result.map((res: any)=>{

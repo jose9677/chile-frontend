@@ -131,6 +131,8 @@ export class StatusDatesComponent implements OnInit {
 
   ) {
 
+
+
     this.isFormSubmitted = false;
     this.documentIsValid = false;
     this.isNewRequest = false;
@@ -146,14 +148,6 @@ export class StatusDatesComponent implements OnInit {
     this.minDate = `${this.minDate.getFullYear() - 124 }-${(this.minDate.getMonth())+1}-${this.minDate.getDate()}`;
 
     this.rutUseSubscription = this.routerQuery.queryParams.subscribe(rut_user => this.rutNeighbor = rut_user.rut_user);
-
-    if (this.rutNeighbor) {
-
-      this.isNewRequest = true;
-
-      this.validateNewRequest = Validators.nullValidator;
-
-    }
 
     this.updateRequestForm = this.fb.group({
       rut: ['', []],
@@ -207,15 +201,13 @@ export class StatusDatesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.isEditingPersonalData = this.evaluateChangesServices.editingPersonalDataObservable;
     this.isEditingRequestData = this.evaluateChangesServices.EditingRequestDataObservable;
     this.isEditingDocuments = this.evaluateChangesServices.EditingDocumentsObservable;
     this.isEditingAdditionalInformation = this.evaluateChangesServices.EditingAdditionalInformationObservable;
 
     this.idRequestSubscription = this.routerQuery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
-
-
-
 
     this.subscription = this.dateService.refresh$.subscribe( () => {
       // this.getDataRequestForId();
@@ -230,11 +222,41 @@ export class StatusDatesComponent implements OnInit {
     //   // this.dataSelectForm();
     // })
 
+    if(this.router.url === '/citas/crear-cita') this.rutNeighbor = this.rutEmployee;
+
+    if (this.rutNeighbor) {
+      const isExpiredRequest = JSON.parse(sessionStorage.getItem('isExpiredRequest'));
+
+      if(!isExpiredRequest) {
+
+        let title: string = ''
+        let message = "No es posible generar una nueva solicitud, usted ya posee una solicitud activa";
+
+        this.modalService.OpenModalError2(ModalComponent, true, title, message);
+
+        this.router.navigate(['/']);
+
+        return
+
+      }
+
+      this.isNewRequest = true;
+
+      this.validateNewRequest = Validators.nullValidator;
+
+
+
+    }
+
     this.dataSelectForm();
 
     this.willBeDeleted();
 
     // this.getDataUserModified();
+
+
+
+
 
   }
 
@@ -493,15 +515,15 @@ export class StatusDatesComponent implements OnInit {
 
         this.changePrevision(preventionsTypes);
 
-        this.preventionTypeRequest =  this.preventionsTypes.find(({id}) => id === Number(this.updateRequestForm.value.preventionsTypes));
+        this.preventionTypeRequest =  this.preventionsTypes?.find(({id}) => id === Number(this.updateRequestForm.value.preventionsTypes));
 
-        this.preventionTypeRequest = this.preventionTypeRequest.prevention_type;
+        this.preventionTypeRequest = this.preventionTypeRequest?.prevention_type;
 
         f.preventionsTypesDetails.setValue(preventionsTypesDetails);
 
         this.preventionDetailRequest = this.preventionDetails.find(({id})=> id === Number( this.updateRequestForm.value.preventionsTypesDetails));
 
-        this.preventionDetailRequest = this.preventionDetailRequest.prevention_detail;
+        this.preventionDetailRequest = this.preventionDetailRequest?.prevention_detail;
 
 
         if ( this.isNewRequest ){
@@ -709,8 +731,8 @@ export class StatusDatesComponent implements OnInit {
         // dateRequest: '',
         // statusRequest: '',
         // statusEmp: '',
-        preventionsTypes: 4,
-        preventionsTypesDetails: 13,
+        // preventionsTypes: 4,
+        // preventionsTypesDetails: 13,
         // haveInsurance: '',
         // statusModDataUser: '',
 
@@ -1272,9 +1294,9 @@ export class StatusDatesComponent implements OnInit {
       let title: string = ''
       let message: string = '';
 
-      if (error.error === 'this user has a solicitude active') message = "Usted ya posee una solicitud activa";
-
       message = "Ha ocurrido un error intente mas tarde";
+
+      if (error.error === 'this user has a solicitude active') message = "Usted ya posee una solicitud activa";
 
       this.modalService.OpenModalError2(ModalComponent, true, title, message);
 

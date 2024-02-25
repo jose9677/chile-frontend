@@ -25,6 +25,11 @@ export const MENU: MenuItem[] = [
         link: '/solicitud/solicitudes-de-inscripcion',
       },
       {
+        roles: [1, 5],
+        label: 'Crear solicitud',
+        link: '/citas/crear-cita',
+      },
+      {
         roles: [3, 5],
         label: 'Asignar Asistente Social',
         link: '/solicitud/asignar-asistente-social'
