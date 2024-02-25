@@ -149,6 +149,16 @@ export class StatusDatesComponent implements OnInit {
 
     this.rutUseSubscription = this.routerQuery.queryParams.subscribe(rut_user => this.rutNeighbor = rut_user.rut_user);
 
+    if(this.router.url === '/citas/crear-cita') this.rutNeighbor = this.rutEmployee;
+
+    if(this.rutNeighbor) {
+
+      this.isNewRequest = true;
+
+      this.validateNewRequest = Validators.nullValidator;
+    }
+
+
     this.updateRequestForm = this.fb.group({
       rut: ['', []],
       names: ['',[ Validators.required, Validators.pattern(/^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ ]+$/)]],
@@ -222,9 +232,9 @@ export class StatusDatesComponent implements OnInit {
     //   // this.dataSelectForm();
     // })
 
-    if(this.router.url === '/citas/crear-cita') this.rutNeighbor = this.rutEmployee;
 
     if (this.rutNeighbor) {
+
       const isExpiredRequest = JSON.parse(sessionStorage.getItem('isExpiredRequest'));
 
       if(!isExpiredRequest) {
@@ -240,11 +250,6 @@ export class StatusDatesComponent implements OnInit {
 
       }
 
-      this.isNewRequest = true;
-
-      this.validateNewRequest = Validators.nullValidator;
-
-
 
     }
 
@@ -253,10 +258,6 @@ export class StatusDatesComponent implements OnInit {
     this.willBeDeleted();
 
     // this.getDataUserModified();
-
-
-
-
 
   }
 
@@ -409,7 +410,7 @@ export class StatusDatesComponent implements OnInit {
 
   deleteDocument( DocumentIndex: any ) {
 
-    this.dataDocumentsArray.removeAt(DocumentIndex);
+    if (this.dataDocumentsArray.value.length > 1) this.dataDocumentsArray.removeAt(DocumentIndex);
 
   }
 
@@ -428,7 +429,7 @@ export class StatusDatesComponent implements OnInit {
 
   deleteDocument2( DocumentIndex: any ) {
 
-    this.dataDocuments2Array.removeAt(DocumentIndex);
+    if (this.dataDocuments2Array.length > 1) this.dataDocuments2Array.removeAt(DocumentIndex);
 
   }
 
@@ -515,15 +516,9 @@ export class StatusDatesComponent implements OnInit {
 
         this.changePrevision(preventionsTypes);
 
-        this.preventionTypeRequest =  this.preventionsTypes?.find(({id}) => id === Number(this.updateRequestForm.value.preventionsTypes));
-
-        this.preventionTypeRequest = this.preventionTypeRequest?.prevention_type;
-
         f.preventionsTypesDetails.setValue(preventionsTypesDetails);
 
-        this.preventionDetailRequest = this.preventionDetails.find(({id})=> id === Number( this.updateRequestForm.value.preventionsTypesDetails));
-
-        this.preventionDetailRequest = this.preventionDetailRequest?.prevention_detail;
+        this.changePrevisionTypes(preventionsTypesDetails);
 
 
         if ( this.isNewRequest ){
@@ -614,7 +609,20 @@ export class StatusDatesComponent implements OnInit {
     })
 
     this.updateRequestForm.controls.preventionsTypesDetails.reset();
+    this.statusDocuments();
     this.preventionDetails = preventionDetails;
+
+    this.preventionTypeRequest =  this.preventionsTypes?.find(({id}) => id === Number(this.updateRequestForm.value.preventionsTypes));
+
+    this.preventionTypeRequest = this.preventionTypeRequest?.prevention_type;
+  }
+
+  changePrevisionTypes( e: Event) {
+
+
+    this.preventionDetailRequest = this.preventionDetails.find(({id})=> id === Number( this.updateRequestForm.value.preventionsTypesDetails));
+
+    this.preventionDetailRequest = this.preventionDetailRequest?.prevention_detail;
 
   }
 
@@ -1097,7 +1105,8 @@ export class StatusDatesComponent implements OnInit {
     this.dataDocuments2Array.clear();
 
     if (this.documentsPre.length === 0) {
-      this.addDocument();
+
+      if ((this.updateRequestForm.value.preventionsTypes ) && (this.updateRequestForm.value.preventionsTypes !== 4)) this.addDocument();
     }
     if (this.documentsDom.length === 0) {
       this.addDocument2 ();

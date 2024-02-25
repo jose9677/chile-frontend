@@ -268,6 +268,7 @@
           [clearable]="false"
           formControlName="preventionsTypesDetails"
           placeholder="Seleccione"
+          (change)="changePrevisionTypes($event)"
           [readonly]="!(isEditingRequestData | async)"
           [ngClass]="{'is-invalid': ((updateRequestForm.controls.preventionsTypesDetails.touched && updateRequestForm.controls.preventionsTypesDetails.errors) || (isFormSubmitted && updateRequestForm.controls.preventionsTypesDetails.errors))}"
           >
@@ -441,7 +442,7 @@
 
     <h3 class="colorTextPrimari" >Documentos</h3><br>
 
-    <div class="row mt-3 justify-content-start">
+    <div class="row mt-3 mb-3 justify-content-start" *ngIf="((this.updateRequestForm.value.preventionsTypes ) && (this.updateRequestForm.value.preventionsTypes !== 4))">
       <div class="col-md-6 col-sm-12">
           <div class="d-flex">
             <label for="prenetionDocument" class="form-label colorTextPrimari w-100 ">Tipo de Prevision </label>
@@ -499,7 +500,7 @@
       </ng-container>
     </div>
 
-    <div class="row mt-3 justify-content-start">
+    <div class="row justify-content-start mb-3">
     <!-- <div class="row mt-3 justify-content-start" *ngIf="updateRequestForm.value.statusRequest !== 11"> -->
       <div class="col-md-6 col-sm-12">
           <div class="row">
@@ -737,8 +738,8 @@
 
   <div class="card row py-3">
     <div class="d-flex justify-content-center align-items-center">
-      <button *ngIf="isNewRequest" type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 " (click)="createRequest($event)" >Generar</button>
-      <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 " (click)="return()" >Regresar</button>
+      <button *ngIf="isNewRequest" type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="createRequest($event)" >Generar</button>
+      <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="return()" >Regresar</button>
     </div>
   </div>
 </form>
