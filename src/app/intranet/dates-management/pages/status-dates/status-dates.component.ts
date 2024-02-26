@@ -283,13 +283,13 @@ export class StatusDatesComponent implements OnInit {
 
 
   addDirectionRegisteredOnThePageForm() {
-    let validatorRegisterToPage = this.updateRequestForm.value.directionToUse !== 'wots' ? [Validators.required] : [];
+    let validatorRegisterToPage = this.updateRequestForm.value.directionToUse !== 'wots' ? Validators.required : Validators.nullValidator;
 
     const dataForm = this.fb.group({
-      location: ['', validatorRegisterToPage],
-      numberStreet: ['', validatorRegisterToPage],
-      propertyType: ['', validatorRegisterToPage],
-      nameHome: ['', validatorRegisterToPage]
+      location: ['', [validatorRegisterToPage]],
+      numberStreet: ['', [validatorRegisterToPage, CustomValidators.number]],
+      propertyType: ['', [validatorRegisterToPage]],
+      nameHome: ['', [validatorRegisterToPage]]
     })
     // this.updateRequestForm.controls.directionToUse.setValue(1);
     this.directionRegisteredOnThePageArray.push(dataForm);

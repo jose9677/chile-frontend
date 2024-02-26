@@ -58,7 +58,7 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
       let statusLastRequest = lastRequest[0].id_status;
 
-      let isExpiredRequest = [7, 14].includes(statusLastRequest);
+      let isExpiredRequest = [7, 9, 14].includes(statusLastRequest);
 
       sessionStorage.setItem('isExpiredRequest', isExpiredRequest.toString());
 

@@ -31,7 +31,7 @@
                 <th (click)="sortByService.dataSortBy('rut')">RUT</th>
                 <th (click)="sortByService.dataSortBy('user_name')">Nombres y Apellidos</th>
                 <th (click)="sortByService.dataSortBy('way_number')">Dirección</th>
-                <th (click)="sortByService.dataSortBy('employee_rut')">Asistente Social</th>
+                <!-- <th (click)="sortByService.dataSortBy('employee_rut')">Asistente Social</th> -->
                 <th (click)="sortByService.dataSortBy('status')">Estatus</th>
                 <th >Opciones</th>
               </tr>
@@ -44,7 +44,7 @@
                   <td>{{request.rut_user}}</td>
                   <td>{{request.user_name + ' ' + request.user_lastname}}</td>
                   <td>{{request.street +' '+ request.way_number  +', '+ request.description +' '+ (request.property_number ?? 's/n')}}</td>
-                  <td>{{(request.assistant_name ?? ' ') + " " + (request.assistant_lastname ?? ' ') }}</td>
+                  <!-- <td>{{(request.assistant_name ?? ' ') + " " + (request.assistant_lastname ?? ' ') }}</td> -->
                   <td>{{request.displayStatus}}</td>
                   <td>
 

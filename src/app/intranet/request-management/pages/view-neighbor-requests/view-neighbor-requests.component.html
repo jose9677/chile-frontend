@@ -38,7 +38,7 @@
                 <th (click)="sortByService.dataSortBy('requestDate')">Fecha Solicitud</th>
                 <th (click)="sortByService.dataSortBy('fonasa')">Tipo de Previsión</th>
                 <th (click)="sortByService.dataSortBy('dateOfVisit')">Fecha de Visita</th>
-                <th (click)="sortByService.dataSortBy('visitor')">Asistente Social</th>
+                <!-- <th (click)="sortByService.dataSortBy('visitor')">Asistente Social</th> -->
                 <th (click)="sortByService.dataSortBy('status')">Estatus</th>
                 <th >Opciones</th>
               </tr>
@@ -50,7 +50,7 @@
                   <td>{{request.request_date}}</td>
                   <td>{{request.fullPeventionData}} </td>
                   <td>{{request.visit_date}}</td>
-                  <td>{{(request.fullName )}}</td>
+                  <!-- <td>{{(request.fullName )}}</td> -->
                   <td>{{request.displayStatus}}</td>
                   <td>
                     <!-- <button *ngIf="request.id_status != 1" (click)="viewDate(request.id_request)" ><i class="mdi mdi-eye" style="font-size: 1.5em;"></i></button> -->
