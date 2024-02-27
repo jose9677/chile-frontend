@@ -1,6 +1,3 @@
-<div style="position: fixed; background-color: red; z-index: 100000;">
-  {{updateRequestForm.value | json}}
-</div>
 <form class="forms-sample container" [formGroup]="updateRequestForm">
   <div class="row mb-3 ">
     <div class="col p-0 m-0">
@@ -314,7 +311,7 @@
             formControlName="directionToUse"
             [readonly]="!(isEditingRequestData | async)"
             (change)="changeOriginAddress($event)"
-            [ngClass]="{'is-invalid': ((updateRequestForm.controls.haveInsurance.touched && updateRequestForm.controls.haveInsurance.errors) || (isFormSubmitted && updateRequestForm.controls.haveInsurance.errors))}"
+            [ngClass]="{'is-invalid': ((updateRequestForm.controls.directionToUse.touched && updateRequestForm.controls.directionToUse.errors) || (isFormSubmitted && updateRequestForm.controls.directionToUse.errors))}"
             >
             <ng-option [value]="'REGISTRO POR PÁGINA'">REGISTRO POR PÁGINA</ng-option>
             <ng-option [value]="'WOTS'">WOTS</ng-option>

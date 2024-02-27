@@ -260,6 +260,8 @@ export class StatusDatesComponent implements OnInit {
 
     }
 
+    
+
     this.dataSelectForm();
 
     this.willBeDeleted();
@@ -415,6 +417,7 @@ export class StatusDatesComponent implements OnInit {
     // this.updateRequestForm.controls.directionToUse.setValue('wots');
 
     this.dataDocumentsArray.push(dataForm);
+
   }
 
   deleteDocument( DocumentIndex: any ) {
@@ -434,6 +437,7 @@ export class StatusDatesComponent implements OnInit {
     // this.updateRequestForm.controls.directionToUse.setValue('wots');
 
     this.dataDocuments2Array.push(dataForm);
+
   }
 
   deleteDocument2( DocumentIndex: any ) {
@@ -829,9 +833,16 @@ export class StatusDatesComponent implements OnInit {
       "mobile_phone": form.mobilePhone,
       "rut_employee": JSON.parse(sessionStorage.getItem('auth-user'))
 
-    }
+    }    
 
-    if(this.updateRequestForm.status === 'INVALID') return;
+    if(
+      this.updateRequestForm.controls.names.errors ||
+      this.updateRequestForm.controls.lastNames.errors ||
+      this.updateRequestForm.controls.gender.errors ||
+      this.updateRequestForm.controls.datesBirth.errors ||
+      this.updateRequestForm.controls.email.errors ||
+      this.updateRequestForm.controls.mobilePhone.errors
+      ) return;
 
     this.dateService.UpdatePersonalData(this.idRequest, personalData).subscribe((result) => {
 
@@ -944,7 +955,17 @@ export class StatusDatesComponent implements OnInit {
 
     }
 
-    if(this.updateRequestForm.status === 'INVALID') return;
+    if(
+      this.updateRequestForm.controls.statusEmp.errors ||
+      this.updateRequestForm.controls.preventionsTypesDetails.errors ||
+      this.updateRequestForm.controls.haveInsurance.errors ||
+      this.updateRequestForm.controls.directionToUse.errors ||
+      this.updateRequestForm.controls.addressRegisteredToPage.controls[0].controls.location.errors ||
+      this.updateRequestForm.controls.addressRegisteredToPage.controls[0].controls.numberStreet.errors ||
+      this.updateRequestForm.controls.addressRegisteredToPage.controls[0].controls.propertyType.errors ||
+      this.updateRequestForm.controls.addressRegisteredToPage.controls[0].controls.nameHome.errors ||
+      this.updateRequestForm.controls.addressWots.controls[0].controls.addressWots.errors
+      ) return;
 
     this.dateService.UpdateRequestData(this.idRequest, this.rutEmployee, requestData).subscribe((result) => {
 
@@ -1007,13 +1028,34 @@ export class StatusDatesComponent implements OnInit {
 
   updateDocuments(e: Event) {
 
+    let validationDocuments : any = [];
+
     e.preventDefault();
 
-    const form = this.updateRequestForm.value
+    const form = this.updateRequestForm.value;
 
     this.isFormSubmitted = true;
 
-    if(this.updateRequestForm.status === 'INVALID') return;
+    console.log(this.dataDocumentsArray.controls, this.dataDocuments2Array.controls);
+
+    this.dataDocumentsArray.controls.map((res: any) => {
+
+      validationDocuments.push(res.controls.document.errors?.required);
+
+    }); 
+
+    this.dataDocuments2Array.controls.map((res: any) => {
+
+      validationDocuments.push(res.controls.document.errors?.required);
+      
+    }); 
+
+    console.log(validationDocuments);
+    console.log(this.listDocumentsDelete.length);
+    console.log((this.listDocumentsDelete.length === 0) && validationDocuments.includes(true));
+
+
+    if( (((validationDocuments.length !== 0) && validationDocuments.includes(true))) || ((validationDocuments.length === 0) && (this.listDocumentsDelete.length === 0)) ) return;
 
     if(this.listDocumentsDelete.length !== 0 ) {
       this.deleteDocuments();
@@ -1130,6 +1172,10 @@ export class StatusDatesComponent implements OnInit {
     e.preventDefault();
 
     this.listDocumentsDelete.push(idFile);
+    console.log(this.dataDocumentsArray.length, this.dataDocuments2Array.length)
+
+    if(this.dataDocumentsArray.length === 0) this.addDocument();
+    if(this.dataDocuments2Array.length === 0) this.addDocument2();
 
   }
 
@@ -1170,7 +1216,13 @@ export class StatusDatesComponent implements OnInit {
       "comments": form.comments
     }
 
-    if(this.updateRequestForm.status === 'INVALID') return;
+    if(
+      this.updateRequestForm.controls.isCaretaker.errors ||
+      this.updateRequestForm.controls.dataCaretaker.controls[0]?.controls.reason.errors ||
+      this.updateRequestForm.controls.dataCaretaker.controls[0]?.controls.dedicationsTypes.errors ||
+      this.updateRequestForm.controls.dataCaretaker.controls[0]?.controls.remunerationType.errors
+
+    ) return;
 
     this.dateService.UpdateAdditionalInformation(this.idRequest, this.rutEmployee, personalData).subscribe((result) => {
 

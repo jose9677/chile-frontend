@@ -269,7 +269,7 @@
                     id="nameHome"
                     formControlName="nameHome"
                     placeholder="Especifique"
-                    maxlength="10"
+                    maxlength="100"
                     [ngClass]="{'is-invalid': ((userRegister.controls.address.touched && userRegister.controls.address.controls.nameHome.errors) || (isFormSubmitted && userRegister.controls.address.controls.nameHome.errors))}"
                     >
                     <div *ngIf="(userRegister.controls.address.touched && userRegister.controls.address.controls.nameHome.errors?.required) || (isFormSubmitted && userRegister.controls.address.controls.nameHome.errors?.required)" class="invalid-feedback">Campo Requerido, si no aplica coloque S/N</div>

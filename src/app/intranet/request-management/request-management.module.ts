@@ -17,6 +17,7 @@ import { ViewAdminRequestsComponent } from './pages/view-admin-requests/view-adm
 import { FilterTableNeighborPipe } from './shared/pipes/filter-table-neighbor.pipe';
 import { FilterTable1AssistantPipe } from './shared/pipes/filter-table1-assistant.pipe';
 import { FilterTable2AssistantPipe } from './shared/pipes/filter-table2-assistant.pipe';
+import { NgxMaskModule } from 'ngx-mask';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { FilterTable2AssistantPipe } from './shared/pipes/filter-table2-assistan
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgSelectModule
+    NgSelectModule,
+    NgxMaskModule.forRoot(),
 
   ]
 })
