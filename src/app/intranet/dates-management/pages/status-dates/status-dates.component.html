@@ -1,4 +1,6 @@
-
+<div style="position: fixed; background-color: red; z-index: 100000;">
+  {{updateRequestForm.value | json}}
+</div>
 <form class="forms-sample container" [formGroup]="updateRequestForm">
   <div class="row mb-3 ">
     <div class="col p-0 m-0">
@@ -130,11 +132,14 @@
       <div class="col-md-4 mb-3" [ngClass]="{'disabled': !(isEditingPersonalData | async)}">
         <label for="landLine" class="form-label">Teléfono Fijo</label>
         <input
-        type="tel"
+        type="text"
         class="form-control"
         id="landLine"
         formControlName="landLine"
-        prefix="+56" mask="  0  0000 - 0000" [showMaskTyped] = "false"
+        [prefix]="prefix"
+        [mask]="mask"
+        [showMaskTyped] = "false"
+        (keyup)="changeinPhoneNumber(updateRequestForm.value.landLine, 1)"
         [readOnly]="!(isEditingPersonalData | async)"
         [ngClass]="{'is-invalid': (updateRequestForm.controls.landLine.touched && updateRequestForm.controls.landLine.errors) || (isFormSubmitted && updateRequestForm.controls.landLine.errors)}"
         >
@@ -148,7 +153,10 @@
         class="form-control"
         id="mobilePhone"
         formControlName="mobilePhone"
-        prefix="+56" mask="  0  0000 - 0000" [showMaskTyped] = "false"
+        [prefix]="prefix"
+        [mask]="mask"
+        [showMaskTyped] = "false"
+        (keyup)="changeinPhoneNumber(updateRequestForm.value.mobilePhone, 2)"
         [readOnly]="!(isEditingPersonalData | async)"
         [ngClass]="{'is-invalid': (updateRequestForm.controls.mobilePhone.touched && updateRequestForm.controls.mobilePhone.errors) || (isFormSubmitted && updateRequestForm.controls.mobilePhone.errors)}"
         >
@@ -389,7 +397,7 @@
               id="nameHome"
               formControlName="nameHome"
               placeholder="Especifique"
-              maxlength="10"
+              maxlength="100"
               [readonly]="!(isEditingRequestData | async) || updateRequestForm.value.directionToUse === 'WOTS'"
               [ngClass]="{'is-invalid': (((address.touched || address.dirty) && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.nameHome.errors) || (isFormSubmitted && updateRequestForm.controls.addressRegisteredToPage.controls[i].controls.nameHome.errors))}"
               >

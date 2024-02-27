@@ -100,6 +100,12 @@ export class StatusDatesComponent implements OnInit {
 
   private validateNewRequest: any = Validators.required;
 
+  public mask: any;
+  public prefix: any;
+
+  public mask2: any;
+  public prefix2: any;
+
 
   // public acceptChange: any = false;
 
@@ -212,6 +218,7 @@ export class StatusDatesComponent implements OnInit {
 
   ngOnInit(): void {
 
+
     this.isEditingPersonalData = this.evaluateChangesServices.editingPersonalDataObservable;
     this.isEditingRequestData = this.evaluateChangesServices.EditingRequestDataObservable;
     this.isEditingDocuments = this.evaluateChangesServices.EditingDocumentsObservable;
@@ -262,6 +269,8 @@ export class StatusDatesComponent implements OnInit {
   }
 
 
+
+
   fillOptionsSelectForm(dataOptions) {
 
     const {gender, locations, property_types, prevention_types, prevention_details, remunerations, motives, dedications } = dataOptions[0]
@@ -289,7 +298,7 @@ export class StatusDatesComponent implements OnInit {
       location: ['', [validatorRegisterToPage]],
       numberStreet: ['', [validatorRegisterToPage, CustomValidators.number]],
       propertyType: ['', [validatorRegisterToPage]],
-      nameHome: ['', [validatorRegisterToPage]]
+      nameHome: ['', [validatorRegisterToPage, Validators.maxLength(100)]]
     })
     // this.updateRequestForm.controls.directionToUse.setValue(1);
     this.directionRegisteredOnThePageArray.push(dataForm);
@@ -476,6 +485,9 @@ export class StatusDatesComponent implements OnInit {
 
 
   fillForm(dataRequest: any) {
+
+    this.mask = '0  0000 - 0000';
+    this.prefix = '+56  ';
 
     let data : any [] = [];
     data = dataRequest;
@@ -1379,6 +1391,16 @@ openTerminosyCondiciones(){
 }
 openPoliticadePrivacidad(){
   this.modalService.openModal(PrivacyPolicyComponent)
+}
+
+
+changeinPhoneNumber(value: any, typeNumber: any) {
+
+  if (value || value === 0) {
+    if (value === 0 && typeNumber === 1) this.updateRequestForm.controls.landLine.setValue('');
+
+    if (value === 0 && typeNumber === 2) this.updateRequestForm.controls.mobilePhone.setValue('');
+  }
 }
 
 
