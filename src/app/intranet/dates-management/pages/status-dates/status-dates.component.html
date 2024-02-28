@@ -467,10 +467,10 @@
           <i class="m-0 p-1 h4 feather icon-eye" title="Ver archivo"></i>
         </a>
         <a class="m-0 p-1" *ngIf="(isEditingDocuments | async)">
-          <i class="m-0 p-0 h4 text-danger feather icon-x-circle" title="Eliminar Archivo" (click)="deleteFile($event, document.document_id)" *ngIf="!willBeDeleted(document.document_id)"></i>
+          <i class="m-0 p-0 h4 text-danger feather icon-x-circle" title="Eliminar Archivo" (click)="deleteFile($event, document.document_id, 1)" *ngIf="!willBeDeleted(document.document_id)"></i>
         </a>
         <a class="m-0 p-1" *ngIf="(isEditingDocuments | async)" >
-          <i class="m-0 p-0 h4 text-success mdi mdi-replay" title="No eliminar Archivo" (click)="recoverFile($event, document.document_id)" *ngIf="willBeDeleted(document.document_id)"></i>
+          <i class="m-0 p-0 h4 text-success mdi mdi-replay" title="No eliminar Archivo" (click)="recoverFile($event, document.document_id, 1)" *ngIf="willBeDeleted(document.document_id)"></i>
         </a>
       </div>
       <ng-container formArrayName="documents" *ngIf="(isEditingDocuments | async)">
@@ -521,10 +521,10 @@
           <i class="m-0 p-1 h4 feather icon-eye" title="Ver archivo"></i>
         </a>
         <a class="m-0 p-1" *ngIf="(isEditingDocuments | async)">
-          <i class="m-0 p-0 h4 text-danger feather icon-x-circle" title="Eliminar Archivo" (click)="deleteFile($event, document.document_id)" *ngIf="!willBeDeleted(document.document_id)"></i>
+          <i class="m-0 p-0 h4 text-danger feather icon-x-circle" title="Eliminar Archivo" (click)="deleteFile($event, document.document_id, 2)" *ngIf="!willBeDeleted(document.document_id)"></i>
         </a>
         <a class="m-0 p-1" *ngIf="(isEditingDocuments | async)" >
-          <i class="m-0 p-0 h4 text-success mdi mdi-replay" title="No eliminar Archivo" (click)="recoverFile($event, document.document_id)" *ngIf="willBeDeleted(document.document_id)"></i>
+          <i class="m-0 p-0 h4 text-success mdi mdi-replay" title="No eliminar Archivo" (click)="recoverFile($event, document.document_id, 2)" *ngIf="willBeDeleted(document.document_id)"></i>
         </a>
       </div>
       <ng-container formArrayName="documents2" *ngIf="(isEditingDocuments | async)">

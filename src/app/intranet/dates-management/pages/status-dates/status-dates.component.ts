@@ -260,7 +260,7 @@ export class StatusDatesComponent implements OnInit {
 
     }
 
-    
+
 
     this.dataSelectForm();
 
@@ -422,7 +422,9 @@ export class StatusDatesComponent implements OnInit {
 
   deleteDocument( DocumentIndex: any ) {
 
-    if (this.dataDocumentsArray.value.length > 1) this.dataDocumentsArray.removeAt(DocumentIndex);
+    if (this.dataDocumentsArray.value.length > 1 || (this.documentsPre.length - this.count) !== 0 ) {
+      this.dataDocumentsArray.removeAt(DocumentIndex);
+    }
 
   }
 
@@ -442,7 +444,9 @@ export class StatusDatesComponent implements OnInit {
 
   deleteDocument2( DocumentIndex: any ) {
 
-    if (this.dataDocuments2Array.length > 1) this.dataDocuments2Array.removeAt(DocumentIndex);
+    if (this.dataDocuments2Array.length > 1 || (this.documentsDom.length - this.count2) !== 0 ) {
+      this.dataDocuments2Array.removeAt(DocumentIndex);
+    }
 
   }
 
@@ -833,7 +837,7 @@ export class StatusDatesComponent implements OnInit {
       "mobile_phone": form.mobilePhone,
       "rut_employee": JSON.parse(sessionStorage.getItem('auth-user'))
 
-    }    
+    }
 
     if(
       this.updateRequestForm.controls.names.errors ||
@@ -1042,13 +1046,13 @@ export class StatusDatesComponent implements OnInit {
 
       validationDocuments.push(res.controls.document.errors?.required);
 
-    }); 
+    });
 
     this.dataDocuments2Array.controls.map((res: any) => {
 
       validationDocuments.push(res.controls.document.errors?.required);
-      
-    }); 
+
+    });
 
     console.log(validationDocuments);
     console.log(this.listDocumentsDelete.length);
@@ -1167,24 +1171,38 @@ export class StatusDatesComponent implements OnInit {
     }
   }
 
-  deleteFile(e: Event, idFile: any) {
+  private count: any = 0;
+  private count2: any = 0;
+
+  deleteFile(e: Event, idFile: any, typeDocument: any) {
 
     e.preventDefault();
 
     this.listDocumentsDelete.push(idFile);
-    console.log(this.dataDocumentsArray.length, this.dataDocuments2Array.length)
 
-    if(this.dataDocumentsArray.length === 0) this.addDocument();
-    if(this.dataDocuments2Array.length === 0) this.addDocument2();
+    if (typeDocument === 1) this.count += 1;
+
+    if (typeDocument === 2) this.count2 += 1;
+
+    console.log(this.documentsPre.length, this.count)
+    if(this.dataDocumentsArray.length === 0 && this.documentsPre.length === this.count) {
+      this.addDocument()
+    };
+    if(this.dataDocuments2Array.length === 0 && this.documentsDom.length === this.count2) {
+      this.addDocument2()
+    };
 
   }
 
-  recoverFile(e: Event, idFile: any) {
+  recoverFile(e: Event, idFile: any, typeDocument: any) {
 
     e.preventDefault();
 
-    this.listDocumentsDelete = this.listDocumentsDelete.filter(list => list !== idFile )
+    if (typeDocument === 1) this.count -= 1;
 
+    if (typeDocument === 2) this.count2 -= 1;
+
+    this.listDocumentsDelete = this.listDocumentsDelete.filter(list => list !== idFile );
 
   }
 
