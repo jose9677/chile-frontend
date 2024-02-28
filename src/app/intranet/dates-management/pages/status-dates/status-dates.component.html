@@ -404,7 +404,7 @@
         </ng-container>
       </ng-container>
 
-      <ng-container formArrayName="addressWots" *ngIf="!isNewRequest">
+      <ng-container formArrayName="addressWots" *ngIf="!isNewRequest && !idRenovation">
         <ng-container *ngFor=" let address of addressWotsArray.controls; let i = index ">
           <div [formGroupName]="i" class="row" *ngIf="(isEditingRequestData | async)">
 
@@ -664,7 +664,7 @@
       </ng-container>
 
 
-      <div class="col-md-4 col-sm-12" [ngClass]="{'disabled': true}" *ngIf="!isNewRequest">
+      <div class="col-md-4 col-sm-12" [ngClass]="{'disabled': true}" *ngIf="!isNewRequest && !idRenovation">
         <label for="registeredInAPS" class="form-label colorTextPrimari">Registro en APS</label>
         <input
         id="registeredInAPS"
@@ -674,7 +674,7 @@
         class="form-control">
       </div>
 
-      <div class="col-md-4 col-sm-12" [ngClass]="{'disabled': true}" *ngIf="!isNewRequest">
+      <div class="col-md-4 col-sm-12" [ngClass]="{'disabled': true}" *ngIf=" !isNewRequest && !idRenovation" >
         <label for="discountPercentage" class="form-label colorTextPrimari">Porcentaje de Descuento</label>
         <input
         id="discountPercentage"
@@ -727,7 +727,7 @@
     </div>
   </div>
 
-  <div class="card row py-3 mb-3" *ngIf="isNewRequest">
+  <div class="card row py-3 mb-3" *ngIf="isNewRequest || idRenovation">
     <div class="d-flex flex-row justify-content-center">
       <div class="form-check form-switch mb-2 colorTextPrimari">
       <input
@@ -745,6 +745,7 @@
   <div class="card row py-3">
     <div class="d-flex justify-content-center align-items-center">
       <button *ngIf="isNewRequest" type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="createRequest($event)" >Generar</button>
+      <button *ngIf="idRenovation" type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="confirmRenovation($event)" >Confirmar</button>
       <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="return()" >Regresar</button>
     </div>
   </div>

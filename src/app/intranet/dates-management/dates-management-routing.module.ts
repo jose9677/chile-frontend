@@ -30,6 +30,11 @@ const routes: Routes = [
         canActivate: [Access1Guard]
       },
       {
+        path: 'confirmar-renovacion',
+        component: StatusDatesComponent,
+        canActivate: [Access1Guard]
+      },
+      {
         path: 'confirmar-cita',
         component: ConfirmDatesComponent,
         canActivate: [Access1Guard]

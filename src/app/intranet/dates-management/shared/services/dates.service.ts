@@ -80,6 +80,17 @@ export class DatesService {
 
   }
 
+  confirmRenovation(idRequest: any, dataRequest: any): Observable<any | void> {
+    return this.http.put<any>( AUTH_API_NP + 'confirm-reno-sol/'+ idRequest, dataRequest, httpOptions).pipe(map((result:any) => {
+
+      return result;
+
+    }),
+    catchError((err)=> this.handlerError(err))
+    );
+
+  }
+
   uploadFilesNewRequest(documentRequest: any): Observable<any | void> {
 
     for (const value of documentRequest.keys()) {

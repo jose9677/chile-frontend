@@ -14,6 +14,7 @@ import { EvaluateChangesService } from '../../shared/services/evaluate-changes.s
 import { LoggedService } from 'src/app/shared/services/logged.service';
 import { TermsAndConditionsComponent } from 'src/app/public/auth/pages/register/terms-and-conditions/terms-and-conditions.component';
 import { PrivacyPolicyComponent } from 'src/app/public/auth/pages/register/privacy-policy/privacy-policy.component';
+import { result } from 'underscore';
 
 @Component({
   selector: 'app-status-dates',
@@ -40,9 +41,12 @@ export class StatusDatesComponent implements OnInit {
   public errors: any = null;
 
   private idRequestSubscription: Subscription;
+  private idRenovationSubscription: Subscription;
   private rutUseSubscription: Subscription;
 
   public idRequest: any;
+
+  public idRenovation: any;
 
   public unassignedRequest: any[];
 
@@ -155,6 +159,9 @@ export class StatusDatesComponent implements OnInit {
 
     this.rutUseSubscription = this.routerQuery.queryParams.subscribe(rut_user => this.rutNeighbor = rut_user.rut_user);
 
+    this.idRenovationSubscription = this.routerQuery.queryParams.subscribe(idRenovation => this.idRenovation = idRenovation.id_renovation);
+
+
     if(this.router.url === '/citas/crear-cita') this.rutNeighbor = this.rutEmployee;
 
     if(this.rutNeighbor) {
@@ -195,7 +202,7 @@ export class StatusDatesComponent implements OnInit {
       discountPercentage: ['', []],
       dataOrigin: ['', []],
       comments: ['', []],
-      authCheck: ['', this.isNewRequest ? [ Validators.required ] : [ Validators.nullValidator ] ]
+      authCheck: ['', this.isNewRequest || this.idRenovation ? [ Validators.required ] : [ Validators.nullValidator ] ]
     });
 
 
@@ -225,6 +232,13 @@ export class StatusDatesComponent implements OnInit {
     this.isEditingAdditionalInformation = this.evaluateChangesServices.EditingAdditionalInformationObservable;
 
     this.idRequestSubscription = this.routerQuery.queryParams.subscribe(idRequest => this.idRequest = idRequest.id_request);
+
+
+
+    if(this.idRenovation) {
+      this.idRequest = this.idRenovation
+    }
+
 
     this.subscription = this.dateService.refresh$.subscribe( () => {
       // this.getDataRequestForId();
@@ -259,8 +273,6 @@ export class StatusDatesComponent implements OnInit {
 
 
     }
-
-
 
     this.dataSelectForm();
 
@@ -461,14 +473,16 @@ export class StatusDatesComponent implements OnInit {
 
     if ( file.type == "image/jpeg" || file.type == "application/pdf" || file.type == "image/png") {
 
-      if( this.isNewRequest) {
+      if( this.isNewRequest || this.idRenovation) {
 
-        this.listFilesUpload.push({'document_path': file, 'id_document_type': id_document_type, 'rut_user': this.rutNeighbor});
+        this.listFilesUpload.push({'document_path': file, 'id_document_type': id_document_type, 'rut_user': this.rutNeighbor ? this.rutNeighbor : this.updateRequestForm.value.rut });
       } else {
 
         this.listFilesUpload.push({'fileData': file, 'id_document_type': id_document_type});
 
       }
+
+      console.log(this.listFilesUpload);
 
 
 
@@ -614,6 +628,13 @@ export class StatusDatesComponent implements OnInit {
 
     })
 
+    if(this.idRenovation) {
+      this.evaluateChangesServices.changeEditingPersonalData(true);
+      this.evaluateChangesServices.changeEditingRequestData(true);
+      this.evaluateChangesServices.changeEditingDocuments (true);
+      this.evaluateChangesServices.changeEditingAdditionalInformation(true);
+    }
+
     this.statusDocuments();
   }
 
@@ -658,11 +679,11 @@ export class StatusDatesComponent implements OnInit {
 
   }
 
-  getDataRequestForId() {
+  getDataRequestForId(idRequest = this.idRequest) {
 
     let dataRequest: any = [];
 
-    this.dateService.getForIdRequest(this.idRequest).subscribe((result) => {
+    this.dateService.getForIdRequest(idRequest).subscribe((result) => {
       this.originalData = result;
       let data: any[] = [];
       data = [result];
@@ -701,7 +722,7 @@ export class StatusDatesComponent implements OnInit {
           idPropertyType: id_property_type,
           propertyNumber: property_number,
 
-          documents: res.data_doc,
+          documents:this.idRenovation? [] : res.data_doc,
 
           isCaretaker: carer,
           motive: id_motive,
@@ -1399,6 +1420,59 @@ export class StatusDatesComponent implements OnInit {
     })
   }
 
+  confirmRenovation(e: Event) {
+
+    this.isFormSubmitted = true;
+
+    if( this.updateRequestForm.status !== 'VALID') return;
+
+    const {rut, names, lastNames, gender, datesBirth, email, landLine, mobilePhone, preventionsTypesDetails, haveInsurance, addressRegisteredToPage, authCheck, isCaretaker, dataCaretaker} = this.updateRequestForm.value;
+
+    let dataRequest: any = {
+      "rut_user": rut,
+      "names": names,
+      "lastname": lastNames,
+      "id_sex": gender,
+      "f_nac": datesBirth,
+      "email": email,
+      "landline": landLine,
+      "mobile_phone": mobilePhone,
+      "id_prevention_type_detail": preventionsTypesDetails,
+      "assurance": haveInsurance,
+      "id_location": addressRegisteredToPage['0'].location,
+      "way_number": addressRegisteredToPage['0'].numberStreet,
+      "id_property_type": addressRegisteredToPage['0'].propertyType,
+      "property_number": addressRegisteredToPage['0'].nameHome,
+      "terms_condition": authCheck,
+      "carer": isCaretaker,
+      "id_motive": dataCaretaker['0']?.reason,
+      "id_dedication": dataCaretaker['0']?.dedicationsTypes,
+      "id_remuneration": dataCaretaker['0']?.remunerationType
+
+    };
+
+    this.dateService.confirmRenovation(this.idRenovation, dataRequest).subscribe((result) => {
+
+    },
+    error => {
+
+      let title: string = ''
+      let message: string = '';
+
+      message = "Ha ocurrido un error intente mas tarde";
+
+      if (error.error === 'this user has a solicitude active') message = "Usted ya posee una solicitud activa";
+
+      this.modalService.OpenModalError2(ModalComponent, true, title, message);
+
+    },
+    () => {
+
+      this.uploadFilesNewRequest();
+
+    })
+  }
+
   uploadFilesNewRequest() {
 
     let count = 0;
@@ -1428,6 +1502,7 @@ export class StatusDatesComponent implements OnInit {
 
           let title: string = ''
           let message: string = "La solicitud se ha creado exitosamente";
+          if(this.idRenovation) message = 'La renovación se ha realizado exitosamente';
           this.modalService.OpenModalError2(ModalComponent, false, title, message);
 
           this.router.navigate(['/']);
@@ -1476,6 +1551,7 @@ changeinPhoneNumber(value: any, typeNumber: any) {
 
   ngOnDestroy() {
     this.idRequestSubscription.unsubscribe();
+    this.idRenovationSubscription.unsubscribe();
     this.rutUseSubscription.unsubscribe();
     this.subscription.unsubscribe();
     this.evaluateChangesServices.changeEditingPersonalData(false);

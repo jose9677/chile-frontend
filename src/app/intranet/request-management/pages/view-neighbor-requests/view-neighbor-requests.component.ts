@@ -112,6 +112,12 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
   }
 
+  confirmRenovation (id_request: any) {
+
+    this.router.navigate(['citas/confirmar-renovacion'], {queryParams: {id_renovation: id_request}});
+
+  }
+
   createDate (e: Event) {
 
     e.preventDefault();
