@@ -35,6 +35,8 @@ export class StatusDatesComponent implements OnInit {
   public isFormSubmitted: boolean;
   public documentIsValid: boolean;
 
+  public isRenovationEdited: boolean;
+
   public maxDate: any;
   public minDate: any;
 
@@ -146,6 +148,7 @@ export class StatusDatesComponent implements OnInit {
     this.isFormSubmitted = false;
     this.documentIsValid = false;
     this.isNewRequest = false;
+    this.isRenovationEdited = false;
 
     this.rolUser = JSON.parse(window.sessionStorage.getItem("rol-user"));
 
@@ -473,7 +476,7 @@ export class StatusDatesComponent implements OnInit {
 
     if ( file.type == "image/jpeg" || file.type == "application/pdf" || file.type == "image/png") {
 
-      if( this.isNewRequest || this.idRenovation) {
+      if( this.isNewRequest) {
 
         this.listFilesUpload.push({'document_path': file, 'id_document_type': id_document_type, 'rut_user': this.rutNeighbor ? this.rutNeighbor : this.updateRequestForm.value.rut });
       } else {
@@ -481,10 +484,6 @@ export class StatusDatesComponent implements OnInit {
         this.listFilesUpload.push({'fileData': file, 'id_document_type': id_document_type});
 
       }
-
-      console.log(this.listFilesUpload);
-
-
 
       this.documentIsValid = true;
 
@@ -628,13 +627,6 @@ export class StatusDatesComponent implements OnInit {
 
     })
 
-    if(this.idRenovation) {
-      this.evaluateChangesServices.changeEditingPersonalData(true);
-      this.evaluateChangesServices.changeEditingRequestData(true);
-      this.evaluateChangesServices.changeEditingDocuments (true);
-      this.evaluateChangesServices.changeEditingAdditionalInformation(true);
-    }
-
     this.statusDocuments();
   }
 
@@ -722,7 +714,7 @@ export class StatusDatesComponent implements OnInit {
           idPropertyType: id_property_type,
           propertyNumber: property_number,
 
-          documents:this.idRenovation? [] : res.data_doc,
+          documents: res.data_doc,
 
           isCaretaker: carer,
           motive: id_motive,
@@ -1061,8 +1053,6 @@ export class StatusDatesComponent implements OnInit {
 
     this.isFormSubmitted = true;
 
-    console.log(this.dataDocumentsArray.controls, this.dataDocuments2Array.controls);
-
     this.dataDocumentsArray.controls.map((res: any) => {
 
       validationDocuments.push(res.controls.document.errors?.required);
@@ -1074,10 +1064,6 @@ export class StatusDatesComponent implements OnInit {
       validationDocuments.push(res.controls.document.errors?.required);
 
     });
-
-    console.log(validationDocuments);
-    console.log(this.listDocumentsDelete.length);
-    console.log((this.listDocumentsDelete.length === 0) && validationDocuments.includes(true));
 
 
     if( (((validationDocuments.length !== 0) && validationDocuments.includes(true))) || ((validationDocuments.length === 0) && (this.listDocumentsDelete.length === 0)) ) return;
@@ -1095,16 +1081,28 @@ export class StatusDatesComponent implements OnInit {
       })
 
       this.listFilesUpload = [];
+
     }
 
+
     let title: string = ''
-    let message: string = "Los archivos se han actualizado exitosamente";
+    let message: string = "La solicitud se ha creado exitosamente";
+    if (this.idRenovation) message = 'La renovación se ha realizado exitosamente';
+
     this.modalService.OpenModalError2(ModalComponent, false, title, message);
 
-    this.evaluateChangesServices.changeEditingDocuments(false);
+
+    if ( !this.idRenovation ) this.evaluateChangesServices.changeEditingDocuments(false);
+    if ( this.idRenovation ) this.router.navigate(['/']);
+
+    // let title: string = ''
+    // let message: string = "Los archivos se han actualizado exitosamente";
+    // this.modalService.OpenModalError2(ModalComponent, false, title, message);
+
   }
 
   uploadFiles(file, type) {
+
 
     const  dataFiles: any = new FormData();
     dataFiles.append("document_path", file);
@@ -1115,9 +1113,9 @@ export class StatusDatesComponent implements OnInit {
     },
     error => {
 
-      // let title: string = ''
-      // let message: string = "Su Solicitud no Pudo ser Procesada Intente Nuevamente";
-      // this.modalService.OpenModalError2(ModalComponent, true, title, message);
+      let title: string = ''
+      let message: string = "El archivo no puedo ser cargado.";
+      this.modalService.OpenModalError2(ModalComponent, false, title, message);
 
 
     },
@@ -1205,7 +1203,6 @@ export class StatusDatesComponent implements OnInit {
 
     if (typeDocument === 2) this.count2 += 1;
 
-    console.log(this.documentsPre.length, this.count)
     if(this.dataDocumentsArray.length === 0 && this.documentsPre.length === this.count) {
       this.addDocument()
     };
@@ -1422,6 +1419,28 @@ export class StatusDatesComponent implements OnInit {
 
   confirmRenovation(e: Event) {
 
+    e.preventDefault();
+
+    this.dateService.confirmRenovation(this.idRenovation).subscribe((result) => {
+
+    },
+    error => {
+
+    },
+    () => {
+
+      let title: string = ''
+      let message: string = 'La renovación se ha realizado exitosamente';
+
+      this.modalService.OpenModalError2(ModalComponent, false, title, message);
+
+      this.router.navigate(['/']);
+
+    })
+  }
+
+  confirmRenovationEdited(e: Event) {
+
     this.isFormSubmitted = true;
 
     if( this.updateRequestForm.status !== 'VALID') return;
@@ -1451,7 +1470,7 @@ export class StatusDatesComponent implements OnInit {
 
     };
 
-    this.dateService.confirmRenovation(this.idRenovation, dataRequest).subscribe((result) => {
+    this.dateService.confirmRenovationEdit(this.idRenovation, dataRequest).subscribe((result) => {
 
     },
     error => {
@@ -1468,7 +1487,9 @@ export class StatusDatesComponent implements OnInit {
     },
     () => {
 
-      this.uploadFilesNewRequest();
+      // this.uploadFilesNewRequest();
+
+      this.updateDocuments(e);
 
     })
   }
@@ -1507,7 +1528,6 @@ export class StatusDatesComponent implements OnInit {
 
           this.router.navigate(['/']);
 
-
         }
       });
 
@@ -1517,38 +1537,56 @@ export class StatusDatesComponent implements OnInit {
 
   }
 
-canEdit(rolUser) {
+  canEdit(rolUser) {
 
-  return [4, 5].includes(rolUser);
+    return [4, 5].includes(rolUser);
 
-}
-
-valueAuth(e: any) {
-
-  if (e.target.checked === false) {
-    this.updateRequestForm.controls.authCheck.reset();
   }
 
-}
+  valueAuth(e: any) {
 
-openTerminosyCondiciones(){
-  this.modalService.openModal(TermsAndConditionsComponent)
-}
-openPoliticadePrivacidad(){
-  this.modalService.openModal(PrivacyPolicyComponent)
-}
+    if (e.target.checked === false) {
+      this.updateRequestForm.controls.authCheck.reset();
+    }
 
-
-changeinPhoneNumber(value: any, typeNumber: any) {
-
-  if (value || value === 0) {
-    if (value === 0 && typeNumber === 1) this.updateRequestForm.controls.landLine.setValue('');
-
-    if (value === 0 && typeNumber === 2) this.updateRequestForm.controls.mobilePhone.setValue('');
   }
-}
+
+  openTerminosyCondiciones(){
+    this.modalService.openModal(TermsAndConditionsComponent)
+  }
+  openPoliticadePrivacidad(){
+    this.modalService.openModal(PrivacyPolicyComponent)
+  }
 
 
+  changeinPhoneNumber(value: any, typeNumber: any) {
+
+    if (value || value === 0) {
+      if (value === 0 && typeNumber === 1) this.updateRequestForm.controls.landLine.setValue('');
+
+      if (value === 0 && typeNumber === 2) this.updateRequestForm.controls.mobilePhone.setValue('');
+    }
+  }
+
+  editRenovation(e: Event) {
+
+    this.isRenovationEdited = true;
+
+    this.editPersonalData(e);
+    this.editRequestData(e);
+    this.editDocument(e);
+    this.editAdditionalInformation(e);
+  }
+
+  cancelEditRenovation(e: Event) {
+
+    this.isRenovationEdited = false;
+
+    this.cancelEditPersonalData(e);
+    this.cancelEditRequestData(e);
+    this.cancelEditDocument(e);
+    this.cancelEditAdditionalInformation(e);
+  }
   ngOnDestroy() {
     this.idRequestSubscription.unsubscribe();
     this.idRenovationSubscription.unsubscribe();

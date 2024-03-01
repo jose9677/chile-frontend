@@ -12,15 +12,13 @@ import { ApsUpdateComponent } from './pages/aps-update/aps-update.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CustomFormsModule } from 'ngx-custom-validators';
+import { TableDataModule } from 'src/app/shared/component/table-data/table-data.module';
 
 
 @NgModule({
   declarations: [
     LayoutApsComponent,
     ApsDashboardComponent,
-    TableDataComponent,
-    FilterPipe,
-    SortByPipe,
     ApsUpdateComponent
   ],
   imports: [
@@ -31,6 +29,7 @@ import { CustomFormsModule } from 'ngx-custom-validators';
     CustomFormsModule,
     ApsManagementRoutingModule,
     NgxMaskModule.forRoot(),
+    TableDataModule
 
   ]
 })

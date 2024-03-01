@@ -51,8 +51,6 @@ export class ConfirmDatesComponent implements OnInit {
 
     this.datesService.getForIdRequest(this.idRequest).subscribe((result) => {
 
-      console.log(result);
-
       if (result.length === 0 || this.errors === true) {
         this.dataRequest = result;
       }else {

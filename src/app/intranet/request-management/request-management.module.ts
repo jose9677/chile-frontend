@@ -18,6 +18,7 @@ import { FilterTableNeighborPipe } from './shared/pipes/filter-table-neighbor.pi
 import { FilterTable1AssistantPipe } from './shared/pipes/filter-table1-assistant.pipe';
 import { FilterTable2AssistantPipe } from './shared/pipes/filter-table2-assistant.pipe';
 import { NgxMaskModule } from 'ngx-mask';
+import { TableDataModule } from 'src/app/shared/component/table-data/table-data.module';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { NgxMaskModule } from 'ngx-mask';
     FilterTableNeighborPipe,
     FilterTable1AssistantPipe,
     FilterTable2AssistantPipe,
+
   ],
 
 
@@ -44,6 +46,7 @@ import { NgxMaskModule } from 'ngx-mask';
     ReactiveFormsModule,
     HttpClientModule,
     NgSelectModule,
+    TableDataModule,
     NgxMaskModule.forRoot(),
 
   ]

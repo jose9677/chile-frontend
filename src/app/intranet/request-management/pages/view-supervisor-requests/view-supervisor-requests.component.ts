@@ -65,8 +65,6 @@ export class ViewSupervisorRequestsComponent implements OnInit {
 
     this.date.getAllRequest().subscribe( result => {
 
-      console.log(result);
-
       result.data_complete.map((res: any)=>{
 
         if (this.userloggedRole === 1) {

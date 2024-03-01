@@ -22,6 +22,10 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
   private dataRequest: any;
 
+  public titleDataTable: any[];
+
+  public dataDataTable: any[];
+
 
   constructor(
     private router: Router,
@@ -33,6 +37,10 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
 
   ) {
+
+    this.titleDataTable = [];
+
+    this.dataDataTable = [];
 
     this.unassignedRequest = [];
 
@@ -78,7 +86,17 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
         // window.sessionStorage.setItem("status-request", JSON.stringify(res.id_status));
 
+        requestForUser.push({
+          'nro. solicitud': res.id_request,
+          'fecha solicitud': res.request_date,
+          'tipo previsión': res.fullPeventionData,
+          'fecha de visita': res.fullPeventionData,
+          'Estatus': res.displayStatus
+        })
+
       })
+
+      this.titleDataTable = Object.keys(requestForUser[0]);
 
 
       requestForUser = result;

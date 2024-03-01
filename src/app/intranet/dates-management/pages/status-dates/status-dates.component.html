@@ -727,7 +727,7 @@
     </div>
   </div>
 
-  <div class="card row py-3 mb-3" *ngIf="isNewRequest || idRenovation">
+  <div class="card row py-3 mb-3" *ngIf="isNewRequest || idRenovation && isRenovationEdited">
     <div class="d-flex flex-row justify-content-center">
       <div class="form-check form-switch mb-2 colorTextPrimari">
       <input
@@ -745,8 +745,14 @@
   <div class="card row py-3">
     <div class="d-flex justify-content-center align-items-center">
       <button *ngIf="isNewRequest" type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="createRequest($event)" >Generar</button>
-      <button *ngIf="idRenovation" type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="confirmRenovation($event)" >Confirmar</button>
-      <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="return()" >Regresar</button>
+
+      <!-- <button *ngIf="idRenovation && isRenovationEdited" type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="cancelEditRenovation($event)" >Cancelar</button> -->
+      <button *ngIf="idRenovation && !isRenovationEdited" type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="confirmRenovation($event)" >Confirmar</button>
+      <button *ngIf="idRenovation && !isRenovationEdited" type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="editRenovation($event)" >Editar datos</button>
+
+      <button *ngIf="idRenovation && isRenovationEdited" type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="confirmRenovationEdited($event)" >Actualizar y enviar</button>
+
+      <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="return()" >Regresar</button>
     </div>
   </div>
 </form>

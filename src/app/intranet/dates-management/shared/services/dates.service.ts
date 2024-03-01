@@ -80,7 +80,18 @@ export class DatesService {
 
   }
 
-  confirmRenovation(idRequest: any, dataRequest: any): Observable<any | void> {
+  confirmRenovation(idRequest: any): Observable<any | void> {
+    return this.http.put<any>( AUTH_API_NP + 'confim-reno-sol-auto-aprove/'+ idRequest, httpOptions).pipe(map((result:any) => {
+
+      return result;
+
+    }),
+    catchError((err)=> this.handlerError(err))
+    );
+
+  }
+
+  confirmRenovationEdit(idRequest: any, dataRequest: any): Observable<any | void> {
     return this.http.put<any>( AUTH_API_NP + 'confirm-reno-sol/'+ idRequest, dataRequest, httpOptions).pipe(map((result:any) => {
 
       return result;
@@ -94,7 +105,6 @@ export class DatesService {
   uploadFilesNewRequest(documentRequest: any): Observable<any | void> {
 
     for (const value of documentRequest.keys()) {
-      console.log(value);
     }
     return this.http.post<any>( AUTH_API_NP + 'sol-doc', documentRequest).pipe(map((result:any) => {
 

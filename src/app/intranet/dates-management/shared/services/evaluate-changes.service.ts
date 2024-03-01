@@ -98,7 +98,6 @@ export class EvaluateChangesService {
     let url = AUTH_API_NP + 'load-user-modify';
     return this.http.post(url, dataModified).pipe(map((result:any) => {
 
-      console.log(result[0]);
       return result[0]
 
     }),
@@ -115,7 +114,6 @@ export class EvaluateChangesService {
 
 
       result.sort(((a, b) => b.id_user - a.id_user));
-      console.log(result);
 
       return result[0]
 
@@ -133,8 +131,6 @@ export class EvaluateChangesService {
     let url = AUTH_API_NP + `approve-user-modify/${id}/${rutEmployee}` ;
     return this.http.put(url, null).pipe(map((result:any) => {
 
-      console.log(result);
-
     }),
     tap(() => {
       this._refresh$.next();
@@ -148,8 +144,6 @@ export class EvaluateChangesService {
     return this.http.put(url, null).pipe(map((result:any) => {
 
 
-      console.log(result);
-
     }),
     tap(() => {
       this._refresh$.next();
@@ -162,7 +156,6 @@ export class EvaluateChangesService {
     let url = AUTH_API_NP + 'update-user-modify/'+ rutUser;
     return this.http.put(url, dataUser).pipe(map((result:any) => {
 
-      console.log(result[0]);
       return result[0]
 
     }),
