@@ -139,11 +139,18 @@
 
                             <a *ngIf="actionsTable.includes('dce')"><i title = "Descargar constancia de entrega" class="mdi mdi-file-pdf-box h3 icon-primary-color mx-1" (click)="downloadConstancyDelivery($event, 12)"></i></a>
 
-                            <a *ngIf="actionsTable.includes('vce')"><i title = "Ver constancia de entrega" class="mdi mdi-eye h3 icon-primary-color mx-1" (click)="viewConstancyDelivery($event, 12)"></i></a>
 
-                            <a *ngIf="actionsTable.includes('evce')"><i title = "Enviar constancia de entrega" class="mdi mdi-send h3 icon-primary-color mx-1" (click)="sendConstancyDelivery($event, 12)"></i></a> -->
 
-                            <a *ngIf="actionsTable.includes('daps')" [href]="data.path" ><i title = "Descargar lista APS" class="color-secondary mdi mdi-download-circle-outline h3 icon-primary-color mx-1" ></i></a>
+                          -->
+
+                          <a *ngIf="actionsTable.includes('vd')"><i title = "Ver constancia de entrega" class="mdi mdi-eye h3 color-secondary mx-1" (click)="actionTable(data['nro. solicitud'], 'nd')"></i></a>
+
+                          <a *ngIf="actionsTable.includes('av')"><i title = "Asignar asistente social" class="mdi mdi-account-plus h3 color-secondary mx-1" (click)="actionTable(data['nro. solicitud'], 'av')"></i></a>
+
+                          <a *ngIf="actionsTable.includes('ev')"><i title = "Editar Asistente Social" class="mdi mdi-pencil h3 color-secondary mx-1" (click)="actionTable(data['nro. solicitud'], 'ev')"></i></a>
+
+
+                          <a *ngIf="actionsTable.includes('daps')" [href]="data.path" ><i title = "Descargar lista APS" class="color-secondary mdi mdi-download-circle-outline h3 icon-primary-color mx-1" ></i></a>
 
                         </td>
 

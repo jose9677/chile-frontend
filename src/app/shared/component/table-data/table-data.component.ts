@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChange, SimpleChanges, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChange, SimpleChanges, ViewChild, ViewContainerRef } from '@angular/core';
 import { SortByTablesService } from './services/sort-by-tables.service';
 import { ModalsService } from 'src/app/shared/services/modals.service';
 import { FilterPipe } from './pipes/filter.pipe';
@@ -25,6 +25,8 @@ export class TableDataComponent implements OnInit {
 
   @Input() dataForPage: any = 5;
 
+
+  @Output() tableActionsEvent = new EventEmitter<string>();
 
   public sortByService: any;
 
@@ -444,10 +446,17 @@ export class TableDataComponent implements OnInit {
       this.getPages(this.dataSearch);
 
     }
-
-
   }
 
 
+  actionTable( idRequest: any, typeAction: any, rutSocialAssistant:any = null) {
+
+    let data = {
+      'idRequest': idRequest,
+      'rutSocialAssistant': rutSocialAssistant,
+      'type': typeAction
+    }
+    this.tableActionsEvent.emit(JSON.stringify(data));
+  }
 
 }
