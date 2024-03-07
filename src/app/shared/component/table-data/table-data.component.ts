@@ -448,7 +448,6 @@ export class TableDataComponent implements OnInit {
     }
   }
 
-
   actionTable( idRequest: any, typeAction: any, rutSocialAssistant:any = null) {
 
     let data = {

@@ -12,6 +12,16 @@
       <div class="card-body">
         <h3 class="colorTextPrimari pb-3">Tus Solicitudes</h3>
 
+          <app-table-data
+          [titlesTable]= "titleDataTable"
+          [dataInput]= "dataDataTable"
+          [addNew]= "{'status': true, title: 'Crear solicitud'}"
+          [options] = true
+          [actionsTable]= "['vd', 'nd', 'cd', 'cr']"
+          [dataForPage]="10"
+          (tableActionsEvent)="tableAction($event)"
+          ></app-table-data>
+
         <div class="row">
           <div class="col mb-3">
             <div class="input-group">

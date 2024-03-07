@@ -38,7 +38,14 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
   ) {
 
-    this.titleDataTable = [];
+    this.titleDataTable = [
+      'Nro.',
+      'nro. solicitud',
+      'fecha solicitud',
+      'tipo previsión',
+      'fecha de visita',
+      'estatus'
+    ];
 
     this.dataDataTable = [];
 
@@ -70,8 +77,7 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
       sessionStorage.setItem('isExpiredRequest', isExpiredRequest.toString());
 
-
-      result.map((res: any)=>{
+      result.map((res: any, i: any)=>{
 
         res.fullName = (res.assistant_names ?? ' ') +' '+ (res.assistant_lastname ?? ' ')
         res.fullPeventionData = res.prevention_type +' - '+ res.prevention_detail
@@ -87,20 +93,19 @@ export class ViewNeighborRequestsComponent implements OnInit {
         // window.sessionStorage.setItem("status-request", JSON.stringify(res.id_status));
 
         requestForUser.push({
+          'Nro.': i+1,
           'nro. solicitud': res.id_request,
           'fecha solicitud': res.request_date,
           'tipo previsión': res.fullPeventionData,
-          'fecha de visita': res.fullPeventionData,
-          'Estatus': res.displayStatus
+          'fecha de visita': res.visit_date,
+          'estatus': res.displayStatus
         })
 
       })
 
-      this.titleDataTable = Object.keys(requestForUser[0]);
+      this.unassignedRequest = result;
 
-
-      requestForUser = result;
-
+      console.log(requestForUser);
     },
     error => {
 
@@ -113,7 +118,7 @@ export class ViewNeighborRequestsComponent implements OnInit {
     },
     () => {
 
-      this.unassignedRequest = requestForUser;
+      this.dataDataTable = requestForUser;
 
     });
   }
@@ -138,12 +143,23 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
   createDate (e: Event) {
 
-    e.preventDefault();
+    if (e !== null) e.preventDefault();
+
     this.router.navigate(['citas/crear-cita'], {queryParams: {rut_user: this.rutNeighbor}});
+
   }
 
 
+  tableAction (eventTable: any) {
 
+    let dataEvent = JSON.parse(eventTable);
+
+    if(dataEvent.type === 'vd') this.viewDate(dataEvent.idRequest);
+    if(dataEvent.type === 'nd') this.createDate(null);
+    if(dataEvent.type === 'cd') this.confirmDate(dataEvent.idRequest);
+    if(dataEvent.type === 'cr') this.confirmRenovation(dataEvent.idRequest);
+
+  }
 
 
 

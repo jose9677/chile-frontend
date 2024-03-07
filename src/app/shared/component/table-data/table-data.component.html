@@ -1,6 +1,6 @@
 <section>
     <div class="row">
-        <div [ngClass]="{'col-md-10': addNew.status, 'col-12': !addNew.status}">
+        <div [ngClass]="{'col': addNew.status, 'col-12': !addNew.status}">
             <div class="input-group p-1 hidden-print">
                 <input
                 type="icon"
@@ -16,8 +16,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2 justify-content-center align-self-end p-0 m-0" *ngIf="addNew.status">
-          <a class="p-0 m-0 d-flex justify-content-start align-items-center" >
+        <div class="col-md-3 justify-content-center align-self-end p-0 m-0" *ngIf="addNew.status">
+          <a class="p-0 m-0 d-flex justify-content-start align-items-center" (click)="actionTable(null, 'nd', null)">
               <i class="mdi mdi-plus-circle-outline h2 icon-success"></i>
               <p class=" colorTextPrimari h4 p-0 m-0"> {{ addNew.title }} </p>
           </a>
@@ -137,24 +137,21 @@
 
 
 
-                            <a *ngIf="actionsTable.includes('dce')"><i title = "Descargar constancia de entrega" class="mdi mdi-file-pdf-box h3 icon-primary-color mx-1" (click)="downloadConstancyDelivery($event, 12)"></i></a>
-
-
-
                           -->
 
-                          <a *ngIf="actionsTable.includes('vd')"><i title = "Ver constancia de entrega" class="mdi mdi-eye h3 color-secondary mx-1" (click)="actionTable(data['nro. solicitud'], 'nd')"></i></a>
+                          <a *ngIf="actionsTable.includes('vd')"><i title = "Ver solicitud" class="mdi mdi-eye h3 color-secondary mx-1" (click)="actionTable(data['nro. solicitud'], 'vd')"></i></a>
+
+                          <a *ngIf="actionsTable.includes('cd')"><i title = "Confirmar solicitud" class="mdi mdi-calendar-check h3 color-secondary mx-1" (click)="actionTable(data['nro. solicitud'] , 'cd', null)"></i></a>
+
+                          <a *ngIf="actionsTable.includes('cr')"><i title = "Confirmar renovacion" class="mdi mdi-check-circle-outline text-success h3 mx-1" (click)="actionTable(data['nro. solicitud'] , 'cr', null)"></i></a>
 
                           <a *ngIf="actionsTable.includes('av')"><i title = "Asignar asistente social" class="mdi mdi-account-plus h3 color-secondary mx-1" (click)="actionTable(data['nro. solicitud'], 'av')"></i></a>
 
                           <a *ngIf="actionsTable.includes('ev')"><i title = "Editar Asistente Social" class="mdi mdi-pencil h3 color-secondary mx-1" (click)="actionTable(data['nro. solicitud'], 'ev')"></i></a>
 
-
                           <a *ngIf="actionsTable.includes('daps')" [href]="data.path" ><i title = "Descargar lista APS" class="color-secondary mdi mdi-download-circle-outline h3 icon-primary-color mx-1" ></i></a>
 
                         </td>
-
-
                     </tr>
 
                     <tr
