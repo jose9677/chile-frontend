@@ -90,6 +90,7 @@ export class ViewAdminRequestsComponent implements OnInit {
           'dirección': res.street + ' ' + res.way_number + ', ' + res.description + ' ' + (res.property_number ?? 's/n'),
           'supervisor': (res.supervisor_names ?? ' ') + ' ' + (res.supervisor_lastname ?? ' '),
           'estatus': res.displayStatus
+          
         })
 
       })

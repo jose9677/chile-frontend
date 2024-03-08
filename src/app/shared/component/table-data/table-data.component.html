@@ -139,11 +139,11 @@
 
                           -->
 
-                          <a *ngIf="actionsTable.includes('vd')"><i title = "Ver solicitud" class="mdi mdi-eye h3 color-secondary mx-1" (click)="actionTable(data['nro. solicitud'], 'vd')"></i></a>
+                          <a *ngIf="actionsTable.includes('vd') && (data['idEstatus'] !== 13) "><i title = "Ver solicitud" class="mdi mdi-eye h3 color-secondary mx-1" (click)="actionTable(data['nro. solicitud'], 'vd')"></i></a>
 
-                          <a *ngIf="actionsTable.includes('cd')"><i title = "Confirmar solicitud" class="mdi mdi-calendar-check h3 color-secondary mx-1" (click)="actionTable(data['nro. solicitud'] , 'cd', null)"></i></a>
+                          <a *ngIf="actionsTable.includes('cd') && (data['idEstatus'] === 3)"><i title = "Confirmar solicitud" class="mdi mdi-calendar-check h3 color-secondary mx-1" (click)="actionTable(data['nro. solicitud'] , 'cd', null)"></i></a>
 
-                          <a *ngIf="actionsTable.includes('cr')"><i title = "Confirmar renovacion" class="mdi mdi-check-circle-outline text-success h3 mx-1" (click)="actionTable(data['nro. solicitud'] , 'cr', null)"></i></a>
+                          <a *ngIf="actionsTable.includes('cr') && (data['idEstatus'] === 13)"><i title = "Confirmar renovacion" class="mdi mdi-check-circle-outline text-success h3 mx-1" (click)="actionTable(data['nro. solicitud'] , 'cr', null)"></i></a>
 
                           <a *ngIf="actionsTable.includes('av')"><i title = "Asignar asistente social" class="mdi mdi-account-plus h3 color-secondary mx-1" (click)="actionTable(data['nro. solicitud'], 'av')"></i></a>
 

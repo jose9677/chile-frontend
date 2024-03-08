@@ -1038,9 +1038,12 @@
         display: table-cell;
 
         div{
-            display :none !important;
-            pointer-events: none !important;
+            i{
+              display :none !important;
+              pointer-events: none !important;
+            }
         }
+
     }
 
 

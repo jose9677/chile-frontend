@@ -69,6 +69,8 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
     this.date.getForRut(this.rutNeighbor).subscribe( result => {
 
+      console.log(result);
+
       let lastRequest = (result.sort((a, b) => b.id_request - a.id_request)).slice(0,1);
 
       let statusLastRequest = lastRequest[0].id_status;
@@ -84,10 +86,12 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
         if (this.userloggedRole === 1) {
           res['displayStatus'] = res.status;
+          res['idDisplayStatus'] = res.id_status;
         }
 
         if (this.userloggedRole !== 1) {
           res['displayStatus'] = res.status_emp;
+          res['idDisplayStatus'] = res.id_status_emp;
         }
 
         // window.sessionStorage.setItem("status-request", JSON.stringify(res.id_status));
@@ -98,7 +102,8 @@ export class ViewNeighborRequestsComponent implements OnInit {
           'fecha solicitud': res.request_date,
           'tipo previsión': res.fullPeventionData,
           'fecha de visita': res.visit_date,
-          'estatus': res.displayStatus
+          'estatus': res.displayStatus,
+          'idEstatus': res.idDisplayStatus
         })
 
       })
