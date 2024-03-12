@@ -20,6 +20,10 @@ import { UserActiveComponent } from './pages/modales/user-active/user-active.com
 import { UserDesactiveComponent } from './pages/modales/user-desactive/user-desactive.component';
 import { ViewUserComponent } from './pages/view-user/view-user.component';
 import { GenerateReportsComponent } from './pages/generate-reports/generate-reports.component';
+import { PasswordChangeComponent } from './pages/password-change/password-change.component';
+import { ViewNeighborsComponent } from './pages/view-neighbors/view-neighbors.component';
+import { ViewNeighborComponent } from './pages/view-neighbor/view-neighbor.component';
+import { CustomFormsModule } from 'ngx-custom-validators';
 
 
 @NgModule({
@@ -36,12 +40,16 @@ import { GenerateReportsComponent } from './pages/generate-reports/generate-repo
     UserActiveComponent,
     UserDesactiveComponent,
     ViewUserComponent,
-    GenerateReportsComponent
+    GenerateReportsComponent,
+    PasswordChangeComponent,
+    ViewNeighborsComponent,
+    ViewNeighborComponent
   ],
   imports: [
     CommonModule,
     PrivateRoutingModule,
     FormsModule,
+    CustomFormsModule,
     ReactiveFormsModule,
     NgSelectModule,
     NgxMaskModule.forRoot(),

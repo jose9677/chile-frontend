@@ -11,6 +11,9 @@ import { ViewUserComponent } from './pages/view-user/view-user.component';
 import { Access345Guard } from '../shared/guards/access-3-4-5.guard';
 import { Access45Guard } from '../shared/guards/access-4-5.guard';
 import { GenerateReportsComponent } from './pages/generate-reports/generate-reports.component';
+import { PasswordChangeComponent } from './pages/password-change/password-change.component';
+import { ViewNeighborsComponent } from './pages/view-neighbors/view-neighbors.component';
+import { ViewNeighborComponent } from './pages/view-neighbor/view-neighbor.component';
 
 const routes: Routes = [
   { path: '',
@@ -49,6 +52,16 @@ const routes: Routes = [
       {
         path:'editar-rol/:id',
         component:EditRoleComponent,
+        canActivate: [Access45Guard]
+      },
+      {
+        path: 'vecinos',
+        component: ViewNeighborsComponent,
+        canActivate: [Access45Guard]
+      },
+      {
+        path: 'vecino',
+        component: ViewNeighborComponent,
         canActivate: [Access45Guard]
       },
       {

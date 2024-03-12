@@ -154,8 +154,8 @@ export class StatusDatesComponent implements OnInit {
 
     this.rutEmployee = JSON.parse(window.sessionStorage.getItem("auth-user"));
 
-    this.maxDate = new Date()
-    this.maxDate = `${this.maxDate.getFullYear() - 1}-${(this.maxDate.getMonth())+1}-${this.maxDate.getDate()}`
+    this.maxDate = new Date();
+    this.maxDate = `${this.maxDate.getFullYear() - 1}-${(this.maxDate.getMonth())+1}-${this.maxDate.getDate()}`;
 
     this.minDate = new Date();
     this.minDate = `${this.minDate.getFullYear() - 124 }-${(this.minDate.getMonth())+1}-${this.minDate.getDate()}`;
