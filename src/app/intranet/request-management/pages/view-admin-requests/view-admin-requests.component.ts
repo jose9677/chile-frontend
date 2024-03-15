@@ -108,7 +108,6 @@ export class ViewAdminRequestsComponent implements OnInit {
 
   viewDate (eventTable: any) {
 
-    console.log(JSON.parse(eventTable));
 
     // this.router.navigate(['citas/estatus-cita'],{queryParams: {id_request : id_request}});
 

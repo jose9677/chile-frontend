@@ -69,7 +69,6 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
     this.date.getForRut(this.rutNeighbor).subscribe( result => {
 
-      console.log(result);
 
       let lastRequest = (result.sort((a, b) => b.id_request - a.id_request)).slice(0,1);
 
@@ -110,7 +109,6 @@ export class ViewNeighborRequestsComponent implements OnInit {
 
       this.unassignedRequest = result;
 
-      console.log(requestForUser);
     },
     error => {
 

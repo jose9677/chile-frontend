@@ -97,7 +97,6 @@ export class ViewSupervisorRequestsComponent implements OnInit {
       let iu = 0;
       let ia = 0;
 
-      console.log(result);
       let allRequestAssigned: any[] = [];
       let allRequestUnassigned: any[] = [];
 

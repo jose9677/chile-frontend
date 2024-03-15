@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -9,9 +9,12 @@ import { Router } from '@angular/router';
 })
 export class ViewNeighborsComponent implements OnInit {
 
+  @Input() data: any
+
   public isFormSubmitted: boolean;
 
   public formRutUser: any;
+
 
   constructor(
     private fb: FormBuilder,
@@ -19,6 +22,8 @@ export class ViewNeighborsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+
 
     this.formRutUser = this.fb.group({
       rutNumber: ['',[Validators.required]],
@@ -36,7 +41,9 @@ export class ViewNeighborsComponent implements OnInit {
 
       let code = rut.slice(-1);
 
-      let correctRut = rut.slice(0, -1) + "-" + code;
+      let correctRut: any = rut;
+
+      if(rut.length > 1) correctRut = rut.slice(0, -1) + "-" + code;
 
       this.formRutUser.controls['rutNumber'].setValue(correctRut);
 
@@ -48,8 +55,14 @@ export class ViewNeighborsComponent implements OnInit {
 
     this.isFormSubmitted = true;
 
-    this.router.navigate(['seguridad/vecino'], {queryParams: {rut: this.formRutUser.value.rut}});
+    if (this.formRutUser.status === 'VALID') {
 
+      this.router.navigate(
+        ['seguridad/vecino'],
+        {queryParams: {rut: this.formRutUser.value.rutNumber}}
+      );
+
+    }
   }
 
 }

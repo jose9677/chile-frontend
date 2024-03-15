@@ -35,7 +35,6 @@ export class DatesService {
 
   }
 
-
   getForRut(rutNeighbor: any): Observable<any | void> {
     return this.http.get<any>( AUTH_API + 'detail-neightbor/'+ rutNeighbor, httpOptions).pipe(map((result:any) => {
 
