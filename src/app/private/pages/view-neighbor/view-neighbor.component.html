@@ -1,0 +1,137 @@
+<div class="card row justify-content-center align-items-center p-3 mb-3">
+
+  <h3 class="colorTextPrimari" >Datos Personales</h3><br>
+
+  <form class="forms-sample" [formGroup]="dataUserForm">
+    <div class="row">
+      <div class="col-md-4 mb-3" [ngClass]="{'disabled': true}">
+        <label for="rut" class="form-label colorTextPrimari">RUT</label>
+        <input
+        class="form-control"
+        id="rut"
+        type="text"
+        [readOnly]="true"
+        formControlName="rut"
+        >
+      </div>
+      <!-- {{}} -->
+      <div class="col-md-4 mb-3" [ngClass]="{'disabled': true}">
+        <label for="name" class="form-label">Nombres</label>
+        <div>
+          <input
+          class="form-control"
+          type="text"
+          id="name"
+          formControlName="names"
+          [readOnly]="true"
+          placeholder="Introduzca sus nombres"
+          [ngClass]="{
+            'is-invalid': (dataUserForm.controls.names.touched && dataUserForm.controls.names.errors) || (isFormSubmitted && dataUserForm.controls.names.errors)
+          }"
+          >
+          <div *ngIf="(dataUserForm.controls.names.touched && dataUserForm.controls.names.errors?.required) || (isFormSubmitted && dataUserForm.controls.names.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+          <div class="text-danger mt-1" *ngIf="dataUserForm.controls.names.errors?.pattern">Este campo solo admite letras</div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3" [ngClass]="{'disabled': true}">
+        <label for="lastNames" class="form-label ">Apellidos</label>
+        <input
+        type="text"
+        class="form-control"
+        id="lastNames"
+        formControlName="lastNames"
+        [readOnly]="true"
+        [ngClass]="{'is-invalid': (dataUserForm.controls.lastNames.touched && dataUserForm.controls.lastNames.errors) || (isFormSubmitted && dataUserForm.controls.lastNames.errors)}" placeholder="Introduzca sus apellidos"
+        >
+        <div *ngIf="(dataUserForm.controls.lastNames.touched && dataUserForm.controls.lastNames.errors?.required) || (isFormSubmitted && dataUserForm.controls.lastNames.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+        <div class="text-danger mt-1" *ngIf="dataUserForm.controls.lastNames.errors?.pattern">Este campo solo admite letras</div>
+      </div>
+      <!-- <div class="col-md-4 mb-3" [ngClass]="{'disabled': true}">
+        <label for="gender" class="form-label">Sexo</label>
+        <ng-select
+        class="form-control p-0"
+        id="gender"
+        placeholder="Seleccione"
+        formControlName="gender"
+        [clearable]="false"
+        [readonly]="true"
+        [ngClass]="{'is-invalid': ((dataUserForm.controls.gender.touched && dataUserForm.controls.gender.errors) || (isFormSubmitted && dataUserForm.controls.gender.errors))}"
+        >
+          <ng-option *ngFor="let gender of genders" [value]="gender.id_sex">{{gender.description}}</ng-option>
+        </ng-select>
+        <div *ngIf="(dataUserForm.controls.gender.touched && dataUserForm.controls.gender.errors?.required) || (dataUserForm.controls.gender.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+      </div> -->
+      <div class="col-md-4 mb-3" [ngClass]="{'disabled': true}">
+        <label for="datesBirth" class="form-label">Fecha de Nacimiento</label>
+        <input
+        class="form-control"
+        type="date"
+        [maxDate]="maxDate"
+        [minDate]="minDate"
+        id="datesBirth"
+        formControlName="datesBirth"
+        [readOnly]="true"
+        [ngClass]="{'is-invalid': (dataUserForm.controls.datesBirth.touched && dataUserForm.controls.datesBirth.errors) || (isFormSubmitted && dataUserForm.controls.datesBirth.errors)}"
+        >
+        <div *ngIf="(dataUserForm.controls.datesBirth.touched && dataUserForm.controls.datesBirth.errors?.required) || (isFormSubmitted && dataUserForm.controls.datesBirth.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+        <div *ngIf="(dataUserForm.controls.datesBirth.touched && dataUserForm.controls.datesBirth.errors?.maxDate ) || (isFormSubmitted && dataUserForm.controls.datesBirth.errors?.maxDate)" class="invalid-feedback">La edad minima no puede ser menor a un año</div>
+        <div *ngIf="(dataUserForm.controls.datesBirth.touched && dataUserForm.controls.datesBirth.errors?.minDate ) || (isFormSubmitted && dataUserForm.controls.datesBirth.errors?.minDate)" class="invalid-feedback">La edad maxima no puede ser mayor a 124 años</div>
+      </div>
+      <div class="col-md-4 mb-3" [ngClass]="{'disabled': true}">
+        <label for="email" class="form-label">Correo Electrónico</label>
+        <input
+        type="email"
+        class="form-control"
+        id="email"
+        formControlName="email"
+        [readOnly]="true"
+        [ngClass]="{'is-invalid': (dataUserForm.controls.email.touched && dataUserForm.controls.email.errors) || (isFormSubmitted && dataUserForm.controls.email.errors)}" placeholder="Introduzca su email"
+        >
+        <div *ngIf="(dataUserForm.controls.email.touched && dataUserForm.controls.email.errors?.required) || (isFormSubmitted && dataUserForm.controls.email.errors)" class="invalid-feedback">Campo Requerido</div>
+        <div class="text-danger mt-1" *ngIf="dataUserForm.controls.email.errors?.email">Verifique el formato de email</div>
+      </div>
+      <div class="col-md-4 mb-3" [ngClass]="{'disabled': true}">
+        <label for="landLine" class="form-label">Teléfono Fijo</label>
+        <input
+        type="text"
+        class="form-control"
+        id="landLine"
+        formControlName="landLine"
+        [prefix]="prefix"
+        [mask]="mask"
+        [showMaskTyped] = "false"
+        (keyup)="changeinPhoneNumber(dataUserForm.value.landLine, 1)"
+        [readOnly]="true"
+        [ngClass]="{'is-invalid': (dataUserForm.controls.landLine.touched && dataUserForm.controls.landLine.errors) || (isFormSubmitted && dataUserForm.controls.landLine.errors)}"
+        >
+        <div *ngIf="(dataUserForm.controls.landLine.touched && dataUserForm.controls.landLine.errors?.required) || (isFormSubmitted && dataUserForm.controls.landLine.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+      </div>
+      <div class="col-md-4 mb-3" [ngClass]="{'disabled': true}">
+        <label for="mobilePhone" class="form-label">Teléfono Móvil</label>
+        <input
+        type="text"
+        class="form-control"
+        id="mobilePhone"
+        formControlName="mobilePhone"
+        [prefix]="prefix"
+        [mask]="mask"
+        [showMaskTyped] = "false"
+        (keyup)="changeinPhoneNumber(dataUserForm.value.mobilePhone, 2)"
+        [readOnly]="true"
+        [ngClass]="{'is-invalid': (dataUserForm.controls.mobilePhone.touched && dataUserForm.controls.mobilePhone.errors) || (isFormSubmitted && dataUserForm.controls.mobilePhone.errors)}"
+        >
+        <div *ngIf="(dataUserForm.controls.mobilePhone.touched && dataUserForm.controls.mobilePhone.errors?.required) || (isFormSubmitted && dataUserForm.controls.mobilePhone.errors?.required)" class="invalid-feedback">Campo Requerido</div>
+      </div>
+    </div>
+  </form>
+
+
+  <div class="d-flex justify-content-end mt-3" >
+    <!-- <a href="#" (click)="editPersonalData($event)" *ngIf="!(isEditingPersonalData | async)">Editar</a> -->
+    <div *ngIf="true">
+      <!-- <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="updatePersonalData($event)">Actualizar</button> -->
+      <button type="button" class=" btn btn-primary me-2 mb-2 mb-md-0 style" (click)="changePassword($event)">Cambiar contraseña</button>
+      <button type="button" class=" btn btn-outline-primary me-2 mb-2 mb-md-0 style" (click)="cancel($event)" >Volver</button>
+    </div>
+  </div>
+</div>

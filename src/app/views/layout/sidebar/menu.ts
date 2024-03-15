@@ -89,6 +89,11 @@ export const MENU: MenuItem[] = [
         link: '/seguridad/usuarios',
       },
       {
+        roles: [4, 5],
+        label: 'Vecinos',
+        link: '/seguridad/vecinos',
+      },
+      {
         roles: [],
         label: 'Roles',
         link: '/seguridad/roles'

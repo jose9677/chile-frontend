@@ -5,6 +5,7 @@ import { DatesService } from 'src/app/intranet/dates-management/shared/services/
 import { ModalsService } from 'src/app/shared/services/modals.service';
 import { SortByTablesService } from '../../shared/services/sort-by-tables.service';
 import { LoggedService } from 'src/app/shared/services/logged.service';
+import { all } from 'underscore';
 
 @Component({
   selector: 'app-view-admin-requests',
@@ -13,13 +14,15 @@ import { LoggedService } from 'src/app/shared/services/logged.service';
 })
 export class ViewAdminRequestsComponent implements OnInit {
 
-  countSolicitudes: any;
+  public countSolicitudes: any;
 
-  rejectRequest: any;
+  public rejectRequest: any;
 
-  approveRequest: any;
+  public approveRequest: any;
 
-  unassignedRequest: any[];
+  public unassignedRequest: any[];
+  public allRequest: any[];
+  public titleDataTable: any[];
 
   public userloggedRut: any;
   public userloggedRole: any;
@@ -48,8 +51,11 @@ export class ViewAdminRequestsComponent implements OnInit {
 
     this.unassignedRequest = [];
 
+    this.allRequest = [];
 
-
+    this.titleDataTable = [
+      'Nro.', 'nro. solicitud', 'fecha de solicitud', 'rut vecino', 'nombres y apellidos', 'dirección', 'supervisor', 'estatus'
+    ]
   }
 
   ngOnInit(): void {
@@ -61,9 +67,12 @@ export class ViewAdminRequestsComponent implements OnInit {
   getAllRequest() {
     this.date.getAllRequest().subscribe( result => {
 
+      let allRequest: any[] = [];
+
       this.unassignedRequest = result.data_complete;
 
-      this.unassignedRequest.map((res) => {
+
+      this.unassignedRequest.map((res: any, i: any) => {
         if (this.userloggedRole === 1) {
           res['displayStatus'] = res.status;
         }
@@ -71,9 +80,22 @@ export class ViewAdminRequestsComponent implements OnInit {
         if (this.userloggedRole !== 1) {
           res['displayStatus'] = res.status_emp;
         }
+
+        allRequest.push({
+          'Nro.': i+1,
+          'nro. solicitud': res.id_request,
+          'fecha de solicitud': res.request_date,
+          'rut vecino': res.rut_user,
+          'nombres y apellidos': res.user_name + ' ' + res.user_lastname,
+          'dirección': res.street + ' ' + res.way_number + ', ' + res.description + ' ' + (res.property_number ?? 's/n'),
+          'supervisor': (res.supervisor_names ?? ' ') + ' ' + (res.supervisor_lastname ?? ' '),
+          'estatus': res.displayStatus
+
+        })
+
       })
 
-
+      this.allRequest = allRequest;
 
       this.countSolicitudes = result.count_solicitudes['0']?.count;
 
@@ -84,9 +106,19 @@ export class ViewAdminRequestsComponent implements OnInit {
     })
   }
 
-  viewDate (id_request: any) {
+  viewDate (eventTable: any) {
 
-    this.router.navigate(['citas/estatus-cita'],{queryParams: {id_request : id_request}});
+
+    // this.router.navigate(['citas/estatus-cita'],{queryParams: {id_request : id_request}});
+
+  }
+
+
+  tableAction (eventTable: any) {
+
+    let dataEvent = JSON.parse(eventTable);
+
+    if(dataEvent.type === 'nd') this.router.navigate(['citas/estatus-cita'],{queryParams: {id_request : dataEvent.idRequest}});
 
   }
 

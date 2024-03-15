@@ -12,69 +12,17 @@
       <div class="card-body">
         <h3 class="colorTextPrimari pb-3">Tus Solicitudes</h3>
 
-        <div class="row">
-          <div class="col mb-3">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Buscar..." #txtSearch (keyup)="sortByService.onSearch(txtSearch.value)">
-              <div class="input-group-append">
-                <span class="input-group-text" id="basic-addon2"><i class="mdi mdi-magnify"></i></span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 justify-content-center align-self-end mb-3">
-            <a class="p-0 m-0 d-flex justify-content-start align-items-center" (click)="createDate( $event )" >
-                <i class="mdi mdi-plus-circle-outline h2 icon-success"></i>
-                <p class=" colorTextPrimari h4 p-0 m-0"> Crear solicitud </p>
-            </a>
-          </div>
-        </div>
+          <app-table-data
+          [titlesTable]= "titleDataTable"
+          [dataInput]= "dataDataTable"
+          [addNew]= "{'status': true, title: 'Crear solicitud'}"
+          [options] = true
+          [actionsTable]= "['vd', 'nd', 'cd', 'cr']"
+          [dataForPage]="10"
+          (tableActionsEvent)="tableAction($event)"
+          ></app-table-data>
 
-        <div class="table-responsive">
-
-          <table class="table">
-            <thead>
-              <tr>
-                <th (click)="sortByService.dataSortBy('nroRequest')">Nro. Solicitud</th>
-                <th (click)="sortByService.dataSortBy('requestDate')">Fecha Solicitud</th>
-                <th (click)="sortByService.dataSortBy('fonasa')">Tipo de Previsión</th>
-                <th (click)="sortByService.dataSortBy('dateOfVisit')">Fecha de Visita</th>
-                <!-- <th (click)="sortByService.dataSortBy('visitor')">Asistente Social</th> -->
-                <th (click)="sortByService.dataSortBy('status')">Estatus</th>
-                <th >Opciones</th>
-              </tr>
-            </thead>
-            <tbody>
-                  <!-- <tr *ngFor="let request of unassignedRequest; index as i " > -->
-                <tr *ngFor="let request of unassignedRequest | filterTableNeighbor:sortByService.search:sortByService.page | sortBy:sortByService.dataSort:sortByService.order" >
-                  <td >{{request.id_request }}</td>
-                  <td>{{request.request_date}}</td>
-                  <td>{{request.fullPeventionData}} </td>
-                  <td>{{request.visit_date}}</td>
-                  <!-- <td>{{(request.fullName )}}</td> -->
-                  <td>{{request.displayStatus}}</td>
-                  <td>
-                    <!-- <button *ngIf="request.id_status != 1" (click)="viewDate(request.id_request)" ><i class="mdi mdi-eye" style="font-size: 1.5em;"></i></button> -->
-                    <button (click)="viewDate(request.id_request)" *ngIf="request.id_status !== 13"><i class="mdi mdi-eye" style="font-size: 1.5em;"></i></button>
-                    <button  *ngIf="request.id_status == 3" (click)="confirmDate(request.id_request)" ><i class="mdi mdi-calendar-check" style="font-size: 1.5em;"></i></button>
-                    <button  *ngIf="request.id_status == 13" (click)="confirmRenovation(request.id_request)" ><i class="mdi mdi-check-circle-outline text-success m-0 p-0" style="font-size: 1.5em;"></i></button>
-                  </td>
-                </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <th>
-                  <!-- <button (click)="createDate()" ><i class="mdi mdi-calendar-plus"></i></button> -->
-                  <!-- Necesito pasar el rut en la funcion -->
-                </th>
-                <th>
-                  <button class="color-secondary" (click)="sortByService.prevPage()" [disabled]="sortByService.page === 0"><i class="mdi mdi-arrow-left-bold"></i>  Anterior  </button>
-                  <button class="color-secondary" (click)="sortByService.nextPage()"  [disabled]="(unassignedRequest | filterTableNeighbor:sortByService.search:sortByService.page).length === 0" >  Siguiente  <i class="mdi mdi-arrow-right-bold"></i></button>
-
-                </th>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
+        
       </div>
     </div>
   </div>

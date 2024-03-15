@@ -171,11 +171,9 @@ export class PrivateService {
 
   }
 
-
   desactivarUser(rutUser: any): Observable<any>{
     let url = AUTH_API + 'desactive-user/'+ rutUser;
     return this.http.put(url, null).pipe(map((result:any) => {
-
 
     }),
     tap(() => {
@@ -231,6 +229,28 @@ export class PrivateService {
 
     let url = `${AUTH_API_NP}export-integramedica`;
     window.location.href = url;
+  }
+
+  getDataUserForRut(rutUser: any): Observable<any | void> {
+    return this.http.get<any>( AUTH_API_NP + 'get-data-user/'+ rutUser, httpOptions).pipe(map((result:any) => {
+
+      return result;
+
+    }),
+    catchError((err)=> this.handlerError(err))
+    );
+
+  }
+
+  changePassword(newPassword: any, rutUser: any): Observable<any | void> {
+    return this.http.put<any>( AUTH_API_NP + 'renove-password/'+ rutUser, newPassword, httpOptions).pipe(map((result:any) => {
+
+      return result;
+
+    }),
+    catchError((err)=> this.handlerError(err))
+    );
+
   }
 
 
