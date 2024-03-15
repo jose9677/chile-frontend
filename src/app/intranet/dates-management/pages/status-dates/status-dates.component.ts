@@ -1491,6 +1491,13 @@ export class StatusDatesComponent implements OnInit {
 
       this.updateDocuments(e);
 
+      let title: string = ''
+          let message: string = "La solicitud se ha creado exitosamente";
+          if(this.idRenovation) message = 'La renovación se ha realizado exitosamente';
+          this.modalService.OpenModalError2(ModalComponent, false, title, message);
+
+          this.router.navigate(['/']);
+
     })
   }
 

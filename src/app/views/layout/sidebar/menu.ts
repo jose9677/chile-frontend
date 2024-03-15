@@ -20,7 +20,7 @@ export const MENU: MenuItem[] = [
     roles: [0],
     subItems: [
       {
-        roles: [1, 5],
+        roles: [1, 3, 5],
         label: 'Estado de Inscripcíon',
         link: '/solicitud/solicitudes-de-inscripcion',
       },
