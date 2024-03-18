@@ -118,7 +118,7 @@ export class ViewAdminRequestsComponent implements OnInit {
 
     let dataEvent = JSON.parse(eventTable);
 
-    if(dataEvent.type === 'nd') this.router.navigate(['citas/estatus-cita'],{queryParams: {id_request : dataEvent.idRequest}});
+    if(dataEvent.type === 'vd') this.router.navigate(['citas/estatus-cita'],{queryParams: {id_request : dataEvent.idRequest}});
 
   }
 
